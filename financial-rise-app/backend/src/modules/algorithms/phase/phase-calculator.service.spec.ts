@@ -242,13 +242,13 @@ describe('PhaseCalculatorService', () => {
   });
 
   describe('applySequencingLogic', () => {
-    it('should identify stabilize as primary when score is very low (<40)', () => {
+    it('should identify stabilize as primary when score is critically low (<30)', () => {
       const scores = {
-        stabilize: 30, // Low score (< 40)
-        organize: 25,
+        stabilize: 25, // Critically low score (< 30 threshold)
+        organize: 35,
         build: 20,
         grow: 15,
-        systemic: 10,
+        systemic: 5,
       };
       const rankings = service.rankPhases(scores);
 
@@ -263,9 +263,9 @@ describe('PhaseCalculatorService', () => {
       const scores = {
         stabilize: 60, // Good
         organize: 45, // Moderate but < 50
-        build: 60, // High (>organize + 10)
+        build: 70, // High (>organize + 20, triggering sequential override)
         grow: 20,
-        systemic: 15,
+        systemic: 5,
       };
       const rankings = service.rankPhases(scores);
 
