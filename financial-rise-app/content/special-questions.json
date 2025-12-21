@@ -1,0 +1,314 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-12-19",
+    "description": "Special assessment questions including confidence levels and entity type",
+    "note": "These questions fulfill specific requirements: REQ-QUEST-009 (before/after confidence), REQ-QUEST-010 (entity type with S-Corp conditional)"
+  },
+  "questions": [
+    {
+      "id": "special-confidence-before",
+      "question_text": "Before this assessment, how confident do you feel about your business's financial health?",
+      "question_type": "scale",
+      "scale_min": 1,
+      "scale_max": 10,
+      "scale_min_label": "Not confident at all",
+      "scale_max_label": "Very confident",
+      "required": true,
+      "order": 1,
+      "category": "confidence_assessment",
+      "timing": "pre_assessment",
+      "note": "REQ-QUEST-009: Before assessment confidence to measure value delivered"
+    },
+    {
+      "id": "special-confidence-after",
+      "question_text": "After reviewing your personalized Financial RISE Report, how confident do you feel about your next steps?",
+      "question_type": "scale",
+      "scale_min": 1,
+      "scale_max": 10,
+      "scale_min_label": "Not confident at all",
+      "scale_max_label": "Very confident",
+      "required": true,
+      "order": 2,
+      "category": "confidence_assessment",
+      "timing": "post_report",
+      "note": "REQ-QUEST-009: After assessment confidence to measure value delivered"
+    },
+    {
+      "id": "special-entity-type",
+      "question_text": "What is your business entity type?",
+      "question_type": "multiple_choice",
+      "required": true,
+      "order": 3,
+      "category": "entity_information",
+      "conditional_trigger": true,
+      "options": [
+        {
+          "value": "sole_proprietor",
+          "label": "Sole Proprietor",
+          "triggers_followup": false
+        },
+        {
+          "value": "partnership",
+          "label": "Partnership",
+          "triggers_followup": false
+        },
+        {
+          "value": "llc",
+          "label": "Limited Liability Company (LLC)",
+          "triggers_followup": false
+        },
+        {
+          "value": "s_corp",
+          "label": "S-Corporation",
+          "triggers_followup": true,
+          "followup_question_id": "special-scorp-payroll"
+        },
+        {
+          "value": "c_corp",
+          "label": "C-Corporation",
+          "triggers_followup": false
+        },
+        {
+          "value": "nonprofit",
+          "label": "Nonprofit Organization",
+          "triggers_followup": false
+        },
+        {
+          "value": "other",
+          "label": "Other",
+          "triggers_followup": false
+        }
+      ],
+      "note": "REQ-QUEST-010: Entity type question with conditional S-Corp payroll follow-up"
+    },
+    {
+      "id": "special-scorp-payroll",
+      "question_text": "Are you taking reasonable compensation (W-2 payroll) as an S-Corp owner?",
+      "question_type": "multiple_choice",
+      "required": true,
+      "order": 4,
+      "category": "entity_information",
+      "conditional_display": true,
+      "display_condition": {
+        "question_id": "special-entity-type",
+        "required_value": "s_corp"
+      },
+      "options": [
+        {
+          "value": "yes_compliant",
+          "label": "Yes, I'm taking reasonable compensation on W-2 payroll",
+          "compliance_flag": "compliant",
+          "stabilize_score": 10,
+          "organize_score": 5,
+          "build_score": 3,
+          "grow_score": 2,
+          "systemic_score": 2
+        },
+        {
+          "value": "yes_uncertain",
+          "label": "Yes, but I'm not sure if it's 'reasonable'",
+          "compliance_flag": "review_needed",
+          "stabilize_score": 6,
+          "organize_score": 3,
+          "build_score": 2,
+          "grow_score": 1,
+          "systemic_score": 1
+        },
+        {
+          "value": "no_planning",
+          "label": "No, but I'm planning to set it up soon",
+          "compliance_flag": "action_required",
+          "stabilize_score": 2,
+          "organize_score": 1,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no_unaware",
+          "label": "No, I wasn't aware this was required",
+          "compliance_flag": "urgent_attention",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "distributions_only",
+          "label": "I only take distributions, no W-2 payroll",
+          "compliance_flag": "urgent_attention",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ],
+      "note": "REQ-QUEST-010: Conditional follow-up question when S-Corp is selected. S-Corp owners are required by IRS to take reasonable compensation.",
+      "recommendation_triggers": {
+        "action_required": "Add recommendation to establish S-Corp payroll",
+        "urgent_attention": "Flag for immediate attention in consultant report",
+        "review_needed": "Suggest payroll review with tax professional"
+      }
+    },
+    {
+      "id": "special-primary-goal",
+      "question_text": "What is your primary goal for the next 12 months?",
+      "question_type": "multiple_choice",
+      "required": true,
+      "order": 5,
+      "category": "business_goals",
+      "options": [
+        {
+          "value": "get_organized",
+          "label": "Get my financials organized and compliant",
+          "goal_alignment": "stabilize_organize"
+        },
+        {
+          "value": "improve_cash_flow",
+          "label": "Improve cash flow and profitability",
+          "goal_alignment": "grow"
+        },
+        {
+          "value": "scale_growth",
+          "label": "Scale and grow the business",
+          "goal_alignment": "grow"
+        },
+        {
+          "value": "build_systems",
+          "label": "Build better financial systems and processes",
+          "goal_alignment": "build"
+        },
+        {
+          "value": "understand_finances",
+          "label": "Better understand my financial reports",
+          "goal_alignment": "systemic"
+        },
+        {
+          "value": "prepare_funding",
+          "label": "Prepare for funding or investment",
+          "goal_alignment": "grow"
+        },
+        {
+          "value": "prepare_sale",
+          "label": "Prepare business for sale or exit",
+          "goal_alignment": "build_grow"
+        },
+        {
+          "value": "reduce_stress",
+          "label": "Reduce financial stress and uncertainty",
+          "goal_alignment": "stabilize"
+        }
+      ],
+      "note": "This helps tailor recommendations to client's stated priorities"
+    },
+    {
+      "id": "special-biggest-challenge",
+      "question_text": "What is your biggest financial challenge right now?",
+      "question_type": "multiple_choice",
+      "required": true,
+      "order": 6,
+      "category": "business_goals",
+      "options": [
+        {
+          "value": "time_bookkeeping",
+          "label": "Finding time to keep up with bookkeeping",
+          "challenge_area": "stabilize"
+        },
+        {
+          "value": "cash_flow",
+          "label": "Managing cash flow and timing",
+          "challenge_area": "grow"
+        },
+        {
+          "value": "understanding_reports",
+          "label": "Understanding what my financial reports mean",
+          "challenge_area": "systemic"
+        },
+        {
+          "value": "tax_compliance",
+          "label": "Staying compliant with tax requirements",
+          "challenge_area": "stabilize"
+        },
+        {
+          "value": "profitability",
+          "label": "Improving profitability",
+          "challenge_area": "grow"
+        },
+        {
+          "value": "financial_systems",
+          "label": "Setting up proper financial systems",
+          "challenge_area": "organize_build"
+        },
+        {
+          "value": "forecasting",
+          "label": "Planning and forecasting for the future",
+          "challenge_area": "grow"
+        },
+        {
+          "value": "team_processes",
+          "label": "Getting my team to follow financial processes",
+          "challenge_area": "build"
+        }
+      ],
+      "note": "Identifies pain points to prioritize in recommendations"
+    },
+    {
+      "id": "special-consultant-relationship",
+      "question_text": "Do you currently work with a financial professional?",
+      "question_type": "multiple_choice",
+      "required": false,
+      "order": 7,
+      "category": "relationship_info",
+      "options": [
+        {
+          "value": "yes_active",
+          "label": "Yes, I have an active relationship with a financial consultant",
+          "engagement_status": "active"
+        },
+        {
+          "value": "yes_accountant_only",
+          "label": "Yes, but only for tax preparation",
+          "engagement_status": "limited"
+        },
+        {
+          "value": "yes_bookkeeper",
+          "label": "Yes, I work with a bookkeeper",
+          "engagement_status": "operational"
+        },
+        {
+          "value": "no_interested",
+          "label": "No, but I'm interested in finding one",
+          "engagement_status": "prospect"
+        },
+        {
+          "value": "no_diy",
+          "label": "No, I handle everything myself",
+          "engagement_status": "diy"
+        }
+      ],
+      "note": "For consultant version: helps understand client's current support level"
+    }
+  ],
+  "conditional_logic": {
+    "description": "Rules for conditional question display",
+    "rules": [
+      {
+        "rule_id": "scorp-payroll-conditional",
+        "trigger_question": "special-entity-type",
+        "trigger_value": "s_corp",
+        "display_question": "special-scorp-payroll",
+        "required": true,
+        "note": "REQ-QUEST-010: Show S-Corp payroll question only when S-Corp is selected"
+      }
+    ]
+  },
+  "scoring_notes": {
+    "confidence_assessment": "Calculate delta between before and after confidence scores to measure value delivered (REQ-QUEST-009)",
+    "entity_type": "Entity type itself doesn't contribute to phase scores, but informs compliance requirements",
+    "scorp_payroll": "S-Corp payroll compliance impacts Stabilize phase score significantly",
+    "goals_and_challenges": "Used for recommendation prioritization, not direct phase scoring"
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-12-19",
+    "description": "Consultant-facing report content sections with DISC coaching",
+    "requirement_reference": "REQ-REPORT-C-001 through REQ-REPORT-C-005",
+    "note": "Consultant report includes DISC profile, detailed scores, and communication coaching"
+  },
+  "report_sections": {
+    "cover_page": {
+      "title": "Financial RISE Report - Consultant Edition",
+      "subtitle": "Readiness Insights for Sustainable Entrepreneurship",
+      "client_info_fields": [
+        "client_name",
+        "business_name",
+        "report_date",
+        "consultant_name"
+      ],
+      "disclaimer": "This report is confidential and intended for use by financial consultants only. Do not share DISC personality information with clients."
+    },
+    "executive_summary": {
+      "section_title": "Executive Summary",
+      "subsections": {
+        "client_overview": {
+          "title": "Client Overview",
+          "content_template": "{client_name}'s {business_name} is a {entity_type} business operating in the {industry} industry for {years_operating}. With {employee_count} and approximately {revenue_range} in monthly revenue, the business is currently focused on {primary_goal}.",
+          "data_sources": [
+            "special-questions.json: entity_type",
+            "questions.json: general-004 (industry)",
+            "questions.json: general-003 (years_operating)",
+            "questions.json: general-002 (employee_count)",
+            "questions.json: general-001 (revenue_range)",
+            "special-questions.json: primary_goal"
+          ]
+        },
+        "phase_determination": {
+          "title": "Financial Phase Assessment",
+          "content_template": "Based on comprehensive analysis, {client_name} is primarily in the **{primary_phase}** phase ({primary_score}%), with {secondary_phase_count} secondary focus area(s). The assessment reveals {transition_pattern} with {special_notes}.",
+          "include_scores": true,
+          "visual_element": "phase_bar_chart.png",
+          "data_sources": ["phase-algorithm.md output"]
+        },
+        "disc_profile_confidential": {
+          "title": "DISC Communication Profile (CONFIDENTIAL)",
+          "content_template": "**{client_name} has a {disc_primary_type} communication style** ({disc_primary_score}% confidence). {disc_profile_description}\n\n**Communication Coaching:** {communication_strategy_summary}",
+          "visibility": "consultant_only",
+          "warning": "DO NOT share DISC type label with client. Use insights to adapt your communication approach.",
+          "include_scores": true,
+          "data_sources": ["disc-algorithm.md output", "disc-communication-strategies.json"]
+        },
+        "key_findings": {
+          "title": "Key Findings",
+          "format": "bullet_list",
+          "max_items": 5,
+          "content_source": "Top 5 gaps from recommendation engine",
+          "tone": "Professional, analytical"
+        },
+        "engagement_opportunity": {
+          "title": "Engagement Opportunity",
+          "content_template": "This assessment identifies {total_recommendations} actionable opportunities for improvement, including {quick_win_count} quick wins that can deliver immediate value. Confidence gap analysis shows potential for {confidence_improvement}% improvement in client confidence through targeted support.",
+          "data_sources": ["Before/after confidence (special-questions)", "Recommendation count"]
+        }
+      }
+    },
+    "detailed_phase_analysis": {
+      "section_title": "Detailed Phase Analysis",
+      "subsections": {
+        "stabilize_phase": {
+          "title": "Stabilize Phase - Accounting Health & Compliance",
+          "description": "Foundational financial order and compliance requirements",
+          "content_elements": [
+            {
+              "element": "phase_score",
+              "label": "Stabilize Score",
+              "format": "percentage_with_rating",
+              "benchmarks": {
+                "excellent": 80,
+                "good": 60,
+                "fair": 40,
+                "needs_work": 20
+              }
+            },
+            {
+              "element": "question_breakdown",
+              "questions": [
+                "stab-001",
+                "stab-002",
+                "stab-003",
+                "stab-004",
+                "stab-005",
+                "stab-006",
+                "stab-007",
+                "stab-008"
+              ],
+              "show_responses": true,
+              "show_scores": true
+            },
+            {
+              "element": "strengths",
+              "title": "Strengths in This Phase",
+              "source": "Questions scoring 7+ in stabilize_score",
+              "max_items": 5
+            },
+            {
+              "element": "opportunities",
+              "title": "Opportunities for Improvement",
+              "source": "Questions scoring <5 in stabilize_score",
+              "max_items": 5
+            },
+            {
+              "element": "red_flags",
+              "title": "Urgent Attention Items",
+              "source": "Questions scoring 0-2 in stabilize_score",
+              "highlight": true,
+              "examples": [
+                "Tax filings behind",
+                "No business/personal separation",
+                "No bank reconciliation"
+              ]
+            }
+          ]
+        },
+        "organize_phase": {
+          "title": "Organize Phase - Foundational Systems",
+          "description": "Chart of Accounts, system integration, and organizational infrastructure",
+          "content_elements": "same structure as stabilize_phase"
+        },
+        "build_phase": {
+          "title": "Build Phase - Operational Excellence",
+          "description": "Financial SOPs, workflows, controls, and team processes",
+          "content_elements": "same structure as stabilize_phase"
+        },
+        "grow_phase": {
+          "title": "Grow Phase - Strategic Planning",
+          "description": "Cash flow forecasting, KPIs, scenario planning, and strategic analytics",
+          "content_elements": "same structure as stabilize_phase"
+        },
+        "systemic_phase": {
+          "title": "Systemic Phase - Financial Literacy",
+          "description": "Client's ability to read, interpret, and act on financial information",
+          "content_elements": "same structure as stabilize_phase"
+        }
+      }
+    },
+    "disc_communication_coaching": {
+      "section_title": "Communication Coaching (CONFIDENTIAL)",
+      "visibility": "consultant_only",
+      "warning_banner": "This section contains sensitive personality information. Never share DISC labels or scores with clients.",
+      "subsections": {
+        "profile_overview": {
+          "title": "Client DISC Profile",
+          "content_template": "**Primary Type:** {disc_primary_type} ({disc_primary_score}%)\n**Secondary Type:** {disc_secondary_type} ({disc_secondary_score}%)\n**Profile Pattern:** {disc_pattern}\n\n**What This Means:**\n{disc_characteristics}",
+          "include_scores": true
+        },
+        "communication_dos_donts": {
+          "title": "Communication Do's and Don'ts",
+          "format": "two_column_table",
+          "content_source": "disc-communication-strategies.json",
+          "columns": ["DO", "DON'T"],
+          "disc_variants": {
+            "D": {
+              "do": [
+                "Be direct and get to the point quickly",
+                "Focus on results and ROI",
+                "Provide executive summaries",
+                "Give them control and autonomy",
+                "Challenge them with goals"
+              ],
+              "dont": [
+                "Waste their time with excessive details",
+                "Be tentative or wishy-washy",
+                "Micromanage their process",
+                "Focus on feelings over results",
+                "Provide long-winded explanations"
+              ]
+            },
+            "I": {
+              "do": [
+                "Build the relationship first",
+                "Be enthusiastic and positive",
+                "Use stories and examples",
+                "Recognize their contributions publicly",
+                "Involve them in collaborative planning"
+              ],
+              "dont": [
+                "Be cold or overly formal",
+                "Focus only on data and numbers",
+                "Isolate them from the team",
+                "Ignore the social aspect",
+                "Be overly critical or negative"
+              ]
+            },
+            "S": {
+              "do": [
+                "Provide clear, step-by-step guidance",
+                "Be patient and supportive",
+                "Give them time to process changes",
+                "Show appreciation for their efforts",
+                "Provide reassurance and stability"
+              ],
+              "dont": [
+                "Rush them or apply high pressure",
+                "Make sudden, drastic changes",
+                "Be confrontational or aggressive",
+                "Overlook their contributions",
+                "Leave them without support"
+              ]
+            },
+            "C": {
+              "do": [
+                "Provide detailed analysis and data",
+                "Be precise and accurate",
+                "Give them time to analyze information",
+                "Support claims with evidence",
+                "Respect their need for quality"
+              ],
+              "dont": [
+                "Make unsubstantiated claims",
+                "Rush them to decide",
+                "Be vague or imprecise",
+                "Ignore details or accuracy",
+                "Push them to 'just trust you'"
+              ]
+            }
+          }
+        },
+        "meeting_preparation": {
+          "title": "Preparing for Your Client Meeting",
+          "content_elements": [
+            {
+              "element": "agenda_recommendations",
+              "title": "Recommended Meeting Agenda",
+              "disc_variants": {
+                "D": "30-45 min max. Start with bottom line, review top 3 priorities, assign action items, done.",
+                "I": "60-90 min. Build rapport, discuss big picture, brainstorm together, celebrate wins, plan collaboratively.",
+                "S": "60-75 min. Review step-by-step, answer all questions, provide reassurance, create clear timeline.",
+                "C": "75-90 min. Review methodology, discuss detailed findings, go through data, answer analytical questions."
+              }
+            },
+            {
+              "element": "materials_to_bring",
+              "title": "Materials to Bring",
+              "disc_variants": {
+                "D": [
+                  "One-page executive summary",
+                  "Top 3-5 action items with ROI",
+                  "Timeline for quick wins"
+                ],
+                "I": [
+                  "Visual presentation with charts",
+                  "Success stories from other clients",
+                  "Collaborative planning worksheet"
+                ],
+                "S": [
+                  "Step-by-step implementation guide",
+                  "Timeline with milestones",
+                  "Support resources and contact info"
+                ],
+                "C": [
+                  "Full detailed report",
+                  "Appendices with methodology",
+                  "Data sources and benchmarks",
+                  "Reference materials"
+                ]
+              }
+            },
+            {
+              "element": "talking_points",
+              "title": "Key Talking Points",
+              "content_source": "Phase-specific findings adapted for DISC type"
+            }
+          ]
+        },
+        "objection_handling": {
+          "title": "Handling Common Objections by DISC Type",
+          "format": "scenario_response_table",
+          "disc_variants": {
+            "D": [
+              {
+                "objection": "\"I don't have time for this\"",
+                "response": "I understand. That's exactly why we focus on high-ROI quick wins that take minimal time but deliver maximum results. Let's implement the top 2 priorities that will save you 10 hours per month."
+              },
+              {
+                "objection": "\"This won't work for my business\"",
+                "response": "Fair challenge. Let me show you the specific ROI data for businesses like yours. Here's what others achieved in 90 days."
+              }
+            ],
+            "I": [
+              {
+                "objection": "\"I'm not sure my team will like this\"",
+                "response": "Great thinking! Let's involve your team in planning how to implement this. When everyone contributes ideas, adoption is much stronger."
+              },
+              {
+                "objection": "\"This seems complicated\"",
+                "response": "I hear you! The exciting part is we'll work on this together. Imagine how great it'll feel when your team celebrates these wins with you."
+              }
+            ],
+            "S": [
+              {
+                "objection": "\"This is a lot of change all at once\"",
+                "response": "You're absolutely right - and we won't do it all at once. Let's take this step by step at a comfortable pace. We'll start with just one small change and I'll support you throughout."
+              },
+              {
+                "objection": "\"What if something goes wrong?\"",
+                "response": "That's a thoughtful concern. We'll implement safeguards and I'll be available to help you every step of the way. You won't be doing this alone."
+              }
+            ],
+            "C": [
+              {
+                "objection": "\"I need to see more data before deciding\"",
+                "response": "Absolutely - thorough analysis is important. I've prepared detailed appendices with methodology, benchmarks, and data sources. Let's review the specifics together."
+              },
+              {
+                "objection": "\"How do you know this will work?\"",
+                "response": "Excellent question. Our methodology is based on [cite sources]. Here's the statistical evidence showing 87% success rate in similar situations."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "recommendations_and_action_plan": {
+      "section_title": "Recommendations & Action Plan",
+      "subsections": {
+        "priority_matrix": {
+          "title": "Priority Matrix",
+          "visual": "impact_effort_matrix.png",
+          "description": "Visual mapping of all recommendations by impact and effort",
+          "quadrants": {
+            "quick_wins": "High Impact, Low Effort - Do First",
+            "strategic": "High Impact, High Effort - Plan Carefully",
+            "fill_ins": "Low Impact, Low Effort - Do When Time Permits",
+            "reconsider": "Low Impact, High Effort - Reconsider Value"
+          }
+        },
+        "quick_wins": {
+          "title": "Quick Wins (Weeks 1-4)",
+          "quantity": "3-5 recommendations",
+          "format": "detailed_recommendation_cards",
+          "include_for_each": [
+            "Title and description",
+            "Specific actions (checklist)",
+            "Timeline and milestones",
+            "Cost range",
+            "Expected benefits",
+            "Success metrics",
+            "Your role as consultant",
+            "Resources needed"
+          ]
+        },
+        "strategic_priorities": {
+          "title": "Strategic Priorities (Months 1-6)",
+          "quantity": "3-7 recommendations",
+          "format": "same as quick_wins"
+        },
+        "long_term_goals": {
+          "title": "Long-Term Goals (6+ Months)",
+          "quantity": "2-4 recommendations",
+          "format": "same as quick_wins"
+        },
+        "engagement_roadmap": {
+          "title": "90-Day Engagement Roadmap",
+          "visual": "timeline_gantt_chart.png",
+          "description": "Suggested timeline for implementing recommendations with your support",
+          "milestones": [
+            "Week 1: Initial implementation kickoff",
+            "Week 2-4: Quick wins implementation",
+            "Month 2: Strategic priorities begin",
+            "Month 3: Progress review and adjustments",
+            "Month 4-6: Continue strategic work",
+            "Month 6: Success review and next phase planning"
+          ]
+        }
+      }
+    },
+    "detailed_question_responses": {
+      "section_title": "Detailed Assessment Responses",
+      "visibility": "consultant_only",
+      "description": "Complete breakdown of client responses for your reference",
+      "format": "appendix",
+      "include": [
+        "All question responses with scores",
+        "DISC question responses (hidden from client)",
+        "Special questions (confidence, entity type, goals)",
+        "Scoring breakdown by phase",
+        "Flagged items requiring urgent attention"
+      ]
+    },
+    "next_steps": {
+      "section_title": "Next Steps & Engagement",
+      "subsections": {
+        "immediate_actions": {
+          "title": "Immediate Next Steps (This Week)",
+          "format": "numbered_list",
+          "items": [
+            "Schedule 60-90 minute review meeting with {client_name}",
+            "Prepare meeting materials based on DISC communication coaching",
+            "Review top 3 priority recommendations in depth",
+            "Prepare pricing proposal for engagement",
+            "Send calendar invite with agenda"
+          ]
+        },
+        "value_proposition": {
+          "title": "Demonstrating Value to Client",
+          "content_template": "This assessment identified {total_recommendations} opportunities for improvement. Based on industry benchmarks:\n\n- Quick wins could save {client_name} approximately {estimated_hours_saved} hours/month\n- Strategic priorities could improve cash flow by {estimated_cash_flow_improvement}\n- Long-term goals position the business for {estimated_growth_potential}\n\nConfidence gap analysis shows potential to increase client confidence from {before_confidence}/10 to {target_confidence}/10, demonstrating clear value delivered.",
+          "data_sources": [
+            "Recommendation engine estimates",
+            "Before confidence score",
+            "Industry benchmarks"
+          ]
+        },
+        "engagement_options": {
+          "title": "Suggested Engagement Packages",
+          "packages": [
+            {
+              "name": "Quick Start Package",
+              "duration": "30 days",
+              "scope": "Implementation support for top 3 quick wins",
+              "deliverables": [
+                "Weekly check-in calls",
+                "Implementation templates",
+                "Troubleshooting support"
+              ]
+            },
+            {
+              "name": "Strategic Implementation Package",
+              "duration": "90 days",
+              "scope": "Comprehensive support for quick wins + strategic priorities",
+              "deliverables": [
+                "Bi-weekly strategy sessions",
+                "Custom process documentation",
+                "Team training",
+                "Monthly progress reporting"
+              ]
+            },
+            {
+              "name": "Transformation Package",
+              "duration": "12 months",
+              "scope": "Full-service support through complete phase advancement",
+              "deliverables": [
+                "Weekly advisory sessions",
+                "Full implementation support",
+                "Quarterly strategic reviews",
+                "Team development",
+                "Progress dashboard"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "appendices": {
+      "section_title": "Appendices",
+      "subsections": {
+        "appendix_a_methodology": {
+          "title": "Appendix A: Assessment Methodology",
+          "content": "Description of Financial RISE framework, scoring algorithms, validation approach"
+        },
+        "appendix_b_disc_framework": {
+          "title": "Appendix B: DISC Communication Framework",
+          "content": "Overview of DISC model, research basis, application to financial consulting"
+        },
+        "appendix_c_phase_criteria": {
+          "title": "Appendix C: Phase Determination Criteria",
+          "content": "Detailed criteria for each of 5 phases with scoring thresholds"
+        },
+        "appendix_d_resources": {
+          "title": "Appendix D: Implementation Resources",
+          "content": "Templates, checklists, tools, and resources for implementing recommendations"
+        }
+      }
+    }
+  },
+  "formatting_guidelines": {
+    "fonts": {
+      "headings": "Calibri Bold, 18-24pt",
+      "body": "Calibri Regular, 14pt minimum (REQ-UI-003)",
+      "captions": "Calibri Regular, 12pt minimum"
+    },
+    "colors": {
+      "primary": "#4B006E (Purple)",
+      "accent": "#D4AF37 (Metallic Gold)",
+      "text": "#000000 on #FFFFFF background",
+      "charts": "Purple/gold color scheme with high contrast"
+    },
+    "layout": {
+      "page_size": "US Letter (8.5\" x 11\")",
+      "margins": "1 inch all sides",
+      "line_spacing": "1.15-1.5",
+      "section_breaks": "Page break between major sections"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "agent-chat": {
+      "command": "node",
+      "args": [
+        "agent-chat/index.js"
+      ],
+      "env": {
+        "NATS_SERVER": "nats://localhost:4222"
+      }
+    }
+  }
+}

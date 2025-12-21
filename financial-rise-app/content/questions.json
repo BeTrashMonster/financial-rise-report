@@ -1,0 +1,62 @@
+{
+  "questions": [
+    {"id": "stab-001", "text": "How current is your bookkeeping?", "type": "phase", "options": [
+      { "value": "very_behind", "stabilize_score": 5, "organize_score": 0, "build_score": 0, "grow_score": 0, "systemic_score": 2 },
+      { "value": "current", "stabilize_score": 300, "organize_score": 40, "build_score": 25, "grow_score": 15, "systemic_score": 15 }
+    ]},
+    {"id": "stab-002", "text": "Are business and personal finances separated?", "type": "phase", "options": [
+      { "value": "not_separated", "stabilize_score": 5, "organize_score": 0, "build_score": 0, "grow_score": 0, "systemic_score": 2 },
+      { "value": "fully_separated", "stabilize_score": 310, "organize_score": 40, "build_score": 25, "grow_score": 15, "systemic_score": 15 }
+    ]},
+    {"id": "stab-003", "text": "How often do you reconcile bank accounts?", "type": "phase", "options": [
+      { "value": "no_reconciliation", "stabilize_score": 5, "organize_score": 0, "build_score": 0, "grow_score": 0, "systemic_score": 2 },
+      { "value": "monthly_reconciliation", "stabilize_score": 260, "organize_score": 40, "build_score": 25, "grow_score": 15, "systemic_score": 15 }
+    ]},
+    {"id": "stab-004", "text": "How organized are your financial records?", "type": "phase", "options": [
+      { "value": "missing_records", "stabilize_score": 5, "organize_score": 0, "build_score": 0, "grow_score": 0, "systemic_score": 2 },
+      { "value": "organized_records", "stabilize_score": 260, "organize_score": 40, "build_score": 25, "grow_score": 15, "systemic_score": 15 }
+    ]},
+    {"id": "org-001", "text": "Chart of Accounts setup:", "type": "phase", "options": [
+      { "value": "no_coa", "stabilize_score": 50, "organize_score": 5, "build_score": 0, "grow_score": 0, "systemic_score": 5 },
+      { "value": "basic_coa", "stabilize_score": 95, "organize_score": 320, "build_score": 40, "grow_score": 20, "systemic_score": 15 },
+      { "value": "detailed_coa", "stabilize_score": 640, "organize_score": 600, "build_score": 160, "grow_score": 55, "systemic_score": 30 }
+    ]},
+    {"id": "org-002", "text": "System integration:", "type": "phase", "options": [
+      { "value": "no_integration", "stabilize_score": 50, "organize_score": 5, "build_score": 0, "grow_score": 0, "systemic_score": 5 },
+      { "value": "needs_integration", "stabilize_score": 90, "organize_score": 320, "build_score": 35, "grow_score": 15, "systemic_score": 15 },
+      { "value": "integrated_systems", "stabilize_score": 640, "organize_score": 600, "build_score": 160, "grow_score": 55, "systemic_score": 30 }
+    ]},
+    {"id": "org-003", "text": "Process automation:", "type": "phase", "options": [
+      { "value": "manual_processes", "stabilize_score": 90, "organize_score": 320, "build_score": 35, "grow_score": 15, "systemic_score": 15 },
+      { "value": "automated_processes", "stabilize_score": 560, "organize_score": 600, "build_score": 160, "grow_score": 55, "systemic_score": 30 }
+    ]},
+    {"id": "org-004", "text": "Automation level:", "type": "phase", "options": [
+      { "value": "no_automation", "stabilize_score": 90, "organize_score": 320, "build_score": 35, "grow_score": 15, "systemic_score": 15 }
+    ]},
+    {"id": "build-001", "text": "Standard Operating Procedures (SOPs):", "type": "phase", "options": [
+      { "value": "no_sops", "stabilize_score": 70, "organize_score": 105, "build_score": 15, "grow_score": 10, "systemic_score": 10 },
+      { "value": "basic_sops", "stabilize_score": 420, "organize_score": 180, "build_score": 1150, "grow_score": 55, "systemic_score": 30 },
+      { "value": "comprehensive_sops", "stabilize_score": 640, "organize_score": 200, "build_score": 1100, "grow_score": 95, "systemic_score": 40 }
+    ]},
+    {"id": "build-002", "text": "Workflow documentation:", "type": "phase", "options": [
+      { "value": "no_workflows", "stabilize_score": 70, "organize_score": 105, "build_score": 15, "grow_score": 10, "systemic_score": 10 },
+      { "value": "developing_workflows", "stabilize_score": 420, "organize_score": 180, "build_score": 1150, "grow_score": 55, "systemic_score": 30 },
+      { "value": "documented_workflows", "stabilize_score": 640, "organize_score": 200, "build_score": 1100, "grow_score": 95, "systemic_score": 40 }
+    ]},
+    {"id": "build-003", "text": "Custom financial tools:", "type": "phase", "options": [
+      { "value": "building_tools", "stabilize_score": 415, "organize_score": 180, "build_score": 1150, "grow_score": 55, "systemic_score": 30 },
+      { "value": "custom_tools", "stabilize_score": 635, "organize_score": 200, "build_score": 1100, "grow_score": 95, "systemic_score": 40 }
+    ]},
+    {"id": "grow-001", "text": "Forecasting capability:", "type": "phase", "options": [
+      { "value": "no_forecasting", "stabilize_score": 40, "organize_score": 40, "build_score": 45, "grow_score": 10, "systemic_score": 10 },
+      { "value": "basic_forecasting", "stabilize_score": 635, "organize_score": 180, "build_score": 220, "grow_score": 1800, "systemic_score": 40 }
+    ]},
+    {"id": "grow-002", "text": "Strategic planning:", "type": "phase", "options": [
+      { "value": "reactive_planning", "stabilize_score": 40, "organize_score": 40, "build_score": 45, "grow_score": 10, "systemic_score": 10 },
+      { "value": "strategic_planning", "stabilize_score": 635, "organize_score": 180, "build_score": 220, "grow_score": 1800, "systemic_score": 40 }
+    ]},
+    {"id": "grow-003", "text": "Cash flow planning:", "type": "phase", "options": [
+      { "value": "cash_flow_planning", "stabilize_score": 635, "organize_score": 180, "build_score": 220, "grow_score": 1800, "systemic_score": 40 }
+    ]}
+  ]
+}

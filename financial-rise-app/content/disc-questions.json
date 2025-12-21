@@ -1,0 +1,169 @@
+{
+  "questions": [
+    {
+      "id": "disc-001",
+      "text": "When making decisions, I tend to:",
+      "type": "disc",
+      "options": [
+        { "value": "decide_quickly", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "consult_others", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "take_time", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "research_thoroughly", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-002",
+      "text": "My communication style is:",
+      "type": "disc",
+      "options": [
+        { "value": "lead_direct", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "brainstorm", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "listen_support", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "present_data", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-003",
+      "text": "I prefer to focus on:",
+      "type": "disc",
+      "options": [
+        { "value": "bottom_line", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "big_picture", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "step_by_step", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "detailed_analysis", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-004",
+      "text": "I prefer to work:",
+      "type": "disc",
+      "options": [
+        { "value": "quick_action", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "collaborate", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "patient_approach", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "systematic_approach", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-005",
+      "text": "People describe me as:",
+      "type": "disc",
+      "options": [
+        { "value": "competitive", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "enthusiastic", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "cooperative", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "analytical", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-006",
+      "text": "I approach tasks with:",
+      "type": "disc",
+      "options": [
+        { "value": "direct_approach", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "friendly_approach", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "gentle_approach", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "precise_approach", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-007",
+      "text": "I am most focused on:",
+      "type": "disc",
+      "options": [
+        { "value": "results_focused", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "relationship_focused", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "stability_focused", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "quality_focused", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-008",
+      "text": "My pace is:",
+      "type": "disc",
+      "options": [
+        { "value": "fast_paced", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "energetic", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "steady_paced", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "methodical", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-009",
+      "text": "I tend to:",
+      "type": "disc",
+      "options": [
+        { "value": "challenge_status", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "inspire_others", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "support_others", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "ensure_accuracy", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-010",
+      "text": "I work best when:",
+      "type": "disc",
+      "options": [
+        { "value": "independent", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "team_player", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "team_harmony", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "follow_procedures", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-011",
+      "text": "I am known for being:",
+      "type": "disc",
+      "options": [
+        { "value": "decisive", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "optimistic", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "considerate", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "logical", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-012",
+      "text": "I orient towards:",
+      "type": "disc",
+      "options": [
+        { "value": "goal_oriented", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "people_oriented", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "reliable", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "detail_oriented", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-013",
+      "text": "My style is:",
+      "type": "disc",
+      "options": [
+        { "value": "assertive", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "persuasive", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "calm", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "careful", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-014",
+      "text": "I am:",
+      "type": "disc",
+      "options": [
+        { "value": "efficient", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "creative", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "consistent", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "thorough", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    },
+    {
+      "id": "disc-015",
+      "text": "People see me as:",
+      "type": "disc",
+      "options": [
+        { "value": "bold", "disc_d_score": 10, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "expressive", "disc_d_score": 0, "disc_i_score": 10, "disc_s_score": 0, "disc_c_score": 0 },
+        { "value": "loyal", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 10, "disc_c_score": 0 },
+        { "value": "accurate", "disc_d_score": 0, "disc_i_score": 0, "disc_s_score": 0, "disc_c_score": 10 }
+      ]
+    }
+  ]
+}

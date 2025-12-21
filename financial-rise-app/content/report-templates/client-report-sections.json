@@ -1,0 +1,421 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-12-19",
+    "description": "Client-facing report content sections with DISC-adapted language",
+    "requirement_reference": "REQ-REPORT-CL-001 through REQ-REPORT-CL-008",
+    "note": "Client report uses encouraging, non-judgmental language. DISC profile is hidden but used to adapt communication style."
+  },
+  "report_sections": {
+    "cover_page": {
+      "title": "Your Financial RISE Report",
+      "subtitle": "Readiness Insights for Sustainable Entrepreneurship",
+      "tagline": "A roadmap to strengthen your business financial foundation",
+      "client_info_fields": [
+        "business_name",
+        "report_date",
+        "prepared_by (consultant_name)"
+      ],
+      "welcome_message": "Congratulations on taking this important step to strengthen your financial operations. This report reveals opportunities to build a more resilient and profitable business."
+    },
+    "executive_summary": {
+      "section_title": "Your Financial Journey",
+      "disc_adaptations": {
+        "D": {
+          "tone": "Direct, action-oriented",
+          "emphasis": "Bottom-line opportunities and quick wins"
+        },
+        "I": {
+          "tone": "Enthusiastic, collaborative",
+          "emphasis": "Exciting possibilities and team impact"
+        },
+        "S": {
+          "tone": "Supportive, reassuring",
+          "emphasis": "Clear path forward with guidance"
+        },
+        "C": {
+          "tone": "Analytical, detailed",
+          "emphasis": "Data-driven insights and systematic approach"
+        }
+      },
+      "subsections": {
+        "where_you_are": {
+          "title_variants": {
+            "D": "Your Current Position",
+            "I": "Where You Are Today",
+            "S": "Understanding Your Starting Point",
+            "C": "Current State Analysis"
+          },
+          "content_template_variants": {
+            "D": "Based on your assessment, you're currently focused on **{primary_phase}** ({primary_score}%). Here's what matters most: {key_strength_brief}. Your top opportunity: {top_gap_brief}.",
+            "I": "Great news! Your business shows strong capabilities in **{primary_phase}** ({primary_score}%). You've already accomplished {key_strength_narrative}! Now imagine the possibilities as we build on this foundation with {opportunity_narrative}.",
+            "S": "Thank you for completing this thorough assessment. Your results show that you're currently working in the **{primary_phase}** ({primary_score}%). This means {reassuring_explanation}. Together, we'll create a comfortable path forward to {supportive_next_steps}.",
+            "C": "Detailed analysis of your 44 assessment responses indicates primary classification in the **{primary_phase}** ({primary_score}% proficiency). Data breakdown shows {analytical_summary}. Systematic evaluation reveals {detailed_opportunities}."
+          }
+        },
+        "what_this_means": {
+          "title": "What This Means for Your Business",
+          "phase_descriptions": {
+            "stabilize": {
+              "neutral": "The Stabilize phase focuses on creating basic financial order and ensuring compliance. Businesses in this phase are establishing foundational accounting practices and getting current with bookkeeping and tax requirements.",
+              "D": "Stabilize phase = Get your financial house in order fast. Priority: eliminate chaos, establish control, ensure compliance. Once stable, you're positioned to scale efficiently.",
+              "I": "The Stabilize phase is about creating a solid foundation to support your growth dreams! It's exciting because once your basics are in place, you'll have the confidence and clarity to pursue bigger opportunities.",
+              "S": "Being in the Stabilize phase means we'll work together to create consistent, reliable financial practices. Step by step, we'll build the foundation that gives you peace of mind and control over your finances.",
+              "C": "The Stabilize phase addresses foundational accounting health and regulatory compliance. This phase establishes data quality standards, reconciliation procedures, and systematic compliance protocols essential for accurate financial reporting."
+            },
+            "organize": {
+              "neutral": "The Organize phase emphasizes building foundational systems and processes. This includes customizing your Chart of Accounts, integrating financial software, and creating organized workflows for financial data.",
+              "D": "Organize phase = Build systems that work for you, not against you. Eliminate manual work, integrate your tools, get real-time visibility. Result: faster decisions, less time wasted.",
+              "I": "The Organize phase is where things get really exciting! You'll create integrated systems that make your business run smoothly, giving you more time to focus on what you love - growing your business and serving customers.",
+              "S": "In the Organize phase, we'll set up clear, consistent systems that make your financial tasks easier and more predictable. You'll know exactly where everything is and what to do each month.",
+              "C": "The Organize phase implements systematic infrastructure including Chart of Accounts optimization, system integration architecture, and standardized categorization protocols. This phase establishes the structural foundation for reliable data aggregation and analysis."
+            },
+            "build": {
+              "neutral": "The Build phase creates robust operational systems and documented processes. This includes developing SOPs, establishing workflows, implementing controls, and building team capabilities around financial operations.",
+              "D": "Build phase = Create a machine that runs without you. Document processes, implement controls, delegate effectively. Result: business operates smoothly even when you're not there.",
+              "I": "The Build phase is about empowering your whole team! Together, you'll create processes that everyone can follow, share responsibilities, and build a collaborative financial culture that supports your vision.",
+              "S": "During the Build phase, we'll develop clear procedures and processes that make everyone's job easier. You'll have documented steps for everything, so you and your team always know what to do and when.",
+              "C": "The Build phase establishes comprehensive operational frameworks including documented Standard Operating Procedures, internal control systems, segregation of duties protocols, and quality assurance mechanisms to ensure process reliability and risk mitigation."
+            },
+            "grow": {
+              "neutral": "The Grow phase focuses on strategic financial planning and forecasting. Businesses here use financial data to drive growth decisions, create projections, track KPIs, and conduct scenario planning.",
+              "D": "Grow phase = Use data to dominate your market. Build forecasts, track KPIs, plan scenarios, make data-driven decisions. Result: predictable growth, minimized risk, maximized ROI.",
+              "I": "The Grow phase is where your vision becomes reality! You'll use financial insights to identify exciting opportunities, plan for amazing growth, and make strategic moves that transform your business.",
+              "S": "In the Grow phase, we'll work together to create thoughtful plans for your business future. With clear forecasts and regular check-ins, you'll feel confident about the path ahead and your ability to achieve your goals.",
+              "C": "The Grow phase implements advanced financial analytics including rolling cash flow forecasts, variance analysis protocols, KPI dashboards, scenario modeling frameworks, and capital allocation optimization to support strategic decision-making and sustainable growth trajectory."
+            },
+            "systemic": {
+              "neutral": "The Systemic phase (financial literacy) runs across all other phases. It represents your ability to read, interpret, and use financial information to make informed business decisions.",
+              "D": "Systemic = Master the numbers so you control the business. Understand reports instantly, make fast data-driven decisions, communicate effectively with stakeholders. Result: total confidence in financial position.",
+              "I": "Financial literacy is like having a superpower! When you understand your numbers, you can share insights with your team, celebrate wins together, and spot opportunities others miss. It's empowering and exciting!",
+              "S": "Building financial literacy means you'll gradually become more comfortable with your financial reports. Over time, you'll feel confident reviewing them, asking questions, and using them to guide your decisions.",
+              "C": "The Systemic phase represents financial statement literacy and analytical capability. This includes comprehensive understanding of financial statement mechanics, ratio analysis proficiency, trend identification skills, and the ability to extract actionable insights from financial data for strategic application."
+            }
+          }
+        },
+        "your_strengths": {
+          "title_variants": {
+            "D": "What's Working Well",
+            "I": "Your Wins So Far!",
+            "S": "Areas Where You're Doing Great",
+            "C": "Identified Strengths and Capabilities"
+          },
+          "content_template": "analysis_of_high_scoring_questions",
+          "max_items": 5,
+          "format_variants": {
+            "D": "bullet_points_brief",
+            "I": "narrative_with_celebrations",
+            "S": "encouraging_numbered_list",
+            "C": "detailed_analysis_with_data"
+          }
+        },
+        "your_opportunities": {
+          "title_variants": {
+            "D": "High-Impact Opportunities",
+            "I": "Exciting Possibilities Ahead",
+            "S": "Areas for Growth",
+            "C": "Improvement Opportunities Identified"
+          },
+          "content_template": "analysis_of_low_scoring_questions",
+          "language_note": "Use encouraging, opportunity-focused language per REQ-REPORT-CL-002. NEVER use judgmental or shaming language.",
+          "max_items": 5,
+          "format_variants": {
+            "D": "bullet_points_with_roi",
+            "I": "narrative_with_vision",
+            "S": "supportive_numbered_list",
+            "C": "analytical_breakdown_with_metrics"
+          }
+        }
+      }
+    },
+    "understanding_your_scores": {
+      "section_title": "Understanding Your Financial Health Snapshot",
+      "visual_element": "phase_radar_chart_or_bar_chart.png",
+      "description_variants": {
+        "D": "Your scores across the 5 financial phases show where to focus for maximum impact:",
+        "I": "Here's an exciting visual of your financial journey - see how far you've come and where you're headed:",
+        "S": "This chart helps you see clearly where you are today and the areas we'll work on together:",
+        "C": "Detailed scoring breakdown across 5 dimensional phases provides comprehensive assessment of current state:"
+      },
+      "phase_scores_display": {
+        "stabilize": {
+          "label": "Stabilize - Accounting Health",
+          "show_percentage": true,
+          "show_rating": true,
+          "include_brief_description": true
+        },
+        "organize": {
+          "label": "Organize - System Foundation",
+          "show_percentage": true,
+          "show_rating": true,
+          "include_brief_description": true
+        },
+        "build": {
+          "label": "Build - Operational Excellence",
+          "show_percentage": true,
+          "show_rating": true,
+          "include_brief_description": true
+        },
+        "grow": {
+          "label": "Grow - Strategic Planning",
+          "show_percentage": true,
+          "show_rating": true,
+          "include_brief_description": true
+        },
+        "systemic": {
+          "label": "Financial Literacy",
+          "show_percentage": true,
+          "show_rating": true,
+          "include_brief_description": true
+        }
+      },
+      "rating_labels": {
+        "excellent": "Excellent (80-100%)",
+        "good": "Good (60-79%)",
+        "fair": "Fair (40-59%)",
+        "needs_attention": "Needs Attention (20-39%)",
+        "priority_focus": "Priority Focus (<20%)"
+      },
+      "hide_from_client": [
+        "Raw scores",
+        "Question-level scores",
+        "DISC personality information",
+        "Internal calculation details"
+      ]
+    },
+    "your_action_plan": {
+      "section_title_variants": {
+        "D": "Your Action Plan - Priority Initiatives",
+        "I": "Your Success Roadmap!",
+        "S": "Your Step-by-Step Action Plan",
+        "C": "Comprehensive Implementation Plan"
+      },
+      "introduction_variants": {
+        "D": "Based on your assessment, here are your highest-ROI opportunities. Focus on quick wins first to build momentum and demonstrate value fast.",
+        "I": "Exciting news! We've identified amazing opportunities to elevate your business. Let's work together on these transformative initiatives!",
+        "S": "We've created a clear, manageable plan for you. We'll take this one step at a time, and support is available whenever you need it.",
+        "C": "Comprehensive analysis has identified optimal implementation sequence. Each recommendation includes detailed methodology, expected outcomes, and systematic approach for execution."
+      },
+      "subsections": {
+        "quick_wins": {
+          "title_variants": {
+            "D": "Quick Wins (Weeks 1-4) - Do These First",
+            "I": "Fast Wins to Celebrate Soon!",
+            "S": "Getting Started - First Steps (Weeks 1-4)",
+            "C": "Phase 1: High-Priority Immediate Actions (Weeks 1-4)"
+          },
+          "quantity": "3-5 recommendations",
+          "format": "recommendation_cards_disc_adapted",
+          "include_for_each": [
+            "Title (DISC-adapted)",
+            "Description (DISC-adapted)",
+            "Why this matters (benefit-focused)",
+            "How to do it (action steps)",
+            "Timeline",
+            "What you'll gain (specific benefits)"
+          ],
+          "language_adaptations": {
+            "D": {
+              "title_style": "Direct, action-oriented",
+              "description_length": "2-3 sentences max",
+              "action_steps": "Brief bullets, outcome-focused",
+              "benefits": "ROI and efficiency gains highlighted"
+            },
+            "I": {
+              "title_style": "Engaging, opportunity-focused",
+              "description_length": "1 short paragraph, narrative",
+              "action_steps": "Collaborative framing, team involvement noted",
+              "benefits": "Positive impact and team wins highlighted"
+            },
+            "S": {
+              "title_style": "Clear, supportive",
+              "description_length": "1-2 paragraphs, reassuring",
+              "action_steps": "Detailed numbered steps with timeline",
+              "benefits": "Stability and peace of mind highlighted"
+            },
+            "C": {
+              "title_style": "Precise, analytical",
+              "description_length": "Detailed explanation with data",
+              "action_steps": "Comprehensive procedures with rationale",
+              "benefits": "Accuracy and quality improvements highlighted"
+            }
+          }
+        },
+        "strategic_priorities": {
+          "title_variants": {
+            "D": "Strategic Priorities (Months 1-6) - Build the Foundation",
+            "I": "Strategic Opportunities to Transform Your Business",
+            "S": "Building for the Future (Months 1-6)",
+            "C": "Phase 2: Strategic Implementation Initiatives (Months 1-6)"
+          },
+          "quantity": "3-7 recommendations",
+          "format": "same structure as quick_wins with DISC adaptations"
+        },
+        "long_term_vision": {
+          "title_variants": {
+            "D": "Long-Term Goals (6+ Months) - Sustain Excellence",
+            "I": "Your Future Vision - Exciting Long-Term Possibilities!",
+            "S": "Looking Ahead (6+ Months)",
+            "C": "Phase 3: Long-Term Strategic Goals (6+ Months)"
+          },
+          "quantity": "2-4 recommendations",
+          "format": "same structure as quick_wins with DISC adaptations"
+        }
+      }
+    },
+    "next_steps": {
+      "section_title_variants": {
+        "D": "Next Steps - Take Action Now",
+        "I": "Let's Get Started on This Exciting Journey!",
+        "S": "Your Next Steps - We're Here to Help",
+        "C": "Recommended Next Steps and Implementation Support"
+      },
+      "content_variants": {
+        "D": "Ready to drive results? Here's what to do:\n\n1. **This week:** Start on your top 3 quick wins\n2. **Schedule:** Book 30-min follow-up to review progress\n3. **Get support:** Reach out with questions - fast response guaranteed\n4. **Track progress:** Use the checklist provided\n\nDon't wait. The sooner you start, the sooner you see results.",
+        "I": "This is so exciting! Here's how we'll work together:\n\n1. **Celebrate:** You've taken an important step by completing this assessment!\n2. **Connect:** Let's schedule time to discuss your vision and priorities\n3. **Collaborate:** We'll work together on implementation\n4. **Share:** Involve your team in the wins ahead\n\nI'm thrilled to be part of your journey. Let's make great things happen!",
+        "S": "You're not alone in this journey. Here's our plan together:\n\n1. **Review:** Take time to review this report at your own pace\n2. **Questions:** Write down any questions as you read\n3. **Meeting:** We'll schedule a comfortable meeting to discuss everything\n4. **Support:** I'm here to support you every step of the way\n\nTake your time. We'll move forward together when you're ready.",
+        "C": "Systematic implementation approach recommended:\n\n1. **Review:** Conduct thorough review of detailed findings and appendices\n2. **Analysis:** Evaluate recommendations against current operational parameters\n3. **Planning:** Develop implementation timeline with resource allocation\n4. **Consultation:** Schedule analytical review session to discuss methodology\n5. **Execution:** Begin systematic implementation per documented procedures\n\nComprehensive support and detailed documentation available throughout process."
+      },
+      "call_to_action": {
+        "include_scheduler": true,
+        "scheduler_note": "REQ-SCHEDULER-001: Link to external scheduler (Calendly, Acuity, etc.)",
+        "button_text_variants": {
+          "D": "Schedule Strategy Call Now",
+          "I": "Let's Connect and Get Started!",
+          "S": "Book a Comfortable Review Session",
+          "C": "Schedule Detailed Consultation"
+        }
+      },
+      "support_resources": {
+        "title": "Support & Resources",
+        "include": [
+          "Contact information",
+          "Office hours / availability",
+          "Additional resources (templates, guides)",
+          "FAQ or common questions"
+        ]
+      }
+    },
+    "appendix_for_client": {
+      "section_title": "Resources & Additional Information",
+      "subsections": {
+        "understanding_phases": {
+          "title": "Understanding the 5 Financial Phases",
+          "content": "Detailed but accessible explanation of each phase with examples"
+        },
+        "action_checklist": {
+          "title": "Your Implementation Checklist",
+          "content": "Printable checklist of all action items from recommendations (REQ-CHECKLIST-001)",
+          "format": "checkbox_list_by_category"
+        },
+        "resources_and_tools": {
+          "title": "Recommended Resources",
+          "content": "Templates, tools, articles, and resources to support implementation"
+        },
+        "glossary": {
+          "title": "Financial Terms Glossary",
+          "content": "Simple definitions of financial terms used in report",
+          "note": "C-types especially appreciate this, but helpful for all"
+        }
+      }
+    }
+  },
+  "language_guidelines": {
+    "required_principles": {
+      "non_judgmental": "NEVER use language that shames or blames (REQ-REPORT-CL-002)",
+      "encouraging": "Frame everything as opportunities, not problems",
+      "actionable": "Every recommendation must be concrete and achievable (REQ-REPORT-CL-003)",
+      "specific": "Avoid vague suggestions - be specific about what to do",
+      "benefit_focused": "Always explain why the action matters and what they'll gain"
+    },
+    "avoid_phrases": [
+      "You failed to...",
+      "You're behind...",
+      "You should have...",
+      "This is wrong...",
+      "You neglected...",
+      "You're not doing...",
+      "This is a problem...",
+      "You need to fix...",
+      "This is broken..."
+    ],
+    "use_instead": [
+      "Opportunity to...",
+      "Room to strengthen...",
+      "Consider implementing...",
+      "Next step is to...",
+      "Enhance this area by...",
+      "Build on this with...",
+      "Opportunity exists to...",
+      "Strengthen by...",
+      "Improve with..."
+    ],
+    "tone_by_disc": {
+      "D": "Confident, direct, results-focused, energizing",
+      "I": "Enthusiastic, positive, collaborative, inspiring",
+      "S": "Supportive, reassuring, patient, encouraging",
+      "C": "Professional, precise, thorough, respectful"
+    }
+  },
+  "formatting_guidelines": {
+    "fonts": {
+      "headings": "Calibri Bold, 18-24pt",
+      "body": "Calibri Regular, 14pt minimum (REQ-UI-003)",
+      "captions": "Calibri Regular, 12pt minimum"
+    },
+    "colors": {
+      "primary": "#4B006E (Purple)",
+      "accent": "#D4AF37 (Metallic Gold)",
+      "text": "#000000 on #FFFFFF background (REQ-UI-002)",
+      "success": "#28A745 (Green for positive items)",
+      "attention": "#FFC107 (Amber for focus areas)"
+    },
+    "visual_elements": {
+      "charts": "Clean, professional charts with DISC-appropriate style",
+      "icons": "Simple, modern icons to improve scannability",
+      "spacing": "Generous white space for readability",
+      "callouts": "Use boxes or highlighting for key points"
+    },
+    "layout": {
+      "page_size": "US Letter (8.5\" x 11\")",
+      "margins": "1 inch all sides",
+      "line_spacing": "1.15-1.5",
+      "section_breaks": "Visual break between sections (not necessarily page breaks)"
+    }
+  },
+  "disc_adaptation_matrix": {
+    "description": "How to adapt each section based on DISC profile",
+    "adaptation_levels": {
+      "length": {
+        "D": "Brief - 50-70% of balanced version",
+        "I": "Moderate - 90-110% of balanced version",
+        "S": "Detailed - 100-120% of balanced version",
+        "C": "Comprehensive - 120-150% of balanced version"
+      },
+      "detail": {
+        "D": "Minimal - executive summary level",
+        "I": "Moderate - narrative with visuals",
+        "S": "Detailed - step-by-step guidance",
+        "C": "Maximum - comprehensive analysis"
+      },
+      "structure": {
+        "D": "Bullet points, scannable, hierarchical",
+        "I": "Narrative flow, visual breaks, engaging",
+        "S": "Numbered steps, clear organization, methodical",
+        "C": "Detailed sections, appendices, comprehensive"
+      },
+      "visuals": {
+        "D": "Minimal, high-impact charts only",
+        "I": "Colorful, engaging, frequent visuals",
+        "S": "Clear, supportive visuals with explanations",
+        "C": "Detailed charts with data labels and sources"
+      }
+    }
+  },
+  "privacy_and_compliance": {
+    "disc_handling": "CRITICAL: DISC profile type is NEVER mentioned to client. Only use it to adapt communication style.",
+    "data_privacy": "Comply with REQ-PRIVACY-001, REQ-PRIVACY-002 regarding client data",
+    "confidentiality": "Report is confidential between consultant and client",
+    "retention": "Follow data retention policies per privacy requirements"
+  }
+}

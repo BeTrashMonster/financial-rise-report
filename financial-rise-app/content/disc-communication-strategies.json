@@ -1,0 +1,376 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-12-19",
+    "description": "DISC-based communication strategies for report customization",
+    "requirement_reference": "REQ-REPORT-C-003, REQ-REPORT-CL-007, Appendix B"
+  },
+  "strategies": {
+    "D": {
+      "type_name": "Dominance",
+      "characteristics": [
+        "Results-oriented",
+        "Direct and decisive",
+        "Competitive",
+        "Fast-paced",
+        "Goal-focused",
+        "Prefers autonomy and control"
+      ],
+      "communication_style": {
+        "tone": "Direct, brief, results-oriented",
+        "language": "Strong action verbs, ROI-focused, competitive framing",
+        "structure": "Executive summary style, bullet points, minimal detail",
+        "pacing": "Fast, get to the point quickly",
+        "emphasis": "Bottom-line impact, competitive advantage, quick wins"
+      },
+      "report_customization": {
+        "executive_summary": {
+          "length": "1 paragraph maximum",
+          "focus": "Key findings and immediate action items",
+          "format": "Bullet points preferred"
+        },
+        "phase_description": {
+          "length": "2-3 sentences",
+          "focus": "What needs to be done and why it matters to results"
+        },
+        "recommendations": {
+          "quantity": "3-5 top priorities only",
+          "format": "Brief title, ROI/impact, action required",
+          "order": "Highest impact first, quick wins highlighted",
+          "detail_level": "Minimal - just enough to take action"
+        },
+        "language_examples": {
+          "positive": [
+            "Drive results",
+            "Gain competitive advantage",
+            "Take control of",
+            "Achieve maximum ROI",
+            "Fast-track growth",
+            "Dominate your market",
+            "Win with better data"
+          ],
+          "avoid": [
+            "Long explanations",
+            "Excessive details",
+            "Tentative language ('maybe', 'consider')",
+            "Process-heavy descriptions"
+          ]
+        },
+        "visual_preferences": {
+          "charts": "Simple bar charts showing results, minimal decoration",
+          "colors": "Bold, high contrast",
+          "layout": "Clean, lots of white space, scannable"
+        }
+      },
+      "motivators": [
+        "Results and achievements",
+        "Control and autonomy",
+        "Winning and competition",
+        "Efficiency and speed",
+        "Direct impact on business"
+      ],
+      "sample_phrases": {
+        "opening": "Here's what you need to know and do to drive results:",
+        "recommendation": "Implement this to gain {specific_benefit} and achieve {measurable_outcome}",
+        "closing": "Take action on these priorities to maximize your competitive advantage"
+      }
+    },
+    "I": {
+      "type_name": "Influence",
+      "characteristics": [
+        "Enthusiastic and optimistic",
+        "People-focused",
+        "Collaborative",
+        "Big-picture thinker",
+        "Innovative",
+        "Seeks recognition and approval"
+      ],
+      "communication_style": {
+        "tone": "Enthusiastic, collaborative, opportunity-focused",
+        "language": "Positive, engaging, story-driven",
+        "structure": "Narrative flow with visual elements",
+        "pacing": "Energetic, conversational",
+        "emphasis": "Opportunities, innovation, teamwork, positive impact"
+      },
+      "report_customization": {
+        "executive_summary": {
+          "length": "2-3 engaging paragraphs",
+          "focus": "Exciting opportunities and big-picture vision",
+          "format": "Narrative with visual highlights"
+        },
+        "phase_description": {
+          "length": "1 paragraph",
+          "focus": "Opportunities for growth and positive transformation"
+        },
+        "recommendations": {
+          "quantity": "5-7 opportunities to explore",
+          "format": "Engaging titles, visual icons, collaborative framing",
+          "order": "Mix of quick wins and innovative ideas",
+          "detail_level": "Moderate - enough to inspire action"
+        },
+        "language_examples": {
+          "positive": [
+            "Exciting opportunity",
+            "Transform your business",
+            "Collaborate with your team",
+            "Unlock potential",
+            "Innovative approach",
+            "Imagine the possibilities",
+            "Celebrate wins together"
+          ],
+          "avoid": [
+            "Overly technical jargon",
+            "Negative framing",
+            "Isolated individual tasks",
+            "Boring data dumps"
+          ]
+        },
+        "visual_preferences": {
+          "charts": "Colorful, engaging visuals with icons and illustrations",
+          "colors": "Bright, energetic color palette",
+          "layout": "Dynamic, varied, visually interesting"
+        }
+      },
+      "motivators": [
+        "Recognition and approval",
+        "Collaboration and teamwork",
+        "Innovation and creativity",
+        "Positive relationships",
+        "Making an impact"
+      ],
+      "sample_phrases": {
+        "opening": "Exciting news! Your assessment reveals tremendous opportunities to elevate your business:",
+        "recommendation": "Imagine the impact when you {action} - your team will {benefit} and you'll create {positive_outcome}",
+        "closing": "Together, we'll transform these insights into breakthrough results for your business!"
+      }
+    },
+    "S": {
+      "type_name": "Steadiness",
+      "characteristics": [
+        "Patient and supportive",
+        "Team-oriented",
+        "Steady and reliable",
+        "Prefers stability",
+        "Good listener",
+        "Cautious with change"
+      ],
+      "communication_style": {
+        "tone": "Supportive, reassuring, methodical",
+        "language": "Gentle, encouraging, clear",
+        "structure": "Step-by-step, logical progression",
+        "pacing": "Steady, comfortable, not rushed",
+        "emphasis": "Process, support, stability, clear timelines"
+      },
+      "report_customization": {
+        "executive_summary": {
+          "length": "2-3 reassuring paragraphs",
+          "focus": "Clear path forward with support available",
+          "format": "Organized narrative with clear sections"
+        },
+        "phase_description": {
+          "length": "1-2 paragraphs",
+          "focus": "What to expect and how we'll support you through it"
+        },
+        "recommendations": {
+          "quantity": "4-6 clear, achievable steps",
+          "format": "Numbered steps, clear timelines, support noted",
+          "order": "Logical sequence, low-risk items first",
+          "detail_level": "Comprehensive - detailed guidance provided"
+        },
+        "language_examples": {
+          "positive": [
+            "Step-by-step guidance",
+            "We'll support you",
+            "At your own pace",
+            "Smooth transition",
+            "Proven process",
+            "You're not alone",
+            "Build gradually"
+          ],
+          "avoid": [
+            "Aggressive urgency",
+            "Radical changes",
+            "Risky language",
+            "Overwhelming options"
+          ]
+        },
+        "visual_preferences": {
+          "charts": "Simple, clear charts with gentle colors",
+          "colors": "Soft, calming color palette (blues, greens)",
+          "layout": "Organized, predictable, easy to follow"
+        }
+      },
+      "motivators": [
+        "Stability and security",
+        "Supporting others",
+        "Clear expectations",
+        "Teamwork and harmony",
+        "Appreciation and acknowledgment"
+      ],
+      "sample_phrases": {
+        "opening": "Thank you for taking time with this assessment. Here's a clear path forward, and we're here to support you every step:",
+        "recommendation": "You can {action} by following these straightforward steps. We'll be with you throughout the process to ensure success",
+        "closing": "Take these at your own pace - we're here to support you whenever you need guidance"
+      }
+    },
+    "C": {
+      "type_name": "Compliance",
+      "characteristics": [
+        "Analytical and precise",
+        "Detail-oriented",
+        "Systematic",
+        "Quality-focused",
+        "Cautious and careful",
+        "Values accuracy and data"
+      ],
+      "communication_style": {
+        "tone": "Analytical, precise, detailed",
+        "language": "Technical accuracy, data-driven, thorough",
+        "structure": "Comprehensive documentation, logical organization",
+        "pacing": "Methodical, thorough, complete",
+        "emphasis": "Accuracy, quality, systematic approach, data validation"
+      },
+      "report_customization": {
+        "executive_summary": {
+          "length": "3-4 detailed paragraphs",
+          "focus": "Methodology, data sources, key metrics",
+          "format": "Structured analysis with supporting data"
+        },
+        "phase_description": {
+          "length": "2-3 paragraphs",
+          "focus": "Detailed criteria, scoring methodology, benchmarks"
+        },
+        "recommendations": {
+          "quantity": "5-8 thoroughly analyzed recommendations",
+          "format": "Detailed analysis, supporting data, references",
+          "order": "Systematic priority based on data",
+          "detail_level": "Maximum - comprehensive documentation"
+        },
+        "language_examples": {
+          "positive": [
+            "Data shows",
+            "Systematic approach",
+            "Comprehensive analysis",
+            "Quality assurance",
+            "Proven methodology",
+            "Accurate assessment",
+            "Thorough evaluation"
+          ],
+          "avoid": [
+            "Vague generalizations",
+            "Unsubstantiated claims",
+            "Overly casual language",
+            "Incomplete information"
+          ]
+        },
+        "visual_preferences": {
+          "charts": "Detailed charts with data labels, precise axes",
+          "colors": "Professional, subdued color palette",
+          "layout": "Organized, comprehensive, reference materials included"
+        }
+      },
+      "motivators": [
+        "Accuracy and precision",
+        "Quality and excellence",
+        "Knowledge and expertise",
+        "Systematic processes",
+        "Clear standards and benchmarks"
+      ],
+      "sample_phrases": {
+        "opening": "Based on comprehensive analysis of your 44 assessment responses, here are the data-driven findings:",
+        "recommendation": "Analysis indicates that implementing {action} will yield {specific_metric} improvement based on {data_source}",
+        "closing": "All recommendations are supported by detailed analysis and industry benchmarks included in Appendix"
+      }
+    },
+    "balanced": {
+      "type_name": "Balanced",
+      "description": "No strongly dominant personality type - use moderate approach",
+      "communication_style": {
+        "tone": "Professional, balanced, clear",
+        "language": "Neutral, accessible, moderate detail",
+        "structure": "Organized with clear sections",
+        "pacing": "Steady, comprehensive but not overwhelming",
+        "emphasis": "Balance of results, process, data, and support"
+      },
+      "report_customization": {
+        "executive_summary": {
+          "length": "2-3 paragraphs",
+          "focus": "Overview of findings and key recommendations",
+          "format": "Mixed - narrative with bullet points"
+        },
+        "phase_description": {
+          "length": "1-2 paragraphs",
+          "focus": "Clear explanation with moderate detail"
+        },
+        "recommendations": {
+          "quantity": "5-7 recommendations",
+          "format": "Standard format with moderate detail",
+          "order": "Priority-based, balanced approach",
+          "detail_level": "Moderate - enough to understand and act"
+        },
+        "visual_preferences": {
+          "charts": "Professional, clear visualizations",
+          "colors": "Balanced color palette",
+          "layout": "Organized, professional, accessible"
+        }
+      },
+      "sample_phrases": {
+        "opening": "Your Financial RISE Report reveals key insights about your business financial health:",
+        "recommendation": "Consider implementing {action} to achieve {benefit} over {timeframe}",
+        "closing": "These recommendations provide a clear path forward to strengthen your financial operations"
+      }
+    },
+    "combination_profiles": {
+      "DI": {
+        "description": "Results-oriented with collaborative energy",
+        "blend": "Brief but engaging, ROI-focused with team emphasis",
+        "strategy": "Quick wins that involve team, competitive opportunities"
+      },
+      "DC": {
+        "description": "Results-driven with analytical precision",
+        "blend": "Data-driven action items, ROI with supporting evidence",
+        "strategy": "Efficient systems with measurable outcomes"
+      },
+      "IS": {
+        "description": "Collaborative with steady support",
+        "blend": "Team-focused with clear process, positive and patient",
+        "strategy": "Collaborative improvements with step-by-step guidance"
+      },
+      "SC": {
+        "description": "Steady process with analytical depth",
+        "blend": "Methodical and detailed, systematic with thoroughness",
+        "strategy": "Comprehensive processes with clear documentation"
+      }
+    }
+  },
+  "application_rules": {
+    "client_report": {
+      "disc_visibility": false,
+      "note": "DISC type is NEVER mentioned to client - only applied to customize communication",
+      "customization": "Adapt language, detail level, structure, and visuals based on profile"
+    },
+    "consultant_report": {
+      "disc_visibility": true,
+      "note": "Consultant sees DISC profile and receives coaching on how to communicate",
+      "customization": "Includes communication coaching and talking points"
+    },
+    "fallback": {
+      "condition": "If DISC profile cannot be determined",
+      "strategy": "Use 'balanced' approach with moderate detail and professional tone"
+    }
+  },
+  "implementation_guidelines": {
+    "strong_profile": {
+      "threshold": "Primary type score > 70% and score difference > 30%",
+      "approach": "Strongly adapt to primary type preferences"
+    },
+    "dual_profile": {
+      "threshold": "Two types within 20% of each other and both > 50%",
+      "approach": "Blend characteristics of both types"
+    },
+    "balanced_profile": {
+      "threshold": "No type > 60% or all types within 25% range",
+      "approach": "Use balanced/neutral communication strategy"
+    }
+  }
+}
