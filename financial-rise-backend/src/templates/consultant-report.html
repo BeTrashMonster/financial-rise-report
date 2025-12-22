@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial RISE Report - Consultant Report</title>
+    <style>
+        /* Brand Colors */
+        :root {
+            --primary-purple: #4B006E;
+            --gold: #D4AF37;
+            --black: #000000;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --medium-gray: #666666;
+            --dark-gray: #333333;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Calibri, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+        }
+
+        /* Page Layout */
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.75in;
+            margin: 0 auto;
+            background-color: var(--white);
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 3px solid var(--primary-purple);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-purple);
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Report Title */
+        .report-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .report-title h1 {
+            font-size: 32px;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+        }
+
+        .report-title .subtitle {
+            font-size: 18px;
+            color: var(--medium-gray);
+        }
+
+        /* Client Information */
+        .client-info {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .client-info h2 {
+            font-size: 18px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            width: 150px;
+            color: var(--dark-gray);
+        }
+
+        .info-value {
+            color: var(--black);
+        }
+
+        /* Executive Summary Section */
+        .executive-summary {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .summary-content {
+            background-color: var(--light-gray);
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .summary-content h3 {
+            font-size: 18px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .summary-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        /* Key Findings Box */
+        .key-findings {
+            background-color: var(--white);
+            border: 2px solid var(--primary-purple);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .key-findings h4 {
+            font-size: 16px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .key-findings ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .key-findings li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .key-findings li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* DISC Profile Box */
+        .disc-profile {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6B2390 100%);
+            color: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .disc-profile h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .disc-profile p {
+            line-height: 1.8;
+        }
+
+        /* Phase Results */
+        .phase-results {
+            margin: 20px 0;
+        }
+
+        .phase-item {
+            background-color: var(--light-gray);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .phase-name {
+            font-weight: bold;
+            color: var(--primary-purple);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .phase-score {
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+
+        /* Recommendations */
+        .recommendations {
+            margin-top: 30px;
+        }
+
+        .recommendation-item {
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .recommendation-item h5 {
+            font-size: 16px;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+        }
+
+        .recommendation-item p {
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary-purple);
+            text-align: center;
+            color: var(--medium-gray);
+            font-size: 12px;
+        }
+
+        /* Placeholder Styling */
+        .placeholder {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Executive Summary -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Financial RISE Report</div>
+            <div class="tagline">Readiness Insights for Sustainable Entrepreneurship</div>
+        </div>
+
+        <!-- Report Title -->
+        <div class="report-title">
+            <h1>Consultant Report</h1>
+            <div class="subtitle">Confidential Assessment Results</div>
+        </div>
+
+        <!-- Client Information -->
+        <div class="client-info">
+            <h2>Client Information</h2>
+            <div class="info-row">
+                <div class="info-label">Client Name:</div>
+                <div class="info-value"><span class="placeholder">{{clientName}}</span></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Business Name:</div>
+                <div class="info-value"><span class="placeholder">{{businessName}}</span></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Assessment Date:</div>
+                <div class="info-value"><span class="placeholder">{{assessmentDate}}</span></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Consultant:</div>
+                <div class="info-value"><span class="placeholder">{{consultantName}}</span></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Assessment ID:</div>
+                <div class="info-value"><span class="placeholder">{{assessmentId}}</span></div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <h2 class="section-title">Executive Summary</h2>
+
+            <div class="summary-content">
+                <h3>Overview</h3>
+                <p>
+                    This confidential report provides a comprehensive analysis of <span class="placeholder">{{clientName}}</span>'s
+                    financial readiness assessment completed on <span class="placeholder">{{assessmentDate}}</span>.
+                    The assessment evaluated their business across the five Financial RISE phases: Stabilize, Organize,
+                    Build, Grow, and Systemic financial literacy.
+                </p>
+
+                <p>
+                    <strong>Primary Phase Identified:</strong> <span class="placeholder">{{primaryPhase}}</span>
+                </p>
+
+                <p>
+                    <span class="placeholder">{{executiveSummaryText}}</span>
+                </p>
+            </div>
+
+            <!-- DISC Profile -->
+            <div class="disc-profile">
+                <h4>DISC Personality Profile (Confidential)</h4>
+                <p>
+                    <strong>Primary Type:</strong> <span class="placeholder">{{discType}}</span>
+                    (<span class="placeholder">{{discTypeFullName}}</span>)
+                </p>
+                <p>
+                    <strong>Communication Strategy:</strong> <span class="placeholder">{{discCommunicationStrategy}}</span>
+                </p>
+                <p>
+                    <strong>Report Adaptation:</strong> The client-facing report has been tailored to match this profile's
+                    communication preferences for maximum impact and engagement.
+                </p>
+            </div>
+
+            <!-- Key Findings -->
+            <div class="key-findings">
+                <h4>Key Findings</h4>
+                <ul>
+                    <li><span class="placeholder">{{keyFinding1}}</span></li>
+                    <li><span class="placeholder">{{keyFinding2}}</span></li>
+                    <li><span class="placeholder">{{keyFinding3}}</span></li>
+                    <li><span class="placeholder">{{keyFinding4}}</span></li>
+                    <li><span class="placeholder">{{keyFinding5}}</span></li>
+                </ul>
+            </div>
+
+            <!-- Phase Results Summary -->
+            <div class="phase-results">
+                <h3 style="color: var(--primary-purple); margin-bottom: 15px;">Phase Assessment Results</h3>
+
+                <div class="phase-item">
+                    <div class="phase-name">Phase 1: Stabilize</div>
+                    <div class="phase-score">Score: <span class="placeholder">{{stabilizeScore}}</span>/100</div>
+                </div>
+
+                <div class="phase-item">
+                    <div class="phase-name">Phase 2: Organize</div>
+                    <div class="phase-score">Score: <span class="placeholder">{{organizeScore}}</span>/100</div>
+                </div>
+
+                <div class="phase-item">
+                    <div class="phase-name">Phase 3: Build</div>
+                    <div class="phase-score">Score: <span class="placeholder">{{buildScore}}</span>/100</div>
+                </div>
+
+                <div class="phase-item">
+                    <div class="phase-name">Phase 4: Grow</div>
+                    <div class="phase-score">Score: <span class="placeholder">{{growScore}}</span>/100</div>
+                </div>
+
+                <div class="phase-item">
+                    <div class="phase-name">Systemic: Financial Literacy</div>
+                    <div class="phase-score">Score: <span class="placeholder">{{systemicScore}}</span>/100</div>
+                </div>
+            </div>
+
+            <!-- Top Recommendations -->
+            <div class="recommendations">
+                <h3 style="color: var(--primary-purple); margin-bottom: 15px;">Top Priority Recommendations</h3>
+
+                <div class="recommendation-item">
+                    <h5>1. <span class="placeholder">{{recommendation1Title}}</span></h5>
+                    <p><span class="placeholder">{{recommendation1Description}}</span></p>
+                </div>
+
+                <div class="recommendation-item">
+                    <h5>2. <span class="placeholder">{{recommendation2Title}}</span></h5>
+                    <p><span class="placeholder">{{recommendation2Description}}</span></p>
+                </div>
+
+                <div class="recommendation-item">
+                    <h5>3. <span class="placeholder">{{recommendation3Title}}</span></h5>
+                    <p><span class="placeholder">{{recommendation3Description}}</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Financial RISE Report - Confidential Consultant Report</p>
+            <p>Generated on <span class="placeholder">{{generatedDate}}</span> | Page 1</p>
+        </div>
+    </div>
+
+    <!-- Additional pages would follow for detailed analysis, full question responses, etc. -->
+
+</body>
+</html>
