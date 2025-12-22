@@ -27,6 +27,8 @@ export enum FinancialPhase {
   SYSTEMIC = 'systemic',
 }
 
+export type DISCType = 'D' | 'I' | 'S' | 'C';
+
 export interface QuestionOption {
   optionId: string;
   text: string;

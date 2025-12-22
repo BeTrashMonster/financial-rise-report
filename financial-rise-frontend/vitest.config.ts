@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    testTimeout: 30000, // Increased for slow MUI component tests
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

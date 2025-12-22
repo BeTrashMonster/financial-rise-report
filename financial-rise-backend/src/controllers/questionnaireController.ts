@@ -12,7 +12,7 @@ class QuestionnaireController {
    * Get the complete questionnaire structure
    * REQ-QUEST-001 through REQ-QUEST-010
    */
-  async getQuestionnaire(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  async getQuestionnaire(_req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const questionnaire = await questionnaireService.getQuestionnaire();
       res.status(200).json(questionnaire);

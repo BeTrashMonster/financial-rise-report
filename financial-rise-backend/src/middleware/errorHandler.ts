@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'express-validator';
 
 export class AppError extends Error {
   statusCode: number;
@@ -15,7 +14,7 @@ export class AppError extends Error {
   }
 }
 
-export const errorHandler = (err: Error | AppError, req: Request, res: Response, next: NextFunction): void => {
+export const errorHandler = (err: Error | AppError, _req: Request, res: Response, _next: NextFunction): void => {
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       error: {

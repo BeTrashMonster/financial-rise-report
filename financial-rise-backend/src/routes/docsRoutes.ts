@@ -12,7 +12,7 @@ router.get('/', swaggerUi.setup(swaggerSpec, {
 }));
 
 // OpenAPI JSON
-router.get('/openapi.json', (req, res) => {
+router.get('/openapi.json', (_req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });

@@ -4,7 +4,6 @@ import { AuthenticatedRequest, AssessmentStatus } from '../types';
 import { AppError } from '../middleware/errorHandler';
 import progressService from '../services/progressService';
 import validationService from '../services/validationService';
-import { Op } from 'sequelize';
 
 /**
  * Assessment Controller
