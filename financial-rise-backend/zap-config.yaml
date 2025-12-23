@@ -1,0 +1,198 @@
+# OWASP ZAP Automation Framework Configuration
+# Financial RISE Backend Security Scanning
+
+---
+env:
+  contexts:
+    - name: "Financial RISE API"
+      urls:
+        - "http://localhost:3000"
+      includePaths:
+        - "http://localhost:3000/api/.*"
+      excludePaths:
+        - "http://localhost:3000/api/v1/auth/logout"
+        - "http://localhost:3000/health"
+      authentication:
+        method: "json"
+        parameters:
+          loginUrl: "http://localhost:3000/api/v1/auth/login"
+          loginRequestData: '{"email":"test@example.com","password":"Test123!"}'
+          usernameParameter: "email"
+          passwordParameter: "password"
+        verification:
+          method: "poll"
+          pollUrl: "http://localhost:3000/api/v1/users/me"
+          pollData: ""
+          pollFrequency: 60
+          pollUnits: "requests"
+      sessionManagement:
+        method: "cookie"
+        parameters:
+          sessionToken: "sessionId"
+      technology:
+        include:
+          - "JavaScript"
+          - "JSON"
+          - "Express.js"
+          - "PostgreSQL"
+
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+
+  vars: {}
+
+jobs:
+  - type: "passiveScan-config"
+    parameters:
+      maxAlertsPerRule: 10
+    rules:
+      - id: 10015
+        threshold: "low"
+      - id: 10021
+        threshold: "low"
+      - id: 10023
+        threshold: "low"
+
+  - type: "spider"
+    parameters:
+      context: "Financial RISE API"
+      user: "test@example.com"
+      url: "http://localhost:3000/api/v1"
+      maxDuration: 10
+      maxDepth: 5
+      maxChildren: 10
+      acceptCookies: true
+      handleODataParametersVisited: false
+      parseComments: true
+      parseGit: false
+      parseRobotsTxt: true
+      parseSitemapXml: true
+      parseSVNEntries: false
+      postForm: true
+      processForm: true
+      requestWaitTime: 500
+
+  - type: "passiveScan-wait"
+    parameters:
+      maxDuration: 10
+
+  - type: "activeScan"
+    parameters:
+      context: "Financial RISE API"
+      user: "test@example.com"
+      url: "http://localhost:3000/api/v1"
+      maxRuleDurationInMins: 5
+      maxScanDurationInMins: 30
+      addQueryParam: false
+      defaultPolicy: "Default Policy"
+      delayInMs: 0
+      handleAntiCSRFTokens: true
+      inScopeOnly: true
+      scanHeadersAllRequests: true
+      threadPerHost: 2
+
+    policyDefinition:
+      defaultStrength: "medium"
+      defaultThreshold: "medium"
+      rules:
+        # SQL Injection
+        - id: 40018
+          name: "SQL Injection"
+          threshold: "low"
+          strength: "high"
+        # Cross Site Scripting (Reflected)
+        - id: 40012
+          name: "Cross Site Scripting (Reflected)"
+          threshold: "low"
+          strength: "high"
+        # Cross Site Scripting (Persistent)
+        - id: 40014
+          name: "Cross Site Scripting (Persistent)"
+          threshold: "low"
+          strength: "high"
+        # Path Traversal
+        - id: 6
+          name: "Path Traversal"
+          threshold: "medium"
+          strength: "medium"
+        # Remote File Inclusion
+        - id: 7
+          name: "Remote File Inclusion"
+          threshold: "medium"
+          strength: "medium"
+        # Server Side Include
+        - id: 40009
+          name: "Server Side Include"
+          threshold: "medium"
+          strength: "medium"
+        # Cross-Site Request Forgery
+        - id: 20016
+          name: "Cross-Site Request Forgery"
+          threshold: "low"
+          strength: "high"
+        # External Redirect
+        - id: 20019
+          name: "External Redirect"
+          threshold: "medium"
+          strength: "medium"
+        # CRLF Injection
+        - id: 40003
+          name: "CRLF Injection"
+          threshold: "medium"
+          strength: "medium"
+        # Parameter Tampering
+        - id: 40008
+          name: "Parameter Tampering"
+          threshold: "medium"
+          strength: "medium"
+        # Server Side Code Injection
+        - id: 90019
+          name: "Server Side Code Injection"
+          threshold: "medium"
+          strength: "medium"
+        # Remote OS Command Injection
+        - id: 90020
+          name: "Remote OS Command Injection"
+          threshold: "low"
+          strength: "high"
+
+  - type: "report"
+    parameters:
+      template: "traditional-html"
+      reportDir: "./security-reports"
+      reportFile: "zap-scan-report-{{timestamp}}"
+      reportTitle: "Financial RISE Backend Security Scan"
+      reportDescription: "Automated security scan using OWASP ZAP"
+      displayReport: false
+    risks:
+      - high
+      - medium
+      - low
+      - info
+
+  - type: "report"
+    parameters:
+      template: "traditional-json"
+      reportDir: "./security-reports"
+      reportFile: "zap-scan-report-{{timestamp}}"
+      risks:
+        - high
+        - medium
+        - low
+
+  - type: "report"
+    parameters:
+      template: "traditional-xml"
+      reportDir: "./security-reports"
+      reportFile: "zap-scan-report-{{timestamp}}"
+      risks:
+        - high
+        - medium
+        - low
+
+  - type: "outputSummary"
+    parameters:
+      format: "long"
+      summaryFile: "./security-reports/scan-summary-{{timestamp}}.txt"
