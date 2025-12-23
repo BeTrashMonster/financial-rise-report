@@ -111,6 +111,34 @@ export interface UpdateAssessmentRequest {
   status?: AssessmentStatus;
 }
 
+
+// Report types
+export enum ReportType {
+  CONSULTANT = 'consultant',
+  CLIENT = 'client',
+}
+
+export interface Report {
+  reportId: string;
+  reportType: ReportType;
+  assessmentId: string;
+  pdfUrl: string;
+  generatedAt: string;
+}
+
+export interface GenerateReportsResponse {
+  success: boolean;
+  data: {
+    consultantReport: Report;
+    clientReport: Report;
+  };
+}
+
+export interface GenerateSingleReportResponse {
+  success: boolean;
+  data: Report;
+}
+
 // UI State types
 export interface AssessmentFormData {
   clientName: string;

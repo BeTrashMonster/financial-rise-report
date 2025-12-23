@@ -78,6 +78,10 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  const handleViewReports = (assessmentId: string) => {
+    navigate(`/reports/${assessmentId}`);
+  };
+
   const filteredAssessments = assessments.filter((assessment) => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -177,6 +181,7 @@ export const Dashboard: React.FC = () => {
                   assessment={assessment}
                   onEdit={handleEditAssessment}
                   onDelete={handleDeleteAssessment}
+                  onViewReports={handleViewReports}
                 />
               </Grid>
             ))}

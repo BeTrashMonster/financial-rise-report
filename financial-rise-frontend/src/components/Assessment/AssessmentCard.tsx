@@ -9,6 +9,7 @@ import {
   Box,
   IconButton,
   Tooltip,
+  Stack,
 } from '@mui/material';
 import {
   Edit as EditIcon,
@@ -16,6 +17,7 @@ import {
   CheckCircle as CompleteIcon,
   RadioButtonUnchecked as DraftIcon,
   PlayArrow as InProgressIcon,
+  Description as ReportIcon,
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { Assessment, AssessmentStatus } from '@/types';
@@ -25,6 +27,7 @@ interface AssessmentCardProps {
   assessment: Assessment;
   onEdit: (assessmentId: string) => void;
   onDelete: (assessmentId: string) => void;
+  onViewReports?: (assessmentId: string) => void;
 }
 
 /**
@@ -35,6 +38,7 @@ export const AssessmentCard: React.FC<AssessmentCardProps> = ({
   assessment,
   onEdit,
   onDelete,
+  onViewReports,
 }) => {
   const getStatusIcon = (status: AssessmentStatus) => {
     switch (status) {
@@ -107,14 +111,27 @@ export const AssessmentCard: React.FC<AssessmentCardProps> = ({
       </CardContent>
 
       <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 2 }}>
-        <Button
-          variant="contained"
-          startIcon={<EditIcon />}
-          onClick={() => onEdit(assessment.assessmentId)}
-          aria-label={`Edit assessment for ${assessment.businessName}`}
-        >
-          {assessment.status === AssessmentStatus.COMPLETED ? 'View' : 'Continue'}
-        </Button>
+        <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
+          <Button
+            variant="contained"
+            startIcon={<EditIcon />}
+            onClick={() => onEdit(assessment.assessmentId)}
+            aria-label={`Edit assessment for ${assessment.businessName}`}
+          >
+            {assessment.status === AssessmentStatus.COMPLETED ? 'View' : 'Continue'}
+          </Button>
+
+          {assessment.status === AssessmentStatus.COMPLETED && onViewReports && (
+            <Button
+              variant="outlined"
+              startIcon={<ReportIcon />}
+              onClick={() => onViewReports(assessment.assessmentId)}
+              aria-label={`View reports for ${assessment.businessName}`}
+            >
+              Reports
+            </Button>
+          )}
+        </Stack>
 
         {assessment.status === AssessmentStatus.DRAFT && (
           <Tooltip title="Delete draft">

@@ -6,6 +6,7 @@ import theme from './theme';
 import Dashboard from './pages/Dashboard';
 import CreateAssessment from './pages/CreateAssessment';
 import Questionnaire from './pages/Questionnaire';
+import ReportPreview from './pages/ReportPreview';
 
 /**
  * Main application entry point
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/assessment/create" element={<CreateAssessment />} />
           <Route path="/assessment/:assessmentId" element={<Questionnaire />} />
+          <Route path="/reports/:assessmentId" element={<ReportPreview />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>

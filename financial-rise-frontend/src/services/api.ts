@@ -6,6 +6,8 @@ import type {
   UpdateAssessmentRequest,
   Questionnaire,
   ApiError,
+  GenerateReportsResponse,
+  GenerateSingleReportResponse,
 } from '@/types';
 
 /**
@@ -107,6 +109,35 @@ class ApiService {
 
   async getQuestionnaire(): Promise<Questionnaire> {
     const response = await this.client.get<Questionnaire>('/questionnaire');
+    return response.data;
+  }
+}
+
+  // Report endpoints
+
+  async generateBothReports(assessmentId: string): Promise<GenerateReportsResponse> {
+    const response = await this.client.post<GenerateReportsResponse>(
+      `/assessments/${assessmentId}/reports`
+    );
+    return response.data;
+  }
+
+  async generateConsultantReport(assessmentId: string): Promise<GenerateSingleReportResponse> {
+    const response = await this.client.post<GenerateSingleReportResponse>(
+      `/assessments/${assessmentId}/reports/consultant`
+    );
+    return response.data;
+  }
+
+  async generateClientReport(assessmentId: string): Promise<GenerateSingleReportResponse> {
+    const response = await this.client.post<GenerateSingleReportResponse>(
+      `/assessments/${assessmentId}/reports/client`
+    );
+    return response.data;
+  }
+
+  async downloadReport(reportId: string): Promise<{ pdfUrl: string }> {
+    const response = await this.client.get<{ pdfUrl: string }>(`/reports/${reportId}/download`);
     return response.data;
   }
 }
