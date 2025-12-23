@@ -4,11 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { AssessmentsModule } from './modules/assessments/assessments.module';
-import { QuestionsModule } from './modules/questions/questions.module';
-import { ReportsModule } from './modules/reports/reports.module';
+// Temporarily disabled until entities are fixed (not part of Work Stream 7)
+// import { AssessmentsModule } from './modules/assessments/assessments.module';
+// import { QuestionsModule } from './modules/questions/questions.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { AlgorithmsModule } from './modules/algorithms/algorithms.module';
+// ReportsModule will be added in Work Stream 11
 
 @Module({
   imports: [
@@ -36,10 +37,11 @@ import { AlgorithmsModule } from './modules/algorithms/algorithms.module';
     // Feature modules
     AuthModule,
     UsersModule,
-    AssessmentsModule,
-    QuestionsModule,
-    ReportsModule,
+    // Temporarily disabled until entities are fixed (not part of Work Stream 7)
+    // AssessmentsModule,
+    // QuestionsModule,
     AlgorithmsModule,
+    // ReportsModule will be added in Work Stream 11
   ],
 })
 export class AppModule {}

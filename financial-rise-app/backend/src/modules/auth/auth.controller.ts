@@ -37,7 +37,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Request() req, @Body() loginDto: LoginDto) {
+  async login(@Request() req: any, @Body() loginDto: LoginDto) {
     return this.authService.login(req.user);
   }
 
@@ -48,7 +48,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Request() req) {
+  async logout(@Request() req: any) {
     return this.authService.logout(req.user.userId);
   }
 
