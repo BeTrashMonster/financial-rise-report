@@ -3,12 +3,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
 import routes from './routes';
 import docsRoutes from './routes/docsRoutes';
 import { errorHandler } from './middleware/errorHandler';
-
-dotenv.config();
+import { config } from './config/env';
 
 const app: Express = express();
 
@@ -18,15 +16,15 @@ app.use(helmet());
 // CORS configuration
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3001',
+    origin: config.corsOrigin,
     credentials: true,
   })
 );
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'),
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+  windowMs: config.rateLimitWindowMs,
+  max: config.rateLimitMaxRequests,
   message: {
     error: {
       code: 'RATE_LIMIT_EXCEEDED',
@@ -41,7 +39,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Logging middleware
-if (process.env.NODE_ENV !== 'test') {
+if (!config.isTest) {
   app.use(morgan('combined'));
 }
 
@@ -51,7 +49,8 @@ app.get('/health', (_req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
     service: 'financial-rise-backend',
-    version: process.env.API_VERSION || 'v1',
+    version: config.apiVersion,
+    environment: config.nodeEnv,
   });
 });
 
@@ -59,7 +58,7 @@ app.get('/health', (_req, res) => {
 app.use('/api-docs', docsRoutes);
 
 // API routes
-app.use(`/api/${process.env.API_VERSION || 'v1'}`, routes);
+app.use(`/api/${config.apiVersion}`, routes);
 
 // 404 handler
 app.use((_req, res) => {

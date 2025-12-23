@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import assessmentController from '../controllers/assessmentController';
 import { authenticate } from '../middleware/auth';
+import { validateBody, validateQuery, validateParams } from '../middleware/validate';
 import {
-  validateCreateAssessment,
-  validateUpdateAssessment,
-  validateUUID,
-  validateListQuery,
-} from '../middleware/validation';
+  createAssessmentSchema,
+  updateAssessmentSchema,
+  listAssessmentsQuerySchema,
+  uuidParamSchema,
+} from '../validators/assessment.validators';
 
 const router = Router();
 
@@ -16,24 +17,44 @@ const router = Router();
  */
 
 // Create new assessment
-router.post('/', authenticate, validateCreateAssessment, assessmentController.createAssessment.bind(assessmentController));
+router.post(
+  '/',
+  authenticate,
+  validateBody(createAssessmentSchema),
+  assessmentController.createAssessment.bind(assessmentController)
+);
 
 // List all assessments for consultant
-router.get('/', authenticate, validateListQuery, assessmentController.listAssessments.bind(assessmentController));
+router.get(
+  '/',
+  authenticate,
+  validateQuery(listAssessmentsQuerySchema),
+  assessmentController.listAssessments.bind(assessmentController)
+);
 
 // Get specific assessment
-router.get('/:id', authenticate, validateUUID, assessmentController.getAssessment.bind(assessmentController));
+router.get(
+  '/:id',
+  authenticate,
+  validateParams(uuidParamSchema),
+  assessmentController.getAssessment.bind(assessmentController)
+);
 
 // Update assessment (auto-save)
 router.patch(
   '/:id',
   authenticate,
-  validateUUID,
-  validateUpdateAssessment,
+  validateParams(uuidParamSchema),
+  validateBody(updateAssessmentSchema),
   assessmentController.updateAssessment.bind(assessmentController)
 );
 
 // Delete draft assessment
-router.delete('/:id', authenticate, validateUUID, assessmentController.deleteAssessment.bind(assessmentController));
+router.delete(
+  '/:id',
+  authenticate,
+  validateParams(uuidParamSchema),
+  assessmentController.deleteAssessment.bind(assessmentController)
+);
 
 export default router;

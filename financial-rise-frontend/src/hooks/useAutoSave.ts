@@ -58,6 +58,7 @@ export const useAutoSave = (assessmentId: string | null, enabled: boolean = true
     }
   };
 
+  // Auto-save on dirty state change
   useEffect(() => {
     if (!enabled || !assessmentId) {
       return;
@@ -80,7 +81,33 @@ export const useAutoSave = (assessmentId: string | null, enabled: boolean = true
         clearTimeout(saveTimeoutRef.current);
       }
     };
-  }, [isDirty, assessmentId, enabled, responses]);
+  }, [isDirty, assessmentId, enabled]); // Removed 'responses' - saveResponses captures it via closure
+
+  // Save on page unload
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isDirty && assessmentId) {
+        // Cancel debounced save
+        if (saveTimeoutRef.current) {
+          clearTimeout(saveTimeoutRef.current);
+        }
+
+        // Trigger synchronous save
+        saveResponses();
+
+        // Show browser warning if there's unsaved data
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isDirty, assessmentId]);
 
   // Manual save function
   const saveNow = () => {

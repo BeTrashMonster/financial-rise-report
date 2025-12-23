@@ -111,7 +111,6 @@ class ApiService {
     const response = await this.client.get<Questionnaire>('/questionnaire');
     return response.data;
   }
-}
 
   // Report endpoints
 

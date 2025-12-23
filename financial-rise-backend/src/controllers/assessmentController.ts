@@ -4,6 +4,8 @@ import { AuthenticatedRequest, AssessmentStatus } from '../types';
 import { AppError } from '../middleware/errorHandler';
 import progressService from '../services/progressService';
 import validationService from '../services/validationService';
+import { ERROR_CODES } from '../constants';
+import type { CreateAssessmentInput, UpdateAssessmentInput, ListAssessmentsQuery, UuidParam } from '../validators/assessment.validators';
 
 /**
  * Assessment Controller
@@ -17,14 +19,15 @@ class AssessmentController {
    */
   async createAssessment(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { clientName, businessName, clientEmail, notes } = req.body;
+      // Body is already validated by middleware
+      const { clientName, businessName, clientEmail, notes } = req.body as CreateAssessmentInput;
 
       const assessment = await Assessment.create({
         consultantId: req.consultantId!,
         clientName,
         businessName,
         clientEmail,
-        notes,
+        notes: notes || null,
         status: AssessmentStatus.DRAFT,
         progress: 0,
       });
@@ -52,13 +55,8 @@ class AssessmentController {
    */
   async listAssessments(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const {
-        status,
-        limit = '50',
-        offset = '0',
-        sortBy = 'updatedAt',
-        sortOrder = 'desc',
-      } = req.query as Record<string, string>;
+      // Query is already validated by middleware - safe from SQL injection
+      const { status, limit, offset, sortBy, sortOrder } = req.query as ListAssessmentsQuery;
 
       const where: any = {
         consultantId: req.consultantId!,
@@ -69,12 +67,12 @@ class AssessmentController {
         where.status = status;
       }
 
-      const order: any = [[sortBy, sortOrder.toUpperCase()]];
+      const order: any = [[sortBy, sortOrder]];
 
       const { count, rows } = await Assessment.findAndCountAll({
         where,
-        limit: parseInt(limit),
-        offset: parseInt(offset),
+        limit,
+        offset,
         order,
       });
 
@@ -90,8 +88,8 @@ class AssessmentController {
           completedAt: a.completedAt,
         })),
         total: count,
-        limit: parseInt(limit),
-        offset: parseInt(offset),
+        limit,
+        offset,
       });
     } catch (error) {
       next(error);
@@ -105,7 +103,8 @@ class AssessmentController {
    */
   async getAssessment(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { id } = req.params;
+      // Params are already validated by middleware
+      const { id } = req.params as UuidParam;
 
       const assessment = await Assessment.findOne({
         where: {
@@ -122,7 +121,7 @@ class AssessmentController {
       });
 
       if (!assessment) {
-        throw new AppError('Assessment not found', 404, 'NOT_FOUND');
+        throw new AppError('Assessment not found', 404, ERROR_CODES.ASSESSMENT_NOT_FOUND);
       }
 
       res.status(200).json({
@@ -156,8 +155,9 @@ class AssessmentController {
    */
   async updateAssessment(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { id } = req.params;
-      const { responses, status } = req.body;
+      // Params and body are already validated by middleware
+      const { id } = req.params as UuidParam;
+      const { responses, status } = req.body as UpdateAssessmentInput;
 
       // Find assessment
       const assessment = await Assessment.findOne({
@@ -169,12 +169,12 @@ class AssessmentController {
       });
 
       if (!assessment) {
-        throw new AppError('Assessment not found', 404, 'NOT_FOUND');
+        throw new AppError('Assessment not found', 404, ERROR_CODES.ASSESSMENT_NOT_FOUND);
       }
 
       // Cannot modify completed assessments
       if (assessment.status === AssessmentStatus.COMPLETED) {
-        throw new AppError('Cannot modify completed assessment', 409, 'CONFLICT');
+        throw new AppError('Cannot modify completed assessment', 409, ERROR_CODES.CANNOT_MODIFY_COMPLETED_ASSESSMENT);
       }
 
       let savedResponses = 0;
@@ -193,7 +193,7 @@ class AssessmentController {
             throw new AppError(
               `Invalid response for question ${response.questionId}`,
               400,
-              'VALIDATION_ERROR',
+              ERROR_CODES.VALIDATION_ERROR,
               validation.errors
             );
           }
@@ -227,7 +227,7 @@ class AssessmentController {
             throw new AppError(
               'Cannot complete assessment: required questions not answered',
               409,
-              'CONFLICT',
+              ERROR_CODES.INCOMPLETE_ASSESSMENT,
               {
                 missingQuestions: completionValidation.missingQuestions,
               }
@@ -264,7 +264,8 @@ class AssessmentController {
    */
   async deleteAssessment(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { id } = req.params;
+      // Params are already validated by middleware
+      const { id } = req.params as UuidParam;
 
       const assessment = await Assessment.findOne({
         where: {
@@ -275,12 +276,12 @@ class AssessmentController {
       });
 
       if (!assessment) {
-        throw new AppError('Assessment not found', 404, 'NOT_FOUND');
+        throw new AppError('Assessment not found', 404, ERROR_CODES.ASSESSMENT_NOT_FOUND);
       }
 
       // Only allow deletion of draft assessments
       if (assessment.status !== AssessmentStatus.DRAFT) {
-        throw new AppError('Can only delete draft assessments', 409, 'CONFLICT');
+        throw new AppError('Can only delete draft assessments', 409, ERROR_CODES.CANNOT_DELETE_NON_DRAFT_ASSESSMENT);
       }
 
       // Soft delete

@@ -1,6 +1,7 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AuthenticatedRequest } from '../types';
+import { config } from '../config/env';
 
 interface JWTPayload {
   consultantId: string;
@@ -30,7 +31,7 @@ export const authenticate = async (
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
+      const decoded = jwt.verify(token, config.jwtSecret) as JWTPayload;
 
       req.consultantId = decoded.consultantId;
       req.userId = decoded.userId;
