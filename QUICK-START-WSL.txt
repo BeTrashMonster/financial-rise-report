@@ -1,0 +1,110 @@
+╔══════════════════════════════════════════════════════════════╗
+║  WSL SETUP - QUICK START GUIDE                              ║
+║  Financial RISE Project                                      ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│ STEP 1: Install WSL (Run as Administrator)                  │
+└──────────────────────────────────────────────────────────────┘
+
+1. Right-click PowerShell → "Run as Administrator"
+
+2. Navigate to project:
+   cd C:\Users\Admin\src
+
+3. Run installation script:
+   .\setup-wsl.ps1
+
+4. Your computer will RESTART
+
+5. After restart, Ubuntu will launch - create username & password
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ STEP 2: Setup Project (After restart)                       │
+└──────────────────────────────────────────────────────────────┘
+
+1. Open Ubuntu (search Start menu) OR type 'wsl' in PowerShell
+
+2. Navigate to project:
+   cd /mnt/c/Users/Admin/src
+
+3. Run setup script:
+   bash wsl-project-setup.sh
+
+4. Wait for installation to complete (will install Node.js & dependencies)
+
+5. Tests will run automatically at the end!
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ DAILY USAGE                                                  │
+└──────────────────────────────────────────────────────────────┘
+
+Open WSL:
+  • Search "Ubuntu" in Start menu, OR
+  • Type "wsl" in PowerShell
+
+Go to project:
+  cd /mnt/c/Users/Admin/src/financial-rise-frontend
+
+Run tests:
+  npm test                 → Run all tests
+  npm run test:coverage    → Run with coverage
+  npm run test:watch       → Watch mode
+
+Development:
+  npm run dev              → Start dev server
+  npm run build            → Build for production
+  npm run lint             → Lint code
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ PRO TIP: Create Quick Alias                                 │
+└──────────────────────────────────────────────────────────────┘
+
+In WSL, run once:
+  echo "alias fr='cd /mnt/c/Users/Admin/src/financial-rise-frontend'" >> ~/.bashrc
+  source ~/.bashrc
+
+Then just type:  fr  (to jump to your project!)
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ TROUBLESHOOTING                                              │
+└──────────────────────────────────────────────────────────────┘
+
+Verify you're in WSL:
+  uname -a
+  (Should show "Linux", not "Windows")
+
+Tests still hanging?
+  • Make sure you're IN WSL (not Windows PowerShell)
+  • Delete node_modules in WSL and reinstall:
+    rm -rf node_modules package-lock.json
+    npm install
+
+Port already in use:
+  lsof -ti:5173 | xargs kill -9
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ FILES CREATED                                                │
+└──────────────────────────────────────────────────────────────┘
+
+C:\Users\Admin\src\
+  ├── setup-wsl.ps1              → WSL installation script
+  ├── wsl-project-setup.sh       → Project setup for WSL
+  ├── README-WSL.md              → Full documentation
+  └── QUICK-START-WSL.txt        → This file
+
+financial-rise-frontend\
+  ├── test-wsl.sh                → Environment verification
+  └── .wslconfig                 → WSL performance settings
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  Ready? Run PowerShell AS ADMIN and execute:                ║
+║  cd C:\Users\Admin\src                                       ║
+║  .\setup-wsl.ps1                                             ║
+╚══════════════════════════════════════════════════════════════╝

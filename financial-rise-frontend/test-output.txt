@@ -1,0 +1,1923 @@
+
+> financial-rise-frontend@1.0.0 test
+> vitest run --coverage
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/Users/Admin/src/financial-rise-frontend[39m
+[2m      Coverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mtoken management[2m > [22mshould store token in localStorage
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mtoken management[2m > [22mshould retrieve token from localStorage
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mcreateAssessment[2m > [22mshould create a new assessment
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mcreateAssessment[2m > [22mshould handle creation errors
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mlistAssessments[2m > [22mshould list all assessments
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mlistAssessments[2m > [22mshould list assessments with filters
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mgetAssessment[2m > [22mshould get assessment by id
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mgetAssessment[2m > [22mshould handle not found error
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mupdateAssessment[2m > [22mshould update assessment with responses
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mupdateAssessment[2m > [22mshould update assessment status
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mupdateAssessment[2m > [22mshould handle update errors
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mdeleteAssessment[2m > [22mshould delete assessment
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mdeleteAssessment[2m > [22mshould handle delete errors
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mdeleteAssessment[2m > [22mshould not allow deleting non-draft assessments
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mgetQuestionnaire[2m > [22mshould get questionnaire
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mgetQuestionnaire[2m > [22mshould handle questionnaire load errors
+ [31m×[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mauthentication[2m > [22mshould create axios instance with correct config
+[31m   → expected "spy" to be called with arguments: [ { baseURL: Any<String>, …(1) } ][90m
+
+Received: 
+
+[31m[90m
+
+Number of calls: [1m0[22m
+[31m[39m
+ [31m×[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mauthentication[2m > [22mshould set up request interceptor
+[31m   → expected "spy" to be called at least once[39m
+ [31m×[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22mauthentication[2m > [22mshould set up response interceptor
+[31m   → expected "spy" to be called at least once[39m
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22merror handling[2m > [22mshould handle network errors
+ [32m✓[39m src/services/__tests__/api.test.ts[2m > [22mapiService[2m > [22merror handling[2m > [22mshould handle timeout errors
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mcurrentAssessment[2m > [22mshould set current assessment
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mcurrentAssessment[2m > [22mshould clear current assessment when set to null
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22massessments list[2m > [22mshould set assessments list
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22massessments list[2m > [22mshould add assessment to the beginning of list
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22massessments list[2m > [22mshould remove assessment by id
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22massessments list[2m > [22mshould not error when removing non-existent assessment
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mquestion navigation[2m > [22mshould set current question index
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mquestion navigation[2m > [22mshould start at index 0 by default
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mresponses[2m > [22mshould set a single response and mark as dirty
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mresponses[2m > [22mshould update existing response
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mresponses[2m > [22mshould set multiple responses from array
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mresponses[2m > [22mshould clear all responses
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mdirty state[2m > [22mshould set dirty state
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mdirty state[2m > [22mshould mark as dirty when setting response
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mdirty state[2m > [22mshould mark as not dirty when setting responses from array
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mlastSavedAt[2m > [22mshould set last saved timestamp
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mlastSavedAt[2m > [22mshould clear last saved timestamp
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mlastSavedAt[2m > [22mshould start with null last saved timestamp
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mloading state[2m > [22mshould set loading state
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mloading state[2m > [22mshould start with loading false
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mreset[2m > [22mshould reset all state to defaults
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mreset[2m > [22mshould not reset assessments list
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mcomplex scenarios[2m > [22mshould handle multiple response updates correctly
+ [32m✓[39m src/store/__tests__/assessmentStore.test.ts[2m > [22massessmentStore[2m > [22mcomplex scenarios[2m > [22mshould maintain Map immutability when setting responses
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould show loading state initially[33m 2176[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould load assessment and questionnaire[33m 5314[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould display assessment details[33m 2689[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould display error when loading fails[33m 465[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould render current question[33m 2169[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould display question progress indicator[33m 2130[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould display progress bar[33m 1908[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould display auto-save indicator[33m 1895[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould navigate to next question when Next is clicked[33m 4374[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould render page title[33m 3467[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould render New Assessment button[33m 2955[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould show loading state initially[33m 1538[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould render page title[33m 5848[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould render page description[33m 3027[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould render all form fields[33m 3026[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould render action buttons[33m 5366[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould load and display assessments[33m 1153[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould navigate to previous question when Previous is clicked[33m 7258[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould display error message on load failure[33m 998[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould navigate to dashboard when Cancel is clicked[33m 5208[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould disable Previous button on first question[33m 5111[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould navigate to create page when New Assessment is clicked[33m 6835[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould show Complete button on last question[33m 6318[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould show validation error for empty client name[33m 7197[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould filter assessments by search query[33m 2997[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould handle Not Applicable checkbox[33m 3332[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould show validation error for empty business name[33m 6951[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould handle consultant notes[33m 4885[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould show validation error for invalid email[33m 8172[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m×[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould filter assessments by status[33m 18619[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "option" and name "Draft"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Go to dashboard":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Go to dashboard"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Logout":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Logout"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Create new assessment":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Create new assessment"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary css-jh47zj-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Delete draft assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Smith LLC":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Smith LLC"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Johnson Industries":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Assessments":
+  [36m<h1[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Acme Corp":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Smith LLC":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Johnson Industries":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Search":
+  [36m<input[31m
+    [33maria-invalid[31m=[32m"false"[31m
+    [33mclass[31m=[32m"MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"[31m
+    [33mid[31m=[32m":r14:"[31m
+    [33mplaceholder[31m=[32m"Search by client or business name..."[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Status":
+  [36m<div[31m
+    [33maria-controls[31m=[32m":r15:"[31m
+    [33maria-expanded[31m=[32m"false"[31m
+    [33maria-haspopup[31m=[32m"listbox"[31m
+    [33maria-labelledby[31m=[32m"status-filter-label status-filter"[31m
+    [33mclass[31m=[32m"MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"[31m
+    [33mid[31m=[32m"status-filter"[31m
+    [33mrole[31m=[32m"combobox"[31m
+    [33mtabindex[31m=[32m"0"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 0% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 0% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"0"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  Name "Assessment 45% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 45% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"45"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  Name "Assessment 100% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 100% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"100"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[31m
+    [33mclass[31m=[32m"MuiBox-root css-1uzi370"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiBox-root css-zf0iqh"[31m
+    [36m>[31m
+      [36m<header[31m
+        [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-yurbhn-MuiSvgIcon-root"[31m
+            [33mdata-testid[31m=[32m"AssessmentIcon"[31m
+            [33mfocusable[31m=[32m"false"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1juivf6-MuiTypography-root"[31m
+          [36m>[31m
+            [0mFinancial RISE Report[0m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Go to dashboard"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"DashboardIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Logout"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"LogoutIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</header>[31m
+      [36m<main[31m
+        [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiContainer-root MuiContainer-maxWidthXl css-19r6kue-MuiContainer-root"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-1yjvs5a"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"MuiBox-root css-v08z5u"[31m
+            [36m>[31m
+              [36m<h1[31m
+                [33mclass[31m=[32m"MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"[31m
+              [36m>[31m
+                [0mAssessments[0m
+              [36m</h1>[31m
+              [36m<button[31m
+                [33maria-label[31m=[32m"Create new assessment"[31m
+                [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary css-jh47zj-MuiButtonBase-root-MuiButton-root"[31m
+                [33mtabindex[31m=[32m"0"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [36m<span[31m
+                  [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeLarge css-htszrh-MuiButton-startIcon"[31m
+                [36m>[31m
+                  [36m<svg[31m
+                    [33maria-hidden[31m=[32m"true"[31m
+                    [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+                    [33mdata-testid[31m=[32m"AddIcon"[31m
+                    [33mfocusable[31m=[32m"false"[31m
+                    [33mviewBox[31m=[32m"0 0 24 24"[31m
+                  [36m>[31m
+                    [36m<path[31m
+                      [33md[31m=[32m"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"[31m
+                    [36m/>[31m
+                  [36m</svg>[31m
+                [36m</span>[31m
+                [0mNew Assessment[0m
+                [36m<span[31m
+                  [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+                [36m/>[31m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"MuiBox-root css-19x4egf"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Search assessments"[31m
+                [33mclass[31m=[32m"MuiFormControl-root MuiTextField-root css-1vs1jgp-MuiFormControl-root-MuiTextField-root"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"[3...[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould show empty state when no assessments exist[33m 578[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould complete assessment when Complete button is clicked[33m 8057[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould show filtered empty state when search returns no results[33m 2830[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould show validation error for client name exceeding max length[33m 9908[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould navigate to questionnaire when edit is clicked[33m 4024[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould save before completing if dirty[33m 7509[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould delete assessment when delete is confirmed[33m 4119[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould successfully create assessment with valid data[33m 8748[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould not delete assessment when delete is cancelled[33m 4131[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould create assessment without optional notes[33m 9347[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould show alert when delete fails[33m 4332[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould show alert when completion fails[33m 6701[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould disable question when marked as Not Applicable[33m 16253[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould call reset on unmount[33m 2020[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/Questionnaire.test.tsx[2m > [22mQuestionnaire[2m > [22mshould have accessible consultant notes field[33m 1941[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould display error message when API call fails[33m 9165[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould render search input with correct placeholder[33m 464[2mms[22m[39m
+ [31m×[39m src/pages/__tests__/Dashboard.test.tsx[2m > [22mDashboard[2m > [22mshould render status filter with all options[33m 20009[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "option" and name "All"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Go to dashboard":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Go to dashboard"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Logout":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Logout"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Create new assessment":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Create new assessment"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary css-jh47zj-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Delete draft assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Smith LLC":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Smith LLC"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Edit assessment for Johnson Industries":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Assessments":
+  [36m<h1[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Acme Corp":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Smith LLC":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  Name "Johnson Industries":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Search":
+  [36m<input[31m
+    [33maria-invalid[31m=[32m"false"[31m
+    [33mclass[31m=[32m"MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"[31m
+    [33mid[31m=[32m":r2b:"[31m
+    [33mplaceholder[31m=[32m"Search by client or business name..."[31m
+    [33mtype[31m=[32m"text"[31m
+    [33mvalue[31m=[32m""[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  combobox:
+
+  Name "Status":
+  [36m<div[31m
+    [33maria-controls[31m=[32m":r2c:"[31m
+    [33maria-expanded[31m=[32m"false"[31m
+    [33maria-haspopup[31m=[32m"listbox"[31m
+    [33maria-labelledby[31m=[32m"status-filter-label status-filter"[31m
+    [33mclass[31m=[32m"MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"[31m
+    [33mid[31m=[32m"status-filter"[31m
+    [33mrole[31m=[32m"combobox"[31m
+    [33mtabindex[31m=[32m"0"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 0% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 0% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"0"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  Name "Assessment 45% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 45% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"45"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  Name "Assessment 100% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 100% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"100"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[31m
+    [33mclass[31m=[32m"MuiBox-root css-1uzi370"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiBox-root css-zf0iqh"[31m
+    [36m>[31m
+      [36m<header[31m
+        [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-yurbhn-MuiSvgIcon-root"[31m
+            [33mdata-testid[31m=[32m"AssessmentIcon"[31m
+            [33mfocusable[31m=[32m"false"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1juivf6-MuiTypography-root"[31m
+          [36m>[31m
+            [0mFinancial RISE Report[0m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Go to dashboard"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"DashboardIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Logout"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"LogoutIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</header>[31m
+      [36m<main[31m
+        [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiContainer-root MuiContainer-maxWidthXl css-19r6kue-MuiContainer-root"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-1yjvs5a"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"MuiBox-root css-v08z5u"[31m
+            [36m>[31m
+              [36m<h1[31m
+                [33mclass[31m=[32m"MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"[31m
+              [36m>[31m
+                [0mAssessments[0m
+              [36m</h1>[31m
+              [36m<button[31m
+                [33maria-label[31m=[32m"Create new assessment"[31m
+                [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary css-jh47zj-MuiButtonBase-root-MuiButton-root"[31m
+                [33mtabindex[31m=[32m"0"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [36m<span[31m
+                  [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeLarge css-htszrh-MuiButton-startIcon"[31m
+                [36m>[31m
+                  [36m<svg[31m
+                    [33maria-hidden[31m=[32m"true"[31m
+                    [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+                    [33mdata-testid[31m=[32m"AddIcon"[31m
+                    [33mfocusable[31m=[32m"false"[31m
+                    [33mviewBox[31m=[32m"0 0 24 24"[31m
+                  [36m>[31m
+                    [36m<path[31m
+                      [33md[31m=[32m"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"[31m
+                    [36m/>[31m
+                  [36m</svg>[31m
+                [36m</span>[31m
+                [0mNew Assessment[0m
+                [36m<span[31m
+                  [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+                [36m/>[31m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"MuiBox-root css-19x4egf"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33maria-label[31m=[32m"Search assessments"[31m
+                [33mclass[31m=[32m"MuiFormControl-root MuiTextField-root css-1vs1jgp-MuiFormControl-root-MuiTextField-root"[31m
+              [36m>[31m
+                [36m<label[31m
+                  [33mclass[31m=[32m"MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"[3...[39m
+ [31m×[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould disable form during submission[33m 10792[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould have accessible form fields[33m 3343[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould enforce max length on notes field[33m 3159[2mms[22m[39m
+ [32m✓[39m src/pages/__tests__/CreateAssessment.test.tsx[2m > [22mCreateAssessment[2m > [22mshould show helper text for notes field[33m 3381[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould render question text[33m 614[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould render all options as checkboxes
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould show required helper text when required
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould not show required helper text when not required
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould call onChange with new selection when checkbox is checked[33m 1209[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould call onChange with updated array when adding to existing selection[33m 734[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould call onChange with filtered array when unchecking[33m 700[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould display selected values as checked
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould handle selecting all options[33m 1264[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould be disabled when disabled prop is true
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould handle null value as empty array[33m 1109[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould handle empty value array[33m 1012[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould handle unchecking the only selected item[33m 631[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/MultipleChoiceQuestion.test.tsx[2m > [22mMultipleChoiceQuestion[2m > [22mshould handle empty options array
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould render question text[33m 1428[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould render multiline text field[33m 502[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould show character limit helper text for required question[33m 561[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould show character limit helper text for optional question[33m 512[2mms[22m[39m
+ [31m×[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould call onChange when text is entered[33m 2317[2mms[22m[39m
+[31m   → expected 't' to be 'Cash flow is inconsistent' // Object.is equality[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould display current value[33m 555[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould handle null value gracefully[33m 497[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould handle empty string value[33m 499[2mms[22m[39m
+ [31m×[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould be disabled when disabled prop is true[33m 459[2mms[22m[39m
+[31m   → expected false to be true // Object.is equality[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould have maxLength attribute of 1000[33m 368[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould have accessible ARIA labels[33m 434[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould not have aria-required when not required[33m 369[2mms[22m[39m
+ [31m×[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould allow multiline input[33m 1777[2mms[22m[39m
+[31m   → expected '3' to contain '\n'[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould update value when typing[33m 1363[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould clear value when emptied[33m 820[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/TextQuestion.test.tsx[2m > [22mTextQuestion[2m > [22mshould have 4 rows by default[33m 386[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould render question text[33m 463[2mms[22m[39m
+ [31m×[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould render rating component with 5 stars[33m 1456[2mms[22m[39m
+[31m   → expected [ <input …(5)></input>, …(5) ] to have a length of 5 but got 6[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould show required helper text when required
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould not show required helper text when not required
+ [31m×[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould call onChange when star is clicked[33m 849[2mms[22m[39m
+[31m   → expected "spy" to be called with arguments: [ 3 ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[32m-   3,[90m
+[31m+   NaN,[90m
+[2m  ][22m
+[31m[90m
+
+Number of calls: [1m1[22m
+[31m[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould display current rating value
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould not display rating text when value is null
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould not display rating text when value is 0
+ [31m×[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould allow changing rating[33m 638[2mms[22m[39m
+[31m   → expected "spy" to be called with arguments: [ 5 ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[32m-   5,[90m
+[31m+   NaN,[90m
+[2m  ][22m
+[31m[90m
+
+Number of calls: [1m1[22m
+[31m[39m
+ [31m×[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould be disabled when disabled prop is true[33m 907[2mms[22m[39m
+[31m   → [2mexpect([22m[31melement[31m[2m).toBeDisabled()[22m
+
+Received element is not disabled:
+  [31m<input
+  class="MuiRating-visuallyHidden"
+  id=":r1n:"
+  name=":r1m:"
+  type="radio"
+  value="1"
+/>[31m[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould have accessible ARIA label
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould display all rating values correctly[33m 417[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould not call onChange when clicking current value and result is null[33m 554[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/RatingQuestion.test.tsx[2m > [22mRatingQuestion[2m > [22mshould render with size large
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould render question text[33m 660[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould render all options
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould show required indicator when required
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould not show required indicator when not required
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould call onChange when option is selected[33m 1441[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould display selected value
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould allow changing selection[33m 808[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould be disabled when disabled prop is true
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould have accessible ARIA labels[33m 419[2mms[22m[39m
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould handle empty options array
+ [32m✓[39m src/components/Questions/__tests__/SingleChoiceQuestion.test.tsx[2m > [22mSingleChoiceQuestion[2m > [22mshould handle null value gracefully[33m 1257[2mms[22m[39m
+ [32m✓[39m src/hooks/__tests__/useAutoSave.test.ts[2m > [22museAutoSave[2m > [22mshould not save when not dirty
+ [31m×[39m src/hooks/__tests__/useAutoSave.test.ts[2m > [22museAutoSave[2m > [22mshould save after 30 seconds when dirty[33m 5122[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [31m×[39m src/hooks/__tests__/useAutoSave.test.ts[2m > [22museAutoSave[2m > [22mshould debounce multiple changes[33m 5062[2mms[22m[39m
+[31m   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render business name[33m 982[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render client name
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render formatted updated date
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render draft status chip
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render in progress status chip
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render completed status chip
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render progress indicator[33m 856[2mms[22m[39m
+ [31m×[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould show "Continue" button for draft assessment[33m 3217[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "button" and name `/Continue/i`
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Acme Corp":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 0% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 0% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"0"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Edit assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Delete draft assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1wo34o8-MuiPaper-root-MuiCard-root"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardContent-root css-2r3irp-MuiCardContent-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-u0v7vs"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+          [36m>[31m
+            [0mAcme Corp[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-13htn8f-MuiChip-root"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeSmall MuiChip-icon MuiChip-iconSmall MuiChip-iconColorDefault css-ptiqhd-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"RadioButtonUncheckedIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-wjsjww-MuiChip-label"[31m
+            [36m>[31m
+              [0mDraft[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1ydyjjr-MuiTypography-root"[31m
+        [36m>[31m
+          [0mJohn Doe[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-eb0ott-MuiTypography-root"[31m
+        [36m>[31m
+          [0mUpdated [0m
+          [0mDec 15, 2025[0m
+        [36m</p>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-8atqhb"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-3mllz6"[31m
+          [36m>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"[31m
+            [36m>[31m
+              [0mAssessment Progress[0m
+            [36m</p>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-1afa13a-MuiTypography-root"[31m
+            [36m>[31m
+              [0m0[0m
+              [0m%[0m
+            [36m</p>[31m
+          [36m</div>[31m
+          [36m<span[31m
+            [33maria-label[31m=[32m"Assessment 0% complete"[31m
+            [33maria-valuemax[31m=[32m"100"[31m
+            [33maria-valuemin[31m=[32m"0"[31m
+            [33maria-valuenow[31m=[32m"0"[31m
+            [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+            [33mrole[31m=[32m"progressbar"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-5xe99f-MuiLinearProgress-bar1"[31m
+              [33mstyle[31m=[32m"transform: translateX(-100%);"[31m
+            [36m/>[31m
+          [36m</span>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardActions-root MuiCardActions-spacing css-1j9t6id-MuiCardActions-root"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"EditIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+          [36m</span>[31m
+          [0mContinue[0m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+          [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+            [33mdata-testid[31m=[32m"DeleteIcon"[31m
+            [33mfocusable[31m=[32m"false"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [31m×[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould show "Continue" button for in progress assessment[33m 2651[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "button" and name `/Continue/i`
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Smith LLC":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 45% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 45% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"45"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Edit assessment for Smith LLC":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Smith LLC"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1wo34o8-MuiPaper-root-MuiCard-root"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardContent-root css-2r3irp-MuiCardContent-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-u0v7vs"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+          [36m>[31m
+            [0mSmith LLC[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorPrimary MuiChip-filledPrimary css-15p98er-MuiChip-root"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeSmall MuiChip-icon MuiChip-iconSmall MuiChip-iconColorPrimary css-ptiqhd-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"PlayArrowIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M8 5v14l11-7z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-wjsjww-MuiChip-label"[31m
+            [36m>[31m
+              [0mIn Progress[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1ydyjjr-MuiTypography-root"[31m
+        [36m>[31m
+          [0mJane Smith[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-eb0ott-MuiTypography-root"[31m
+        [36m>[31m
+          [0mUpdated [0m
+          [0mDec 18, 2025[0m
+        [36m</p>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-8atqhb"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-3mllz6"[31m
+          [36m>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"[31m
+            [36m>[31m
+              [0mAssessment Progress[0m
+            [36m</p>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-1afa13a-MuiTypography-root"[31m
+            [36m>[31m
+              [0m45[0m
+              [0m%[0m
+            [36m</p>[31m
+          [36m</div>[31m
+          [36m<span[31m
+            [33maria-label[31m=[32m"Assessment 45% complete"[31m
+            [33maria-valuemax[31m=[32m"100"[31m
+            [33maria-valuemin[31m=[32m"0"[31m
+            [33maria-valuenow[31m=[32m"45"[31m
+            [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+            [33mrole[31m=[32m"progressbar"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-5xe99f-MuiLinearProgress-bar1"[31m
+              [33mstyle[31m=[32m"transform: translateX(-55%);"[31m
+            [36m/>[31m
+          [36m</span>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardActions-root MuiCardActions-spacing css-1j9t6id-MuiCardActions-root"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Edit assessment for Smith LLC"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"EditIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+          [36m</span>[31m
+          [0mContinue[0m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [31m×[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould show "View" button for completed assessment[33m 2444[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "button" and name `/View/i`
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Johnson Industries":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 100% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 100% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"100"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Edit assessment for Johnson Industries":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1wo34o8-MuiPaper-root-MuiCard-root"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardContent-root css-2r3irp-MuiCardContent-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-u0v7vs"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+          [36m>[31m
+            [0mJohnson Industries[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorSuccess MuiChip-filledSuccess css-txuvm7-MuiChip-root"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeSmall MuiChip-icon MuiChip-iconSmall MuiChip-iconColorSuccess css-ptiqhd-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"CheckCircleIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-wjsjww-MuiChip-label"[31m
+            [36m>[31m
+              [0mCompleted[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1ydyjjr-MuiTypography-root"[31m
+        [36m>[31m
+          [0mBob Johnson[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-eb0ott-MuiTypography-root"[31m
+        [36m>[31m
+          [0mUpdated [0m
+          [0mDec 20, 2025[0m
+        [36m</p>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-8atqhb"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-3mllz6"[31m
+          [36m>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"[31m
+            [36m>[31m
+              [0mAssessment Progress[0m
+            [36m</p>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-1afa13a-MuiTypography-root"[31m
+            [36m>[31m
+              [0m100[0m
+              [0m%[0m
+            [36m</p>[31m
+          [36m</div>[31m
+          [36m<span[31m
+            [33maria-label[31m=[32m"Assessment 100% complete"[31m
+            [33maria-valuemax[31m=[32m"100"[31m
+            [33maria-valuemin[31m=[32m"0"[31m
+            [33maria-valuenow[31m=[32m"100"[31m
+            [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+            [33mrole[31m=[32m"progressbar"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-5xe99f-MuiLinearProgress-bar1"[31m
+              [33mstyle[31m=[32m"transform: translateX(0%);"[31m
+            [36m/>[31m
+          [36m</span>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardActions-root MuiCardActions-spacing css-1j9t6id-MuiCardActions-root"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"EditIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+          [36m</span>[31m
+          [0mView[0m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould show delete button only for draft assessments[33m 1503[2mms[22m[39m
+ [31m×[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould call onEdit when Continue button is clicked[33m 3011[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "button" and name `/Continue/i`
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Acme Corp":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 0% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 0% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"0"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Edit assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Delete draft assessment for Acme Corp":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1wo34o8-MuiPaper-root-MuiCard-root"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardContent-root css-2r3irp-MuiCardContent-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-u0v7vs"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+          [36m>[31m
+            [0mAcme Corp[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-13htn8f-MuiChip-root"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeSmall MuiChip-icon MuiChip-iconSmall MuiChip-iconColorDefault css-ptiqhd-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"RadioButtonUncheckedIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-wjsjww-MuiChip-label"[31m
+            [36m>[31m
+              [0mDraft[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1ydyjjr-MuiTypography-root"[31m
+        [36m>[31m
+          [0mJohn Doe[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-eb0ott-MuiTypography-root"[31m
+        [36m>[31m
+          [0mUpdated [0m
+          [0mDec 15, 2025[0m
+        [36m</p>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-8atqhb"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-3mllz6"[31m
+          [36m>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"[31m
+            [36m>[31m
+              [0mAssessment Progress[0m
+            [36m</p>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-1afa13a-MuiTypography-root"[31m
+            [36m>[31m
+              [0m0[0m
+              [0m%[0m
+            [36m</p>[31m
+          [36m</div>[31m
+          [36m<span[31m
+            [33maria-label[31m=[32m"Assessment 0% complete"[31m
+            [33maria-valuemax[31m=[32m"100"[31m
+            [33maria-valuemin[31m=[32m"0"[31m
+            [33maria-valuenow[31m=[32m"0"[31m
+            [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-1v2t47i-MuiLinearProgress-root"[31m
+            [33mrole[31m=[32m"progressbar"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-5xe99f-MuiLinearProgress-bar1"[31m
+              [33mstyle[31m=[32m"transform: translateX(-100%);"[31m
+            [36m/>[31m
+          [36m</span>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardActions-root MuiCardActions-spacing css-1j9t6id-MuiCardActions-root"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Edit assessment for Acme Corp"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"EditIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+          [36m</span>[31m
+          [0mContinue[0m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Delete draft assessment for Acme Corp"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-1mk6yu1-MuiButtonBase-root-MuiIconButton-root"[31m
+          [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+            [33mdata-testid[31m=[32m"DeleteIcon"[31m
+            [33mfocusable[31m=[32m"false"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [31m×[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould call onEdit when View button is clicked[33m 2392[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "button" and name `/View/i`
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "Johnson Industries":
+  [36m<h2[31m
+    [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  progressbar:
+
+  Name "Assessment 100% complete":
+  [36m<span[31m
+    [33maria-label[31m=[32m"Assessment 100% complete"[31m
+    [33maria-valuemax[31m=[32m"100"[31m
+    [33maria-valuemin[31m=[32m"0"[31m
+    [33maria-valuenow[31m=[32m"100"[31m
+    [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Edit assessment for Johnson Industries":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1wo34o8-MuiPaper-root-MuiCard-root"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardContent-root css-2r3irp-MuiCardContent-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-u0v7vs"[31m
+        [36m>[31m
+          [36m<h2[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1y8v3j7-MuiTypography-root"[31m
+          [36m>[31m
+            [0mJohnson Industries[0m
+          [36m</h2>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorSuccess MuiChip-filledSuccess css-txuvm7-MuiChip-root"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeSmall MuiChip-icon MuiChip-iconSmall MuiChip-iconColorSuccess css-ptiqhd-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"CheckCircleIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-wjsjww-MuiChip-label"[31m
+            [36m>[31m
+              [0mCompleted[0m
+            [36m</span>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1ydyjjr-MuiTypography-root"[31m
+        [36m>[31m
+          [0mBob Johnson[0m
+        [36m</p>[31m
+        [36m<p[31m
+          [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-eb0ott-MuiTypography-root"[31m
+        [36m>[31m
+          [0mUpdated [0m
+          [0mDec 20, 2025[0m
+        [36m</p>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiBox-root css-8atqhb"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiBox-root css-3mllz6"[31m
+          [36m>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-r40f8v-MuiTypography-root"[31m
+            [36m>[31m
+              [0mAssessment Progress[0m
+            [36m</p>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 css-1afa13a-MuiTypography-root"[31m
+            [36m>[31m
+              [0m100[0m
+              [0m%[0m
+            [36m</p>[31m
+          [36m</div>[31m
+          [36m<span[31m
+            [33maria-label[31m=[32m"Assessment 100% complete"[31m
+            [33maria-valuemax[31m=[32m"100"[31m
+            [33maria-valuemin[31m=[32m"0"[31m
+            [33maria-valuenow[31m=[32m"100"[31m
+            [33mclass[31m=[32m"MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-one1nz-MuiLinearProgress-root"[31m
+            [33mrole[31m=[32m"progressbar"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-5xe99f-MuiLinearProgress-bar1"[31m
+              [33mstyle[31m=[32m"transform: translateX(0%);"[31m
+            [36m/>[31m
+          [36m</span>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"MuiCardActions-root MuiCardActions-spacing css-1j9t6id-MuiCardActions-root"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33maria-label[31m=[32m"Edit assessment for Johnson Industries"[31m
+          [33mclass[31m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"[31m
+          [33mtabindex[31m=[32m"0"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"EditIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+          [36m</span>[31m
+          [0mView[0m
+          [36m<span[31m
+            [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+          [36m/>[31m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould call onDelete when delete button is clicked[33m 1048[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould have accessible aria labels for edit button[33m 645[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould have accessible aria labels for delete button[33m 575[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render with proper card structure
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould display correct progress value
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould display 100% progress for completed assessment
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould display 0% progress for draft assessment
+ [32m✓[39m src/components/Assessment/__tests__/AssessmentCard.test.tsx[2m > [22mAssessmentCard[2m > [22mshould render edit icon in button
+ [32m✓[39m src/components/Assessment/__tests__/ProgressIndicator.test.tsx[2m > [22mProgressIndicator[2m > [22mshould render progress percentage[33m 388[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/ProgressIndicator.test.tsx[2m > [22mProgressIndicator[2m > [22mshould render without label when showLabel is false
+ [32m✓[39m src/components/Assessment/__tests__/ProgressIndicator.test.tsx[2m > [22mProgressIndicator[2m > [22mshould have accessible label[33m 775[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/ProgressIndicator.test.tsx[2m > [22mProgressIndicator[2m > [22mshould round progress to nearest integer
+ [32m✓[39m src/components/Assessment/__tests__/ProgressIndicator.test.tsx[2m > [22mProgressIndicator[2m > [22mshould display 100% for complete assessment
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render application title[33m 839[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render children content
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render dashboard icon button[33m 1624[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render logout icon button[33m 1001[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould navigate to dashboard when dashboard button is clicked[33m 1339[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould remove auth token and navigate to login when logout is clicked[33m 2986[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render footer with copyright text
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render app bar with primary color
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render assessment icon in app bar
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould have dashboard tooltip[33m 2411[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould have logout tooltip[33m 698[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render with proper layout structure
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render toolbar within app bar
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould apply flexbox layout for full height[33m 325[2mms[22m[39m
+ [32m✓[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould render multiple children correctly
+ [31m×[39m src/components/Layout/__tests__/AppLayout.test.tsx[2m > [22mAppLayout[2m > [22mshould have accessible navigation structure[33m 2130[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "toolbar"
+
+Here are the accessible roles:
+
+  banner:
+
+  Name "":
+  [36m<header[31m
+    [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  button:
+
+  Name "Go to dashboard":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Go to dashboard"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Logout":
+  [36m<button[31m
+    [33maria-label[31m=[32m"Logout"[31m
+    [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+    [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+    [33mtabindex[31m=[32m"0"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  main:
+
+  Name "":
+  [36m<main[31m
+    [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+  contentinfo:
+
+  Name "":
+  [36m<footer[31m
+    [33mclass[31m=[32m"MuiBox-root css-1uzi370"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"MuiBox-root css-zf0iqh"[31m
+    [36m>[31m
+      [36m<header[31m
+        [33mclass[31m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-hip9hq-MuiPaper-root-MuiAppBar-root"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"[31m
+        [36m>[31m
+          [36m<svg[31m
+            [33maria-hidden[31m=[32m"true"[31m
+            [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-yurbhn-MuiSvgIcon-root"[31m
+            [33mdata-testid[31m=[32m"AssessmentIcon"[31m
+            [33mfocusable[31m=[32m"false"[31m
+            [33mviewBox[31m=[32m"0 0 24 24"[31m
+          [36m>[31m
+            [36m<path[31m
+              [33md[31m=[32m"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M9 17H7v-7h2zm4 0h-2V7h2zm4 0h-2v-4h2z"[31m
+            [36m/>[31m
+          [36m</svg>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-h6 css-1juivf6-MuiTypography-root"[31m
+          [36m>[31m
+            [0mFinancial RISE Report[0m
+          [36m</div>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Go to dashboard"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"DashboardIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+          [36m<button[31m
+            [33maria-label[31m=[32m"Logout"[31m
+            [33mclass[31m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"[31m
+            [33mdata-mui-internal-clone-element[31m=[32m"true"[31m
+            [33mtabindex[31m=[32m"0"[31m
+            [33mtype[31m=[32m"button"[31m
+          [36m>[31m
+            [36m<svg[31m
+              [33maria-hidden[31m=[32m"true"[31m
+              [33mclass[31m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"[31m
+              [33mdata-testid[31m=[32m"LogoutIcon"[31m
+              [33mfocusable[31m=[32m"false"[31m
+              [33mviewBox[31m=[32m"0 0 24 24"[31m
+            [36m>[31m
+              [36m<path[31m
+                [33md[31m=[32m"m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"[31m
+              [36m/>[31m
+            [36m</svg>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[31m
+            [36m/>[31m
+          [36m</button>[31m
+        [36m</div>[31m
+      [36m</header>[31m
+      [36m<main[31m
+        [33mclass[31m=[32m"MuiBox-root css-1eswfqi"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiContainer-root MuiContainer-maxWidthXl css-19r6kue-MuiContainer-root"[31m
+        [36m>[31m
+          [36m<div>[31m
+            [0mTest Content[0m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</main>[31m
+      [36m<footer[31m
+        [33mclass[31m=[32m"MuiBox-root css-1uzi370"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"MuiContainer-root MuiContainer-maxWidthXl css-19r6kue-MuiContainer-root"[31m
+        [36m>[31m
+          [36m<p[31m
+            [33mclass[31m=[32m"MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-1vl95ex-MuiTypography-root"[31m
+          [36m>[31m
+            [0m© 2025 Financial RISE Report. All rights reserved.[0m
+          [36m</p>[31m
+        [36m</div>[31m
+      [36m</footer>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AutoSaveIndicator.test.tsx[2m > [22mAutoSaveIndicator[2m > [22mshould show saving state[33m 474[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AutoSaveIndicator.test.tsx[2m > [22mAutoSaveIndicator[2m > [22mshould show unsaved changes state[33m 314[2mms[22m[39m
+ [32m✓[39m src/components/Assessment/__tests__/AutoSaveIndicator.test.tsx[2m > [22mAutoSaveIndicator[2m > [22mshould show saved state with timestamp
+ [32m✓[39m src/components/Assessment/__tests__/AutoSaveIndicator.test.tsx[2m > [22mAutoSaveIndicator[2m > [22mshould not render when nothing to show
+ [31m×[39m src/components/Assessment/__tests__/AutoSaveIndicator.test.tsx[2m > [22mAutoSaveIndicator[2m > [22mshould have accessible labels[33m 1209[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "status"
+
+Here are the accessible roles:
+
+  progressbar:
+
+  Name "":
+  [36m<span[31m
+    [33mclass[31m=[32m"MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary MuiChip-icon MuiChip-iconSmall MuiChip-iconColorPrimary css-1rfkhxz-MuiCircularProgress-root"[31m
+    [33mrole[31m=[32m"progressbar"[31m
+    [33mstyle[31m=[32m"width: 16px; height: 16px;"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33maria-label[31m=[32m"Saving changes"[31m
+      [33maria-live[31m=[32m"polite"[31m
+      [33mclass[31m=[32m"MuiChip-root MuiChip-outlined MuiChip-sizeSmall MuiChip-colorPrimary MuiChip-outlinedPrimary css-1y6wsfa-MuiChip-root"[31m
+    [36m>[31m
+      [36m<span[31m
+        [33mclass[31m=[32m"MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary MuiChip-icon MuiChip-iconSmall MuiChip-iconColorPrimary css-1rfkhxz-MuiCircularProgress-root"[31m
+        [33mrole[31m=[32m"progressbar"[31m
+        [33mstyle[31m=[32m"width: 16px; height: 16px;"[31m
+      [36m>[31m
+        [36m<svg[31m
+          [33mclass[31m=[32m"MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"[31m
+          [33mviewBox[31m=[32m"22 22 44 44"[31m
+        [36m>[31m
+          [36m<circle[31m
+            [33mclass[31m=[32m"MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"[31m
+            [33mcx[31m=[32m"44"[31m
+            [33mcy[31m=[32m"44"[31m
+            [33mfill[31m=[32m"none"[31m
+            [33mr[31m=[32m"20.2"[31m
+            [33mstroke-width[31m=[32m"3.6"[31m
+          [36m/>[31m
+        [36m</svg>[31m
+      [36m</span>[31m
+      [36m<span[31m
+        [33mclass[31m=[32m"MuiChip-label MuiChip-labelSmall css-rrn746-MuiChip-label"[31m
+      [36m>[31m
+        [0mSaving...[0m
+      [36m</span>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+
+[2m Test Files [22m [1m[31m10 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[31m33 failed[39m[22m[2m | [22m[1m[32m169 passed[39m[22m[90m (202)[39m
+[2m   Start at [22m 20:23:43
+[2m   Duration [22m 767.52s[2m (transform 3.23s, setup 33.14s, collect 1333.41s, tests 355.91s, environment 189.20s, prepare 29.89s)[22m
+
