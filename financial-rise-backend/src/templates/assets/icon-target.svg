@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Target Icon - Goals -->
+  <defs>
+    <style>
+      .target-outer { fill: none; stroke: #4B006E; stroke-width: 3; }
+      .target-middle { fill: none; stroke: #6B2390; stroke-width: 3; }
+      .target-inner { fill: #D4AF37; }
+      .target-center { fill: #4B006E; }
+    </style>
+  </defs>
+
+  <circle cx="50" cy="50" r="45" class="target-outer"/>
+  <circle cx="50" cy="50" r="30" class="target-middle"/>
+  <circle cx="50" cy="50" r="15" class="target-inner"/>
+  <circle cx="50" cy="50" r="5" class="target-center"/>
+</svg>

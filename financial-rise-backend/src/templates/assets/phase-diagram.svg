@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <!-- Financial RISE Phase Diagram SVG -->
+  <defs>
+    <style>
+      .phase-text { font-family: Calibri, sans-serif; font-size: 14px; font-weight: bold; }
+      .phase-number { font-family: Calibri, sans-serif; font-size: 18px; font-weight: bold; }
+      .arrow { fill: #D4AF37; }
+      .phase-circle { stroke-width: 3; }
+      .phase-circle-inactive { fill: #FFFFFF; stroke: #666666; }
+      .phase-circle-active { fill: #4B006E; stroke: #D4AF37; }
+      .phase-circle-completed { fill: #2E7D32; stroke: #2E7D32; }
+      .text-inactive { fill: #666666; }
+      .text-active { fill: #FFFFFF; }
+      .text-label { fill: #333333; font-size: 12px; }
+    </style>
+  </defs>
+
+  <!-- Phase 1: Stabilize -->
+  <g id="phase1">
+    <circle cx="80" cy="80" r="40" class="phase-circle phase-circle-inactive"/>
+    <text x="80" y="70" text-anchor="middle" class="phase-number text-inactive">1</text>
+    <text x="80" y="90" text-anchor="middle" class="phase-text text-inactive">Stabilize</text>
+    <text x="80" y="150" text-anchor="middle" class="text-label">Foundation</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M 130 80 L 170 80 L 165 75 M 170 80 L 165 85" class="arrow" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- Phase 2: Organize -->
+  <g id="phase2">
+    <circle cx="220" cy="80" r="40" class="phase-circle phase-circle-inactive"/>
+    <text x="220" y="70" text-anchor="middle" class="phase-number text-inactive">2</text>
+    <text x="220" y="90" text-anchor="middle" class="phase-text text-inactive">Organize</text>
+    <text x="220" y="150" text-anchor="middle" class="text-label">Systems</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <path d="M 270 80 L 310 80 L 305 75 M 310 80 L 305 85" class="arrow" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- Phase 3: Build -->
+  <g id="phase3">
+    <circle cx="360" cy="80" r="40" class="phase-circle phase-circle-inactive"/>
+    <text x="360" y="70" text-anchor="middle" class="phase-number text-inactive">3</text>
+    <text x="360" y="90" text-anchor="middle" class="phase-text text-inactive">Build</text>
+    <text x="360" y="150" text-anchor="middle" class="text-label">Operations</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <path d="M 410 80 L 450 80 L 445 75 M 450 80 L 445 85" class="arrow" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- Phase 4: Grow -->
+  <g id="phase4">
+    <circle cx="500" cy="80" r="40" class="phase-circle phase-circle-inactive"/>
+    <text x="500" y="70" text-anchor="middle" class="phase-number text-inactive">4</text>
+    <text x="500" y="90" text-anchor="middle" class="phase-text text-inactive">Grow</text>
+    <text x="500" y="150" text-anchor="middle" class="text-label">Strategy</text>
+  </g>
+
+  <!-- Arrow 4 -->
+  <path d="M 550 80 L 590 80 L 585 75 M 590 80 L 585 85" class="arrow" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- Phase 5: Systemic -->
+  <g id="phase5">
+    <circle cx="640" cy="80" r="40" class="phase-circle phase-circle-inactive"/>
+    <text x="640" y="70" text-anchor="middle" class="phase-number text-inactive">5</text>
+    <text x="640" y="90" text-anchor="middle" class="phase-text text-inactive">Systemic</text>
+    <text x="640" y="150" text-anchor="middle" class="text-label">Literacy</text>
+  </g>
+</svg>

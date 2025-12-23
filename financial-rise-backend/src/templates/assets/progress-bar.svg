@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 50" width="400" height="50">
+  <!-- Progress Bar Template -->
+  <defs>
+    <style>
+      .progress-bg { fill: #F5F5F5; }
+      .progress-fill { fill: url(#progressGradient); }
+      .progress-text { font-family: Calibri, sans-serif; font-size: 14px; font-weight: bold; fill: #4B006E; }
+    </style>
+    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4B006E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B2390;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background bar -->
+  <rect x="0" y="10" width="400" height="30" rx="15" class="progress-bg"/>
+
+  <!-- Progress fill (width will be dynamically set based on percentage) -->
+  <!-- Example: 70% progress -->
+  <rect x="0" y="10" width="280" height="30" rx="15" class="progress-fill"/>
+
+  <!-- Progress text -->
+  <text x="200" y="32" text-anchor="middle" class="progress-text">70% Complete</text>
+</svg>

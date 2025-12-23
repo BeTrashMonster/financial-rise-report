@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Building Icon - Build Phase -->
+  <defs>
+    <style>
+      .building-fill { fill: #4B006E; }
+      .building-window { fill: #D4AF37; }
+      .building-door { fill: #666666; }
+    </style>
+  </defs>
+
+  <!-- Building structure -->
+  <rect x="20" y="30" width="60" height="60" class="building-fill"/>
+  <polygon points="20,30 50,10 80,30" class="building-fill"/>
+
+  <!-- Windows -->
+  <rect x="30" y="40" width="10" height="10" class="building-window"/>
+  <rect x="60" y="40" width="10" height="10" class="building-window"/>
+  <rect x="30" y="55" width="10" height="10" class="building-window"/>
+  <rect x="60" y="55" width="10" height="10" class="building-window"/>
+
+  <!-- Door -->
+  <rect x="45" y="70" width="10" height="20" class="building-door"/>
+</svg>

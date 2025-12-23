@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Shield Icon - Stabilize Phase -->
+  <defs>
+    <style>
+      .shield-fill { fill: url(#shieldGradient); }
+      .shield-check { fill: none; stroke: #FFFFFF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4B006E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B2390;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shield shape -->
+  <path d="M 50 10 L 80 25 L 80 50 Q 80 80 50 90 Q 20 80 20 50 L 20 25 Z" class="shield-fill"/>
+
+  <!-- Checkmark -->
+  <path d="M 35 50 L 45 60 L 65 35" class="shield-check"/>
+</svg>

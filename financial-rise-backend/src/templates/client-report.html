@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial RISE Report - Your Financial Readiness Journey</title>
+    <style>
+        /* Brand Colors */
+        :root {
+            --primary-purple: #4B006E;
+            --gold: #D4AF37;
+            --black: #000000;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --medium-gray: #666666;
+            --dark-gray: #333333;
+            --success-green: #2E7D32;
+            --info-blue: #1976D2;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Calibri, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+        }
+
+        /* Page Layout */
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.75in;
+            margin: 0 auto;
+            background-color: var(--white);
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 3px solid var(--primary-purple);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-purple);
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome h1 {
+            font-size: 36px;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+
+        .welcome .client-name {
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .welcome p {
+            font-size: 16px;
+            color: var(--dark-gray);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 24px;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        /* Confidence Assessment Box */
+        .confidence-box {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6B2390 100%);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .confidence-box h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .confidence-comparison {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .confidence-item {
+            text-align: center;
+        }
+
+        .confidence-label {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .confidence-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .confidence-arrow {
+            font-size: 36px;
+            color: var(--gold);
+        }
+
+        /* Journey Visual Section */
+        .journey-visual {
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .phase-diagram {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .phase-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .phase-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .phase-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 3px solid var(--medium-gray);
+            background-color: var(--white);
+            color: var(--medium-gray);
+        }
+
+        .phase-circle.current {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6B2390 100%);
+            border-color: var(--gold);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(75, 0, 110, 0.3);
+        }
+
+        .phase-circle.completed {
+            background-color: var(--success-green);
+            border-color: var(--success-green);
+            color: var(--white);
+        }
+
+        .phase-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--dark-gray);
+            margin-top: 10px;
+        }
+
+        .phase-label.current {
+            color: var(--primary-purple);
+            font-size: 16px;
+        }
+
+        /* Current Phase Highlight */
+        .current-phase-box {
+            background-color: var(--white);
+            border: 3px solid var(--primary-purple);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .current-phase-box h3 {
+            font-size: 22px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .current-phase-box p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--dark-gray);
+        }
+
+        /* Quick Wins Section */
+        .quick-wins {
+            margin: 30px 0;
+        }
+
+        .quick-win-item {
+            background-color: var(--light-gray);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--gold);
+            border-radius: 8px;
+        }
+
+        .quick-win-item h4 {
+            font-size: 18px;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .quick-win-icon {
+            margin-right: 10px;
+            font-size: 24px;
+            color: var(--gold);
+        }
+
+        .quick-win-item p {
+            font-size: 15px;
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+
+        .why-matters {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Personalized Roadmap */
+        .roadmap-section {
+            margin: 30px 0;
+        }
+
+        .roadmap-item {
+            background-color: var(--white);
+            border: 2px solid var(--medium-gray);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+
+        .roadmap-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6B2390 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .roadmap-title {
+            font-size: 20px;
+            color: var(--primary-purple);
+            font-weight: bold;
+        }
+
+        .roadmap-description {
+            font-size: 15px;
+            color: var(--dark-gray);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-actions {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .roadmap-actions h5 {
+            font-size: 14px;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .roadmap-actions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .roadmap-actions li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .roadmap-actions li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Next Steps Section */
+        .next-steps {
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6B2390 100%);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .next-steps h2 {
+            font-size: 26px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .next-steps p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .call-to-action {
+            background-color: var(--gold);
+            color: var(--primary-purple);
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Encouraging Message Box */
+        .encouragement-box {
+            background-color: var(--light-gray);
+            border-left: 5px solid var(--success-green);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .encouragement-box p {
+            font-size: 16px;
+            color: var(--dark-gray);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .encouragement-box .signature {
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--primary-purple);
+            font-style: normal;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary-purple);
+            text-align: center;
+            color: var(--medium-gray);
+            font-size: 12px;
+        }
+
+        /* Placeholder Styling */
+        .placeholder {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* DISC Adaptive Content Markers (for template processing) */
+        .disc-d {
+            /* Brief, results-oriented content for Dominance types */
+        }
+
+        .disc-i {
+            /* Collaborative, big-picture content for Influence types */
+        }
+
+        .disc-s {
+            /* Step-by-step, reassuring content for Steadiness types */
+        }
+
+        .disc-c {
+            /* Detailed, analytical content for Compliance types */
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Welcome and Journey Overview -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Financial RISE Report</div>
+            <div class="tagline">Readiness Insights for Sustainable Entrepreneurship</div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome">
+            <h1>Your Financial Readiness Journey</h1>
+            <div class="client-name"><span class="placeholder">{{clientName}}</span></div>
+            <p>
+                Congratulations on taking this important step toward financial clarity and growth!
+                This personalized report maps your current financial position and provides a
+                clear path forward to achieve your business goals.
+            </p>
+        </div>
+
+        <!-- Confidence Assessment -->
+        <div class="confidence-box">
+            <h3>Your Confidence Growth</h3>
+            <p>We measured your confidence at the beginning and end of this assessment:</p>
+            <div class="confidence-comparison">
+                <div class="confidence-item">
+                    <div class="confidence-label">Starting Confidence</div>
+                    <div class="confidence-score"><span class="placeholder">{{beforeConfidence}}</span></div>
+                </div>
+                <div class="confidence-arrow">→</div>
+                <div class="confidence-item">
+                    <div class="confidence-label">Current Confidence</div>
+                    <div class="confidence-score"><span class="placeholder">{{afterConfidence}}</span></div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 15px;">
+                <span class="placeholder">{{confidenceMessage}}</span>
+            </p>
+        </div>
+
+        <!-- Journey Visual -->
+        <div class="journey-visual">
+            <h2 class="section-title" style="border-bottom-color: var(--primary-purple);">Your Financial RISE Journey</h2>
+            <p class="section-subtitle">The path to sustainable financial success has five key phases:</p>
+
+            <div class="phase-diagram">
+                <!-- Phase progression visualization -->
+                <div class="phase-container">
+                    <div class="phase-step">
+                        <div class="phase-circle {{#if isStabilizePhase}}current{{/if}}{{#if stabilizeCompleted}}completed{{/if}}">
+                            <div>Stabilize</div>
+                        </div>
+                        <div class="phase-label {{#if isStabilizePhase}}current{{/if}}">Phase 1</div>
+                    </div>
+
+                    <div class="phase-step">
+                        <div class="phase-circle {{#if isOrganizePhase}}current{{/if}}{{#if organizeCompleted}}completed{{/if}}">
+                            <div>Organize</div>
+                        </div>
+                        <div class="phase-label {{#if isOrganizePhase}}current{{/if}}">Phase 2</div>
+                    </div>
+
+                    <div class="phase-step">
+                        <div class="phase-circle {{#if isBuildPhase}}current{{/if}}{{#if buildCompleted}}completed{{/if}}">
+                            <div>Build</div>
+                        </div>
+                        <div class="phase-label {{#if isBuildPhase}}current{{/if}}">Phase 3</div>
+                    </div>
+
+                    <div class="phase-step">
+                        <div class="phase-circle {{#if isGrowPhase}}current{{/if}}{{#if growCompleted}}completed{{/if}}">
+                            <div>Grow</div>
+                        </div>
+                        <div class="phase-label {{#if isGrowPhase}}current{{/if}}">Phase 4</div>
+                    </div>
+
+                    <div class="phase-step">
+                        <div class="phase-circle {{#if isSystemicPhase}}current{{/if}}{{#if systemicCompleted}}completed{{/if}}">
+                            <div>Systemic</div>
+                        </div>
+                        <div class="phase-label {{#if isSystemicPhase}}current{{/if}}">Financial Literacy</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Phase Highlight -->
+            <div class="current-phase-box">
+                <h3>You're Currently in the <span class="placeholder">{{primaryPhaseName}}</span> Phase</h3>
+                <p><span class="placeholder">{{currentPhaseDescription}}</span></p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Financial RISE Report - Your Personalized Financial Roadmap</p>
+            <p>Assessment Date: <span class="placeholder">{{assessmentDate}}</span> | Page 1</p>
+        </div>
+    </div>
+
+    <!-- Page 2: Quick Wins -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Financial RISE Report</div>
+            <div class="tagline">Readiness Insights for Sustainable Entrepreneurship</div>
+        </div>
+
+        <h2 class="section-title">Your Quick Wins</h2>
+        <p class="section-subtitle">
+            Start here! These are high-impact actions you can take right now to improve
+            your financial position. Each one is designed to give you immediate results.
+        </p>
+
+        <div class="quick-wins">
+            <div class="quick-win-item">
+                <h4><span class="quick-win-icon">⚡</span><span class="placeholder">{{quickWin1Title}}</span></h4>
+                <p><span class="placeholder">{{quickWin1Description}}</span></p>
+                <div class="why-matters">
+                    <strong>Why this matters:</strong> <span class="placeholder">{{quickWin1Why}}</span>
+                </div>
+            </div>
+
+            <div class="quick-win-item">
+                <h4><span class="quick-win-icon">⚡</span><span class="placeholder">{{quickWin2Title}}</span></h4>
+                <p><span class="placeholder">{{quickWin2Description}}</span></p>
+                <div class="why-matters">
+                    <strong>Why this matters:</strong> <span class="placeholder">{{quickWin2Why}}</span>
+                </div>
+            </div>
+
+            <div class="quick-win-item">
+                <h4><span class="quick-win-icon">⚡</span><span class="placeholder">{{quickWin3Title}}</span></h4>
+                <p><span class="placeholder">{{quickWin3Description}}</span></p>
+                <div class="why-matters">
+                    <strong>Why this matters:</strong> <span class="placeholder">{{quickWin3Why}}</span>
+                </div>
+            </div>
+
+            <div class="quick-win-item">
+                <h4><span class="quick-win-icon">⚡</span><span class="placeholder">{{quickWin4Title}}</span></h4>
+                <p><span class="placeholder">{{quickWin4Description}}</span></p>
+                <div class="why-matters">
+                    <strong>Why this matters:</strong> <span class="placeholder">{{quickWin4Why}}</span>
+                </div>
+            </div>
+
+            <div class="quick-win-item">
+                <h4><span class="quick-win-icon">⚡</span><span class="placeholder">{{quickWin5Title}}</span></h4>
+                <p><span class="placeholder">{{quickWin5Description}}</span></p>
+                <div class="why-matters">
+                    <strong>Why this matters:</strong> <span class="placeholder">{{quickWin5Why}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Financial RISE Report - Your Personalized Financial Roadmap</p>
+            <p>Assessment Date: <span class="placeholder">{{assessmentDate}}</span> | Page 2</p>
+        </div>
+    </div>
+
+    <!-- Page 3: Personalized Roadmap -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Financial RISE Report</div>
+            <div class="tagline">Readiness Insights for Sustainable Entrepreneurship</div>
+        </div>
+
+        <h2 class="section-title">Your Personalized Roadmap</h2>
+        <p class="section-subtitle">
+            <span class="placeholder">{{roadmapIntro}}</span>
+        </p>
+
+        <div class="roadmap-section">
+            <!-- Roadmap Step 1 -->
+            <div class="roadmap-item">
+                <div class="roadmap-header">
+                    <div class="roadmap-number">1</div>
+                    <div class="roadmap-title"><span class="placeholder">{{roadmapStep1Title}}</span></div>
+                </div>
+                <div class="roadmap-description">
+                    <span class="placeholder">{{roadmapStep1Description}}</span>
+                </div>
+                <div class="roadmap-actions">
+                    <h5>Key Actions:</h5>
+                    <ul>
+                        <li><span class="placeholder">{{roadmapStep1Action1}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep1Action2}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep1Action3}}</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Roadmap Step 2 -->
+            <div class="roadmap-item">
+                <div class="roadmap-header">
+                    <div class="roadmap-number">2</div>
+                    <div class="roadmap-title"><span class="placeholder">{{roadmapStep2Title}}</span></div>
+                </div>
+                <div class="roadmap-description">
+                    <span class="placeholder">{{roadmapStep2Description}}</span>
+                </div>
+                <div class="roadmap-actions">
+                    <h5>Key Actions:</h5>
+                    <ul>
+                        <li><span class="placeholder">{{roadmapStep2Action1}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep2Action2}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep2Action3}}</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Roadmap Step 3 -->
+            <div class="roadmap-item">
+                <div class="roadmap-header">
+                    <div class="roadmap-number">3</div>
+                    <div class="roadmap-title"><span class="placeholder">{{roadmapStep3Title}}</span></div>
+                </div>
+                <div class="roadmap-description">
+                    <span class="placeholder">{{roadmapStep3Description}}</span>
+                </div>
+                <div class="roadmap-actions">
+                    <h5>Key Actions:</h5>
+                    <ul>
+                        <li><span class="placeholder">{{roadmapStep3Action1}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep3Action2}}</span></li>
+                        <li><span class="placeholder">{{roadmapStep3Action3}}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Financial RISE Report - Your Personalized Financial Roadmap</p>
+            <p>Assessment Date: <span class="placeholder">{{assessmentDate}}</span> | Page 3</p>
+        </div>
+    </div>
+
+    <!-- Page 4: Next Steps and Encouragement -->
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Financial RISE Report</div>
+            <div class="tagline">Readiness Insights for Sustainable Entrepreneurship</div>
+        </div>
+
+        <h2 class="section-title">Next Steps</h2>
+
+        <!-- Next Steps Call to Action -->
+        <div class="next-steps">
+            <h2>Let's Work Together</h2>
+            <p>
+                You've taken the first step by completing this assessment. Now it's time to turn
+                these insights into action. I'm here to support you every step of the way.
+            </p>
+            <p>
+                <span class="placeholder">{{nextStepsDescription}}</span>
+            </p>
+            <div class="call-to-action">
+                <span class="placeholder">{{callToAction}}</span>
+            </div>
+        </div>
+
+        <!-- Encouragement Message (DISC-adapted) -->
+        <div class="encouragement-box">
+            <p>
+                <span class="placeholder">{{encouragementMessage}}</span>
+            </p>
+            <div class="signature">
+                — <span class="placeholder">{{consultantName}}</span>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <h2 class="section-title" style="margin-top: 40px;">Additional Resources</h2>
+
+        <div style="background-color: var(--light-gray); padding: 20px; border-radius: 8px;">
+            <p style="margin-bottom: 15px; font-size: 15px; color: var(--dark-gray);">
+                <strong>Understanding Your Report:</strong> This assessment evaluated your business across
+                five key financial phases. Each phase builds on the previous one, creating a strong
+                foundation for sustainable growth.
+            </p>
+
+            <ul style="margin-left: 20px; color: var(--dark-gray); font-size: 15px;">
+                <li style="margin-bottom: 8px;">
+                    <strong>Phase 1 - Stabilize:</strong> Get your financial house in order with proper
+                    accounting, compliance, and debt management
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>Phase 2 - Organize:</strong> Set up foundational systems like Chart of Accounts
+                    and integrate your business tools
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>Phase 3 - Build:</strong> Create robust operational systems with documented
+                    processes and team workflows
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>Phase 4 - Grow:</strong> Implement strategic financial planning with cash flow
+                    projections and scenario modeling
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <strong>Systemic - Financial Literacy:</strong> Build your ability to read, interpret,
+                    and make decisions from financial reports
+                </li>
+            </ul>
+
+            <p style="margin-top: 20px; font-size: 15px; color: var(--dark-gray);">
+                <strong>Remember:</strong> Financial transformation is a journey, not a destination.
+                Every business moves through these phases at its own pace. The key is consistent
+                progress, not perfection.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Financial RISE Report - Your Personalized Financial Roadmap</p>
+            <p>Assessment Date: <span class="placeholder">{{assessmentDate}}</span> | Page 4</p>
+            <p style="margin-top: 10px;">Thank you for your commitment to financial excellence!</p>
+        </div>
+    </div>
+
+</body>
+</html>

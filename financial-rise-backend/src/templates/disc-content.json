@@ -1,0 +1,150 @@
+{
+  "contentVariations": {
+    "D": {
+      "profileName": "Dominance",
+      "description": "Direct, results-oriented, decisive, and competitive. Values efficiency and bottom-line results.",
+      "communicationStrategy": "Be brief, direct, and results-focused. Emphasize ROI and competitive advantages. Provide executive summaries with key takeaways.",
+      "reportTone": "brief-and-direct",
+      "welcomeMessage": "Let's cut to the chase: this report shows you exactly where your business stands financially and what actions will drive the biggest results.",
+      "confidenceMessage": {
+        "increased": "Strong work. Your confidence jumped from {{before}}/10 to {{after}}/10. That momentum is your competitive edge.",
+        "maintained": "Your confidence held steady at {{after}}/10. Now let's channel that into measurable results.",
+        "decreased": "Confidence dipped from {{before}}/10 to {{after}}/10, but that's temporary. The action plan below will turn things around fast."
+      },
+      "roadmapIntro": "Here's your power move sequence—three high-impact actions that deliver maximum ROI with minimum waste:",
+      "encouragementMessage": "You didn't get this far by sitting still. Your assessment shows clear opportunities for competitive advantage. Let's execute on these priorities and dominate your market. The wins are there—you just need to take them.",
+      "callToAction": "Schedule your strategy session now to execute these priorities",
+      "nextStepsDescription": "Time is money. Your next move is simple: book a 30-minute strategy call where we'll prioritize these actions and set aggressive but achievable targets. No fluff, just execution."
+    },
+    "I": {
+      "profileName": "Influence",
+      "description": "Enthusiastic, collaborative, optimistic, and people-oriented. Values relationships and team success.",
+      "communicationStrategy": "Use collaborative language, emphasize partnerships and team opportunities. Include visuals and big-picture thinking. Celebrate progress and potential.",
+      "reportTone": "collaborative-and-enthusiastic",
+      "welcomeMessage": "Welcome to an exciting journey! This report is the beginning of a partnership that will transform your financial future and create amazing opportunities for you and your team.",
+      "confidenceMessage": {
+        "increased": "This is fantastic! Your confidence grew from {{before}}/10 to {{after}}/10. Together, we're building something special!",
+        "maintained": "You're maintaining strong confidence at {{after}}/10, which shows your positive outlook is a real strength!",
+        "decreased": "I noticed your confidence shifted from {{before}}/10 to {{after}}/10. That's okay—we all have moments of doubt. The good news? We're in this together, and I'm here to support you every step of the way."
+      },
+      "roadmapIntro": "Imagine the possibilities! Here are three exciting opportunities that will energize your business and open new doors for growth:",
+      "encouragementMessage": "I'm genuinely excited about the potential I see in your business! You have so many strengths to build on, and the opportunities ahead are truly inspiring. This journey is going to be collaborative, supportive, and—dare I say it—fun! Let's make magic happen together.",
+      "callToAction": "Let's connect and start building your success story together!",
+      "nextStepsDescription": "I can't wait to partner with you on this journey! Let's schedule a time to talk through these exciting opportunities. We'll brainstorm together, align on your vision, and create a plan that energizes you and your team."
+    },
+    "S": {
+      "profileName": "Steadiness",
+      "description": "Patient, reliable, supportive, and methodical. Values stability, consistency, and clear processes.",
+      "communicationStrategy": "Use reassuring language, provide step-by-step guidance, and emphasize stability. Avoid pressure and allow time for processing. Build trust through consistency.",
+      "reportTone": "step-by-step-and-reassuring",
+      "welcomeMessage": "You've taken an important step today, and I want you to know that you're in good hands. This report will guide you through a clear, manageable path to financial stability and growth—one step at a time.",
+      "confidenceMessage": {
+        "increased": "It's wonderful to see your confidence grow from {{before}}/10 to {{after}}/10. That's a sign you're moving in the right direction, at a pace that feels right for you.",
+        "maintained": "Your confidence staying steady at {{after}}/10 shows you have a solid foundation. We'll build on that foundation carefully and thoughtfully.",
+        "decreased": "I understand your confidence may have shifted from {{before}}/10 to {{after}}/10, and that's completely normal. Change can feel uncomfortable, but please know that we'll take this journey at your pace, with support every step of the way."
+      },
+      "roadmapIntro": "Let's take this one step at a time. Here are three manageable actions we can work through together, at a pace that feels comfortable for you:",
+      "encouragementMessage": "I want you to know that financial improvement doesn't have to be overwhelming or rushed. We're going to take this journey together, at a pace that works for you. Every small step forward is progress, and I'll be right here to support you through each one. You don't have to do this alone.",
+      "callToAction": "Schedule a comfortable, no-pressure conversation to discuss next steps",
+      "nextStepsDescription": "There's no rush or pressure here. When you're ready, let's schedule a relaxed conversation where we can walk through these recommendations together. We'll move at your pace, address any concerns, and create a plan that feels manageable and sustainable for you."
+    },
+    "C": {
+      "profileName": "Compliance",
+      "description": "Analytical, precise, systematic, and quality-focused. Values accuracy, data, and thorough documentation.",
+      "communicationStrategy": "Provide detailed information, data-driven insights, and thorough documentation. Be precise and accurate. Include methodologies and supporting evidence.",
+      "reportTone": "detailed-and-analytical",
+      "welcomeMessage": "This report provides a comprehensive, data-driven analysis of your financial readiness across all five phases. Each recommendation is based on systematic evaluation of your current state and evidence-based best practices.",
+      "confidenceMessage": {
+        "increased": "Your confidence score increased from {{before}}/10 to {{after}}/10 (a {{change}}-point improvement). This quantitative shift indicates measurable progress in your financial understanding and readiness.",
+        "maintained": "Your confidence remained consistent at {{after}}/10 throughout the assessment process, suggesting a stable and accurate self-assessment of your capabilities.",
+        "decreased": "Your confidence decreased from {{before}}/10 to {{after}}/10 (a {{change}}-point reduction). This is often observed when individuals gain deeper awareness of complexity—a sign of increased financial literacy, not decline."
+      },
+      "roadmapIntro": "Based on systematic analysis of your assessment responses, the following three priorities have been identified using a weighted scoring algorithm that evaluates impact, feasibility, and dependency factors:",
+      "encouragementMessage": "Your assessment data reveals specific, addressable opportunities for systematic improvement. The recommendations in this report are based on proven methodologies and best practices documented across thousands of similar business profiles. Each action item includes clear success criteria and measurable outcomes. With proper attention to detail and methodical execution, these improvements are highly achievable.",
+      "callToAction": "Schedule a detailed consultation to review methodology and implementation specifics",
+      "nextStepsDescription": "The optimal next step is to schedule a comprehensive review session where we can examine the detailed analysis behind each recommendation, discuss implementation methodologies, review success metrics, and address any technical questions you may have about the assessment process or findings."
+    }
+  },
+  "phaseDescriptions": {
+    "Stabilize": {
+      "D": "Your business needs foundational financial controls. Bottom line: get your books clean, taxes current, and debt under control. This is about minimizing risk and maximizing operational efficiency.",
+      "I": "Let's build a strong foundation together! The Stabilize phase is about creating financial peace of mind so you can focus on the exciting growth opportunities ahead.",
+      "S": "The Stabilize phase is about creating a safe, reliable financial foundation. We'll work through this systematically, addressing one area at a time until you feel secure and confident.",
+      "C": "Stabilize phase indicates foundational financial systems require attention. This involves implementing proper accounting procedures, ensuring regulatory compliance, and establishing baseline financial controls per industry standards."
+    },
+    "Organize": {
+      "D": "Time to systematize. Organize phase means setting up efficient financial processes that run without you micromanaging. This frees you up for strategic work.",
+      "I": "How exciting! The Organize phase is where we create integrated systems that bring your whole team together. It's about collaboration and making everything work in harmony!",
+      "S": "In the Organize phase, we'll carefully set up the right systems and processes. Each piece will fit together logically, giving you clear structure and reducing stress.",
+      "C": "Organize phase requires implementation of standardized financial infrastructure including Chart of Accounts configuration, system integration protocols, and documented procedural frameworks."
+    },
+    "Build": {
+      "D": "Build phase is your competitive advantage. Create robust systems that scale without breaking. Focus: operational excellence and reducing friction.",
+      "I": "This is where the magic happens! The Build phase is about creating amazing workflows and empowering your team with tools that make everyone's job easier and more effective.",
+      "S": "The Build phase focuses on creating reliable, repeatable processes. We'll develop systems step-by-step that you and your team can trust and rely on every day.",
+      "C": "Build phase involves development of comprehensive operational systems including standard operating procedures, workflow documentation, and quality assurance protocols aligned with industry best practices."
+    },
+    "Grow": {
+      "D": "Grow phase = offensive strategy. Use forecasting and cash flow planning to identify high-ROI opportunities and outmaneuver competition. This is where you win.",
+      "I": "The Grow phase is all about exciting possibilities! Together, we'll create visionary plans and explore new opportunities that align with your biggest dreams for the business.",
+      "S": "In the Grow phase, we'll carefully plan for sustainable expansion. Every growth step will be thoughtfully considered and backed by solid financial planning.",
+      "C": "Grow phase requires implementation of advanced financial planning methodologies including multi-scenario cash flow modeling, variance analysis, and strategic forecasting protocols."
+    },
+    "Systemic": {
+      "D": "Systemic means you read the numbers and make fast, confident decisions. This is about financial mastery—turning data into competitive advantage.",
+      "I": "Financial literacy is empowering! When you understand your numbers, you can share insights with your team and make decisions that everyone can rally behind.",
+      "S": "Systemic financial literacy means you'll feel comfortable and confident reading your reports. We'll build your understanding gradually, at a pace that works for you.",
+      "C": "Systemic financial literacy involves comprehensive understanding of financial statement analysis, ratio interpretation, and data-driven decision methodologies based on quantitative metrics."
+    }
+  },
+  "quickWinTones": {
+    "D": {
+      "prefix": "Quick Win:",
+      "whyMattersPrefix": "Impact:",
+      "actionVerb": "Execute"
+    },
+    "I": {
+      "prefix": "Exciting Opportunity:",
+      "whyMattersPrefix": "Why you'll love this:",
+      "actionVerb": "Let's do"
+    },
+    "S": {
+      "prefix": "First Step:",
+      "whyMattersPrefix": "This helps because:",
+      "actionVerb": "Complete"
+    },
+    "C": {
+      "prefix": "Priority Action Item:",
+      "whyMattersPrefix": "Rationale:",
+      "actionVerb": "Implement"
+    }
+  },
+  "roadmapLanguage": {
+    "D": {
+      "stepPrefix": "Priority",
+      "actionHeader": "Execute:",
+      "timeframeEmphasis": "immediate-impact"
+    },
+    "I": {
+      "stepPrefix": "Opportunity",
+      "actionHeader": "Let's explore:",
+      "timeframeEmphasis": "collaborative-journey"
+    },
+    "S": {
+      "stepPrefix": "Step",
+      "actionHeader": "What to do:",
+      "timeframeEmphasis": "manageable-pace"
+    },
+    "C": {
+      "stepPrefix": "Phase",
+      "actionHeader": "Implementation tasks:",
+      "timeframeEmphasis": "systematic-progression"
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-12-22",
+    "description": "DISC-adapted content variations for Financial RISE reports",
+    "usage": "Use this JSON to dynamically select appropriate language, tone, and messaging based on client's DISC personality profile"
+  }
+}
