@@ -1,4 +1,4 @@
-import { DISCType } from '../types';
+import { DISCType, FinancialPhase } from '../types';
 
 interface ClientInfo {
   name: string;
@@ -19,22 +19,18 @@ interface DISCProfile {
 }
 
 interface PhaseResults {
-  primaryPhase: string;
+  primaryPhase: FinancialPhase;
   scores: {
-    Stabilize: number;
-    Organize: number;
-    Build: number;
-    Grow: number;
-    Systemic: number;
+    [key in FinancialPhase]: number;
   };
-  secondaryPhases: string[];
+  secondaryPhases: FinancialPhase[];
 }
 
 interface AssessmentResponse {
   questionId: string;
   questionText: string;
   answer: string;
-  phase: string;
+  phase: FinancialPhase;
   notes?: string;
 }
 
@@ -59,7 +55,7 @@ interface QuickWin {
 }
 
 interface Roadmap {
-  phases: string[];
+  phases: FinancialPhase[];
   milestones: string[];
 }
 

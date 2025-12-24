@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { AuthenticatedRequest } from '../types';
+import { AuthenticatedRequest, FinancialPhase } from '../types';
 import { ReportGenerationService } from '../services/ReportGenerationService';
 import Assessment from '../models/Assessment';
 import AssessmentResponse from '../models/AssessmentResponse';
@@ -62,15 +62,15 @@ export class ReportController {
       // TODO: Fetch phase results from phase calculation service
       // For now, using mock data - this will be replaced with actual service call
       const phaseResults = {
-        primaryPhase: 'Organize' as const,
+        primaryPhase: FinancialPhase.ORGANIZE,
         scores: {
-          Stabilize: 75,
-          Organize: 45,
-          Build: 30,
-          Grow: 20,
-          Systemic: 40,
+          [FinancialPhase.STABILIZE]: 75,
+          [FinancialPhase.ORGANIZE]: 45,
+          [FinancialPhase.BUILD]: 30,
+          [FinancialPhase.GROW]: 20,
+          [FinancialPhase.SYSTEMIC]: 40,
         },
-        secondaryPhases: ['Stabilize' as const],
+        secondaryPhases: [FinancialPhase.STABILIZE],
       };
 
       // Generate report
@@ -89,7 +89,7 @@ export class ReportController {
           questionId: r.questionId,
           questionText: r.questionText || '',
           answer: r.answer,
-          phase: r.phase || 'Stabilize',
+          phase: r.phase || FinancialPhase.STABILIZE,
           notes: r.consultantNotes,
         })),
         consultantNotes: assessment.notes || '',
@@ -154,15 +154,15 @@ export class ReportController {
 
       // TODO: Fetch phase results from phase calculation service
       const phaseResults = {
-        primaryPhase: 'Organize' as const,
+        primaryPhase: FinancialPhase.ORGANIZE,
         scores: {
-          Stabilize: 75,
-          Organize: 45,
-          Build: 30,
-          Grow: 20,
-          Systemic: 40,
+          [FinancialPhase.STABILIZE]: 75,
+          [FinancialPhase.ORGANIZE]: 45,
+          [FinancialPhase.BUILD]: 30,
+          [FinancialPhase.GROW]: 20,
+          [FinancialPhase.SYSTEMIC]: 40,
         },
-        secondaryPhases: ['Stabilize' as const],
+        secondaryPhases: [FinancialPhase.STABILIZE],
       };
 
       // TODO: Generate quick wins based on phase results and DISC profile
@@ -186,7 +186,7 @@ export class ReportController {
 
       // TODO: Generate roadmap based on phase results
       const roadmap = {
-        phases: ['Organize' as const, 'Build' as const, 'Grow' as const],
+        phases: [FinancialPhase.ORGANIZE, FinancialPhase.BUILD, FinancialPhase.GROW],
         milestones: [
           'Complete Chart of Accounts restructuring',
           'Implement monthly financial close process',
@@ -282,15 +282,15 @@ export class ReportController {
 
       // TODO: Fetch phase results from phase calculation service
       const phaseResults = {
-        primaryPhase: 'Organize' as const,
+        primaryPhase: FinancialPhase.ORGANIZE,
         scores: {
-          Stabilize: 75,
-          Organize: 45,
-          Build: 30,
-          Grow: 20,
-          Systemic: 40,
+          [FinancialPhase.STABILIZE]: 75,
+          [FinancialPhase.ORGANIZE]: 45,
+          [FinancialPhase.BUILD]: 30,
+          [FinancialPhase.GROW]: 20,
+          [FinancialPhase.SYSTEMIC]: 40,
         },
-        secondaryPhases: ['Stabilize' as const],
+        secondaryPhases: [FinancialPhase.STABILIZE],
       };
 
       // TODO: Generate quick wins and roadmap
@@ -313,7 +313,7 @@ export class ReportController {
       ];
 
       const roadmap = {
-        phases: ['Organize' as const, 'Build' as const, 'Grow' as const],
+        phases: [FinancialPhase.ORGANIZE, FinancialPhase.BUILD, FinancialPhase.GROW],
         milestones: [
           'Complete Chart of Accounts restructuring',
           'Implement monthly financial close process',
@@ -344,7 +344,7 @@ export class ReportController {
           questionId: r.questionId,
           questionText: r.questionText || '',
           answer: r.answer,
-          phase: r.phase || 'Stabilize',
+          phase: r.phase || FinancialPhase.STABILIZE,
           notes: r.consultantNotes,
         })),
         consultantNotes: assessment.notes || '',
@@ -374,7 +374,7 @@ export class ReportController {
    */
   public downloadReport = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     try {
-      const { reportId } = req.params;
+      const { reportId: _reportId } = req.params;
 
       // TODO: Implement report metadata storage to track generated reports
       // For now, returning a simple message
