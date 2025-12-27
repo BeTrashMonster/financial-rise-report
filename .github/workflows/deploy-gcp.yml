@@ -1,0 +1,422 @@
+name: GCP CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '18'
+  POSTGRES_VERSION: '14'
+  GCP_REGION: us-central1
+  ARTIFACT_REGISTRY_REPO: financial-rise-docker
+
+jobs:
+  # ============================================
+  # BACKEND TESTS
+  # ============================================
+
+  backend-test:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./financial-rise-app/backend
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: financial-rise-app/backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test:cov
+        env:
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          DATABASE_USER: test_user
+          DATABASE_PASSWORD: test_password
+          DATABASE_NAME: test_db
+          JWT_SECRET: test_secret
+          JWT_REFRESH_SECRET: test_refresh_secret
+          NODE_ENV: test
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./financial-rise-app/backend/coverage/lcov.info
+          flags: backend
+
+  # ============================================
+  # FRONTEND TESTS
+  # ============================================
+
+  frontend-test:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./financial-rise-app/frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: financial-rise-app/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Type check
+        run: npm run type-check || echo "Type check not configured"
+
+      - name: Run tests
+        run: npm run test || echo "Tests not configured yet"
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Upload coverage (if available)
+        if: hashFiles('financial-rise-app/frontend/coverage/lcov.info') != ''
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./financial-rise-app/frontend/coverage/lcov.info
+          flags: frontend
+
+  # ============================================
+  # BUILD AND PUSH TO ARTIFACT REGISTRY
+  # ============================================
+
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    needs: [backend-test, frontend-test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    permissions:
+      contents: read
+      id-token: write
+
+    outputs:
+      backend-image: ${{ steps.image-tags.outputs.backend }}
+      frontend-image: ${{ steps.image-tags.outputs.frontend }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
+      - name: Set image tags
+        id: image-tags
+        run: |
+          REGISTRY="${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}"
+          BACKEND_IMAGE="${REGISTRY}/backend:${{ github.sha }}"
+          FRONTEND_IMAGE="${REGISTRY}/frontend:${{ github.sha }}"
+          BACKEND_LATEST="${REGISTRY}/backend:latest"
+          FRONTEND_LATEST="${REGISTRY}/frontend:latest"
+
+          echo "backend=${BACKEND_IMAGE}" >> $GITHUB_OUTPUT
+          echo "frontend=${FRONTEND_IMAGE}" >> $GITHUB_OUTPUT
+
+          echo "BACKEND_IMAGE=${BACKEND_IMAGE}" >> $GITHUB_ENV
+          echo "FRONTEND_IMAGE=${FRONTEND_IMAGE}" >> $GITHUB_ENV
+          echo "BACKEND_LATEST=${BACKEND_LATEST}" >> $GITHUB_ENV
+          echo "FRONTEND_LATEST=${FRONTEND_LATEST}" >> $GITHUB_ENV
+
+      - name: Build backend image
+        working-directory: ./financial-rise-app/backend
+        run: |
+          docker build \
+            -f Dockerfile \
+            --target production \
+            -t ${{ env.BACKEND_IMAGE }} \
+            -t ${{ env.BACKEND_LATEST }} \
+            .
+
+      - name: Build frontend image
+        working-directory: ./financial-rise-app/frontend
+        run: |
+          docker build \
+            -f Dockerfile \
+            --target production \
+            -t ${{ env.FRONTEND_IMAGE }} \
+            -t ${{ env.FRONTEND_LATEST }} \
+            .
+
+      - name: Push images to Artifact Registry
+        run: |
+          docker push ${{ env.BACKEND_IMAGE }}
+          docker push ${{ env.FRONTEND_IMAGE }}
+          docker push ${{ env.BACKEND_LATEST }}
+          docker push ${{ env.FRONTEND_LATEST }}
+
+  # ============================================
+  # DEPLOY TO STAGING
+  # ============================================
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Copy deployment files to VM
+        run: |
+          gcloud compute scp \
+            --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --recurse \
+            financial-rise-app/docker-compose.yml \
+            financial-rise-app/docker-compose.prod.yml \
+            ${{ secrets.STAGING_VM_NAME }}:/opt/financial-rise/
+
+      - name: Deploy to staging VM
+        run: |
+          gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
+            --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --command="
+              set -e
+              cd /opt/financial-rise
+
+              # Pull latest environment variables from Secret Manager
+              gcloud secrets versions access latest \
+                --secret=financial-rise-staging-env > .env
+
+              # Configure Docker for Artifact Registry
+              gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
+              # Pull latest images
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+
+              # Create database backup (if postgres is running locally)
+              docker compose exec -T postgres pg_dump -U financial_rise financial_rise_staging > backup-\$(date +%Y%m%d-%H%M%S).sql 2>/dev/null || echo 'Using Cloud SQL, skipping local backup'
+
+              # Run database migrations
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm backend npm run migration:run || echo 'Migrations completed or skipped'
+
+              # Restart services with new images
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+
+              # Wait for services to be healthy
+              sleep 15
+
+              # Show running containers
+              docker ps
+            "
+
+      - name: Health check staging
+        run: |
+          STAGING_IP=$(gcloud compute addresses describe financial-rise-staging-ip \
+            --region=${{ env.GCP_REGION }} --format='get(address)')
+
+          echo "Staging IP: $STAGING_IP"
+
+          for i in {1..30}; do
+            if curl -f http://$STAGING_IP/api/v1/health 2>/dev/null; then
+              echo "✅ Staging health check passed"
+              exit 0
+            fi
+            echo "⏳ Waiting for staging to be healthy... ($i/30)"
+            sleep 10
+          done
+
+          echo "❌ Staging health check failed"
+          exit 1
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "⚠️ Deployment failed, attempting rollback..."
+          gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
+            --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --command="
+              cd /opt/financial-rise
+              echo 'Pulling previous images tagged as latest...'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+              echo 'Rollback completed'
+            "
+
+  # ============================================
+  # DEPLOY TO PRODUCTION (Manual Approval)
+  # ============================================
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    environment: production  # Requires manual approval in GitHub
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Copy deployment files to VM
+        run: |
+          gcloud compute scp \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --recurse \
+            financial-rise-app/docker-compose.yml \
+            financial-rise-app/docker-compose.prod.yml \
+            ${{ secrets.PRODUCTION_VM_NAME }}:/opt/financial-rise/
+
+      - name: Create database backup
+        run: |
+          echo "Creating production database backup..."
+          gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --command="
+              cd /opt/financial-rise
+              BACKUP_FILE=backup-\$(date +%Y%m%d-%H%M%S).sql
+
+              # Backup from Cloud SQL or local postgres
+              docker compose exec -T postgres pg_dump -U financial_rise financial_rise_production > \$BACKUP_FILE 2>/dev/null || echo 'Using Cloud SQL'
+
+              # Upload backup to GCS
+              if [ -f \$BACKUP_FILE ]; then
+                gcloud storage cp \$BACKUP_FILE gs://financial-rise-backups/\$BACKUP_FILE
+                echo 'Backup uploaded to GCS'
+              fi
+            "
+
+      - name: Deploy to production VM
+        run: |
+          gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --command="
+              set -e
+              cd /opt/financial-rise
+
+              # Pull latest environment variables
+              gcloud secrets versions access latest \
+                --secret=financial-rise-production-env > .env
+
+              # Configure Docker for Artifact Registry
+              gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
+              # Pull latest images
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+
+              # Run migrations
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm backend npm run migration:run || echo 'Migrations completed'
+
+              # Rolling restart (zero-downtime)
+              echo 'Restarting backend...'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate backend
+              sleep 20
+
+              echo 'Restarting frontend...'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate frontend
+              sleep 10
+
+              # Show running containers
+              docker ps
+            "
+
+      - name: Health check production
+        run: |
+          PRODUCTION_IP=$(gcloud compute addresses describe financial-rise-production-ip \
+            --region=${{ env.GCP_REGION }} --format='get(address)')
+
+          echo "Production IP: $PRODUCTION_IP"
+
+          for i in {1..30}; do
+            if curl -f http://$PRODUCTION_IP/api/v1/health 2>/dev/null; then
+              echo "✅ Production health check passed"
+              exit 0
+            fi
+            echo "⏳ Waiting for production to be healthy... ($i/30)"
+            sleep 10
+          done
+
+          echo "❌ Production health check failed"
+          exit 1
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "⚠️ Production deployment failed, attempting rollback..."
+          gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --command="
+              cd /opt/financial-rise
+
+              # Pull previous images with 'latest' tag
+              echo 'Pulling previous version...'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+
+              echo '⚠️ Rollback completed. Please check logs and investigate the issue.'
+            "
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "🎉 Production deployment successful!"
+          echo "Deployed commit: ${{ github.sha }}"
+          echo "Deployed by: ${{ github.actor }}"

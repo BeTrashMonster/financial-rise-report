@@ -31,7 +31,7 @@ services:
     container_name: financial-rise-backend
     environment:
       NODE_ENV: development
-      PORT: 3000
+      PORT: 4000
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       DATABASE_USER: ${POSTGRES_USER:-financial_rise}
@@ -39,10 +39,10 @@ services:
       DATABASE_NAME: ${POSTGRES_DB:-financial_rise_db}
       JWT_SECRET: ${JWT_SECRET:-dev_jwt_secret_change_in_prod}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_secret_change_in_prod}
-      AWS_REGION: ${AWS_REGION:-us-east-1}
-      AWS_S3_BUCKET: ${AWS_S3_BUCKET:-financial-rise-reports-dev}
+      GCS_BUCKET: ${GCS_BUCKET:-financial-rise-reports-dev}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID:-}
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
       - ./backend:/app
       - /app/node_modules
