@@ -1,7 +1,22 @@
 #!/bin/bash
 #
-# Financial RISE - Manual Deployment Script
+# Financial RISE - GCP Deployment Script
 # Usage: ./deploy.sh [staging|production]
+#
+# SECURITY: This script loads ALL secrets from GCP Secret Manager
+# Work Stream 51 (CRIT-001) - Secrets Management & Rotation
+#
+# Required GCP Secrets:
+# - financial-rise-${ENVIRONMENT}-env (contains all environment variables)
+# - JWT_SECRET (loaded via SecretsService in application)
+# - REFRESH_TOKEN_SECRET (loaded via SecretsService in application)
+# - DATABASE_PASSWORD (loaded via SecretsService in application)
+# - DB_ENCRYPTION_KEY (loaded via SecretsService in application)
+#
+# Prerequisites:
+# 1. GCP CLI (gcloud) installed and authenticated
+# 2. Service account with roles/secretmanager.secretAccessor permission
+# 3. Secrets created in GCP Secret Manager for target environment
 #
 
 set -e
@@ -12,6 +27,7 @@ COMPOSE_FILES="-f docker-compose.yml -f docker-compose.prod.yml"
 echo "======================================"
 echo "Financial RISE Deployment Script"
 echo "Environment: $ENVIRONMENT"
+echo "Security: GCP Secret Manager"
 echo "======================================"
 
 # Validate environment
@@ -32,17 +48,23 @@ fi
 
 cd /opt/financial-rise || exit 1
 
-# Pull latest environment variables from Secret Manager
-echo "📥 Pulling environment variables from Secret Manager..."
+# CRITICAL SECURITY: Load ALL secrets from GCP Secret Manager
+# This ensures NO secrets are hardcoded in version control (CRIT-001)
+echo "📥 Loading secrets from GCP Secret Manager..."
+echo "   Secret: financial-rise-${ENVIRONMENT}-env"
+
 gcloud secrets versions access latest \
     --secret="financial-rise-${ENVIRONMENT}-env" > .env
 
 if [ $? -ne 0 ]; then
-    echo "❌ Failed to pull secrets from Secret Manager"
+    echo "❌ Failed to pull secrets from GCP Secret Manager"
+    echo "   Ensure the secret 'financial-rise-${ENVIRONMENT}-env' exists"
+    echo "   and you have roles/secretmanager.secretAccessor permission"
     exit 1
 fi
 
-echo "✅ Environment variables loaded"
+echo "✅ Secrets loaded from GCP Secret Manager"
+echo "   Application will validate secret strength on startup"
 
 # Configure Docker for Artifact Registry
 echo "🔐 Configuring Docker for Artifact Registry..."

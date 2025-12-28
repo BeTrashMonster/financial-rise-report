@@ -3,9 +3,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { SecretsValidationService } from './config/secrets-validation.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // CRITICAL: Validate secrets on startup (Work Stream 51 - CRIT-001)
+  // This prevents the application from starting with weak or default secrets
+  const secretsValidator = app.get(SecretsValidationService);
+  secretsValidator.validateSecrets(); // Throws error if validation fails
 
   // Security middleware
   app.use(helmet());
