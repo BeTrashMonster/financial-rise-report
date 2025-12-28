@@ -26,7 +26,7 @@ export class PIISafeLogger implements LoggerService {
   private readonly logger: Logger;
 
   constructor(context?: string) {
-    this.logger = new Logger(context);
+    this.logger = new Logger(context || 'Application');
   }
 
   /**

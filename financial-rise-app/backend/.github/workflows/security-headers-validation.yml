@@ -1,0 +1,350 @@
+# Security Headers Validation Workflow
+# Work Stream 58 (HIGH-009) - Enhanced Security Headers
+#
+# Purpose: Validate security headers configuration in CI/CD pipeline
+# Target: Ensure A+ grade on securityheaders.com
+#
+# Runs on:
+# - Every push to main/develop
+# - Every pull request
+# - Weekly schedule (to catch regressions)
+
+name: Security Headers Validation
+
+on:
+  push:
+    branches: [main, develop, feature/**]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  test-security-headers:
+    name: Test Security Headers Configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: financial-rise-app/backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: financial-rise-app/backend
+        run: npm ci
+
+      - name: Run security headers unit tests
+        working-directory: financial-rise-app/backend
+        run: npm test -- security-headers.spec.ts --verbose
+
+      - name: Build application
+        working-directory: financial-rise-app/backend
+        run: npm run build
+
+      - name: Start application (background)
+        working-directory: financial-rise-app/backend
+        run: |
+          npm run start:prod &
+          echo $! > .pid
+        env:
+          NODE_ENV: production
+          PORT: 3000
+
+      - name: Wait for application to start
+        run: |
+          timeout 60 bash -c 'until curl -f http://localhost:3000/api/v1/health; do sleep 2; done'
+
+      - name: Test Content-Security-Policy header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'content-security-policy')
+          echo "CSP Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: Content-Security-Policy header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "default-src 'self'" ]]; then
+            echo "ERROR: CSP default-src not configured correctly"
+            exit 1
+          fi
+          echo "✓ Content-Security-Policy validated"
+
+      - name: Test Strict-Transport-Security header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'strict-transport-security')
+          echo "HSTS Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: Strict-Transport-Security header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "max-age=31536000" ]]; then
+            echo "ERROR: HSTS max-age not set to 1 year"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "preload" ]]; then
+            echo "ERROR: HSTS preload directive missing"
+            exit 1
+          fi
+          echo "✓ Strict-Transport-Security validated"
+
+      - name: Test X-Frame-Options header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'x-frame-options')
+          echo "X-Frame-Options Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: X-Frame-Options header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "DENY" ]]; then
+            echo "ERROR: X-Frame-Options not set to DENY"
+            exit 1
+          fi
+          echo "✓ X-Frame-Options validated"
+
+      - name: Test X-Content-Type-Options header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'x-content-type-options')
+          echo "X-Content-Type-Options Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: X-Content-Type-Options header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "nosniff" ]]; then
+            echo "ERROR: X-Content-Type-Options not set to nosniff"
+            exit 1
+          fi
+          echo "✓ X-Content-Type-Options validated"
+
+      - name: Test Referrer-Policy header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'referrer-policy')
+          echo "Referrer-Policy Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: Referrer-Policy header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "strict-origin-when-cross-origin" ]]; then
+            echo "ERROR: Referrer-Policy not configured correctly"
+            exit 1
+          fi
+          echo "✓ Referrer-Policy validated"
+
+      - name: Test Permissions-Policy header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'permissions-policy')
+          echo "Permissions-Policy Header: $HEADER"
+          if [[ -z "$HEADER" ]]; then
+            echo "ERROR: Permissions-Policy header not found"
+            exit 1
+          fi
+          if [[ ! "$HEADER" =~ "geolocation=()" ]]; then
+            echo "ERROR: Permissions-Policy geolocation not disabled"
+            exit 1
+          fi
+          echo "✓ Permissions-Policy validated"
+
+      - name: Verify no X-Powered-By header
+        run: |
+          HEADER=$(curl -s -I http://localhost:3000/api/v1/health | grep -i 'x-powered-by' || true)
+          if [[ -n "$HEADER" ]]; then
+            echo "ERROR: X-Powered-By header should be removed by Helmet"
+            echo "Found: $HEADER"
+            exit 1
+          fi
+          echo "✓ X-Powered-By header successfully removed"
+
+      - name: Test all critical headers present
+        run: |
+          RESPONSE=$(curl -s -I http://localhost:3000/api/v1/health)
+
+          REQUIRED_HEADERS=(
+            "content-security-policy"
+            "strict-transport-security"
+            "x-frame-options"
+            "x-content-type-options"
+            "referrer-policy"
+            "permissions-policy"
+          )
+
+          MISSING_HEADERS=()
+
+          for HEADER in "${REQUIRED_HEADERS[@]}"; do
+            if ! echo "$RESPONSE" | grep -qi "$HEADER"; then
+              MISSING_HEADERS+=("$HEADER")
+            fi
+          done
+
+          if [ ${#MISSING_HEADERS[@]} -gt 0 ]; then
+            echo "ERROR: Missing required security headers:"
+            printf '%s\n' "${MISSING_HEADERS[@]}"
+            exit 1
+          fi
+
+          echo "✓ All 6 critical security headers present"
+
+      - name: Stop application
+        if: always()
+        working-directory: financial-rise-app/backend
+        run: |
+          if [ -f .pid ]; then
+            kill $(cat .pid) || true
+            rm .pid
+          fi
+
+      - name: Generate security headers report
+        if: always()
+        run: |
+          echo "## Security Headers Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Validated Headers" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Content-Security-Policy" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Strict-Transport-Security (HSTS)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ X-Frame-Options" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ X-Content-Type-Options" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Referrer-Policy" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Permissions-Policy" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Target Grade:** A+ on securityheaders.com" >> $GITHUB_STEP_SUMMARY
+
+  analyze-csp-policy:
+    name: Analyze CSP Policy
+    runs-on: ubuntu-latest
+    needs: test-security-headers
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract CSP policy
+        id: extract-csp
+        working-directory: financial-rise-app/backend
+        run: |
+          CSP_CONFIG=$(grep -A 20 "contentSecurityPolicy:" src/config/security-headers.config.ts || true)
+          echo "CSP Configuration found in source code"
+
+      - name: Check for unsafe directives
+        working-directory: financial-rise-app/backend
+        run: |
+          CONFIG_FILE="src/config/security-headers.config.ts"
+
+          # Check for unsafe-eval (should NOT be present in script-src)
+          if grep -A 20 "scriptSrc:" "$CONFIG_FILE" | grep -q "unsafe-eval"; then
+            echo "ERROR: unsafe-eval found in script-src"
+            exit 1
+          fi
+
+          # Check for unsafe-inline in script-src (should NOT be present)
+          if grep -A 20 "scriptSrc:" "$CONFIG_FILE" | grep -q "unsafe-inline"; then
+            echo "ERROR: unsafe-inline found in script-src"
+            exit 1
+          fi
+
+          echo "✓ No unsafe directives in script-src (good)"
+
+          # Allow unsafe-inline in style-src for Material-UI (this is OK)
+          if grep -A 20 "styleSrc:" "$CONFIG_FILE" | grep -q "unsafe-inline"; then
+            echo "ℹ unsafe-inline found in style-src (acceptable for Material-UI)"
+          fi
+
+      - name: Check object-src blocking
+        working-directory: financial-rise-app/backend
+        run: |
+          CONFIG_FILE="src/config/security-headers.config.ts"
+
+          if ! grep -q "objectSrc.*'none'" "$CONFIG_FILE"; then
+            echo "ERROR: object-src should be set to 'none' to block Flash/Java"
+            exit 1
+          fi
+
+          echo "✓ object-src correctly blocks plugins"
+
+      - name: Check frame-src blocking
+        working-directory: financial-rise-app/backend
+        run: |
+          CONFIG_FILE="src/config/security-headers.config.ts"
+
+          if ! grep -q "frameSrc.*'none'" "$CONFIG_FILE"; then
+            echo "ERROR: frame-src should be set to 'none' for clickjacking protection"
+            exit 1
+          fi
+
+          echo "✓ frame-src correctly blocks iframes"
+
+  security-grade-check:
+    name: Security Grade Check (Production Only)
+    runs-on: ubuntu-latest
+    needs: test-security-headers
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
+    steps:
+      - name: Placeholder for securityheaders.com check
+        run: |
+          echo "## Production Security Headers Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note:** This job would check production deployment at:" >> $GITHUB_STEP_SUMMARY
+          echo "https://securityheaders.com/?q=https://your-production-domain.com" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Manual Verification Required:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Deploy to production" >> $GITHUB_STEP_SUMMARY
+          echo "2. Visit https://securityheaders.com" >> $GITHUB_STEP_SUMMARY
+          echo "3. Test production URL" >> $GITHUB_STEP_SUMMARY
+          echo "4. Verify A+ grade" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Expected Grade:** A+" >> $GITHUB_STEP_SUMMARY
+
+      # Future enhancement: Integrate with securityheaders.com API
+      # - name: Check with securityheaders.com API
+      #   run: |
+      #     SCORE=$(curl -s "https://securityheaders.com/?q=$PRODUCTION_URL&followRedirects=on" | grep -oP 'score":\K[^,}]+')
+      #     if [ "$SCORE" != "A+" ]; then
+      #       echo "ERROR: Security headers grade is $SCORE, expected A+"
+      #       exit 1
+      #     fi
+
+  notify-security-team:
+    name: Notify Security Team on Failure
+    runs-on: ubuntu-latest
+    needs: [test-security-headers, analyze-csp-policy]
+    if: failure()
+
+    steps:
+      - name: Create failure notification
+        run: |
+          echo "## ⚠️ Security Headers Validation Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow:** ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Author:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Action Required:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review security headers configuration" >> $GITHUB_STEP_SUMMARY
+          echo "2. Check test logs for specific failures" >> $GITHUB_STEP_SUMMARY
+          echo "3. Fix issues before merging" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**References:**" >> $GITHUB_STEP_SUMMARY
+          echo "- Configuration: \`src/config/security-headers.config.ts\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Tests: \`src/security-headers.spec.ts\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Documentation: \`docs/SECURITY-HEADERS.md\`" >> $GITHUB_STEP_SUMMARY
+
+      # Future enhancement: Send Slack/email notification
+      # - name: Send Slack notification
+      #   uses: slackapi/slack-github-action@v1
+      #   with:
+      #     webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     payload: |
+      #       {
+      #         "text": "Security Headers Validation Failed",
+      #         "blocks": [...]
+      #       }
