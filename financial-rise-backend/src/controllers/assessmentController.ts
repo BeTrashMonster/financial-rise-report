@@ -56,7 +56,7 @@ class AssessmentController {
   async listAssessments(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       // Query is already validated by middleware - safe from SQL injection
-      const { status, limit, offset, sortBy, sortOrder } = req.query as ListAssessmentsQuery;
+      const { status, limit, offset, sortBy, sortOrder } = req.query as unknown as ListAssessmentsQuery;
 
       const where: any = {
         consultantId: req.consultantId!,

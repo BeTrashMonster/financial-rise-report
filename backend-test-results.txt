@@ -1,0 +1,1022 @@
+
+> financial-rise-backend@1.0.0 test
+> jest --coverage --verbose
+
+PASS src/services/__tests__/ReportTemplateService.test.ts (48.154 s)
+  ReportTemplateService
+    Consultant Report Generation
+      renderConsultantReport
+        ✓ should generate complete HTML consultant report with all sections (610 ms)
+        ✓ should include DISC communication recommendations based on primary type (7 ms)
+        ✓ should display consultant notes when provided (14 ms)
+        ✓ should highlight warning flags from responses (3 ms)
+      renderClientReport
+        ✓ should generate complete HTML client report with all sections (52 ms)
+        ✓ should adapt language for D-type personalities (brief, results-oriented) (3 ms)
+        ✓ should adapt language for I-type personalities (collaborative, big-picture) (2 ms)
+        ✓ should adapt language for S-type personalities (step-by-step, reassuring) (2 ms)
+        ✓ should adapt language for C-type personalities (detailed, analytical) (2 ms)
+        ✓ should include phase diagram visual asset (4 ms)
+        ✓ should apply consultant branding when provided (3 ms)
+        ✓ should use non-judgmental, encouraging language throughout (2 ms)
+    DISC Content Adaptation
+      getDISCContentVariation
+        ✓ should return D-type content variations (2 ms)
+        ✓ should return I-type content variations (1 ms)
+        ✓ should return S-type content variations (10 ms)
+        ✓ should return C-type content variations (2 ms)
+        ✓ should handle multiple content sections for each DISC type (11 ms)
+      getCommunicationStrategy
+        ✓ should return communication strategy for D-type (5 ms)
+        ✓ should return communication strategy for I-type (2 ms)
+        ✓ should return communication strategy for S-type
+        ✓ should return communication strategy for C-type
+    Visual Assets
+      getPhaseDiagramSVG
+        ✓ should generate SVG phase diagram with current position highlighted (7 ms)
+        ✓ should highlight the primary phase (2 ms)
+        ✓ should show secondary phases when provided (2 ms)
+        ✓ should be accessible with proper ARIA labels (1 ms)
+      getPhaseIcon
+        ✓ should return SVG icon for Stabilize phase (2 ms)
+        ✓ should return SVG icon for Organize phase (1 ms)
+        ✓ should return SVG icon for Build phase (1 ms)
+        ✓ should return SVG icon for Grow phase (1 ms)
+        ✓ should return SVG icon for Systemic phase (1 ms)
+    Template Styling
+      ✓ should include brand colors in consultant report CSS (2 ms)
+      ✓ should use Calibri font family with 14px minimum (2 ms)
+      ✓ should be print-optimized for PDF generation (2 ms)
+    Error Handling
+      ✓ should handle missing optional fields gracefully in consultant report (3 ms)
+      ✓ should handle missing optional fields gracefully in client report (1 ms)
+
+FAIL src/services/__tests__/ReportGenerationService.test.ts
+  ● Test suite failed to run
+
+    [96msrc/services/ReportGenerationService.ts[0m:[93m134[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+      Types of property 'scores' are incompatible.
+        Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+    [7m134[0m         phaseResults: data.phaseResults,
+    [7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+      [96msrc/services/ReportTemplateService.ts[0m:[93m50[0m:[93m3[0m
+        [7m50[0m   phaseResults: PhaseResults;
+        [7m  [0m [96m  ~~~~~~~~~~~~[0m
+        The expected type comes from property 'phaseResults' which is declared here on type 'ConsultantReportData'
+    [96msrc/services/ReportGenerationService.ts[0m:[93m183[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+      Types of property 'scores' are incompatible.
+        Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+    [7m183[0m         phaseResults: data.phaseResults,
+    [7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+      [96msrc/services/ReportTemplateService.ts[0m:[93m75[0m:[93m3[0m
+        [7m75[0m   phaseResults: PhaseResults;
+        [7m  [0m [96m  ~~~~~~~~~~~~[0m
+        The expected type comes from property 'phaseResults' which is declared here on type 'ClientReportData'
+
+PASS src/services/__tests__/progressService.test.ts (17.284 s)
+  ProgressService
+    calculateProgress
+      ✓ should calculate 0% progress when no questions answered (11 ms)
+      ✓ should calculate 50% progress when half questions answered (2 ms)
+      ✓ should calculate 100% progress when all questions answered (1 ms)
+      ✓ should handle questionnaire with no required questions (1 ms)
+
+PASS src/services/__tests__/validationService.test.ts (66.002 s)
+  ValidationService
+    validateResponse
+      ✓ should return error for non-existent question (458 ms)
+      ✓ should validate notApplicable responses (1 ms)
+      ✓ should reject null answer for required question (2 ms)
+      Single Choice validation
+        ✓ should validate correct single choice answer (3 ms)
+        ✓ should reject invalid single choice option (2 ms)
+      Multiple Choice validation
+        ✓ should validate correct multiple choice answer (3 ms)
+        ✓ should reject non-array multiple choice answer (2 ms)
+        ✓ should reject empty array for required multiple choice (2 ms)
+      Rating validation
+        ✓ should validate correct rating (3 ms)
+        ✓ should reject out-of-range ratings (1 ms)
+        ✓ should reject non-integer ratings (2 ms)
+      Text validation
+        ✓ should validate text answer (2 ms)
+        ✓ should reject text exceeding 1000 characters (2 ms)
+    validateCompletion
+      ✓ should validate complete assessment (3 ms)
+      ✓ should identify missing required questions (3 ms)
+
+PASS src/__tests__/unit/scheduler/scheduler-integration.test.ts
+  scheduler-integration
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/conditional/conditional-questions.test.ts
+  conditional-questions
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/phase/phase-determination.test.ts
+  phase-determination
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/monitoring/performance-metrics.test.ts
+  performance-metrics
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/reports/report-generation.test.ts
+  report-generation
+    Unit Tests
+      ✓ should be implemented based on specification (4 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/notes/consultant-notes.test.ts
+  consultant-notes
+    Unit Tests
+      ✓ should be implemented based on specification (1 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+  console.error
+    ❌ FATAL: Missing required environment variables:
+
+      47 |
+      48 |   if (missing.length > 0) {
+    > 49 |     console.error('❌ FATAL: Missing required environment variables:');
+         |             ^
+      50 |     missing.forEach(envVar => {
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+
+      at validateEnv (src/config/env.ts:49:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - JWT_SECRET
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - DATABASE_URL
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    
+    Please set these variables in your .env file or environment.
+
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+    > 53 |     console.error('\nPlease set these variables in your .env file or environment.');
+         |             ^
+      54 |     console.error('See .env.example for reference.\n');
+      55 |     process.exit(1);
+      56 |   }
+
+      at validateEnv (src/config/env.ts:53:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    See .env.example for reference.
+
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+    > 54 |     console.error('See .env.example for reference.\n');
+         |             ^
+      55 |     process.exit(1);
+      56 |   }
+      57 | }
+
+      at validateEnv (src/config/env.ts:54:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  ●  process.exit called with "1"
+
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+    > 55 |     process.exit(1);
+         |             ^
+      56 |   }
+      57 | }
+      58 |
+
+      at validateEnv (src/config/env.ts:55:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+PASS src/__tests__/unit/logging/activity-logging.test.ts
+  activity-logging
+    Unit Tests
+      ✓ should be implemented based on specification (4 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/disc/secondary-traits.test.ts
+  secondary-traits
+    Unit Tests
+      ✓ should be implemented based on specification (4 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/admin/activity-logging.test.ts
+  activity-logging
+    Unit Tests
+      ✓ should be implemented based on specification (13 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/shareable/shareable-links.test.ts
+  shareable-links
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/checklist/auto-generation.test.ts
+  auto-generation
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/assessment/assessment-crud.test.ts
+  assessment-crud
+    Unit Tests
+      ✓ should be implemented based on specification (4 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/admin/user-management.test.ts
+  user-management
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/shareable/access-control.test.ts
+  access-control
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/email/email-delivery.test.ts
+  email-delivery
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/disc/disc-algorithm.test.ts
+  disc-algorithm
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification
+
+PASS src/__tests__/unit/checklist/checklist-crud.test.ts
+  checklist-crud
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/auth/authentication.test.ts
+  authentication
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/auth/authorization.test.ts
+  authorization
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/assessment/questionnaire.test.ts
+  questionnaire
+    Unit Tests
+      ✓ should be implemented based on specification (14 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/phase/multi-phase.test.ts
+  multi-phase
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (5 ms)
+
+PASS src/__tests__/unit/conditional/rule-engine.test.ts
+  rule-engine
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/reports/pdf-export.test.ts
+  pdf-export
+    Unit Tests
+      ✓ should be implemented based on specification (3 ms)
+    Integration Tests
+      ✓ should be implemented based on specification
+
+PASS src/__tests__/unit/logging/log-search.test.ts
+  log-search
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/analytics/csv-export.test.ts
+  csv-export
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/dashboard/filtering.test.ts
+  filtering
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/analytics/analytics.test.ts
+  analytics
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/branding/branding.test.ts
+  branding
+    Unit Tests
+      ✓ should be implemented based on specification (4 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (30 ms)
+
+PASS src/__tests__/unit/dashboard/search.test.ts
+  search
+    Unit Tests
+      ✓ should be implemented based on specification (2 ms)
+    Integration Tests
+      ✓ should be implemented based on specification (1 ms)
+
+PASS src/__tests__/unit/sample.test.ts
+  Sample Test Suite
+    ✓ should pass a basic test (5 ms)
+    ✓ should demonstrate async testing (2 ms)
+
+  console.error
+    ❌ FATAL: Missing required environment variables:
+
+      47 |
+      48 |   if (missing.length > 0) {
+    > 49 |     console.error('❌ FATAL: Missing required environment variables:');
+         |             ^
+      50 |     missing.forEach(envVar => {
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+
+      at validateEnv (src/config/env.ts:49:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - JWT_SECRET
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - DATABASE_URL
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    
+    Please set these variables in your .env file or environment.
+
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+    > 53 |     console.error('\nPlease set these variables in your .env file or environment.');
+         |             ^
+      54 |     console.error('See .env.example for reference.\n');
+      55 |     process.exit(1);
+      56 |   }
+
+      at validateEnv (src/config/env.ts:53:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    See .env.example for reference.
+
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+    > 54 |     console.error('See .env.example for reference.\n');
+         |             ^
+      55 |     process.exit(1);
+      56 |   }
+      57 | }
+
+      at validateEnv (src/config/env.ts:54:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  ●  process.exit called with "1"
+
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+    > 55 |     process.exit(1);
+         |             ^
+      56 |   }
+      57 | }
+      58 |
+
+      at validateEnv (src/config/env.ts:55:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+  console.error
+    ❌ FATAL: Missing required environment variables:
+
+      47 |
+      48 |   if (missing.length > 0) {
+    > 49 |     console.error('❌ FATAL: Missing required environment variables:');
+         |             ^
+      50 |     missing.forEach(envVar => {
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+
+      at validateEnv (src/config/env.ts:49:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - JWT_SECRET
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - DATABASE_URL
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    
+    Please set these variables in your .env file or environment.
+
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+    > 53 |     console.error('\nPlease set these variables in your .env file or environment.');
+         |             ^
+      54 |     console.error('See .env.example for reference.\n');
+      55 |     process.exit(1);
+      56 |   }
+
+      at validateEnv (src/config/env.ts:53:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    See .env.example for reference.
+
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+    > 54 |     console.error('See .env.example for reference.\n');
+         |             ^
+      55 |     process.exit(1);
+      56 |   }
+      57 | }
+
+      at validateEnv (src/config/env.ts:54:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  ●  process.exit called with "1"
+
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+    > 55 |     process.exit(1);
+         |             ^
+      56 |   }
+      57 | }
+      58 |
+
+      at validateEnv (src/config/env.ts:55:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+  console.error
+    ❌ FATAL: Missing required environment variables:
+
+      47 |
+      48 |   if (missing.length > 0) {
+    > 49 |     console.error('❌ FATAL: Missing required environment variables:');
+         |             ^
+      50 |     missing.forEach(envVar => {
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+
+      at validateEnv (src/config/env.ts:49:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - JWT_SECRET
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+       - DATABASE_URL
+
+      49 |     console.error('❌ FATAL: Missing required environment variables:');
+      50 |     missing.forEach(envVar => {
+    > 51 |       console.error(`   - ${envVar}`);
+         |               ^
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+
+      at src/config/env.ts:51:15
+          at Array.forEach (<anonymous>)
+      at validateEnv (src/config/env.ts:50:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    
+    Please set these variables in your .env file or environment.
+
+      51 |       console.error(`   - ${envVar}`);
+      52 |     });
+    > 53 |     console.error('\nPlease set these variables in your .env file or environment.');
+         |             ^
+      54 |     console.error('See .env.example for reference.\n');
+      55 |     process.exit(1);
+      56 |   }
+
+      at validateEnv (src/config/env.ts:53:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  console.error
+    See .env.example for reference.
+
+      52 |     });
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+    > 54 |     console.error('See .env.example for reference.\n');
+         |             ^
+      55 |     process.exit(1);
+      56 |   }
+      57 | }
+
+      at validateEnv (src/config/env.ts:54:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+
+  ●  process.exit called with "1"
+
+      53 |     console.error('\nPlease set these variables in your .env file or environment.');
+      54 |     console.error('See .env.example for reference.\n');
+    > 55 |     process.exit(1);
+         |             ^
+      56 |   }
+      57 | }
+      58 |
+
+      at validateEnv (src/config/env.ts:55:13)
+      at Object.<anonymous> (src/config/env.ts:70:1)
+      at Object.require (src/middleware/auth.ts:4:1)
+      at Object.<anonymous> (src/middleware/__tests__/auth.test.ts:3:1)
+FAIL src/middleware/__tests__/auth.test.ts
+  ● Test suite failed to run
+
+    Jest worker encountered 4 child process exceptions, exceeding retry limit
+
+      at ChildProcessWorker.initialize (node_modules/jest-worker/build/workers/ChildProcessWorker.js:181:21)
+
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/controllers/reportController.ts
+ERROR: [96msrc/controllers/reportController.ts[0m:[93m87[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType '{ primaryPhase: "Organize"; scores: { Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }; secondaryPhases: "Stabilize"[]; }' is not assignable to type 'PhaseResults'.
+  Types of property 'primaryPhase' are incompatible.
+    Type '"Organize"' is not assignable to type 'FinancialPhase'. Did you mean 'FinancialPhase.ORGANIZE'?
+
+[7m87[0m         phaseResults,
+[7m  [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96msrc/services/ReportGenerationService.ts[0m:[93m73[0m:[93m3[0m
+    [7m73[0m   phaseResults: PhaseResults;
+    [7m  [0m [96m  ~~~~~~~~~~~~[0m
+    The expected type comes from property 'phaseResults' which is declared here on type 'ConsultantReportData'
+[96msrc/controllers/reportController.ts[0m:[93m215[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType '{ primaryPhase: "Organize"; scores: { Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }; secondaryPhases: "Stabilize"[]; }' is not assignable to type 'PhaseResults'.
+  Types of property 'primaryPhase' are incompatible.
+    Type '"Organize"' is not assignable to type 'FinancialPhase'. Did you mean 'FinancialPhase.ORGANIZE'?
+
+[7m215[0m         phaseResults,
+[7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96msrc/services/ReportGenerationService.ts[0m:[93m81[0m:[93m3[0m
+    [7m81[0m   phaseResults: PhaseResults;
+    [7m  [0m [96m  ~~~~~~~~~~~~[0m
+    The expected type comes from property 'phaseResults' which is declared here on type 'ClientReportData'
+[96msrc/controllers/reportController.ts[0m:[93m217[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType '{ phases: ("Organize" | "Build" | "Grow")[]; milestones: string[]; }' is not assignable to type 'Roadmap'.
+  Types of property 'phases' are incompatible.
+    Type '("Organize" | "Build" | "Grow")[]' is not assignable to type 'FinancialPhase[]'.
+      Type '"Organize" | "Build" | "Grow"' is not assignable to type 'FinancialPhase'.
+        Type '"Organize"' is not assignable to type 'FinancialPhase'. Did you mean 'FinancialPhase.ORGANIZE'?
+
+[7m217[0m         roadmap,
+[7m   [0m [91m        ~~~~~~~[0m
+
+  [96msrc/services/ReportGenerationService.ts[0m:[93m83[0m:[93m3[0m
+    [7m83[0m   roadmap: Roadmap;
+    [7m  [0m [96m  ~~~~~~~[0m
+    The expected type comes from property 'roadmap' which is declared here on type 'ClientReportData'
+[96msrc/controllers/reportController.ts[0m:[93m342[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType '{ primaryPhase: "Organize"; scores: { Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }; secondaryPhases: "Stabilize"[]; }' is not assignable to type 'PhaseResults'.
+  Types of property 'primaryPhase' are incompatible.
+    Type '"Organize"' is not assignable to type 'FinancialPhase'. Did you mean 'FinancialPhase.ORGANIZE'?
+
+[7m342[0m         phaseResults,
+[7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96msrc/services/ReportGenerationService.ts[0m:[93m73[0m:[93m3[0m
+    [7m73[0m   phaseResults: PhaseResults;
+    [7m  [0m [96m  ~~~~~~~~~~~~[0m
+    The expected type comes from property 'phaseResults' which is declared here on type 'BothReportsData'
+[96msrc/controllers/reportController.ts[0m:[93m352[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType '{ phases: ("Organize" | "Build" | "Grow")[]; milestones: string[]; }' is not assignable to type 'Roadmap'.
+  Types of property 'phases' are incompatible.
+    Type '("Organize" | "Build" | "Grow")[]' is not assignable to type 'FinancialPhase[]'.
+      Type '"Organize" | "Build" | "Grow"' is not assignable to type 'FinancialPhase'.
+        Type '"Organize"' is not assignable to type 'FinancialPhase'. Did you mean 'FinancialPhase.ORGANIZE'?
+
+[7m352[0m         roadmap,
+[7m   [0m [91m        ~~~~~~~[0m
+
+  [96msrc/services/ReportGenerationService.ts[0m:[93m83[0m:[93m3[0m
+    [7m83[0m   roadmap: Roadmap;
+    [7m  [0m [96m  ~~~~~~~[0m
+    The expected type comes from property 'roadmap' which is declared here on type 'BothReportsData'
+[96msrc/controllers/reportController.ts[0m:[93m377[0m:[93m13[0m - [91merror[0m[90m TS6133: [0m'reportId' is declared but its value is never read.
+
+[7m377[0m       const { reportId } = req.params;
+[7m   [0m [91m            ~~~~~~~~~~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/controllers/assessmentController.ts
+ERROR: [96msrc/controllers/assessmentController.ts[0m:[93m59[0m:[93m60[0m - [91merror[0m[90m TS2352: [0mConversion of type 'ParsedQs' to type '{ limit: number; offset: number; sortBy: "clientName" | "businessName" | "status" | "progress" | "createdAt" | "updatedAt"; sortOrder: "ASC" | "DESC"; status?: AssessmentStatus | undefined; }' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'ParsedQs' is missing the following properties from type '{ limit: number; offset: number; sortBy: "clientName" | "businessName" | "status" | "progress" | "createdAt" | "updatedAt"; sortOrder: "ASC" | "DESC"; status?: AssessmentStatus | undefined; }': limit, offset, sortBy, sortOrder
+
+[7m59[0m       const { status, limit, offset, sortBy, sortOrder } = req.query as ListAssessmentsQuery;
+[7m  [0m [91m                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/middleware/security.ts
+ERROR: [96msrc/middleware/security.ts[0m:[93m94[0m:[93m10[0m - [91merror[0m[90m TS2339: [0mProperty 'expectCt' does not exist on type 'Helmet'.
+
+[7m94[0m   helmet.expectCt({
+[7m  [0m [91m         ~~~~~~~~[0m
+[96msrc/middleware/security.ts[0m:[93m122[0m:[93m28[0m - [91merror[0m[90m TS2339: [0mProperty 'session' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+
+[7m122[0m   const sessionToken = req.session?.csrfToken;
+[7m   [0m [91m                           ~~~~~~~[0m
+[96msrc/middleware/security.ts[0m:[93m140[0m:[93m39[0m - [91merror[0m[90m TS7030: [0mNot all code paths return a value.
+
+[7m140[0m export const sqlInjectionProtection = (req: Request, res: Response, next: NextFunction) => {
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/middleware/security.ts[0m:[93m184[0m:[93m45[0m - [91merror[0m[90m TS6133: [0m'res' is declared but its value is never read.
+
+[7m184[0m export const xssProtection = (req: Request, res: Response, next: NextFunction) => {
+[7m   [0m [91m                                            ~~~[0m
+[96msrc/middleware/security.ts[0m:[93m217[0m:[93m10[0m - [91merror[0m[90m TS7030: [0mNot all code paths return a value.
+
+[7m217[0m   return (req: Request, res: Response, next: NextFunction) => {
+[7m   [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/middleware/validate.ts
+ERROR: [96msrc/middleware/validate.ts[0m:[93m20[0m:[93m31[0m - [91merror[0m[90m TS6133: [0m'res' is declared but its value is never read.
+
+[7m20[0m   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+[7m  [0m [91m                              ~~~[0m
+[96msrc/middleware/validate.ts[0m:[93m35[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'errors' does not exist on type 'ZodError<unknown>'.
+
+[7m35[0m         const details = error.errors.map((err) => ({
+[7m  [0m [91m                              ~~~~~~[0m
+[96msrc/middleware/validate.ts[0m:[93m35[0m:[93m43[0m - [91merror[0m[90m TS7006: [0mParameter 'err' implicitly has an 'any' type.
+
+[7m35[0m         const details = error.errors.map((err) => ({
+[7m  [0m [91m                                          ~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/routes/auth.routes.ts
+ERROR: [96msrc/routes/auth.routes.ts[0m:[93m2[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module '../controllers/AuthController' or its corresponding type declarations.
+
+[7m2[0m import { AuthController } from '../controllers/AuthController';
+[7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/routes/auth.routes.ts[0m:[93m6[0m:[93m3[0m - [91merror[0m[90m TS2305: [0mModule '"../middleware/rateLimiter"' has no exported member 'registerLimiter'.
+
+[7m6[0m   registerLimiter,
+[7m [0m [91m  ~~~~~~~~~~~~~~~[0m
+[96msrc/routes/auth.routes.ts[0m:[93m15[0m:[93m8[0m - [91merror[0m[90m TS2307: [0mCannot find module '../middleware/validator' or its corresponding type declarations.
+
+[7m15[0m } from '../middleware/validator';
+[7m  [0m [91m       ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/services/AuthService.ts
+ERROR: [96msrc/services/AuthService.ts[0m:[93m1[0m:[93m46[0m - [91merror[0m[90m TS2307: [0mCannot find module 'typeorm' or its corresponding type declarations.
+
+[7m1[0m import { Repository, MoreThan, IsNull } from 'typeorm';
+[7m [0m [91m                                             ~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m2[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/User' or its corresponding type declarations.
+
+[7m2[0m import { User, UserRole } from '../database/entities/User';
+[7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m3[0m:[93m30[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/RefreshToken' or its corresponding type declarations.
+
+[7m3[0m import { RefreshToken } from '../database/entities/RefreshToken';
+[7m [0m [91m                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m4[0m:[93m36[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/PasswordResetToken' or its corresponding type declarations.
+
+[7m4[0m import { PasswordResetToken } from '../database/entities/PasswordResetToken';
+[7m [0m [91m                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m5[0m:[93m36[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/FailedLoginAttempt' or its corresponding type declarations.
+
+[7m5[0m import { FailedLoginAttempt } from '../database/entities/FailedLoginAttempt';
+[7m [0m [91m                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m6[0m:[93m26[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/AuditLog' or its corresponding type declarations.
+
+[7m6[0m import { AuditLog } from '../database/entities/AuditLog';
+[7m [0m [91m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m7[0m:[93m74[0m - [91merror[0m[90m TS2307: [0mCannot find module '../utils/password' or its corresponding type declarations.
+
+[7m7[0m import { hashPassword, verifyPassword, validatePasswordComplexity } from '../utils/password';
+[7m [0m [91m                                                                         ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AuthService.ts[0m:[93m13[0m:[93m3[0m - [91merror[0m[90m TS6133: [0m'AccessTokenPayload' is declared but its value is never read.
+
+[7m13[0m   AccessTokenPayload
+[7m  [0m [91m  ~~~~~~~~~~~~~~~~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/services/AdminService.ts
+ERROR: [96msrc/services/AdminService.ts[0m:[93m1[0m:[93m89[0m - [91merror[0m[90m TS2307: [0mCannot find module 'typeorm' or its corresponding type declarations.
+
+[7m1[0m import { Repository, FindOptionsWhere, Like, Between, MoreThan, LessThan, IsNull } from 'typeorm';
+[7m [0m [91m                                                                                        ~~~~~~~~~[0m
+[96msrc/services/AdminService.ts[0m:[93m2[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/User' or its corresponding type declarations.
+
+[7m2[0m import { User, UserRole } from '../database/entities/User';
+[7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AdminService.ts[0m:[93m3[0m:[93m26[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/AuditLog' or its corresponding type declarations.
+
+[7m3[0m import { AuditLog } from '../database/entities/AuditLog';
+[7m [0m [91m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AdminService.ts[0m:[93m4[0m:[93m30[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/RefreshToken' or its corresponding type declarations.
+
+[7m4[0m import { RefreshToken } from '../database/entities/RefreshToken';
+[7m [0m [91m                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AdminService.ts[0m:[93m5[0m:[93m58[0m - [91merror[0m[90m TS2307: [0mCannot find module '../utils/password' or its corresponding type declarations.
+
+[7m5[0m import { hashPassword, validatePasswordComplexity } from '../utils/password';
+[7m [0m [91m                                                         ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/services/AdminService.ts[0m:[93m423[0m:[93m40[0m - [91merror[0m[90m TS7006: [0mParameter 'log' implicitly has an 'any' type.
+
+[7m423[0m     const logsWithUserEmail = logs.map(log => ({
+[7m   [0m [91m                                       ~~~[0m
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService.ts
+ERROR: [96msrc/services/ReportGenerationService.ts[0m:[93m134[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+  Types of property 'scores' are incompatible.
+    Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+[7m134[0m         phaseResults: data.phaseResults,
+[7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96msrc/services/ReportTemplateService.ts[0m:[93m50[0m:[93m3[0m
+    [7m50[0m   phaseResults: PhaseResults;
+    [7m  [0m [96m  ~~~~~~~~~~~~[0m
+    The expected type comes from property 'phaseResults' which is declared here on type 'ConsultantReportData'
+[96msrc/services/ReportGenerationService.ts[0m:[93m183[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+  Types of property 'scores' are incompatible.
+    Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+[7m183[0m         phaseResults: data.phaseResults,
+[7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96msrc/services/ReportTemplateService.ts[0m:[93m75[0m:[93m3[0m
+    [7m75[0m   phaseResults: PhaseResults;
+    [7m  [0m [96m  ~~~~~~~~~~~~[0m
+    The expected type comes from property 'phaseResults' which is declared here on type 'ClientReportData'
+STACK: 
+Failed to collect coverage from /mnt/c/Users/Admin/src/financial-rise-backend/src/utils/jwt.ts
+ERROR: [96msrc/utils/jwt.ts[0m:[93m2[0m:[93m26[0m - [91merror[0m[90m TS2307: [0mCannot find module '../database/entities/User' or its corresponding type declarations.
+
+[7m2[0m import { UserRole } from '../database/entities/User';
+[7m [0m [91m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+STACK: 
+------------------------------------------------|---------|----------|---------|---------|---------------------------
+File                                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s         
+------------------------------------------------|---------|----------|---------|---------|---------------------------
+All files                                       |   50.48 |     63.3 |   73.46 |      50 |                           
+ src                                            |       0 |        0 |       0 |       0 |                           
+  app.ts                                        |       0 |        0 |       0 |       0 | 1-76                      
+ src/constants                                  |       0 |      100 |     100 |       0 |                           
+  errorCodes.ts                                 |       0 |      100 |     100 |       0 | 6-76                      
+  index.ts                                      |       0 |      100 |     100 |       0 | 6-9                       
+  rateLimits.ts                                 |       0 |      100 |     100 |       0 | 6-28                      
+  timings.ts                                    |       0 |      100 |     100 |       0 | 6                         
+  validation.ts                                 |       0 |      100 |     100 |       0 | 6-53                      
+ src/controllers                                |       0 |      100 |       0 |       0 |                           
+  questionnaireController.ts                    |       0 |      100 |       0 |       0 | 3-25                      
+ src/middleware                                 |       0 |        0 |       0 |       0 |                           
+  auth.ts                                       |       0 |        0 |       0 |       0 | 2-60                      
+  errorHandler.ts                               |       0 |        0 |       0 |       0 | 2-71                      
+  rateLimiter.ts                                |       0 |        0 |       0 |       0 | 1-96                      
+  validation.ts                                 |       0 |        0 |       0 |       0 | 1-62                      
+ src/migrations                                 |       0 |      100 |       0 |       0 |                           
+  20251220000001-create-assessments.ts          |       0 |      100 |       0 |       0 | 1-71                      
+  20251220000002-create-assessment-responses.ts |       0 |      100 |       0 |       0 | 1-60                      
+ src/models                                     |     100 |      100 |     100 |     100 |                           
+  Assessment.ts                                 |     100 |      100 |     100 |     100 |                           
+  AssessmentResponse.ts                         |     100 |      100 |     100 |     100 |                           
+  index.ts                                      |     100 |      100 |     100 |     100 |                           
+ src/routes                                     |       0 |      100 |       0 |       0 |                           
+  assessmentRoutes.ts                           |       0 |      100 |     100 |       0 | 1-60                      
+  docsRoutes.ts                                 |       0 |      100 |       0 |       0 | 1-20                      
+  index.ts                                      |       0 |      100 |     100 |       0 | 1-13                      
+  questionnaireRoutes.ts                        |       0 |      100 |     100 |       0 | 1-14                      
+  reportRoutes.ts                               |       0 |      100 |     100 |       0 | 1-213                     
+ src/services                                   |   94.65 |    79.74 |   94.52 |   94.47 |                           
+  ReportTemplateService.ts                      |     100 |    77.77 |     100 |     100 | 184,378,748-770,1039-1161 
+  progressService.ts                            |     100 |      100 |     100 |     100 |                           
+  questionnaireService.ts                       |   28.57 |      100 |       0 |   28.57 | 17-136                    
+  validationService.ts                          |   91.93 |       80 |     100 |   91.52 | 55,64,100,114,135         
+ src/types                                      |     100 |      100 |     100 |     100 |                           
+  index.ts                                      |     100 |      100 |     100 |     100 |                           
+ src/utils                                      |       0 |      100 |     100 |       0 |                           
+  swagger.ts                                    |       0 |      100 |     100 |       0 | 1-224                     
+ src/validators                                 |       0 |        0 |       0 |       0 |                           
+  assessment.validators.ts                      |       0 |        0 |       0 |       0 | 6-112                     
+------------------------------------------------|---------|----------|---------|---------|---------------------------
+Jest: "global" coverage threshold for statements (80%) not met: 50.48%
+Jest: "global" coverage threshold for branches (80%) not met: 63.3%
+Jest: "global" coverage threshold for lines (80%) not met: 50%
+Jest: "global" coverage threshold for functions (80%) not met: 73.46%
+Summary of all failing tests
+FAIL src/services/__tests__/ReportGenerationService.test.ts
+  ● Test suite failed to run
+
+    [96msrc/services/ReportGenerationService.ts[0m:[93m134[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+      Types of property 'scores' are incompatible.
+        Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+    [7m134[0m         phaseResults: data.phaseResults,
+    [7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+      [96msrc/services/ReportTemplateService.ts[0m:[93m50[0m:[93m3[0m
+        [7m50[0m   phaseResults: PhaseResults;
+        [7m  [0m [96m  ~~~~~~~~~~~~[0m
+        The expected type comes from property 'phaseResults' which is declared here on type 'ConsultantReportData'
+    [96msrc/services/ReportGenerationService.ts[0m:[93m183[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'import("/mnt/c/Users/Admin/src/financial-rise-backend/src/services/ReportGenerationService").PhaseResults' is not assignable to type 'PhaseResults'.
+      Types of property 'scores' are incompatible.
+        Type '{ stabilize: number; organize: number; build: number; grow: number; systemic: number; }' is missing the following properties from type '{ Stabilize: number; Organize: number; Build: number; Grow: number; Systemic: number; }': Stabilize, Organize, Build, Grow, Systemic
+
+    [7m183[0m         phaseResults: data.phaseResults,
+    [7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+      [96msrc/services/ReportTemplateService.ts[0m:[93m75[0m:[93m3[0m
+        [7m75[0m   phaseResults: PhaseResults;
+        [7m  [0m [96m  ~~~~~~~~~~~~[0m
+        The expected type comes from property 'phaseResults' which is declared here on type 'ClientReportData'
+
+FAIL src/middleware/__tests__/auth.test.ts
+  ● Test suite failed to run
+
+    Jest worker encountered 4 child process exceptions, exceeding retry limit
+
+      at ChildProcessWorker.initialize (node_modules/jest-worker/build/workers/ChildProcessWorker.js:181:21)
+
+
+Test Suites: 2 failed, 33 passed, 35 total
+Tests:       114 passed, 114 total
+Snapshots:   0 total
+Time:        324.571 s
+Ran all test suites.

@@ -11,7 +11,7 @@ export const typeOrmConfig = (
   username: configService.get('DATABASE_USER', 'financial_rise'),
   password: configService.get('DATABASE_PASSWORD'),
   database: configService.get('DATABASE_NAME', 'financial_rise_db'),
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  entities: [__dirname + '/../modules/**/*.entity{.ts,.js}', __dirname + '/../reports/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false, // Never use in production
   logging: configService.get('NODE_ENV') === 'development',
@@ -22,14 +22,18 @@ export const typeOrmConfig = (
 
 // DataSource for migrations
 const config = new ConfigService();
-export const dataSource = new DataSource({
+const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: config.get('DATABASE_HOST', 'localhost'),
-  port: config.get('DATABASE_PORT', 5432),
+  port: parseInt(config.get('DATABASE_PORT', '5432')),
   username: config.get('DATABASE_USER', 'financial_rise'),
-  password: config.get('DATABASE_PASSWORD'),
-  database: config.get('DATABASE_NAME', 'financial_rise_db'),
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  password: config.get('DATABASE_PASSWORD', 'financial_rise_dev'),
+  database: config.get('DATABASE_NAME', 'financial_rise_dev'),
+  entities: [__dirname + '/../modules/**/*.entity{.ts,.js}', __dirname + '/../reports/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false,
-} as DataSourceOptions);
+  logging: true,
+};
+
+const dataSource = new DataSource(dataSourceOptions);
+export default dataSource;

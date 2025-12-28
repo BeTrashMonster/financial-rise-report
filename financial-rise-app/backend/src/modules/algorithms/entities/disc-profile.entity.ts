@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { Assessment } from '../../assessments/entities/assessment.entity';
 
 export type DISCType = 'D' | 'I' | 'S' | 'C';
 export type ConfidenceLevel = 'high' | 'moderate' | 'low';
@@ -15,8 +16,14 @@ export class DISCProfile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('text')
+  @Column({ type: 'uuid' })
   assessment_id: string;
+
+  @ManyToOne(() => Assessment, (assessment) => assessment.disc_profiles, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'assessment_id' })
+  assessment: Assessment;
 
   @Column('float')
   d_score: number;
@@ -51,11 +58,4 @@ export class DISCProfile {
 
   @CreateDateColumn()
   calculated_at: Date;
-
-  // TODO: Add relationship to Assessment entity when created
-  // @ManyToOne(() => Assessment, (assessment) => assessment.disc_profile, {
-  //   onDelete: 'CASCADE',
-  // })
-  // @JoinColumn({ name: 'assessment_id' })
-  // assessment: Assessment;
 }

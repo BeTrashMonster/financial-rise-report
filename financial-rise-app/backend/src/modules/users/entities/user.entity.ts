@@ -65,6 +65,9 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   reset_password_expires: Date | null;
 
+  @Column({ type: 'timestamp', nullable: true })
+  reset_password_used_at: Date | null;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   @Exclude()
   refresh_token: string | null;

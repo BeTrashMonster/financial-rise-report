@@ -3,44 +3,40 @@ import {
   IsEmail,
   IsOptional,
   IsEnum,
-  IsInt,
-  IsBoolean,
-  Min,
-  Max,
-  Length,
+  MaxLength,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { AssessmentStatus } from '../../../../../../database/entities/Assessment';
+import { AssessmentStatus } from '../entities/assessment.entity';
 
 export class UpdateAssessmentDto {
   @ApiPropertyOptional({
     description: 'Client full name',
     example: 'John Smith',
-    minLength: 2,
     maxLength: 100,
   })
   @IsString()
   @IsOptional()
-  @Length(2, 100)
+  @MaxLength(100)
   clientName?: string;
 
   @ApiPropertyOptional({
-    description: 'Client business name',
-    example: 'Smith Consulting LLC',
-    minLength: 2,
-    maxLength: 200,
+    description: 'Business name',
+    example: 'Acme Corp',
+    maxLength: 100,
   })
   @IsString()
   @IsOptional()
-  @Length(2, 200)
-  clientBusinessName?: string;
+  @MaxLength(100)
+  businessName?: string;
 
   @ApiPropertyOptional({
     description: 'Client email address',
     example: 'john.smith@example.com',
+    maxLength: 255,
   })
   @IsEmail()
   @IsOptional()
+  @MaxLength(255)
   clientEmail?: string;
 
   @ApiPropertyOptional({
@@ -53,44 +49,12 @@ export class UpdateAssessmentDto {
   status?: AssessmentStatus;
 
   @ApiPropertyOptional({
-    description: 'Entity type (LLC, S-Corp, C-Corp, Sole Proprietor, Partnership)',
-    example: 'S-Corp',
-    maxLength: 100,
+    description: 'Optional notes about the assessment',
+    example: 'Updated notes after consultation',
+    maxLength: 5000,
   })
   @IsString()
   @IsOptional()
-  @Length(0, 100)
-  entityType?: string;
-
-  @ApiPropertyOptional({
-    description: 'Whether S-Corp is on payroll (conditional question)',
-    example: true,
-  })
-  @IsBoolean()
-  @IsOptional()
-  isSCorpOnPayroll?: boolean;
-
-  @ApiPropertyOptional({
-    description: 'Confidence level before assessment (1-10)',
-    minimum: 1,
-    maximum: 10,
-    example: 5,
-  })
-  @IsInt()
-  @Min(1)
-  @Max(10)
-  @IsOptional()
-  confidenceBefore?: number;
-
-  @ApiPropertyOptional({
-    description: 'Confidence level after assessment (1-10)',
-    minimum: 1,
-    maximum: 10,
-    example: 8,
-  })
-  @IsInt()
-  @Min(1)
-  @Max(10)
-  @IsOptional()
-  confidenceAfter?: number;
+  @MaxLength(5000)
+  notes?: string;
 }

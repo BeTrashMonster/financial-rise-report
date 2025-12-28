@@ -3,12 +3,32 @@ import { AssessmentsController } from './assessments.controller';
 import { AssessmentsService } from './assessments.service';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
-import { SaveResponseDto } from './dto/save-response.dto';
-import { AssessmentStatus } from '../../../../../database/entities/Assessment'
+import { AssessmentStatus } from './entities/assessment.entity';
 
 describe('AssessmentsController', () => {
   let controller: AssessmentsController;
   let service: AssessmentsService;
+
+  const mockUser = {
+    id: 'user-123',
+    email: 'consultant@example.com',
+  };
+
+  const mockAssessment = {
+    id: 'assessment-123',
+    consultant_id: 'user-123',
+    client_name: 'John Smith',
+    business_name: 'Smith Consulting LLC',
+    client_email: 'john.smith@example.com',
+    status: AssessmentStatus.DRAFT,
+    progress: 0,
+    notes: null,
+    started_at: null,
+    completed_at: null,
+    created_at: new Date(),
+    updated_at: new Date(),
+    deleted_at: null,
+  };
 
   const mockAssessmentsService = {
     create: jest.fn(),
@@ -16,28 +36,6 @@ describe('AssessmentsController', () => {
     findOne: jest.fn(),
     update: jest.fn(),
     remove: jest.fn(),
-    archive: jest.fn(),
-    restore: jest.fn(),
-    saveResponse: jest.fn(),
-    getResponses: jest.fn(),
-  };
-
-  const mockUser = {
-    id: 'user-123',
-    email: 'consultant@example.com',
-    role: 'consultant',
-  };
-
-  const mockAssessment = {
-    id: 'assessment-123',
-    consultantId: 'user-123',
-    clientName: 'John Smith',
-    clientBusinessName: 'Smith Consulting LLC',
-    clientEmail: 'john.smith@example.com',
-    status: AssessmentStatus.DRAFT,
-    progressPercentage: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
   };
 
   beforeEach(async () => {
@@ -65,7 +63,7 @@ describe('AssessmentsController', () => {
     it('should create a new assessment', async () => {
       const createDto: CreateAssessmentDto = {
         clientName: 'John Smith',
-        clientBusinessName: 'Smith Consulting LLC',
+        businessName: 'Smith Consulting LLC',
         clientEmail: 'john.smith@example.com',
       };
 
@@ -79,22 +77,58 @@ describe('AssessmentsController', () => {
   });
 
   describe('findAll', () => {
-    it('should return all assessments for consultant', async () => {
-      const assessments = [mockAssessment];
-      mockAssessmentsService.findAll.mockResolvedValue(assessments);
+    it('should return paginated assessments', async () => {
+      const paginatedResponse = {
+        data: [mockAssessment],
+        meta: {
+          page: 1,
+          limit: 10,
+          total: 1,
+          totalPages: 1,
+        },
+      };
 
-      const result = await controller.findAll(mockUser, false);
+      mockAssessmentsService.findAll.mockResolvedValue(paginatedResponse);
 
-      expect(service.findAll).toHaveBeenCalledWith(mockUser.id, false);
-      expect(result).toEqual(assessments);
+      const result = await controller.findAll(mockUser);
+
+      expect(service.findAll).toHaveBeenCalledWith(mockUser.id, {
+        page: undefined,
+        limit: undefined,
+        status: undefined,
+        search: undefined,
+        sortBy: undefined,
+        sortOrder: undefined,
+      });
+      expect(result).toEqual(paginatedResponse);
     });
 
-    it('should return archived assessments when archived=true', async () => {
-      mockAssessmentsService.findAll.mockResolvedValue([]);
+    it('should apply filters when provided', async () => {
+      const paginatedResponse = {
+        data: [],
+        meta: { page: 1, limit: 10, total: 0, totalPages: 0 },
+      };
 
-      await controller.findAll(mockUser, true);
+      mockAssessmentsService.findAll.mockResolvedValue(paginatedResponse);
 
-      expect(service.findAll).toHaveBeenCalledWith(mockUser.id, true);
+      await controller.findAll(
+        mockUser,
+        1,
+        10,
+        AssessmentStatus.COMPLETED,
+        'Smith',
+        'updated_at',
+        'DESC',
+      );
+
+      expect(service.findAll).toHaveBeenCalledWith(mockUser.id, {
+        page: 1,
+        limit: 10,
+        status: AssessmentStatus.COMPLETED,
+        search: 'Smith',
+        sortBy: 'updated_at',
+        sortOrder: 'DESC',
+      });
     });
   });
 
@@ -113,95 +147,33 @@ describe('AssessmentsController', () => {
     it('should update an assessment', async () => {
       const updateDto: UpdateAssessmentDto = {
         clientName: 'Jane Smith',
+        status: AssessmentStatus.IN_PROGRESS,
       };
 
-      const updatedAssessment = { ...mockAssessment, clientName: 'Jane Smith' };
+      const updatedAssessment = {
+        ...mockAssessment,
+        client_name: 'Jane Smith',
+        status: AssessmentStatus.IN_PROGRESS,
+      };
+
       mockAssessmentsService.update.mockResolvedValue(updatedAssessment);
 
       const result = await controller.update('assessment-123', updateDto, mockUser);
 
       expect(service.update).toHaveBeenCalledWith('assessment-123', updateDto, mockUser.id);
-      expect(result.clientName).toBe('Jane Smith');
+      expect(result.client_name).toBe('Jane Smith');
+      expect(result.status).toBe(AssessmentStatus.IN_PROGRESS);
     });
   });
 
   describe('remove', () => {
-    it('should delete a draft assessment', async () => {
+    it('should soft delete an assessment', async () => {
       mockAssessmentsService.remove.mockResolvedValue(undefined);
 
-      await controller.remove('assessment-123', mockUser);
+      const result = await controller.remove('assessment-123', mockUser);
 
       expect(service.remove).toHaveBeenCalledWith('assessment-123', mockUser.id);
-    });
-  });
-
-  describe('archive', () => {
-    it('should archive an assessment', async () => {
-      const archivedAssessment = { ...mockAssessment, archivedAt: new Date() };
-      mockAssessmentsService.archive.mockResolvedValue(archivedAssessment);
-
-      const result = await controller.archive('assessment-123', mockUser);
-
-      expect(service.archive).toHaveBeenCalledWith('assessment-123', mockUser.id);
-      expect(result.archivedAt).toBeDefined();
-    });
-  });
-
-  describe('restore', () => {
-    it('should restore an archived assessment', async () => {
-      mockAssessmentsService.restore.mockResolvedValue(mockAssessment);
-
-      const result = await controller.restore('assessment-123', mockUser);
-
-      expect(service.restore).toHaveBeenCalledWith('assessment-123', mockUser.id);
-      expect(result).toEqual(mockAssessment);
-    });
-  });
-
-  describe('saveResponse', () => {
-    it('should save a response', async () => {
-      const saveDto: SaveResponseDto = {
-        questionId: 'question-123',
-        answerValue: 'Test answer',
-      };
-
-      const mockResponse = {
-        id: 'response-123',
-        assessmentId: 'assessment-123',
-        questionId: 'question-123',
-        answerValue: 'Test answer',
-      };
-
-      mockAssessmentsService.saveResponse.mockResolvedValue(mockResponse);
-
-      const result = await controller.saveResponse('assessment-123', saveDto, mockUser);
-
-      expect(service.saveResponse).toHaveBeenCalledWith('assessment-123', saveDto, mockUser.id);
-      expect(result).toEqual(mockResponse);
-    });
-  });
-
-  describe('getResponses', () => {
-    it('should return all responses for an assessment', async () => {
-      const mockResponses = [
-        {
-          id: 'response-1',
-          questionId: 'question-1',
-          answerValue: 'Answer 1',
-        },
-        {
-          id: 'response-2',
-          questionId: 'question-2',
-          answerValue: 'Answer 2',
-        },
-      ];
-
-      mockAssessmentsService.getResponses.mockResolvedValue(mockResponses);
-
-      const result = await controller.getResponses('assessment-123', mockUser);
-
-      expect(service.getResponses).toHaveBeenCalledWith('assessment-123', mockUser.id);
-      expect(result).toEqual(mockResponses);
+      expect(result).toBeUndefined();
     });
   });
 });

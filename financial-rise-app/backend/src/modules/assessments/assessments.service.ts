@@ -2,24 +2,31 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Assessment, AssessmentStatus } from '../../../../../database/entities/Assessment'
-import { Response } from '../../../../../database/entities/Response'
-import { Question } from '../../../../../database/entities/Question'
+import { Repository, FindOptionsWhere, Like } from 'typeorm';
+import { Assessment, AssessmentStatus } from './entities/assessment.entity';
+import { AssessmentResponse } from './entities/assessment-response.entity';
+import { Question } from '../questions/entities/question.entity';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
-import { SaveResponseDto } from './dto/save-response.dto';
+
+export interface FindAllFilters {
+  page?: number;
+  limit?: number;
+  status?: AssessmentStatus;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: 'ASC' | 'DESC';
+}
 
 @Injectable()
 export class AssessmentsService {
   constructor(
     @InjectRepository(Assessment)
     private assessmentRepository: Repository<Assessment>,
-    @InjectRepository(Response)
-    private responseRepository: Repository<Response>,
+    @InjectRepository(AssessmentResponse)
+    private responseRepository: Repository<AssessmentResponse>,
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
   ) {}
@@ -29,43 +36,85 @@ export class AssessmentsService {
    */
   async create(createDto: CreateAssessmentDto, consultantId: string): Promise<Assessment> {
     const assessment = this.assessmentRepository.create({
-      ...createDto,
-      consultantId,
+      client_name: createDto.clientName,
+      business_name: createDto.businessName,
+      client_email: createDto.clientEmail,
+      notes: createDto.notes || null,
+      consultant_id: consultantId,
       status: AssessmentStatus.DRAFT,
-      progressPercentage: 0,
+      progress: 0,
     });
 
     return this.assessmentRepository.save(assessment);
   }
 
   /**
-   * Find all assessments for a consultant
-   * @param consultantId - The consultant's user ID
-   * @param includeArchived - Whether to include archived assessments (false = exclude, true = only archived)
+   * Find all assessments for a consultant with pagination and filtering
    */
-  async findAll(consultantId: string, includeArchived: boolean = false): Promise<Assessment[]> {
+  async findAll(consultantId: string, filters: FindAllFilters = {}) {
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      search,
+      sortBy = 'updated_at',
+      sortOrder = 'DESC',
+    } = filters;
+
+    // Validate limit
+    const maxLimit = Math.min(limit, 100);
+    const skip = (page - 1) * maxLimit;
+
     const queryBuilder = this.assessmentRepository
       .createQueryBuilder('assessment')
-      .where('assessment.consultantId = :consultantId', { consultantId })
-      .andWhere('assessment.deletedAt IS NULL');
+      .where('assessment.consultant_id = :consultantId', { consultantId })
+      .andWhere('assessment.deleted_at IS NULL');
 
-    if (includeArchived) {
-      queryBuilder.andWhere('assessment.archivedAt IS NOT NULL');
-    } else {
-      queryBuilder.andWhere('assessment.archivedAt IS NULL');
+    // Apply status filter
+    if (status) {
+      queryBuilder.andWhere('assessment.status = :status', { status });
     }
 
-    return queryBuilder.orderBy('assessment.updatedAt', 'DESC').getMany();
+    // Apply search filter (client name, business name, or email)
+    if (search) {
+      queryBuilder.andWhere(
+        '(assessment.client_name ILIKE :search OR assessment.business_name ILIKE :search OR assessment.client_email ILIKE :search)',
+        { search: `%${search}%` },
+      );
+    }
+
+    // Apply sorting
+    queryBuilder.orderBy(`assessment.${sortBy}`, sortOrder);
+
+    // Get total count for pagination
+    const total = await queryBuilder.getCount();
+
+    // Apply pagination
+    queryBuilder.skip(skip).take(maxLimit);
+
+    // Execute query
+    const data = await queryBuilder.getMany();
+
+    return {
+      data,
+      meta: {
+        page,
+        limit: maxLimit,
+        total,
+        totalPages: Math.ceil(total / maxLimit),
+      },
+    };
   }
 
   /**
    * Find one assessment by ID
    * Only returns assessment if it belongs to the consultant
+   * Loads all relationships (responses, discProfile, phaseResult)
    */
   async findOne(id: string, consultantId: string): Promise<Assessment> {
     const assessment = await this.assessmentRepository.findOne({
-      where: { id, consultantId },
-      relations: ['responses'],
+      where: { id, consultant_id: consultantId },
+      relations: ['responses', 'disc_profiles', 'phase_results'],
     });
 
     if (!assessment) {
@@ -85,6 +134,11 @@ export class AssessmentsService {
   ): Promise<Assessment> {
     const assessment = await this.findOne(id, consultantId);
 
+    // Validate status transitions
+    if (updateDto.status) {
+      this.validateStatusTransition(assessment.status, updateDto.status);
+    }
+
     // Track status changes
     const oldStatus = assessment.status;
     const newStatus = updateDto.status;
@@ -93,152 +147,65 @@ export class AssessmentsService {
     if (
       newStatus === AssessmentStatus.IN_PROGRESS &&
       oldStatus === AssessmentStatus.DRAFT &&
-      !assessment.startedAt
+      !assessment.started_at
     ) {
-      assessment.startedAt = new Date();
+      assessment.started_at = new Date();
     }
 
     // Set completedAt when moving to COMPLETED
-    if (newStatus === AssessmentStatus.COMPLETED && !assessment.completedAt) {
-      assessment.completedAt = new Date();
+    if (newStatus === AssessmentStatus.COMPLETED && !assessment.completed_at) {
+      assessment.completed_at = new Date();
     }
 
-    // Update fields
-    Object.assign(assessment, updateDto);
+    // Map DTO fields to entity fields
+    if (updateDto.clientName !== undefined) assessment.client_name = updateDto.clientName;
+    if (updateDto.businessName !== undefined) assessment.business_name = updateDto.businessName;
+    if (updateDto.clientEmail !== undefined) assessment.client_email = updateDto.clientEmail;
+    if (updateDto.notes !== undefined) assessment.notes = updateDto.notes;
+    if (updateDto.status !== undefined) assessment.status = updateDto.status;
 
     return this.assessmentRepository.save(assessment);
   }
 
   /**
-   * Soft delete an assessment (only DRAFT assessments can be deleted)
+   * Validate status transitions
+   */
+  private validateStatusTransition(currentStatus: AssessmentStatus, newStatus: AssessmentStatus): void {
+    // Cannot move from COMPLETED back to DRAFT
+    if (currentStatus === AssessmentStatus.COMPLETED && newStatus === AssessmentStatus.DRAFT) {
+      throw new BadRequestException('Cannot revert completed assessment to draft status');
+    }
+  }
+
+  /**
+   * Soft delete an assessment
    */
   async remove(id: string, consultantId: string): Promise<void> {
     const assessment = await this.findOne(id, consultantId);
-
-    // Only allow deletion of DRAFT assessments
-    if (assessment.status !== AssessmentStatus.DRAFT) {
-      throw new BadRequestException(
-        'Only draft assessments can be deleted. Completed assessments should be archived instead.',
-      );
-    }
-
     await this.assessmentRepository.softDelete(id);
   }
 
   /**
-   * Archive an assessment
+   * Calculate and update assessment progress based on answered questions
    */
-  async archive(id: string, consultantId: string): Promise<Assessment> {
-    const assessment = await this.findOne(id, consultantId);
-
-    assessment.archivedAt = new Date();
-    return this.assessmentRepository.save(assessment);
-  }
-
-  /**
-   * Restore an archived assessment
-   */
-  async restore(id: string, consultantId: string): Promise<Assessment> {
-    const assessment = await this.findOne(id, consultantId);
-
-    assessment.archivedAt = null;
-    return this.assessmentRepository.save(assessment);
-  }
-
-  /**
-   * Save or update a response to a question
-   * Auto-save functionality - creates or updates response
-   */
-  async saveResponse(
-    assessmentId: string,
-    saveDto: SaveResponseDto,
-    consultantId: string,
-  ): Promise<Response> {
-    // Verify assessment exists and belongs to consultant
-    const assessment = await this.findOne(assessmentId, consultantId);
-
-    // Verify question exists
-    const question = await this.questionRepository.findOne({
-      where: { id: saveDto.questionId },
-    });
-
-    if (!question) {
-      throw new NotFoundException(`Question with ID ${saveDto.questionId} not found`);
-    }
-
-    // Check if response already exists
-    let response = await this.responseRepository.findOne({
-      where: {
-        assessmentId,
-        questionId: saveDto.questionId,
-      },
-    });
-
-    if (response) {
-      // Update existing response
-      Object.assign(response, saveDto);
-    } else {
-      // Create new response
-      response = this.responseRepository.create({
-        assessmentId,
-        ...saveDto,
-      });
-    }
-
-    const savedResponse = await this.responseRepository.save(response);
-
-    // Update progress percentage
-    await this.updateProgress(assessmentId);
-
-    return savedResponse;
-  }
-
-  /**
-   * Update assessment progress based on answered questions
-   */
-  private async updateProgress(assessmentId: string): Promise<void> {
-    const progressPercentage = await this.calculateProgress(assessmentId);
-
-    await this.assessmentRepository.save({
-      id: assessmentId,
-      progressPercentage,
-    });
-  }
-
-  /**
-   * Calculate progress percentage
-   * Returns percentage (0-100) of questions answered
-   */
-  private async calculateProgress(assessmentId: string): Promise<number> {
-    // Count total questions (excluding conditional questions that aren't triggered)
-    // For MVP, we'll count all questions - conditional logic will be Phase 3
-    const totalQuestions = await this.questionRepository.count({
-      where: { deletedAt: null as any },
-    });
+  async updateProgress(assessmentId: string): Promise<number> {
+    // Count total questions
+    const totalQuestions = await this.questionRepository.count();
 
     if (totalQuestions === 0) {
       return 0;
     }
 
-    // Count answered questions (responses that have a value or are marked N/A)
+    // Count answered questions
     const answeredQuestions = await this.responseRepository.count({
-      where: { assessmentId },
+      where: { assessment_id: assessmentId },
     });
 
-    return Math.round((answeredQuestions / totalQuestions) * 100);
-  }
+    const progress = Math.round((answeredQuestions / totalQuestions) * 100 * 100) / 100; // Round to 2 decimals
 
-  /**
-   * Get all responses for an assessment
-   */
-  async getResponses(assessmentId: string, consultantId: string): Promise<Response[]> {
-    // Verify assessment exists and belongs to consultant
-    await this.findOne(assessmentId, consultantId);
+    // Update assessment
+    await this.assessmentRepository.update(assessmentId, { progress });
 
-    return this.responseRepository.find({
-      where: { assessmentId },
-      relations: ['question'],
-      order: { createdAt: 'ASC' },
-    });
+    return progress;
   }
 }

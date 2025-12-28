@@ -13,6 +13,7 @@ import { UsersService } from '../users/users.service';
 import { User, UserStatus } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { RefreshTokenService } from './refresh-token.service';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private refreshTokenService: RefreshTokenService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -65,7 +67,7 @@ export class AuthService {
     return result;
   }
 
-  async login(user: User) {
+  async login(user: User, deviceInfo?: string, ipAddress?: string) {
     const payload = { sub: user.id, email: user.email, role: user.role };
 
     const accessToken = this.jwtService.sign(payload);
@@ -74,9 +76,22 @@ export class AuthService {
       expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION', '7d'),
     });
 
-    // Hash and store refresh token
-    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-    await this.usersService.updateRefreshToken(user.id, hashedRefreshToken);
+    // Calculate expiration date for refresh token
+    const refreshExpirationDays = parseInt(
+      this.configService.get<string>('JWT_REFRESH_EXPIRATION', '7d').replace('d', ''),
+      10,
+    );
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + refreshExpirationDays);
+
+    // Store refresh token in database (supports multiple devices)
+    await this.refreshTokenService.createToken(
+      user.id,
+      refreshToken,
+      expiresAt,
+      deviceInfo,
+      ipAddress,
+    );
 
     return {
       access_token: accessToken,
@@ -93,12 +108,49 @@ export class AuthService {
     };
   }
 
+  /**
+   * Validates password complexity requirements
+   * @param password - The password to validate
+   * @throws BadRequestException if password doesn't meet requirements
+   */
+  private validatePasswordComplexity(password: string): void {
+    const minLength = 8;
+    const errors: string[] = [];
+
+    if (password.length < minLength) {
+      errors.push(`Password must be at least ${minLength} characters long`);
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      errors.push('Password must contain at least one uppercase letter');
+    }
+
+    if (!/[a-z]/.test(password)) {
+      errors.push('Password must contain at least one lowercase letter');
+    }
+
+    if (!/\d/.test(password)) {
+      errors.push('Password must contain at least one number');
+    }
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      errors.push('Password must contain at least one special character (!@#$%^&*(),.?":{}|<>)');
+    }
+
+    if (errors.length > 0) {
+      throw new BadRequestException(errors.join('; '));
+    }
+  }
+
   async register(registerDto: RegisterDto) {
     const existingUser = await this.usersService.findByEmail(registerDto.email);
 
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }
+
+    // Validate password complexity
+    this.validatePasswordComplexity(registerDto.password);
 
     // Hash password with bcrypt (salt rounds: 12)
     const hashedPassword = await bcrypt.hash(registerDto.password, 12);
@@ -127,14 +179,10 @@ export class AuthService {
         throw new UnauthorizedException('User not found');
       }
 
-      if (!user.refresh_token) {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
+      // Verify the refresh token exists in the database and is valid
+      const storedToken = await this.refreshTokenService.findValidToken(user.id, refreshToken);
 
-      // Verify the refresh token matches the stored hashed version
-      const isTokenValid = await bcrypt.compare(refreshToken, user.refresh_token);
-
-      if (!isTokenValid) {
+      if (!storedToken) {
         throw new UnauthorizedException('Invalid refresh token');
       }
 
@@ -156,8 +204,16 @@ export class AuthService {
     }
   }
 
-  async logout(userId: string) {
-    await this.usersService.updateRefreshToken(userId, null);
+  async logout(userId: string, revokeAllDevices = false) {
+    if (revokeAllDevices) {
+      // Revoke all refresh tokens for this user (logout from all devices)
+      await this.refreshTokenService.revokeAllUserTokens(userId);
+    } else {
+      // For single device logout, we would need the specific token
+      // For now, revoke all tokens (can be enhanced to revoke specific token)
+      await this.refreshTokenService.revokeAllUserTokens(userId);
+    }
+
     return { message: 'Logged out successfully' };
   }
 
@@ -210,18 +266,27 @@ export class AuthService {
       throw new BadRequestException('Reset token has expired');
     }
 
+    // Check if token has already been used
+    if (users.reset_password_used_at) {
+      throw new BadRequestException('Reset token has already been used');
+    }
+
+    // Validate password complexity
+    this.validatePasswordComplexity(newPassword);
+
     // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 12);
 
-    // Update password and clear reset token
+    // Update password and mark reset token as used
     await this.usersService.update(users.id, {
       password_hash: hashedPassword,
+      reset_password_used_at: new Date(),
     });
 
     await this.usersService.clearResetPasswordToken(users.id);
 
-    // Clear refresh token to force re-login
-    await this.usersService.updateRefreshToken(users.id, null);
+    // Revoke all refresh tokens to force re-login on all devices
+    await this.refreshTokenService.revokeAllUserTokens(users.id);
 
     return { message: 'Password has been reset successfully' };
   }

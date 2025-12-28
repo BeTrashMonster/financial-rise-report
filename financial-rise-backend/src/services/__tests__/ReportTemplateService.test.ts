@@ -1,5 +1,5 @@
 import { ReportTemplateService } from '../ReportTemplateService';
-import { DISCType } from '../../types';
+import { DISCType, FinancialPhase } from '../../types';
 
 describe('ReportTemplateService', () => {
   let service: ReportTemplateService;
@@ -28,22 +28,22 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Organize',
+            primaryPhase: FinancialPhase.ORGANIZE,
             scores: {
-              Stabilize: 75,
-              Organize: 45,
-              Build: 30,
-              Grow: 20,
-              Systemic: 50
+              [FinancialPhase.STABILIZE]: 75,
+              [FinancialPhase.ORGANIZE]: 45,
+              [FinancialPhase.BUILD]: 30,
+              [FinancialPhase.GROW]: 20,
+              [FinancialPhase.SYSTEMIC]: 50
             },
-            secondaryPhases: ['Stabilize']
+            secondaryPhases: [FinancialPhase.STABILIZE]
           },
           responses: [
             {
               questionId: 'q1',
               questionText: 'Do you have a Chart of Accounts?',
               answer: 'No',
-              phase: 'Organize',
+              phase: FinancialPhase.ORGANIZE,
               notes: 'Client needs COA setup'
             }
           ],
@@ -68,7 +68,7 @@ describe('ReportTemplateService', () => {
 
         // Verify phase results section
         expect(html).toContain('Financial Readiness Assessment Results');
-        expect(html).toContain('Organize');
+        expect(html).toContain(FinancialPhase.ORGANIZE);
 
         // Verify action plan section
         expect(html).toContain('Recommended Action Plan');
@@ -91,8 +91,8 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Stabilize',
-            scores: { Stabilize: 40, Organize: 60, Build: 50, Grow: 30, Systemic: 45 },
+            primaryPhase: FinancialPhase.STABILIZE,
+            scores: { [FinancialPhase.STABILIZE]: 40, [FinancialPhase.ORGANIZE]: 60, [FinancialPhase.BUILD]: 50, [FinancialPhase.GROW]: 30, [FinancialPhase.SYSTEMIC]: 45 },
             secondaryPhases: []
           },
           responses: [],
@@ -118,8 +118,8 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Build',
-            scores: { Stabilize: 80, Organize: 75, Build: 45, Grow: 25, Systemic: 60 },
+            primaryPhase: FinancialPhase.BUILD,
+            scores: { [FinancialPhase.STABILIZE]: 80, [FinancialPhase.ORGANIZE]: 75, [FinancialPhase.BUILD]: 45, [FinancialPhase.GROW]: 25, [FinancialPhase.SYSTEMIC]: 60 },
             secondaryPhases: []
           },
           responses: [],
@@ -142,8 +142,8 @@ describe('ReportTemplateService', () => {
             confidence: 'moderate'
           },
           phaseResults: {
-            primaryPhase: 'Stabilize',
-            scores: { Stabilize: 25, Organize: 35, Build: 20, Grow: 15, Systemic: 30 },
+            primaryPhase: FinancialPhase.STABILIZE,
+            scores: { [FinancialPhase.STABILIZE]: 25, [FinancialPhase.ORGANIZE]: 35, [FinancialPhase.BUILD]: 20, [FinancialPhase.GROW]: 15, [FinancialPhase.SYSTEMIC]: 30 },
             secondaryPhases: []
           },
           responses: [
@@ -151,7 +151,7 @@ describe('ReportTemplateService', () => {
               questionId: 'q-debt',
               questionText: 'Are you current on all debt payments?',
               answer: 'No',
-              phase: 'Stabilize',
+              phase: FinancialPhase.STABILIZE,
               notes: 'Critical: 90 days behind on loan'
             }
           ],
@@ -179,8 +179,8 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Grow',
-            scores: { Stabilize: 85, Organize: 80, Build: 75, Grow: 50, Systemic: 70 },
+            primaryPhase: FinancialPhase.GROW,
+            scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 75, [FinancialPhase.GROW]: 50, [FinancialPhase.SYSTEMIC]: 70 },
             secondaryPhases: []
           },
           quickWins: [
@@ -189,7 +189,7 @@ describe('ReportTemplateService', () => {
             'Implement revenue forecasting'
           ],
           roadmap: {
-            phases: ['Grow', 'Systemic'],
+            phases: [FinancialPhase.GROW, FinancialPhase.SYSTEMIC],
             milestones: ['Complete cash flow planning', 'Master financial reporting']
           },
           branding: {
@@ -212,7 +212,7 @@ describe('ReportTemplateService', () => {
 
         // Verify financial journey section
         expect(html).toContain('Your Financial Readiness Journey');
-        expect(html).toContain('Grow');
+        expect(html).toContain(FinancialPhase.GROW);
 
         // Verify quick wins section
         expect(html).toContain('Your Quick Wins');
@@ -238,12 +238,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Build',
-            scores: { Stabilize: 90, Organize: 85, Build: 55, Grow: 40, Systemic: 65 },
+            primaryPhase: FinancialPhase.BUILD,
+            scores: { [FinancialPhase.STABILIZE]: 90, [FinancialPhase.ORGANIZE]: 85, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
             secondaryPhases: []
           },
           quickWins: ['Implement SOPs', 'Create financial dashboard'],
-          roadmap: { phases: ['Build'], milestones: ['Systems operational'] },
+          roadmap: { phases: [FinancialPhase.BUILD], milestones: ['Systems operational'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -263,12 +263,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Organize',
-            scores: { Stabilize: 70, Organize: 50, Build: 40, Grow: 30, Systemic: 55 },
+            primaryPhase: FinancialPhase.ORGANIZE,
+            scores: { [FinancialPhase.STABILIZE]: 70, [FinancialPhase.ORGANIZE]: 50, [FinancialPhase.BUILD]: 40, [FinancialPhase.GROW]: 30, [FinancialPhase.SYSTEMIC]: 55 },
             secondaryPhases: []
           },
           quickWins: ['Set up COA', 'Integrate accounting software'],
-          roadmap: { phases: ['Organize', 'Build'], milestones: ['Foundation complete'] },
+          roadmap: { phases: [FinancialPhase.ORGANIZE, FinancialPhase.BUILD], milestones: ['Foundation complete'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -288,12 +288,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Stabilize',
-            scores: { Stabilize: 35, Organize: 45, Build: 25, Grow: 20, Systemic: 40 },
+            primaryPhase: FinancialPhase.STABILIZE,
+            scores: { [FinancialPhase.STABILIZE]: 35, [FinancialPhase.ORGANIZE]: 45, [FinancialPhase.BUILD]: 25, [FinancialPhase.GROW]: 20, [FinancialPhase.SYSTEMIC]: 40 },
             secondaryPhases: []
           },
           quickWins: ['Organize receipts', 'Review bank reconciliation'],
-          roadmap: { phases: ['Stabilize'], milestones: ['Financial stability achieved'] },
+          roadmap: { phases: [FinancialPhase.STABILIZE], milestones: ['Financial stability achieved'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -313,12 +313,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Systemic',
-            scores: { Stabilize: 90, Organize: 88, Build: 85, Grow: 80, Systemic: 45 },
+            primaryPhase: FinancialPhase.SYSTEMIC,
+            scores: { [FinancialPhase.STABILIZE]: 90, [FinancialPhase.ORGANIZE]: 88, [FinancialPhase.BUILD]: 85, [FinancialPhase.GROW]: 80, [FinancialPhase.SYSTEMIC]: 45 },
             secondaryPhases: []
           },
           quickWins: ['Master variance analysis', 'Learn KPI interpretation'],
-          roadmap: { phases: ['Systemic'], milestones: ['Financial literacy mastery'] },
+          roadmap: { phases: [FinancialPhase.SYSTEMIC], milestones: ['Financial literacy mastery'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -338,12 +338,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Organize',
-            scores: { Stabilize: 75, Organize: 45, Build: 30, Grow: 20, Systemic: 50 },
+            primaryPhase: FinancialPhase.ORGANIZE,
+            scores: { [FinancialPhase.STABILIZE]: 75, [FinancialPhase.ORGANIZE]: 45, [FinancialPhase.BUILD]: 30, [FinancialPhase.GROW]: 20, [FinancialPhase.SYSTEMIC]: 50 },
             secondaryPhases: []
           },
           quickWins: ['Action 1', 'Action 2'],
-          roadmap: { phases: ['Organize'], milestones: ['Milestone 1'] },
+          roadmap: { phases: [FinancialPhase.ORGANIZE], milestones: ['Milestone 1'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -363,12 +363,12 @@ describe('ReportTemplateService', () => {
             confidence: 'high'
           },
           phaseResults: {
-            primaryPhase: 'Build',
-            scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+            primaryPhase: FinancialPhase.BUILD,
+            scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
             secondaryPhases: []
           },
           quickWins: ['Action 1'],
-          roadmap: { phases: ['Build'], milestones: ['Milestone 1'] },
+          roadmap: { phases: [FinancialPhase.BUILD], milestones: ['Milestone 1'] },
           branding: {
             consultantName: 'Elite Financial Advisors',
             logo: 'https://example.com/logo.png',
@@ -393,12 +393,12 @@ describe('ReportTemplateService', () => {
             confidence: 'moderate'
           },
           phaseResults: {
-            primaryPhase: 'Stabilize',
-            scores: { Stabilize: 20, Organize: 25, Build: 15, Grow: 10, Systemic: 25 },
+            primaryPhase: FinancialPhase.STABILIZE,
+            scores: { [FinancialPhase.STABILIZE]: 20, [FinancialPhase.ORGANIZE]: 25, [FinancialPhase.BUILD]: 15, [FinancialPhase.GROW]: 10, [FinancialPhase.SYSTEMIC]: 25 },
             secondaryPhases: []
           },
           quickWins: ['Organize receipts', 'Set up basic bookkeeping'],
-          roadmap: { phases: ['Stabilize'], milestones: ['Basic order achieved'] },
+          roadmap: { phases: [FinancialPhase.STABILIZE], milestones: ['Basic order achieved'] },
           branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
         };
 
@@ -492,39 +492,39 @@ describe('ReportTemplateService', () => {
   describe('Visual Assets', () => {
     describe('getPhaseDiagramSVG', () => {
       it('should generate SVG phase diagram with current position highlighted', () => {
-        const svg = service.getPhaseDiagramSVG('Organize', ['Stabilize']);
+        const svg = service.getPhaseDiagramSVG(FinancialPhase.ORGANIZE, [FinancialPhase.STABILIZE]);
 
         expect(svg).toContain('<svg');
         expect(svg).toContain('</svg>');
-        expect(svg).toContain('Stabilize');
-        expect(svg).toContain('Organize');
-        expect(svg).toContain('Build');
-        expect(svg).toContain('Grow');
-        expect(svg).toContain('Systemic');
+        expect(svg).toContain(FinancialPhase.STABILIZE);
+        expect(svg).toContain(FinancialPhase.ORGANIZE);
+        expect(svg).toContain(FinancialPhase.BUILD);
+        expect(svg).toContain(FinancialPhase.GROW);
+        expect(svg).toContain(FinancialPhase.SYSTEMIC);
       });
 
       it('should highlight the primary phase', () => {
-        const svg = service.getPhaseDiagramSVG('Build', []);
+        const svg = service.getPhaseDiagramSVG(FinancialPhase.BUILD, []);
 
         // Primary phase should have different styling (phase-box-primary class)
         expect(svg).toContain('phase-box-primary');
-        expect(svg).toContain('Build');
+        expect(svg).toContain(FinancialPhase.BUILD);
       });
 
       it('should show secondary phases when provided', () => {
-        const svg = service.getPhaseDiagramSVG('Grow', ['Build', 'Systemic']);
+        const svg = service.getPhaseDiagramSVG(FinancialPhase.GROW, [FinancialPhase.BUILD, FinancialPhase.SYSTEMIC]);
 
         // Secondary phases should have the 'phase-box-secondary' CSS class
         expect(svg).toContain('phase-box-secondary');
 
         // Verify the SVG contains all expected phases
-        expect(svg).toContain('Build');
-        expect(svg).toContain('Systemic');
-        expect(svg).toContain('Grow');
+        expect(svg).toContain(FinancialPhase.BUILD);
+        expect(svg).toContain(FinancialPhase.SYSTEMIC);
+        expect(svg).toContain(FinancialPhase.GROW);
       });
 
       it('should be accessible with proper ARIA labels', () => {
-        const svg = service.getPhaseDiagramSVG('Stabilize', []);
+        const svg = service.getPhaseDiagramSVG(FinancialPhase.STABILIZE, []);
 
         expect(svg).toMatch(/aria-label|role="img"/i);
       });
@@ -532,32 +532,32 @@ describe('ReportTemplateService', () => {
 
     describe('getPhaseIcon', () => {
       it('should return SVG icon for Stabilize phase', () => {
-        const icon = service.getPhaseIcon('Stabilize');
+        const icon = service.getPhaseIcon(FinancialPhase.STABILIZE);
 
         expect(icon).toContain('<svg');
         expect(icon).toContain('</svg>');
       });
 
       it('should return SVG icon for Organize phase', () => {
-        const icon = service.getPhaseIcon('Organize');
+        const icon = service.getPhaseIcon(FinancialPhase.ORGANIZE);
 
         expect(icon).toContain('<svg');
       });
 
       it('should return SVG icon for Build phase', () => {
-        const icon = service.getPhaseIcon('Build');
+        const icon = service.getPhaseIcon(FinancialPhase.BUILD);
 
         expect(icon).toContain('<svg');
       });
 
       it('should return SVG icon for Grow phase', () => {
-        const icon = service.getPhaseIcon('Grow');
+        const icon = service.getPhaseIcon(FinancialPhase.GROW);
 
         expect(icon).toContain('<svg');
       });
 
       it('should return SVG icon for Systemic phase', () => {
-        const icon = service.getPhaseIcon('Systemic');
+        const icon = service.getPhaseIcon(FinancialPhase.SYSTEMIC);
 
         expect(icon).toContain('<svg');
       });
@@ -576,8 +576,8 @@ describe('ReportTemplateService', () => {
           confidence: 'high'
         },
         phaseResults: {
-          primaryPhase: 'Build',
-          scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+          primaryPhase: FinancialPhase.BUILD,
+          scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
           secondaryPhases: []
         },
         responses: [],
@@ -599,12 +599,12 @@ describe('ReportTemplateService', () => {
           confidence: 'high'
         },
         phaseResults: {
-          primaryPhase: 'Build',
-          scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+          primaryPhase: FinancialPhase.BUILD,
+          scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
           secondaryPhases: []
         },
         quickWins: ['Test action'],
-        roadmap: { phases: ['Build'], milestones: ['Test'] },
+        roadmap: { phases: [FinancialPhase.BUILD], milestones: ['Test'] },
         branding: { consultantName: 'Advisor', logo: null, brandColor: '#4B006E' }
       };
 
@@ -625,8 +625,8 @@ describe('ReportTemplateService', () => {
           confidence: 'high'
         },
         phaseResults: {
-          primaryPhase: 'Build',
-          scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+          primaryPhase: FinancialPhase.BUILD,
+          scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
           secondaryPhases: []
         },
         responses: [],
@@ -652,8 +652,8 @@ describe('ReportTemplateService', () => {
           confidence: 'high'
         },
         phaseResults: {
-          primaryPhase: 'Build',
-          scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+          primaryPhase: FinancialPhase.BUILD,
+          scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
           secondaryPhases: []
         },
         responses: [],
@@ -673,8 +673,8 @@ describe('ReportTemplateService', () => {
           confidence: 'high'
         },
         phaseResults: {
-          primaryPhase: 'Build',
-          scores: { Stabilize: 85, Organize: 80, Build: 55, Grow: 40, Systemic: 65 },
+          primaryPhase: FinancialPhase.BUILD,
+          scores: { [FinancialPhase.STABILIZE]: 85, [FinancialPhase.ORGANIZE]: 80, [FinancialPhase.BUILD]: 55, [FinancialPhase.GROW]: 40, [FinancialPhase.SYSTEMIC]: 65 },
           secondaryPhases: []
         },
         quickWins: [],

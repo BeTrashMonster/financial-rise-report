@@ -66,8 +66,10 @@ function getEnvVar<K extends keyof typeof OPTIONAL_ENV_VARS>(
   return process.env[key] || defaultValue;
 }
 
-// Validate on module load
-validateEnv();
+// Validate on module load (skip in test environment)
+if (process.env.NODE_ENV !== 'test') {
+  validateEnv();
+}
 
 /**
  * Validated and typed configuration object

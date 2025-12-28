@@ -28,7 +28,7 @@ import { RatingQuestion } from '@/components/Questions/RatingQuestion';
 import { TextQuestion } from '@/components/Questions/TextQuestion';
 import { useAssessmentStore } from '@/store/assessmentStore';
 import { useAutoSave } from '@/hooks/useAutoSave';
-import { apiService } from '@/services/api';
+import { apiClient } from '@/services/apiClient';
 import type { Question, QuestionType, Questionnaire as QuestionnaireType } from '@/types';
 
 /**
@@ -83,8 +83,8 @@ export const Questionnaire: React.FC = () => {
 
       // Load assessment and questionnaire in parallel
       const [assessment, questionnaireData] = await Promise.all([
-        apiService.getAssessment(assessmentId!),
-        apiService.getQuestionnaire(),
+        apiClient.getAssessment(assessmentId!),
+        apiClient.getQuestionnaire(),
       ]);
 
       setCurrentAssessment(assessment);
@@ -154,7 +154,7 @@ export const Questionnaire: React.FC = () => {
       }
 
       // Mark assessment as completed
-      await apiService.updateAssessment(assessmentId, {
+      await apiClient.updateAssessment(assessmentId, {
         status: 'completed',
       });
 

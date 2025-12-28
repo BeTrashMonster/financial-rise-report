@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useAssessmentStore } from '@/store/assessmentStore';
-import { apiService } from '@/services/api';
+import { apiClient } from '@/services/apiClient';
 import type { AssessmentResponse } from '@/types';
 
 /**
@@ -43,7 +43,7 @@ export const useAutoSave = (assessmentId: string | null, enabled: boolean = true
       }
 
       // Save to backend
-      await apiService.updateAssessment(assessmentId, {
+      await apiClient.updateAssessment(assessmentId, {
         responses: responsesToSave,
       });
 

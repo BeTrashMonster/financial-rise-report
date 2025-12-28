@@ -9,9 +9,10 @@ import {
   UseGuards,
   Query,
   ParseUUIDPipe,
-  ParseBoolPipe,
+  ParseIntPipe,
   HttpCode,
   HttpStatus,
+  ParseEnumPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -24,19 +25,15 @@ import {
 import { AssessmentsService } from './assessments.service';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
-import { SaveResponseDto } from './dto/save-response.dto';
-import { AssessmentResponseDto } from './dto/assessment-response.dto';
+import { AssessmentResponseDto, PaginatedAssessmentsResponseDto } from './dto/assessment-response.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { UserRole } from '../../../../../database/entities/User'
 import { GetUser } from '../auth/decorators/get-user.decorator';
+import { AssessmentStatus } from './entities/assessment.entity';
 
 @ApiTags('assessments')
 @ApiBearerAuth()
 @Controller('api/v1/assessments')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.CONSULTANT, UserRole.ADMIN)
+@UseGuards(JwtAuthGuard)
 export class AssessmentsController {
   constructor(private readonly assessmentsService: AssessmentsService) {}
 
@@ -58,23 +55,38 @@ export class AssessmentsController {
 
   @Get()
   @ApiOperation({
-    summary: 'Get all assessments',
-    description: 'Retrieves all assessments for the authenticated consultant',
+    summary: 'List assessments',
+    description: 'Retrieves all assessments for the authenticated consultant with pagination and filtering',
   })
-  @ApiQuery({
-    name: 'archived',
-    required: false,
-    type: Boolean,
-    description: 'Filter archived assessments (false = active only, true = archived only)',
-  })
+  @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number (default: 1)' })
+  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Items per page (default: 10, max: 100)' })
+  @ApiQuery({ name: 'status', required: false, enum: AssessmentStatus, description: 'Filter by status' })
+  @ApiQuery({ name: 'search', required: false, type: String, description: 'Search by client name, business name, or email' })
+  @ApiQuery({ name: 'sortBy', required: false, type: String, description: 'Sort field (default: updatedAt)' })
+  @ApiQuery({ name: 'sortOrder', required: false, enum: ['asc', 'desc'], description: 'Sort order (default: desc)' })
   @ApiResponse({
     status: 200,
-    description: 'List of assessments',
-    type: [AssessmentResponseDto],
+    description: 'Paginated list of assessments',
+    type: PaginatedAssessmentsResponseDto,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  findAll(@GetUser() user: any, @Query('archived', new ParseBoolPipe({ optional: true })) archived: boolean = false) {
-    return this.assessmentsService.findAll(user.id, archived);
+  findAll(
+    @GetUser() user: any,
+    @Query('page', new ParseIntPipe({ optional: true })) page?: number,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
+    @Query('status') status?: AssessmentStatus,
+    @Query('search') search?: string,
+    @Query('sortBy') sortBy?: string,
+    @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
+  ) {
+    return this.assessmentsService.findAll(user.id, {
+      page,
+      limit,
+      status,
+      search,
+      sortBy,
+      sortOrder,
+    });
   }
 
   @Get(':id')
@@ -120,83 +132,13 @@ export class AssessmentsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Delete assessment',
-    description: 'Soft deletes an assessment. Only DRAFT assessments can be deleted.',
+    description: 'Soft deletes an assessment',
   })
   @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
   @ApiResponse({ status: 204, description: 'Assessment deleted successfully' })
-  @ApiResponse({
-    status: 400,
-    description: 'Cannot delete non-draft assessment',
-  })
   @ApiResponse({ status: 404, description: 'Assessment not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
     return this.assessmentsService.remove(id, user.id);
-  }
-
-  @Patch(':id/archive')
-  @ApiOperation({
-    summary: 'Archive assessment',
-    description: 'Archives a completed assessment to keep dashboard clean',
-  })
-  @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Assessment archived successfully',
-    type: AssessmentResponseDto,
-  })
-  @ApiResponse({ status: 404, description: 'Assessment not found' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  archive(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
-    return this.assessmentsService.archive(id, user.id);
-  }
-
-  @Patch(':id/restore')
-  @ApiOperation({
-    summary: 'Restore archived assessment',
-    description: 'Restores an archived assessment back to active list',
-  })
-  @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
-  @ApiResponse({
-    status: 200,
-    description: 'Assessment restored successfully',
-    type: AssessmentResponseDto,
-  })
-  @ApiResponse({ status: 404, description: 'Assessment not found' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  restore(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
-    return this.assessmentsService.restore(id, user.id);
-  }
-
-  @Post(':id/responses')
-  @ApiOperation({
-    summary: 'Save response to question',
-    description:
-      'Saves or updates a response to a question. Supports auto-save. Updates progress automatically.',
-  })
-  @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
-  @ApiResponse({ status: 201, description: 'Response saved successfully' })
-  @ApiResponse({ status: 404, description: 'Assessment or question not found' })
-  @ApiResponse({ status: 400, description: 'Invalid input data' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  saveResponse(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() saveResponseDto: SaveResponseDto,
-    @GetUser() user: any,
-  ) {
-    return this.assessmentsService.saveResponse(id, saveResponseDto, user.id);
-  }
-
-  @Get(':id/responses')
-  @ApiOperation({
-    summary: 'Get all responses',
-    description: 'Retrieves all responses for an assessment',
-  })
-  @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
-  @ApiResponse({ status: 200, description: 'List of responses' })
-  @ApiResponse({ status: 404, description: 'Assessment not found' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  getResponses(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
-    return this.assessmentsService.getResponses(id, user.id);
   }
 }

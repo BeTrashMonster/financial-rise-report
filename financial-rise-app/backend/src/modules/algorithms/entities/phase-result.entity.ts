@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { Assessment } from '../../assessments/entities/assessment.entity';
 
 export type FinancialPhase = 'stabilize' | 'organize' | 'build' | 'grow' | 'systemic';
 
@@ -14,8 +15,14 @@ export class PhaseResult {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('text')
+  @Column({ type: 'uuid' })
   assessment_id: string;
+
+  @ManyToOne(() => Assessment, (assessment) => assessment.phase_results, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'assessment_id' })
+  assessment: Assessment;
 
   @Column('float')
   stabilize_score: number;
@@ -46,11 +53,4 @@ export class PhaseResult {
 
   @CreateDateColumn()
   calculated_at: Date;
-
-  // TODO: Add relationship to Assessment entity when created
-  // @ManyToOne(() => Assessment, (assessment) => assessment.phase_result, {
-  //   onDelete: 'CASCADE',
-  // })
-  // @JoinColumn({ name: 'assessment_id' })
-  // assessment: Assessment;
 }

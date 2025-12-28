@@ -1,73 +1,53 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
-import { AssessmentStatus } from '../../../../../../database/entities/Assessment';
+import { AssessmentStatus } from '../entities/assessment.entity';
 
-export class ResponseItemDto {
-  @ApiProperty()
-  @Expose()
-  id: string;
+export class AssessmentMetaDto {
+  @ApiProperty({ example: 1 })
+  page: number;
 
-  @ApiProperty()
-  @Expose()
-  questionId: string;
+  @ApiProperty({ example: 20 })
+  limit: number;
 
-  @ApiPropertyOptional()
-  @Expose()
-  answerValue: string | null;
+  @ApiProperty({ example: 45 })
+  total: number;
 
-  @ApiPropertyOptional()
-  @Expose()
-  answerNumeric: number | null;
-
-  @ApiProperty()
-  @Expose()
-  isNotApplicable: boolean;
-
-  @ApiPropertyOptional()
-  @Expose()
-  consultantNotes: string | null;
-
-  @ApiProperty()
-  @Expose()
-  createdAt: Date;
-
-  @ApiProperty()
-  @Expose()
-  updatedAt: Date;
+  @ApiProperty({ example: 3 })
+  totalPages: number;
 }
 
 export class AssessmentResponseDto {
   @ApiProperty({
     description: 'Assessment ID',
-    example: '123e4567-e89b-12d3-a456-426614174000',
+    example: 'a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d',
   })
   @Expose()
   id: string;
 
   @ApiProperty({
     description: 'Consultant ID',
-    example: '123e4567-e89b-12d3-a456-426614174001',
+    example: '550e8400-e29b-41d4-a716-446655440000',
   })
   @Expose()
   consultantId: string;
 
   @ApiProperty({
-    description: 'Client name',
+    description: 'Client full name',
     example: 'John Smith',
   })
   @Expose()
   clientName: string;
 
   @ApiProperty({
-    description: 'Client business name',
-    example: 'Smith Consulting LLC',
+    description: 'Business name',
+    example: 'Acme Corp',
   })
   @Expose()
-  clientBusinessName: string;
+  businessName: string;
 
   @ApiProperty({
-    description: 'Client email',
-    example: 'john.smith@example.com',
+    description: 'Client email address',
+    example: 'john@acmecorp.com',
   })
   @Expose()
   clientEmail: string;
@@ -80,90 +60,59 @@ export class AssessmentResponseDto {
   @Expose()
   status: AssessmentStatus;
 
-  @ApiPropertyOptional({
-    description: 'Entity type',
-    example: 'S-Corp',
-  })
-  @Expose()
-  entityType: string | null;
-
-  @ApiPropertyOptional({
-    description: 'Is S-Corp on payroll',
-    example: true,
-  })
-  @Expose()
-  isSCorpOnPayroll: boolean | null;
-
-  @ApiPropertyOptional({
-    description: 'Confidence before assessment (1-10)',
-    example: 5,
-  })
-  @Expose()
-  confidenceBefore: number | null;
-
-  @ApiPropertyOptional({
-    description: 'Confidence after assessment (1-10)',
-    example: 8,
-  })
-  @Expose()
-  confidenceAfter: number | null;
-
   @ApiProperty({
     description: 'Progress percentage (0-100)',
     example: 45.5,
   })
   @Expose()
-  progressPercentage: number;
-
-  @ApiPropertyOptional({
-    description: 'When assessment was started',
-  })
-  @Expose()
-  startedAt: Date | null;
-
-  @ApiPropertyOptional({
-    description: 'When assessment was completed',
-  })
-  @Expose()
-  completedAt: Date | null;
+  progress: number;
 
   @ApiProperty({
     description: 'When assessment was created',
+    example: '2025-12-20T08:00:00Z',
   })
   @Expose()
   createdAt: Date;
 
   @ApiProperty({
     description: 'When assessment was last updated',
+    example: '2025-12-26T14:30:00Z',
   })
   @Expose()
   updatedAt: Date;
 
   @ApiPropertyOptional({
-    description: 'When assessment was archived',
+    description: 'When assessment was started',
+    example: '2025-12-20T09:15:00Z',
   })
   @Expose()
-  archivedAt: Date | null;
+  startedAt: Date | null;
 
   @ApiPropertyOptional({
-    description: 'Assessment responses',
-    type: [ResponseItemDto],
+    description: 'When assessment was completed',
+    example: null,
   })
   @Expose()
-  @Type(() => ResponseItemDto)
-  responses?: ResponseItemDto[];
+  completedAt: Date | null;
+
+  @ApiPropertyOptional({
+    description: 'Optional notes about the assessment',
+    example: 'Follow up on payroll questions',
+  })
+  @Expose()
+  notes: string | null;
 }
 
-export class AssessmentListResponseDto {
+export class PaginatedAssessmentsResponseDto {
   @ApiProperty({
-    description: 'List of assessments',
+    description: 'Array of assessments',
     type: [AssessmentResponseDto],
   })
-  assessments: AssessmentResponseDto[];
+  data: AssessmentResponseDto[];
 
   @ApiProperty({
-    description: 'Total count',
-    example: 42,
+    description: 'Pagination metadata',
+    type: AssessmentMetaDto,
   })
-  total: number;
+  meta: AssessmentMetaDto;
 }
