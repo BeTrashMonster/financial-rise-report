@@ -6,6 +6,7 @@ import {
   Request,
   HttpCode,
   HttpStatus,
+  Headers,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
@@ -48,13 +49,15 @@ export class AuthController {
 
   /**
    * POST /auth/logout
-   * Invalidate refresh token
+   * Invalidate refresh token and blacklist access token (Work Stream 57)
    */
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Request() req: any) {
-    return this.authService.logout(req.user.userId);
+  async logout(@Request() req: any, @Headers('authorization') authHeader: string) {
+    // Extract access token from Authorization header for blacklisting
+    const accessToken = authHeader?.replace('Bearer ', '') || '';
+    return this.authService.logout(req.user.userId, accessToken);
   }
 
   /**
@@ -70,7 +73,7 @@ export class AuthController {
   /**
    * POST /auth/forgot-password
    * Request password reset email
-   * Rate limit: 3 attempts per 5 minutes to prevent password reset spam
+   * Rate limit: 3 attempts per 5 minutes to prevent email flooding
    */
   @Throttle({ default: { ttl: 300000, limit: 3 } }) // 3 requests per 5 minutes
   @Post('forgot-password')
@@ -90,5 +93,15 @@ export class AuthController {
       resetPasswordDto.token,
       resetPasswordDto.new_password,
     );
+  }
+
+  /**
+   * GET /auth/health-check
+   * Health check endpoint for monitoring
+   */
+  @Post('health-check')
+  @HttpCode(HttpStatus.OK)
+  healthCheck() {
+    return { status: 'ok', service: 'auth', timestamp: new Date().toISOString() };
   }
 }
