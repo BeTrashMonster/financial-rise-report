@@ -29,8 +29,6 @@
     "node_modules",
     "dist",
     "test",
-    "**/*spec.ts",
-    "src/modules/assessments/**/*",
-    "src/modules/questions/**/*"
+    "**/*spec.ts"
   ]
 }
