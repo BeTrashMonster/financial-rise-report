@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { SecretsValidationService } from './config/secrets-validation.service';
+import { getCorsConfig } from './config/cors.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,11 +17,9 @@ async function bootstrap() {
   // Security middleware
   app.use(helmet());
 
-  // Enable CORS
-  app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
-    credentials: true,
-  });
+  // Enable CORS with secure configuration (Work Stream 59 - HIGH-010)
+  // Implements origin whitelist, request logging, and explicit method/header configuration
+  app.enableCors(getCorsConfig());
 
   // Global validation pipe
   app.useGlobalPipes(
