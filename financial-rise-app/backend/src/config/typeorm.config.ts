@@ -1,6 +1,50 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import * as fs from 'fs';
+import * as path from 'path';
+
+/**
+ * Get SSL configuration for database connection
+ * Supports production SSL/TLS with CA certificate validation
+ *
+ * Environment variables:
+ * - DATABASE_SSL: 'true' to enable SSL
+ * - DATABASE_SSL_REJECT_UNAUTHORIZED: 'true' to enforce certificate validation
+ * - DATABASE_SSL_CA: Path to CA certificate file
+ */
+function getSSLConfig(configService: ConfigService): any {
+  const sslEnabled = configService.get('DATABASE_SSL') === 'true';
+
+  if (!sslEnabled) {
+    return false;
+  }
+
+  const rejectUnauthorized = configService.get('DATABASE_SSL_REJECT_UNAUTHORIZED') === 'true';
+  const caPath = configService.get('DATABASE_SSL_CA');
+
+  const sslConfig: any = {
+    rejectUnauthorized,
+  };
+
+  // Load CA certificate if path is provided
+  if (caPath) {
+    try {
+      // Check if file exists before reading
+      if (fs.existsSync(caPath)) {
+        sslConfig.ca = fs.readFileSync(caPath).toString();
+      } else {
+        // Log warning but don't fail - connection attempt will reveal if cert is actually needed
+        console.warn(`[TypeORM SSL] CA certificate file not found: ${caPath}`);
+      }
+    } catch (error) {
+      // Log error but don't throw - allow TypeORM to handle connection failure
+      console.error(`[TypeORM SSL] Error reading CA certificate from ${caPath}:`, error);
+    }
+  }
+
+  return sslConfig;
+}
 
 export const typeOrmConfig = (
   configService: ConfigService,
@@ -15,9 +59,7 @@ export const typeOrmConfig = (
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false, // Never use in production
   logging: configService.get('NODE_ENV') === 'development',
-  ssl: configService.get('DATABASE_SSL') === 'true' ? {
-    rejectUnauthorized: false,
-  } : false,
+  ssl: getSSLConfig(configService),
 });
 
 // DataSource for migrations
@@ -33,6 +75,7 @@ const dataSourceOptions: DataSourceOptions = {
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false,
   logging: true,
+  ssl: getSSLConfig(config) as any,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
