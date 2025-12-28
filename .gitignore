@@ -61,3 +61,10 @@ ENV/
 coverage/
 .nyc_output/
 *.lcov
+
+# GCP Infrastructure Files (DO NOT COMMIT)
+.env.staging
+.env.production
+github-actions-key.json
+github-actions-key-base64.txt
+policy.yaml
