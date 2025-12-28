@@ -9,6 +9,15 @@ import {
 import { Assessment } from './assessment.entity';
 import { Question } from '../../questions/entities/question.entity';
 import { EncryptedColumnTransformer } from '../../../common/transformers/encrypted-column.transformer';
+import { EncryptionService } from '../../../common/services/encryption.service';
+import { ConfigService } from '@nestjs/config';
+
+// Create encryption transformer instance
+const createEncryptionTransformer = () => {
+  const configService = new ConfigService();
+  const encryptionService = new EncryptionService(configService);
+  return new EncryptedColumnTransformer(encryptionService);
+};
 
 @Entity('assessment_responses')
 @Index(['assessment_id'])
@@ -40,7 +49,7 @@ export class AssessmentResponse {
    */
   @Column({
     type: 'text',
-    transformer: new EncryptedColumnTransformer(),
+    transformer: createEncryptionTransformer(),
   })
   answer: Record<string, any>;
 
