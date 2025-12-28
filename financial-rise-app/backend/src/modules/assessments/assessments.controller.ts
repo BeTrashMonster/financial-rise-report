@@ -27,6 +27,7 @@ import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
 import { AssessmentResponseDto, PaginatedAssessmentsResponseDto } from './dto/assessment-response.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AssessmentOwnershipGuard } from '../../common/guards/assessment-ownership.guard';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { AssessmentStatus } from './entities/assessment.entity';
 
@@ -90,9 +91,10 @@ export class AssessmentsController {
   }
 
   @Get(':id')
+  @UseGuards(AssessmentOwnershipGuard)
   @ApiOperation({
     summary: 'Get assessment by ID',
-    description: 'Retrieves a specific assessment with all responses',
+    description: 'Retrieves a specific assessment with all responses. IDOR protected - users can only access their own assessments.',
   })
   @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
   @ApiResponse({
@@ -102,14 +104,16 @@ export class AssessmentsController {
   })
   @ApiResponse({ status: 404, description: 'Assessment not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - assessment belongs to another user' })
   findOne(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
     return this.assessmentsService.findOne(id, user.id);
   }
 
   @Patch(':id')
+  @UseGuards(AssessmentOwnershipGuard)
   @ApiOperation({
     summary: 'Update assessment',
-    description: 'Updates assessment fields. Supports auto-save functionality.',
+    description: 'Updates assessment fields. Supports auto-save functionality. IDOR protected - users can only update their own assessments.',
   })
   @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
   @ApiResponse({
@@ -120,6 +124,7 @@ export class AssessmentsController {
   @ApiResponse({ status: 404, description: 'Assessment not found' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - assessment belongs to another user' })
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateAssessmentDto: UpdateAssessmentDto,
@@ -129,15 +134,17 @@ export class AssessmentsController {
   }
 
   @Delete(':id')
+  @UseGuards(AssessmentOwnershipGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Delete assessment',
-    description: 'Soft deletes an assessment',
+    description: 'Soft deletes an assessment. IDOR protected - users can only delete their own assessments.',
   })
   @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
   @ApiResponse({ status: 204, description: 'Assessment deleted successfully' })
   @ApiResponse({ status: 404, description: 'Assessment not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - assessment belongs to another user' })
   remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
     return this.assessmentsService.remove(id, user.id);
   }
