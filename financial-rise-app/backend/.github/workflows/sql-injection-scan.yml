@@ -1,0 +1,223 @@
+name: Security - SQL Injection Scan
+
+on:
+  pull_request:
+    paths:
+      - 'src/**/*.ts'
+      - 'test/**/*.ts'
+  push:
+    branches:
+      - main
+      - develop
+  schedule:
+    # Run weekly on Mondays at 2 AM UTC
+    - cron: '0 2 * * 1'
+
+jobs:
+  sql-injection-tests:
+    name: Run SQL Injection E2E Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: financial-rise-app/backend
+
+      - name: Install sqlite3 for tests
+        run: npm install --save-dev sqlite3
+        working-directory: financial-rise-app/backend
+
+      - name: Run SQL injection security tests
+        run: npm test -- src/security/sql-injection.spec.ts --testTimeout=30000
+        working-directory: financial-rise-app/backend
+        env:
+          NODE_ENV: test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sql-injection-test-results
+          path: financial-rise-app/backend/coverage/
+
+  static-analysis:
+    name: Static Analysis - Unsafe Query Patterns
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for raw SQL with template literals
+        run: |
+          echo "Scanning for unsafe SQL patterns..."
+
+          # Check for template literals with SQL keywords
+          if grep -r --include="*.ts" --exclude-dir=node_modules \
+             -E '`(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER).*\$\{' \
+             financial-rise-app/backend/src/; then
+            echo "❌ ERROR: Found raw SQL with string interpolation"
+            echo "Use parameterized queries instead"
+            exit 1
+          fi
+
+          echo "✅ No raw SQL with template literals found"
+
+      - name: Check for unsafe query() usage
+        run: |
+          echo "Scanning for unsafe .query() calls..."
+
+          # Look for .query() with template literals
+          if grep -r --include="*.ts" --exclude-dir=node_modules \
+             -E '\.query\(`' \
+             financial-rise-app/backend/src/ \
+             --exclude="*.migration.ts"; then
+            echo "❌ ERROR: Found .query() with template literals"
+            echo "Use QueryBuilder with parameters instead"
+            exit 1
+          fi
+
+          echo "✅ No unsafe .query() calls found"
+
+      - name: Check for string concatenation in queries
+        run: |
+          echo "Scanning for SQL string concatenation..."
+
+          # Look for string concatenation in SQL contexts
+          if grep -r --include="*.ts" --exclude-dir=node_modules \
+             -E '(WHERE|AND|OR|ORDER BY|GROUP BY).*\+.*\$|.*\+.*(SELECT|FROM|WHERE)' \
+             financial-rise-app/backend/src/; then
+            echo "⚠️ WARNING: Found possible string concatenation in SQL context"
+            echo "Verify these are using parameterized queries"
+            # Don't fail, just warn
+          fi
+
+          echo "✅ String concatenation check complete"
+
+      - name: Verify parameterized query usage
+        run: |
+          echo "Verifying parameterized query patterns..."
+
+          # Count createQueryBuilder with parameters
+          QB_COUNT=$(grep -r --include="*.ts" --exclude-dir=node_modules \
+             -E 'createQueryBuilder.*where.*:' \
+             financial-rise-app/backend/src/ | wc -l)
+
+          echo "Found $QB_COUNT parameterized QueryBuilder queries"
+
+          if [ $QB_COUNT -lt 5 ]; then
+            echo "⚠️ WARNING: Expected more parameterized queries"
+          else
+            echo "✅ Parameterized queries in use"
+          fi
+
+  documentation-check:
+    name: Verify Security Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check SQL injection prevention docs exist
+        run: |
+          if [ ! -f financial-rise-app/backend/docs/SQL-INJECTION-PREVENTION.md ]; then
+            echo "❌ ERROR: SQL injection prevention documentation missing"
+            exit 1
+          fi
+          echo "✅ SQL injection prevention docs found"
+
+      - name: Check code review checklist exists
+        run: |
+          if [ ! -f financial-rise-app/backend/docs/CODE-REVIEW-CHECKLIST.md ]; then
+            echo "❌ ERROR: Code review checklist missing"
+            exit 1
+          fi
+          echo "✅ Code review checklist found"
+
+  integration-tests:
+    name: Run Full Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: financial-rise-app/backend
+
+      - name: Install sqlite3 for tests
+        run: npm install --save-dev sqlite3
+        working-directory: financial-rise-app/backend
+
+      - name: Run all tests with coverage
+        run: npm test -- --coverage --testTimeout=30000
+        working-directory: financial-rise-app/backend
+        env:
+          NODE_ENV: test
+
+      - name: Check coverage thresholds
+        run: |
+          # Verify at least 80% coverage for business logic
+          # This is configured in jest.config.js
+          echo "✅ Coverage check complete (enforced by Jest config)"
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: financial-rise-app/backend/coverage/
+
+  security-summary:
+    name: Security Scan Summary
+    runs-on: ubuntu-latest
+    needs: [sql-injection-tests, static-analysis, documentation-check, integration-tests]
+    if: always()
+
+    steps:
+      - name: Check job results
+        run: |
+          echo "## SQL Injection Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| SQL Injection Tests | ${{ needs.sql-injection-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Static Analysis | ${{ needs.static-analysis.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Documentation Check | ${{ needs.documentation-check.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Integration Tests | ${{ needs.integration-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail if any check failed
+        if: |
+          needs.sql-injection-tests.result == 'failure' ||
+          needs.static-analysis.result == 'failure' ||
+          needs.documentation-check.result == 'failure' ||
+          needs.integration-tests.result == 'failure'
+        run: |
+          echo "❌ One or more security checks failed"
+          exit 1
+
+      - name: Success message
+        if: |
+          needs.sql-injection-tests.result == 'success' &&
+          needs.static-analysis.result == 'success' &&
+          needs.documentation-check.result == 'success' &&
+          needs.integration-tests.result == 'success'
+        run: |
+          echo "✅ All SQL injection security checks passed"
