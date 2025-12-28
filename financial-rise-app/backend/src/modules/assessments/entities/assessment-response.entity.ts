@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Assessment } from './assessment.entity';
 import { Question } from '../../questions/entities/question.entity';
+import { EncryptedColumnTransformer } from '../../../common/transformers/encrypted-column.transformer';
 
 @Entity('assessment_responses')
 @Index(['assessment_id'])
@@ -32,7 +33,15 @@ export class AssessmentResponse {
   @JoinColumn({ name: 'question_id', referencedColumnName: 'question_key' })
   question: Question;
 
-  @Column({ type: 'jsonb' })
+  /**
+   * SECURITY: Financial PII - Encrypted at rest (CRIT-005)
+   * Contains client financial data (revenue, expenses, debt, etc.)
+   * Encrypted using AES-256-GCM to meet GDPR/CCPA compliance
+   */
+  @Column({
+    type: 'text',
+    transformer: new EncryptedColumnTransformer(),
+  })
   answer: Record<string, any>;
 
   @Column({ type: 'boolean', default: false })

@@ -64,6 +64,7 @@ jobs:
           DATABASE_NAME: test_db
           JWT_SECRET: test_secret
           JWT_REFRESH_SECRET: test_refresh_secret
+          DB_ENCRYPTION_KEY: 5aa04dcfa2ee8196404f657008e6e6da2db2412b6ad6bb67caa38e8a55ab5911
           NODE_ENV: test
 
       - name: Upload coverage

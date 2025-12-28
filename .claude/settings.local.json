@@ -5,7 +5,12 @@
       "Bash(git add:*)",
       "Bash(git rm:*)",
       "Bash(git push:*)",
-      "Bash(gcloud:*)"
+      "Bash(gcloud:*)",
+      "mcp__memory__read_graph",
+      "mcp__memory__create_entities",
+      "mcp__memory__search_nodes",
+      "mcp__memory__open_nodes",
+      "Bash(npm test:*)"
     ]
   }
 }

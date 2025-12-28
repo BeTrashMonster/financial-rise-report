@@ -7,10 +7,16 @@ import { Assessment } from '../assessments/entities/assessment.entity';
 import { Question } from '../questions/entities/question.entity';
 import { AssessmentsModule } from '../assessments/assessments.module';
 
+/**
+ * Questionnaire Module - Enhanced with Phase 2.2 services
+ *
+ * This module handles questionnaire responses with full validation
+ * and progress tracking via AssessmentsModule services.
+ */
 @Module({
   imports: [
     TypeOrmModule.forFeature([AssessmentResponse, Assessment, Question]),
-    AssessmentsModule,
+    AssessmentsModule, // Provides ValidationService, ProgressService, AssessmentsService
   ],
   controllers: [QuestionnaireController],
   providers: [QuestionnaireService],

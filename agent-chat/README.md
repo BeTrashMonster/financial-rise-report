@@ -123,6 +123,30 @@ node index.js
 
 The server uses stdio transport for MCP communication.
 
+## Agent Memory System
+
+In addition to chat coordination, agents have a hierarchical memory system powered by the MCP memory server. See **[MEMORY-SYSTEM.md](./MEMORY-SYSTEM.md)** for complete documentation.
+
+**Key Features:**
+- **5 memory layers**: Core principles, Current task, Recent memory, Episodic memory, Memory compost
+- **Auto-summarization**: Recent memories automatically summarized after 10 entries
+- **5 pre-configured agents**: tdd-implementer, project-manager, business-analyst, requirements-reviewer, security-reviewer
+- **Memory utilities**: Helper library in `memory-manager.js` for common operations
+
+**Quick Example:**
+```javascript
+// Load agent memory
+const nodes = await mcp__memory__open_nodes({ names: ["tdd-implementer"] });
+
+// Add recent memory
+await mcp__memory__add_observations({
+  observations: [{
+    entityName: "tdd-implementer",
+    contents: ["[RECENT] Completed Work Stream 15 with 87% test coverage"]
+  }]
+});
+```
+
 ## Troubleshooting
 
 **"NATS connection failed"**

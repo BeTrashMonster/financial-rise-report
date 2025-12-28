@@ -6,7 +6,17 @@ import { Assessment } from '../assessments/entities/assessment.entity';
 import { Question } from '../questions/entities/question.entity';
 import { SubmitResponseDto } from './dto/submit-response.dto';
 import { AssessmentsService } from '../assessments/assessments.service';
+import { ValidationService } from '../assessments/services/validation.service';
+import { ProgressService } from '../assessments/services/progress.service';
 
+/**
+ * Questionnaire Service - Enhanced with validation and progress tracking
+ *
+ * Phase 2.2 Enhancements:
+ * - Integrated ValidationService for response validation
+ * - Integrated ProgressService for accurate progress calculation
+ * - Added proper error handling for invalid responses
+ */
 @Injectable()
 export class QuestionnaireService {
   constructor(
@@ -17,10 +27,13 @@ export class QuestionnaireService {
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
     private assessmentsService: AssessmentsService,
+    private validationService: ValidationService,
+    private progressService: ProgressService,
   ) {}
 
   /**
    * Submit or update a response to a question
+   * ENHANCED: Now validates response before saving
    */
   async submitResponse(dto: SubmitResponseDto, consultantId: string) {
     // Verify assessment exists and belongs to consultant
@@ -34,6 +47,13 @@ export class QuestionnaireService {
     if (!question) {
       throw new NotFoundException(`Question with ID ${dto.questionId} not found`);
     }
+
+    // PHASE 2.2: Validate response before saving
+    await this.validationService.validateResponseOrThrow(
+      dto.questionId,
+      dto.answer,
+      dto.notApplicable || false,
+    );
 
     // Check if response already exists
     let response = await this.responseRepository.findOne({
@@ -62,12 +82,19 @@ export class QuestionnaireService {
 
     const savedResponse = await this.responseRepository.save(response);
 
-    // Update progress
-    const progress = await this.assessmentsService.updateProgress(dto.assessmentId);
+    // PHASE 2.2: Use ProgressService for accurate progress calculation
+    const progressResult = await this.progressService.calculateProgress(dto.assessmentId);
+
+    // Update assessment progress in database
+    await this.assessmentRepository.update(dto.assessmentId, {
+      progress: progressResult.progress,
+    });
 
     return {
       ...savedResponse,
-      progress,
+      progress: progressResult.progress,
+      totalQuestions: progressResult.totalQuestions,
+      answeredQuestions: progressResult.answeredQuestions,
     };
   }
 
