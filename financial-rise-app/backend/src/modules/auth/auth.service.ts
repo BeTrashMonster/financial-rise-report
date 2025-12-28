@@ -4,6 +4,7 @@ import {
   ConflictException,
   BadRequestException,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -14,9 +15,12 @@ import { User, UserStatus } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenService } from './refresh-token.service';
+import { LogSanitizer } from '../../common/utils/log-sanitizer';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -238,12 +242,15 @@ export class AuthService {
     // For now, we'll just return the token (in production, this should be sent via email)
     // Example: await this.emailService.sendPasswordResetEmail(user.email, resetToken);
 
-    console.log(`Password reset token for ${email}: ${resetToken}`);
+    // SECURITY: Use structured logging with PII sanitization (CRIT-002 remediation)
+    this.logger.log(`Password reset requested for user`, {
+      email: LogSanitizer.sanitizeEmail(email),
+      timestamp: new Date().toISOString(),
+    });
 
+    // SECURITY: Never return tokens in API response, even in development
     return {
       message: 'If an account with that email exists, a password reset link has been sent.',
-      // Remove this in production - only for development
-      ...(this.configService.get('NODE_ENV') === 'development' && { resetToken }),
     };
   }
 

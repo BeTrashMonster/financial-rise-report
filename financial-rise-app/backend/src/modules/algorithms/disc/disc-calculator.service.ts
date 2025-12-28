@@ -8,6 +8,7 @@ import {
   NormalizedDISCScores,
   DISCProfileResult,
 } from './disc.types';
+import { LogSanitizer } from '../../../common/utils/log-sanitizer';
 
 /**
  * Service for calculating DISC personality profiles from assessment responses
@@ -130,7 +131,11 @@ export class DISCCalculatorService {
       scores.C += response.weights.disc_c_score || 0;
     }
 
-    this.logger.debug(`Raw DISC scores: ${JSON.stringify(scores)}`);
+    // SECURITY: Sanitize PII in logs (HIGH-008 remediation)
+    this.logger.debug(`DISC calculation completed`, {
+      scoreHash: LogSanitizer.sanitizeDISCScores(scores),
+      responseCount: responses.length,
+    });
     return scores;
   }
 
