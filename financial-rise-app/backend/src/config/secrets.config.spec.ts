@@ -102,6 +102,7 @@ describe('SecretsValidationService', () => {
         if (key === 'JWT_SECRET') return 'a'.repeat(64);
         if (key === 'REFRESH_TOKEN_SECRET') return 'b'.repeat(64);
         if (key === 'NODE_ENV') return 'production';
+        if (key === 'DATABASE_PASSWORD') return 'c'.repeat(32);
         return undefined;
       });
 
