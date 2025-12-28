@@ -2069,3 +2069,23 @@ Full backend test suite has compilation errors from Work Stream 53 (EncryptedCol
 
 ---
 
+## 📋 ACTION ITEM for Project Manager Agent
+
+**Date:** 2025-12-28
+**From:** Development Team
+**Priority:** MEDIUM
+**Task:** Roadmap Gardening Reminder
+
+**Message:**
+Please ensure the roadmap (`plans/roadmap.md`) stays well-gardened by:
+1. Moving completed work streams to `plans/completed/roadmap-archive.md`
+2. Updating status indicators (⚪ → 🟡 → ✅)
+3. Keeping the main roadmap focused on active/incomplete work only
+4. Adding completion dates when archiving work streams
+
+This helps keep the roadmap clean and actionable for all team members.
+
+**Reference:** See CLAUDE.md "Roadmap Structure" section for guidance on automatic gardening.
+
+---
+
