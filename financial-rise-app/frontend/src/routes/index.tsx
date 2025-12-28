@@ -6,6 +6,8 @@ import { useAppSelector } from '@store/hooks';
 import Login from '@pages/Login/Login';
 import Dashboard from '@pages/Dashboard/Dashboard';
 import NotFound from '@pages/NotFound/NotFound';
+import Privacy from '@pages/Privacy/Privacy';
+import DoNotSell from '@pages/DoNotSell/DoNotSell';
 
 /**
  * Protected Route Component
@@ -58,6 +60,10 @@ export const AppRoutes: React.FC = () => {
           </PublicRoute>
         }
       />
+
+      {/* Legal/Privacy Pages - Public Access */}
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/do-not-sell" element={<DoNotSell />} />
 
       {/* Protected Routes */}
       <Route

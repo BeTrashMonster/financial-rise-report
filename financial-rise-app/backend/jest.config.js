@@ -16,8 +16,7 @@ module.exports = {
     'secrets-e2e\\.spec\\.ts$',
     'main\\.spec\\.ts$',
     'sql-injection\\.spec\\.ts$', // Requires database setup
-    'users-right-to-object\\.spec\\.ts$', // Incomplete feature
-    'users-processing-restriction\\.spec\\.ts$', // Incomplete feature
+    'users-right-to-object\\.spec\\.ts$', // Incomplete feature - requires Work Stream 67
     'auth\\.module\\.spec\\.ts$', // Complex module dependencies
     'cors-configuration\\.spec\\.ts$', // Depends on incomplete features
     'idor-attack\\.integration\\.spec\\.ts$', // Integration test

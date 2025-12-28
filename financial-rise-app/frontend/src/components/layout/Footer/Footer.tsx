@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, Container, Typography, Link, Divider } from '@mui/material';
+import GppGoodIcon from '@mui/icons-material/GppGood';
 
 /**
  * Application Footer Component
- * Displays copyright and links
+ * Displays copyright, legal links, and CCPA compliance notice
  */
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -71,6 +72,33 @@ export const Footer: React.FC = () => {
                 variant="body2"
               >
                 Contact
+              </Link>
+            </Box>
+
+            {/* CCPA Compliance Notice - Prominent per CCPA § 1798.135 */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 0.5,
+                alignItems: 'center',
+                justifyContent: { xs: 'center', sm: 'flex-end' },
+                marginTop: 1,
+              }}
+            >
+              <GppGoodIcon sx={{ fontSize: 16, color: 'primary.main' }} />
+              <Link
+                href="/do-not-sell"
+                color="primary"
+                underline="hover"
+                variant="body2"
+                sx={{
+                  fontWeight: 600,
+                  '&:hover': {
+                    color: 'primary.dark',
+                  },
+                }}
+              >
+                Do Not Sell My Personal Information
               </Link>
             </Box>
 

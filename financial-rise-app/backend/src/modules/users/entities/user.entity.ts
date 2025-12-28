@@ -80,4 +80,10 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true })
   last_login_at: Date | null;
+
+  @Column({ type: 'boolean', default: false })
+  processing_restricted: boolean;
+
+  @Column({ type: 'text', nullable: true })
+  restriction_reason: string | null;
 }

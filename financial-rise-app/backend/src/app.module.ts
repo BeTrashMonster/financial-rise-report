@@ -13,6 +13,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { AlgorithmsModule } from './modules/algorithms/algorithms.module';
 import { ReportsModule } from './reports/reports.module';
 import { SecretsModule } from './config/secrets.module';
+import { ConsentsModule } from './modules/consents/consents.module';
 import { AppController } from './app.controller';
 import { DataRetentionService } from './common/services/data-retention.service';
 import { Assessment } from './modules/assessments/entities/assessment.entity';
@@ -58,6 +59,7 @@ import { Report } from './reports/entities/report.entity';
     QuestionnaireModule,
     AlgorithmsModule,
     ReportsModule,
+    ConsentsModule,
   ],
   controllers: [AppController],
   providers: [

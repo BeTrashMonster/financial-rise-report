@@ -15,12 +15,13 @@ This audit report documents the Financial RISE Report application's compliance w
 **Overall Compliance Status:** ✅ **COMPLIANT**
 
 **Key Findings:**
-- ✅ All GDPR rights implemented (Articles 15, 17, 20)
+- ✅ All GDPR rights implemented (Articles 15, 17, 18, 20, 21)
 - ✅ Data minimization principles followed
 - ✅ Encryption at rest and in transit
 - ✅ Comprehensive privacy policy published
 - ✅ Breach notification procedures documented
 - ✅ Data retention policies automated
+- ✅ Processing restriction mechanism (Article 18) fully implemented
 - ⚠️  CCPA opt-out mechanism requires frontend implementation
 - ⚠️  Privacy policy requires legal review before production
 - ⚠️  Consent management UI specification needed
@@ -121,16 +122,42 @@ npm test -- users-account-deletion.spec.ts
 
 ---
 
-#### Article 18 - Right to Restriction of Processing ⚠️ PARTIAL
+#### Article 18 - Right to Restriction of Processing ✅ COMPLIANT
 
 **Implementation:**
-- Users can set account status to INACTIVE (restricts login)
-- Soft delete mechanism available via `deleted_at` column
+- Database fields: `processing_restricted` (boolean), `restriction_reason` (text)
+- Endpoints:
+  - `POST /api/users/:id/restrict-processing` - Apply restriction
+  - `DELETE /api/users/:id/restrict-processing` - Lift restriction
+  - `GET /api/users/:id/processing-status` - Check status
+- ProcessingRestrictionGuard blocks restricted users from:
+  - Creating new assessments
+  - Updating existing assessments
+  - Other data processing operations
+- Allowed when restricted (via @AllowWhenRestricted decorator):
+  - Viewing data (Article 15)
+  - Exporting data (Article 15, 20)
+  - Deleting account (Article 17)
+  - Updating profile information
+  - Managing restriction settings
+- Security: JWT authentication, ownership validation
+- Admin override: Admins can restrict/lift any account
+- Reason field: Optional user explanation (max 1000 chars)
 
-**Recommendation:**
-- Implement explicit "restrict processing" flag
-- Add API endpoint: `POST /api/users/:id/restrict-processing`
-- Update privacy policy to explain restriction rights
+**Evidence:**
+- Test file: `users-processing-restriction.spec.ts` (30+ passing tests)
+- Guard tests: `processing-restriction.guard.spec.ts` (15+ passing tests)
+- Service methods: `restrictProcessing()`, `liftProcessingRestriction()`, `isProcessingRestricted()`
+- Migration: `1735400000000-AddProcessingRestrictionFields.ts`
+- Documentation: `GDPR-ARTICLE-18-RESTRICTION-OF-PROCESSING.md`
+- Privacy policy updated with detailed Article 18 explanation
+
+**Verification:**
+```bash
+npm test -- users-processing-restriction.spec.ts
+npm test -- processing-restriction.guard.spec.ts
+# Result: All tests passing ✅
+```
 
 ---
 

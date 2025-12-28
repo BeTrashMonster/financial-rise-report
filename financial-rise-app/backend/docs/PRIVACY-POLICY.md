@@ -187,8 +187,25 @@ Under GDPR, you have the following rights:
 - All cascading data deleted: assessments, responses, DISC profiles, phase results
 
 **Article 18 - Right to Restriction of Processing:**
-- Request temporary suspension of data processing
-- Contact: [Support email to be provided]
+- Request temporary suspension of data processing while maintaining data storage
+- Endpoint: `POST /api/users/{id}/restrict-processing`
+- Lift restriction: `DELETE /api/users/{id}/restrict-processing`
+- Check status: `GET /api/users/{id}/processing-status`
+- **When to use:** You may restrict processing when:
+  - Contesting the accuracy of your data (we verify accuracy)
+  - Processing is unlawful but you prefer restriction over deletion
+  - You need the data for legal claims even if we no longer need it
+  - You've objected to processing pending verification
+- **What you can still do when restricted:**
+  - View all your data
+  - Export your data (Article 15)
+  - Delete your account (Article 17)
+  - Update your profile information
+  - Manage restriction settings
+- **What is blocked when restricted:**
+  - Creating new assessments
+  - Updating existing assessments
+  - Other data processing operations
 
 **Article 20 - Right to Data Portability:**
 - Receive your data in JSON format
