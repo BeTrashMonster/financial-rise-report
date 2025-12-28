@@ -77,12 +77,20 @@ class RealApiClient {
     // Load tokens from localStorage on initialization
     this.loadTokensFromStorage();
 
-    // Request interceptor: Add auth token
+    // Request interceptor: Add auth token and CSRF token
     this.client.interceptors.request.use(
       (config) => {
         if (this.accessToken && config.headers) {
           config.headers.Authorization = `Bearer ${this.accessToken}`;
         }
+
+        // Add CSRF token from cookie to header (double-submit cookie pattern)
+        // Work Stream 63 (MED-002) - Global CSRF Protection
+        const csrfToken = this.getCsrfTokenFromCookie();
+        if (csrfToken && config.headers) {
+          config.headers['X-CSRF-Token'] = csrfToken;
+        }
+
         return config;
       },
       (error) => Promise.reject(error)
@@ -186,6 +194,26 @@ class RealApiClient {
     this.refreshToken = null;
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+  }
+
+  /**
+   * Get CSRF token from cookie
+   * Work Stream 63 (MED-002) - Global CSRF Protection
+   * Implements double-submit cookie pattern client-side logic
+   */
+  private getCsrfTokenFromCookie(): string | null {
+    // Parse document.cookie to find XSRF-TOKEN
+    const cookieName = 'XSRF-TOKEN';
+    const cookies = document.cookie.split(';');
+
+    for (const cookie of cookies) {
+      const [name, value] = cookie.trim().split('=');
+      if (name === cookieName) {
+        return decodeURIComponent(value);
+      }
+    }
+
+    return null;
   }
 
   // ==========================================
