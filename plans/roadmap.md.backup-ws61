@@ -177,16 +177,16 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 - **CWE:** CWE-16 - Configuration
 
 **Tasks:**
-- [x] Write tests for Content Security Policy (CSP)
-- [x] Configure Helmet with enhanced CSP directives
-- [x] Implement HSTS with preload (31536000 max-age)
-- [x] Configure X-Frame-Options: DENY
-- [x] Configure Permissions-Policy header
-- [x] Add Referrer-Policy: strict-origin-when-cross-origin
-- [x] Test headers with securityheaders.com
-- [x] Verify CSP doesn't block legitimate functionality
-- [x] Document security headers configuration
-- [x] Add header validation to CI/CD
+- [ ] Write tests for Content Security Policy (CSP)
+- [ ] Configure Helmet with enhanced CSP directives
+- [ ] Implement HSTS with preload (31536000 max-age)
+- [ ] Configure X-Frame-Options: DENY
+- [ ] Configure Permissions-Policy header
+- [ ] Add Referrer-Policy: strict-origin-when-cross-origin
+- [ ] Test headers with securityheaders.com
+- [ ] Verify CSP doesn't block legitimate functionality
+- [ ] Document security headers configuration
+- [ ] Add header validation to CI/CD
 
 **Effort:** S
 
@@ -247,8 +247,7 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 ---
 
 ### Work Stream 61: PII Masking in Logs (HIGH-008)
-- **Status:** ✅ Complete
-- **Completed:** 2025-12-28
+- **Status:** 🟡 In Progress
 - **Agent:** tdd-executor-ws61
 - **Depends On:** Work Stream 54 (Remove Sensitive Data from Logs) - ✅ Complete
 - **Severity:** 🟠 HIGH - GDPR COMPLIANCE
@@ -257,40 +256,24 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 - **CWE:** CWE-532 - Insertion of Sensitive Information into Log File
 
 **Tasks:**
-- [x] Extend LogSanitizer with 5 additional PII patterns (phone, SSN, credit card, IP, address)
-- [x] Implement email masking (show domain only) - inherited from WS54
-- [x] Implement name masking (first letter + ***) - inherited from WS54
-- [x] Implement financial data masking - inherited from WS54
-- [x] Implement phone number masking (last 4 digits)
-- [x] Implement SSN masking (complete redaction)
-- [x] Implement credit card masking (last 4 digits, Visa/Amex formats)
-- [x] Implement IP address masking (IPv4 first octet, IPv6 redaction)
-- [x] Implement physical address masking (complete redaction)
-- [x] Create PIISafeLogger wrapper with automatic sanitization
-- [x] Write comprehensive tests for PII masking (73 LogSanitizer tests)
-- [x] Write integration tests for PIISafeLogger (26 tests)
-- [x] Configure log analysis script (detect-pii-in-logs.sh)
-- [x] Document PII logging policies (PII-LOGGING-POLICY.md - 600+ lines)
-- [x] Add PII detection to code review checklist (CODE-REVIEW-CHECKLIST.md)
+- [ ] Extend LogSanitizer with additional PII patterns
+- [ ] Implement email masking (show domain only)
+- [ ] Implement name masking (first letter + ***)
+- [ ] Implement financial data masking
+- [ ] Scan all logging statements for PII
+- [ ] Replace Logger with PII-safe wrapper
+- [ ] Write tests for PII masking
+- [ ] Configure log analysis to detect PII leakage
+- [ ] Document PII logging policies
+- [ ] Add PII detection to code review checklist
 
 **Effort:** M
 
 **Done When:**
-- ✅ All PII automatically masked in logs (9 PII types supported)
-- ✅ Zero PII detected in log analysis (detection script created)
-- ✅ Tests pass (99 tests: 73 LogSanitizer + 26 PIISafeLogger)
-- ✅ Documentation complete (600+ lines policy + code review checklist)
-
-**Deliverables:**
-- `src/common/utils/log-sanitizer.ts` - Enhanced with 5 new methods (+160 lines)
-- `src/common/utils/log-sanitizer.spec.ts` - 30 new tests (+250 lines, 73 total)
-- `src/common/utils/pii-safe-logger.ts` - Logger wrapper with auto-sanitization (130 lines)
-- `src/common/utils/pii-safe-logger.spec.ts` - 26 integration tests (290 lines)
-- `src/common/utils/index.ts` - Updated exports
-- `docs/PII-LOGGING-POLICY.md` - Comprehensive policy (600+ lines)
-- `docs/CODE-REVIEW-CHECKLIST.md` - Enhanced PII detection checklist
-- `scripts/detect-pii-in-logs.sh` - Automated PII detection script (200 lines)
-- `dev-logs/2025-12-28-work-stream-61-pii-masking.md` - Complete implementation log
+- All PII automatically masked in logs
+- Zero PII detected in log analysis
+- Tests pass
+- Documentation complete
 
 **Reference:** `SECURITY-AUDIT-REPORT.md` Lines 1080-1123
 

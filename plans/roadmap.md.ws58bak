@@ -177,16 +177,16 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 - **CWE:** CWE-16 - Configuration
 
 **Tasks:**
-- [x] Write tests for Content Security Policy (CSP)
-- [x] Configure Helmet with enhanced CSP directives
-- [x] Implement HSTS with preload (31536000 max-age)
-- [x] Configure X-Frame-Options: DENY
-- [x] Configure Permissions-Policy header
-- [x] Add Referrer-Policy: strict-origin-when-cross-origin
-- [x] Test headers with securityheaders.com
-- [x] Verify CSP doesn't block legitimate functionality
-- [x] Document security headers configuration
-- [x] Add header validation to CI/CD
+- [ ] Write tests for Content Security Policy (CSP)
+- [ ] Configure Helmet with enhanced CSP directives
+- [ ] Implement HSTS with preload (31536000 max-age)
+- [ ] Configure X-Frame-Options: DENY
+- [ ] Configure Permissions-Policy header
+- [ ] Add Referrer-Policy: strict-origin-when-cross-origin
+- [ ] Test headers with securityheaders.com
+- [ ] Verify CSP doesn't block legitimate functionality
+- [ ] Document security headers configuration
+- [ ] Add header validation to CI/CD
 
 **Effort:** S
 
