@@ -537,25 +537,30 @@ describe('SQL Injection Security Tests', () => {
   describe('Comprehensive Attack Simulation', () => {
     it('should withstand coordinated SQL injection attack across multiple endpoints', async () => {
       // Simulate attacker trying multiple vectors
-      const attacks = [
+      const attacks: Array<{
+        endpoint: string;
+        method: 'post' | 'get' | 'patch';
+        data?: any;
+        query?: any;
+      }> = [
         { endpoint: '/auth/login', method: 'post', data: { email: "' OR '1'='1--", password: 'x' } },
         { endpoint: '/assessments', method: 'get', query: { search: "'; DROP TABLE assessments--" } },
         { endpoint: `/assessments/${assessmentId}`, method: 'patch', data: { clientName: "' UNION SELECT * FROM users--" } },
       ];
 
       for (const attack of attacks) {
-        let response;
-        if (attack.method === 'post') {
+        let response: any;
+        if (attack.method === 'post' && attack.data) {
           response = await request(app.getHttpServer())
             .post(attack.endpoint)
             .set('Authorization', `Bearer ${authToken}`)
             .send(attack.data);
-        } else if (attack.method === 'get') {
+        } else if (attack.method === 'get' && attack.query) {
           response = await request(app.getHttpServer())
             .get(attack.endpoint)
             .query(attack.query)
             .set('Authorization', `Bearer ${authToken}`);
-        } else if (attack.method === 'patch') {
+        } else if (attack.method === 'patch' && attack.data) {
           response = await request(app.getHttpServer())
             .patch(attack.endpoint)
             .set('Authorization', `Bearer ${authToken}`)
@@ -563,7 +568,9 @@ describe('SQL Injection Security Tests', () => {
         }
 
         // None should cause database errors
-        expect(response.status).toBeLessThan(500);
+        if (response) {
+          expect(response.status).toBeLessThan(500);
+        }
       }
 
       // Verify database integrity after attack simulation

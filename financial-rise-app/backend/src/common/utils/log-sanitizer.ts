@@ -73,6 +73,63 @@ export class LogSanitizer {
     'client_name',
   ]);
 
+  // Phone number field names
+  private static readonly PHONE_FIELDS = new Set([
+    'phone',
+    'phoneNumber',
+    'phone_number',
+    'mobile',
+    'mobileNumber',
+    'mobile_number',
+    'contactNumber',
+    'contact_number',
+    'telephone',
+  ]);
+
+  // SSN field names
+  private static readonly SSN_FIELDS = new Set([
+    'ssn',
+    'socialSecurityNumber',
+    'social_security_number',
+    'taxId',
+    'tax_id',
+  ]);
+
+  // Credit card field names
+  private static readonly CREDIT_CARD_FIELDS = new Set([
+    'creditCard',
+    'credit_card',
+    'cardNumber',
+    'card_number',
+    'paymentCard',
+    'payment_card',
+  ]);
+
+  // IP address field names
+  private static readonly IP_FIELDS = new Set([
+    'ip',
+    'ipAddress',
+    'ip_address',
+    'clientIp',
+    'client_ip',
+    'remoteAddress',
+    'remote_address',
+  ]);
+
+  // Address field names
+  private static readonly ADDRESS_FIELDS = new Set([
+    'address',
+    'street',
+    'streetAddress',
+    'street_address',
+    'mailingAddress',
+    'mailing_address',
+    'billingAddress',
+    'billing_address',
+    'shippingAddress',
+    'shipping_address',
+  ]);
+
   /**
    * Sanitize email address - show domain only
    * @param email - Email address to sanitize
@@ -160,6 +217,105 @@ export class LogSanitizer {
   }
 
   /**
+   * Sanitize phone number - show only last 4 digits
+   * @param phone - Phone number to sanitize
+   * @returns Sanitized phone number
+   */
+  static sanitizePhoneNumber(phone: string | null | undefined): string {
+    if (!phone || typeof phone !== 'string') {
+      return '[REDACTED]';
+    }
+
+    // Extract only digits
+    const digits = phone.replace(/\D/g, '');
+
+    // Validate phone number length (should be at least 7 digits)
+    if (digits.length < 7) {
+      return '[REDACTED]';
+    }
+
+    // Show only last 4 digits
+    const lastFour = digits.slice(-4);
+    return `***-***-${lastFour}`;
+  }
+
+  /**
+   * Sanitize SSN - complete redaction
+   * @param ssn - Social Security Number to redact
+   * @returns Redacted placeholder
+   */
+  static sanitizeSSN(ssn: string | null | undefined): string {
+    return '[REDACTED - SSN]';
+  }
+
+  /**
+   * Sanitize credit card number - show only last 4 digits
+   * @param cardNumber - Credit card number to sanitize
+   * @returns Sanitized credit card number
+   */
+  static sanitizeCreditCard(cardNumber: string | null | undefined): string {
+    if (!cardNumber || typeof cardNumber !== 'string') {
+      return '[REDACTED]';
+    }
+
+    // Extract only digits
+    const digits = cardNumber.replace(/\D/g, '');
+
+    // Validate credit card length (typically 15-16 digits)
+    if (digits.length < 13 || digits.length > 19) {
+      return '[REDACTED]';
+    }
+
+    // Show only last 4 digits
+    const lastFour = digits.slice(-4);
+
+    // Format based on card length
+    if (digits.length === 15) {
+      // American Express format
+      return `****-****-***-${lastFour}`;
+    } else {
+      // Visa, Mastercard, Discover format
+      return `****-****-****-${lastFour}`;
+    }
+  }
+
+  /**
+   * Sanitize IP address - mask last 3 octets for IPv4, redact IPv6
+   * @param ip - IP address to sanitize
+   * @returns Sanitized IP address
+   */
+  static sanitizeIPAddress(ip: string | null | undefined): string {
+    if (!ip || typeof ip !== 'string') {
+      return '[REDACTED]';
+    }
+
+    // Check if IPv6
+    if (ip.includes(':')) {
+      return '[REDACTED - IPv6]';
+    }
+
+    // Check if IPv4
+    const ipv4Regex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+    const match = ip.match(ipv4Regex);
+
+    if (match) {
+      // Show only first octet
+      return `${match[1]}.*.*.*`;
+    }
+
+    return '[REDACTED]';
+  }
+
+  /**
+   * Sanitize physical address - complete redaction
+   * @param address - Physical address to redact
+   * @returns Redacted placeholder
+   */
+  static sanitizeAddress(address: string | null | undefined): string {
+    return '[REDACTED - ADDRESS]';
+  }
+
+  /**
    * Sanitize URL - redact sensitive query parameters
    * @param url - URL to sanitize
    * @returns Sanitized URL with redacted params
@@ -209,6 +365,30 @@ export class LogSanitizer {
     // Redact JWT tokens (three base64 segments separated by dots)
     const jwtRegex = /eyJ[A-Za-z0-9_-]+\.eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g;
     sanitized = sanitized.replace(jwtRegex, '[REDACTED - TOKEN]');
+
+    // Redact SSN patterns (XXX-XX-XXXX)
+    const ssnRegex = /\b\d{3}-\d{2}-\d{4}\b/g;
+    sanitized = sanitized.replace(ssnRegex, '[REDACTED - SSN]');
+
+    // Redact SSN without dashes (9 consecutive digits)
+    const ssnNoHyphenRegex = /\b\d{9}\b/g;
+    sanitized = sanitized.replace(ssnNoHyphenRegex, '[REDACTED - SSN]');
+
+    // Redact credit card numbers (13-19 digits with optional dashes/spaces)
+    const creditCardRegex = /\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/g;
+    sanitized = sanitized.replace(creditCardRegex, (card) => this.sanitizeCreditCard(card));
+
+    // Redact Amex format (15 digits)
+    const amexRegex = /\b\d{4}[\s-]?\d{6}[\s-]?\d{5}\b/g;
+    sanitized = sanitized.replace(amexRegex, (card) => this.sanitizeCreditCard(card));
+
+    // Redact phone numbers (various formats)
+    const phoneRegex = /\b(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b/g;
+    sanitized = sanitized.replace(phoneRegex, (phone) => this.sanitizePhoneNumber(phone));
+
+    // Redact IPv4 addresses
+    const ipv4Regex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g;
+    sanitized = sanitized.replace(ipv4Regex, (ip) => this.sanitizeIPAddress(ip));
 
     // Redact long alphanumeric strings (likely tokens - 32+ characters)
     const hexTokenRegex = /\b[a-fA-F0-9]{32,}\b/g;
@@ -267,6 +447,36 @@ export class LogSanitizer {
       // Check if field is email
       if (key === 'email' || lowerKey === 'email') {
         sanitized[key] = this.sanitizeEmail(value as string);
+        continue;
+      }
+
+      // Check if field is a phone number
+      if (this.PHONE_FIELDS.has(key) || lowerKey.includes('phone') || lowerKey.includes('mobile') || lowerKey.includes('telephone')) {
+        sanitized[key] = this.sanitizePhoneNumber(value as string);
+        continue;
+      }
+
+      // Check if field is SSN
+      if (this.SSN_FIELDS.has(key) || lowerKey.includes('ssn') || lowerKey.includes('social')) {
+        sanitized[key] = this.sanitizeSSN(value as string);
+        continue;
+      }
+
+      // Check if field is credit card
+      if (this.CREDIT_CARD_FIELDS.has(key) || lowerKey.includes('card')) {
+        sanitized[key] = this.sanitizeCreditCard(value as string);
+        continue;
+      }
+
+      // Check if field is IP address
+      if (this.IP_FIELDS.has(key) || lowerKey.includes('ip')) {
+        sanitized[key] = this.sanitizeIPAddress(value as string);
+        continue;
+      }
+
+      // Check if field is an address
+      if (this.ADDRESS_FIELDS.has(key) || lowerKey.includes('address') || lowerKey.includes('street')) {
+        sanitized[key] = this.sanitizeAddress(value as string);
         continue;
       }
 

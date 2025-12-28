@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { SecretsValidationService } from './config/secrets-validation.service';
 import { getCorsConfig } from './config/cors.config';
-import { configureSecurityHeaders } from './config/security-headers.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,10 +14,8 @@ async function bootstrap() {
   const secretsValidator = app.get(SecretsValidationService);
   secretsValidator.validateSecrets(); // Throws error if validation fails
 
-  // Security Headers (Work Stream 58 - HIGH-009)
-  // Comprehensive security headers for XSS, clickjacking, MITM protection
-  // Target: A+ grade on securityheaders.com
-  configureSecurityHeaders(app);
+  // Security middleware
+  app.use(helmet());
 
   // Enable CORS with secure configuration (Work Stream 59 - HIGH-010)
   // Implements origin whitelist, request logging, and explicit method/header configuration

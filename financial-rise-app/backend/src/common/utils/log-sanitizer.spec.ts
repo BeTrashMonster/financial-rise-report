@@ -346,6 +346,254 @@ describe('LogSanitizer', () => {
     });
   });
 
+  describe('sanitizePhoneNumber', () => {
+    it('should mask phone numbers showing only last 4 digits', () => {
+      expect(LogSanitizer.sanitizePhoneNumber('555-123-4567')).toBe('***-***-4567');
+    });
+
+    it('should handle phone numbers in different formats', () => {
+      expect(LogSanitizer.sanitizePhoneNumber('(555) 123-4567')).toBe('***-***-4567');
+      expect(LogSanitizer.sanitizePhoneNumber('5551234567')).toBe('***-***-4567');
+      expect(LogSanitizer.sanitizePhoneNumber('+1 555 123 4567')).toBe('***-***-4567');
+    });
+
+    it('should handle international phone numbers', () => {
+      expect(LogSanitizer.sanitizePhoneNumber('+44 20 1234 5678')).toBe('***-***-5678');
+    });
+
+    it('should handle null or undefined', () => {
+      expect(LogSanitizer.sanitizePhoneNumber(null as any)).toBe('[REDACTED]');
+      expect(LogSanitizer.sanitizePhoneNumber(undefined as any)).toBe('[REDACTED]');
+    });
+
+    it('should handle invalid phone numbers', () => {
+      expect(LogSanitizer.sanitizePhoneNumber('123')).toBe('[REDACTED]');
+      expect(LogSanitizer.sanitizePhoneNumber('not-a-phone')).toBe('[REDACTED]');
+    });
+  });
+
+  describe('sanitizeSSN', () => {
+    it('should completely redact SSN', () => {
+      expect(LogSanitizer.sanitizeSSN('123-45-6789')).toBe('[REDACTED - SSN]');
+    });
+
+    it('should handle SSN without dashes', () => {
+      expect(LogSanitizer.sanitizeSSN('123456789')).toBe('[REDACTED - SSN]');
+    });
+
+    it('should handle null or undefined', () => {
+      expect(LogSanitizer.sanitizeSSN(null as any)).toBe('[REDACTED - SSN]');
+      expect(LogSanitizer.sanitizeSSN(undefined as any)).toBe('[REDACTED - SSN]');
+    });
+  });
+
+  describe('sanitizeCreditCard', () => {
+    it('should show only last 4 digits of credit card', () => {
+      expect(LogSanitizer.sanitizeCreditCard('4532-1234-5678-9010')).toBe('****-****-****-9010');
+    });
+
+    it('should handle credit cards without dashes', () => {
+      expect(LogSanitizer.sanitizeCreditCard('4532123456789010')).toBe('****-****-****-9010');
+    });
+
+    it('should handle Amex format (15 digits)', () => {
+      expect(LogSanitizer.sanitizeCreditCard('371449635398431')).toBe('****-****-***-8431');
+    });
+
+    it('should handle null or undefined', () => {
+      expect(LogSanitizer.sanitizeCreditCard(null as any)).toBe('[REDACTED]');
+      expect(LogSanitizer.sanitizeCreditCard(undefined as any)).toBe('[REDACTED]');
+    });
+  });
+
+  describe('sanitizeIPAddress', () => {
+    it('should mask IPv4 addresses showing only first octet', () => {
+      expect(LogSanitizer.sanitizeIPAddress('192.168.1.100')).toBe('192.*.*.*');
+    });
+
+    it('should handle localhost', () => {
+      expect(LogSanitizer.sanitizeIPAddress('127.0.0.1')).toBe('127.*.*.*');
+    });
+
+    it('should mask IPv6 addresses', () => {
+      expect(LogSanitizer.sanitizeIPAddress('2001:0db8:85a3:0000:0000:8a2e:0370:7334')).toBe('[REDACTED - IPv6]');
+    });
+
+    it('should handle null or undefined', () => {
+      expect(LogSanitizer.sanitizeIPAddress(null as any)).toBe('[REDACTED]');
+      expect(LogSanitizer.sanitizeIPAddress(undefined as any)).toBe('[REDACTED]');
+    });
+  });
+
+  describe('sanitizeAddress', () => {
+    it('should completely redact physical addresses', () => {
+      expect(LogSanitizer.sanitizeAddress('123 Main St, Portland, OR 97201')).toBe('[REDACTED - ADDRESS]');
+    });
+
+    it('should handle multi-line addresses', () => {
+      const address = '123 Main St\nApt 4B\nPortland, OR 97201';
+      expect(LogSanitizer.sanitizeAddress(address)).toBe('[REDACTED - ADDRESS]');
+    });
+
+    it('should handle null or undefined', () => {
+      expect(LogSanitizer.sanitizeAddress(null as any)).toBe('[REDACTED - ADDRESS]');
+      expect(LogSanitizer.sanitizeAddress(undefined as any)).toBe('[REDACTED - ADDRESS]');
+    });
+  });
+
+  describe('detectAndRedactPII - Enhanced', () => {
+    it('should detect and redact phone numbers in text', () => {
+      const text = 'Please call me at 555-123-4567 or (555) 987-6543';
+      const result = LogSanitizer.detectAndRedactPII(text);
+
+      expect(result).toContain('***-***-4567');
+      expect(result).toContain('***-***-6543');
+      expect(result).not.toContain('555-123-4567');
+    });
+
+    it('should detect and redact SSN in text', () => {
+      const text = 'SSN: 123-45-6789 on file';
+      const result = LogSanitizer.detectAndRedactPII(text);
+
+      expect(result).toContain('[REDACTED - SSN]');
+      expect(result).not.toContain('123-45-6789');
+    });
+
+    it('should detect and redact credit card numbers', () => {
+      const text = 'Payment made with card 4532-1234-5678-9010';
+      const result = LogSanitizer.detectAndRedactPII(text);
+
+      expect(result).toContain('****-****-****-9010');
+      expect(result).not.toContain('4532-1234-5678-9010');
+    });
+
+    it('should detect and redact IP addresses', () => {
+      const text = 'Request from IP 192.168.1.100';
+      const result = LogSanitizer.detectAndRedactPII(text);
+
+      expect(result).toContain('192.*.*.*');
+      expect(result).not.toContain('192.168.1.100');
+    });
+
+    it('should handle multiple PII types in one string', () => {
+      const text = 'User john@example.com called from 555-123-4567, IP: 192.168.1.50, Card: 4532123456789010';
+      const result = LogSanitizer.detectAndRedactPII(text);
+
+      expect(result).toContain('***@example.com');
+      expect(result).toContain('***-***-4567');
+      expect(result).toContain('192.*.*.*');
+      expect(result).toContain('****-****-****-9010');
+    });
+  });
+
+  describe('sanitizeObject - Enhanced PII Fields', () => {
+    it('should sanitize phone number fields', () => {
+      const data = {
+        id: '123',
+        phone: '555-123-4567',
+        mobile: '(555) 987-6543',
+        contactNumber: '5559998888',
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.id).toBe('123');
+      expect(result.phone).toBe('***-***-4567');
+      expect(result.mobile).toBe('***-***-6543');
+      expect(result.contactNumber).toBe('***-***-8888');
+    });
+
+    it('should sanitize SSN fields', () => {
+      const data = {
+        id: '123',
+        ssn: '123-45-6789',
+        socialSecurityNumber: '987654321',
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.id).toBe('123');
+      expect(result.ssn).toBe('[REDACTED - SSN]');
+      expect(result.socialSecurityNumber).toBe('[REDACTED - SSN]');
+    });
+
+    it('should sanitize credit card fields', () => {
+      const data = {
+        id: '123',
+        creditCard: '4532-1234-5678-9010',
+        cardNumber: '4532123456789010',
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.id).toBe('123');
+      expect(result.creditCard).toBe('****-****-****-9010');
+      expect(result.cardNumber).toBe('****-****-****-9010');
+    });
+
+    it('should sanitize IP address fields', () => {
+      const data = {
+        id: '123',
+        ipAddress: '192.168.1.100',
+        ip: '10.0.0.5',
+        clientIp: '172.16.0.1',
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.id).toBe('123');
+      expect(result.ipAddress).toBe('192.*.*.*');
+      expect(result.ip).toBe('10.*.*.*');
+      expect(result.clientIp).toBe('172.*.*.*');
+    });
+
+    it('should sanitize address fields', () => {
+      const data = {
+        id: '123',
+        address: '123 Main St, Portland, OR',
+        street: '456 Oak Ave',
+        mailingAddress: 'PO Box 789',
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.id).toBe('123');
+      expect(result.address).toBe('[REDACTED - ADDRESS]');
+      expect(result.street).toBe('[REDACTED - ADDRESS]');
+      expect(result.mailingAddress).toBe('[REDACTED - ADDRESS]');
+    });
+
+    it('should handle complex nested objects with multiple PII types', () => {
+      const data = {
+        user: {
+          name: 'John Doe',
+          email: 'john@example.com',
+          phone: '555-123-4567',
+          address: '123 Main St',
+        },
+        payment: {
+          cardNumber: '4532123456789010',
+          amount: 1500,
+        },
+        metadata: {
+          ipAddress: '192.168.1.100',
+          ssn: '123-45-6789',
+        },
+      };
+
+      const result = LogSanitizer.sanitizeObject(data);
+
+      expect(result.user.name).toBe('J***');
+      expect(result.user.email).toBe('***@example.com');
+      expect(result.user.phone).toBe('***-***-4567');
+      expect(result.user.address).toBe('[REDACTED - ADDRESS]');
+      expect(result.payment.cardNumber).toBe('****-****-****-9010');
+      expect(result.payment.amount).toBe('[REDACTED - FINANCIAL]');
+      expect(result.metadata.ipAddress).toBe('192.*.*.*');
+      expect(result.metadata.ssn).toBe('[REDACTED - SSN]');
+    });
+  });
+
   describe('integration scenarios', () => {
     it('should sanitize complete authentication log entry', () => {
       const logData = {

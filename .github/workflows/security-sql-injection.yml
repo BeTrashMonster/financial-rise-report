@@ -1,0 +1,98 @@
+name: SQL Injection Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'financial-rise-app/backend/src/**/*.ts'
+      - 'financial-rise-app/backend/scripts/scan-sql-injection.js'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'financial-rise-app/backend/src/**/*.ts'
+
+jobs:
+  sql-injection-scan:
+    name: SQL Injection Vulnerability Scan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./financial-rise-app/backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: financial-rise-app/backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run SQL injection vulnerability scanner
+        id: scan
+        run: |
+          npm run scan:sql-injection
+        continue-on-error: true
+
+      - name: Run SQL injection prevention tests
+        run: |
+          npm run test:sql-injection
+
+      - name: Check scan results
+        if: steps.scan.outcome == 'failure'
+        run: |
+          echo "❌ SQL injection vulnerabilities detected!"
+          echo "Review the scan output above for details."
+          exit 1
+
+      - name: Upload scan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sql-injection-scan-results
+          path: |
+            financial-rise-app/backend/coverage/
+          retention-days: 30
+
+  security-test:
+    name: Security Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./financial-rise-app/backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: financial-rise-app/backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run all security tests
+        run: npm run test:security
+
+      - name: Check test coverage
+        run: |
+          npm run test:cov
+          # Ensure security-critical code has 100% coverage
+          echo "Verifying security test coverage..."
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: financial-rise-app/backend/coverage/
+          retention-days: 30

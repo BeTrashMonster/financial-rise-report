@@ -45,22 +45,47 @@
   - Wrap queries in try-catch
   - Log full error, return sanitized message to client
 
-## PII & Sensitive Data Protection (CRIT-002)
+## PII & Sensitive Data Protection (CRIT-002, HIGH-008)
 
-### Logging
+### Logging (Work Stream 61)
+
+- [ ] **Use PIISafeLogger for all new code**
+  - ✅ `private readonly logger = new PIISafeLogger(MyService.name);`
+  - ❌ `private readonly logger = new Logger(MyService.name);`
+  - Automatic PII sanitization for all log levels
+
+- [ ] **No direct console.log usage**
+  - ❌ `console.log('User:', user)`
+  - ❌ `console.error('Error:', error)`
+  - ✅ Use PIISafeLogger or Logger instead
 
 - [ ] **No PII in log statements**
-  - ❌ `console.log('User:', user)`
   - ❌ `logger.log('Password reset token:', token)`
   - ❌ `logger.debug('DISC scores:', scores)`
+  - ❌ `logger.log('User email: ' + email)`
+  - ❌ `logger.log('Credit card:', cardNumber)`
+  - ❌ `logger.log('SSN:', ssn)`
 
-- [ ] **Use LogSanitizer for all logs**
-  - ✅ `logger.log(\`User logged in: ${LogSanitizer.sanitizeEmail(email)}\`)`
-  - ✅ `logger.debug('Reset initiated', { user: LogSanitizer.sanitizeUser(user) })`
+- [ ] **Verify automatic PII masking for all PII types**
+  - Emails: `***@example.com` (domain visible)
+  - Phones: `***-***-4567` (last 4 digits visible)
+  - Credit Cards: `****-****-****-9010` (last 4 visible)
+  - SSN: `[REDACTED - SSN]` (completely hidden)
+  - IP Addresses: `192.*.*.*` (first octet visible)
+  - Names: `J***` (first letter visible)
+  - Addresses: `[REDACTED - ADDRESS]` (completely hidden)
+  - Financial Data: `[REDACTED - FINANCIAL]` (completely hidden)
+  - DISC Scores: `[REDACTED - PII]` (production only)
+
+- [ ] **Manual sanitization when PIISafeLogger cannot be used**
+  - Use `LogSanitizer.sanitizeObject(data)` for complex objects
+  - Use `LogSanitizer.detectAndRedactPII(text)` for strings
+  - Never log raw PII even temporarily
 
 - [ ] **Sensitive fields excluded from logs**
-  - Never log: passwords, tokens, DISC scores, financial data
-  - Safe to log: user IDs (UUIDs), timestamps, status codes
+  - Never log: passwords, tokens, SSN, credit cards, full addresses
+  - Never log: DISC scores (production), financial data, phone numbers (in full)
+  - Safe to log: user IDs (UUIDs), timestamps, status codes, assessment IDs
 
 ### API Responses
 

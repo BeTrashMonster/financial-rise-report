@@ -333,8 +333,7 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 ---
 
 ### Work Stream 60: Data Retention Policy (HIGH-007)
-- **Status:** ✅ Complete
-- **Completed:** 2025-12-28
+- **Status:** 🟡 In Progress
 - **Agent:** tdd-executor-retention
 - **Depends On:** Work Stream 52, 53 (Encryption at Rest) - ✅ Complete
 - **Severity:** 🟠 HIGH - GDPR COMPLIANCE
@@ -343,34 +342,25 @@ This roadmap organizes the Financial RISE Report implementation into parallel wo
 - **CWE:** CWE-404 - Improper Resource Shutdown or Release
 
 **Tasks:**
-- [x] Write tests for DataRetentionService (15 unit tests, all passing)
-- [x] Implement scheduled job for data cleanup (cron: 0 2 * * *)
-- [x] Delete completed assessments after 2 years (soft delete)
-- [x] Delete expired reports based on expires_at (hard delete)
-- [x] Implement soft delete with audit trail (@DeleteDateColumn)
-- [x] Add retention policy configuration (getRetentionConfig method)
-- [x] Log all retention actions for compliance (GDPR audit logging)
-- [x] Write integration tests for data deletion (10 tests created)
-- [x] Document retention policies (DATA-RETENTION-POLICY.md)
-- [x] Create manual data purge endpoint for testing (purgeOldData method)
+- [ ] Write tests for DataRetentionService
+- [ ] Implement scheduled job for data cleanup (cron: 0 2 * * *)
+- [ ] Delete completed assessments after 2 years
+- [ ] Delete expired reports based on expires_at
+- [ ] Implement soft delete with audit trail
+- [ ] Add retention policy configuration
+- [ ] Log all retention actions for compliance
+- [ ] Write integration tests for data deletion
+- [ ] Document retention policies
+- [ ] Create manual data purge endpoint for testing
 
 **Effort:** M
 
 **Done When:**
-- ✅ Scheduled job runs daily at 2 AM (@Cron decorator)
-- ✅ Old data automatically deleted (assessments >2 years, expired reports)
-- ✅ Deletion logged for compliance audit (comprehensive GDPR logging)
-- ✅ Tests pass (15/15 unit tests passing)
-- ✅ Documentation complete (DATA-RETENTION-POLICY.md, 600+ lines)
-
-**Deliverables:**
-- `src/common/services/data-retention.service.ts` - Main service implementation (176 lines)
-- `src/common/services/data-retention.service.spec.ts` - Unit tests (230 lines, 15/15 passing)
-- `src/common/services/data-retention.integration.spec.ts` - Integration tests (326 lines)
-- `src/app.module.ts` - Updated with ScheduleModule and DataRetentionService registration
-- `docs/DATA-RETENTION-POLICY.md` - Complete policy documentation (600+ lines)
-- `dev-logs/2025-12-28-work-stream-60-data-retention-policy.md` - Implementation log
-- `package.json` - Added @nestjs/schedule dependency
+- Scheduled job runs daily at 2 AM
+- Old data automatically deleted
+- Deletion logged for compliance audit
+- Tests pass
+- Documentation complete
 
 **Reference:** `SECURITY-AUDIT-REPORT.md` Lines 1024-1077
 
