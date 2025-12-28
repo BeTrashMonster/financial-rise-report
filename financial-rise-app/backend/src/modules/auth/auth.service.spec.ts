@@ -5,6 +5,7 @@ import { BadRequestException, UnauthorizedException, ConflictException } from '@
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { RefreshTokenService } from './refresh-token.service';
+import { TokenBlacklistService } from './services/token-blacklist.service';
 import { User, UserStatus, UserRole } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
@@ -14,6 +15,7 @@ describe('AuthService - Security Enhancements', () => {
   let jwtService: jest.Mocked<JwtService>;
   let configService: jest.Mocked<ConfigService>;
   let refreshTokenService: jest.Mocked<RefreshTokenService>;
+  let tokenBlacklistService: jest.Mocked<TokenBlacklistService>;
 
   const mockUser: User = {
     id: '123e4567-e89b-12d3-a456-426614174000',
@@ -90,6 +92,17 @@ describe('AuthService - Security Enhancements', () => {
             countActiveSessions: jest.fn(),
           },
         },
+        {
+          provide: TokenBlacklistService,
+          useValue: {
+            blacklistToken: jest.fn(),
+            isBlacklisted: jest.fn(),
+            removeFromBlacklist: jest.fn(),
+            clearAll: jest.fn(),
+            getBlacklistSize: jest.fn(),
+            cleanupExpiredTokens: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -98,6 +111,7 @@ describe('AuthService - Security Enhancements', () => {
     jwtService = module.get(JwtService);
     configService = module.get(ConfigService);
     refreshTokenService = module.get(RefreshTokenService);
+    tokenBlacklistService = module.get(TokenBlacklistService);
   });
 
   describe('Security Fix 1: Password Complexity Validation', () => {
@@ -310,9 +324,13 @@ describe('AuthService - Security Enhancements', () => {
     });
 
     it('should revoke all refresh tokens on logout', async () => {
+      const accessToken = 'valid.access.token';
       refreshTokenService.revokeAllUserTokens.mockResolvedValue(undefined);
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: Math.floor(Date.now() / 1000) + 900,
+      });
 
-      await service.logout(mockUser.id);
+      await service.logout(mockUser.id, accessToken);
 
       expect(refreshTokenService.revokeAllUserTokens).toHaveBeenCalledWith(mockUser.id);
     });
@@ -421,6 +439,153 @@ describe('AuthService - Security Enhancements', () => {
       await expect(service.resetPassword('valid-token', 'AnotherPass123!')).rejects.toThrow(
         'Reset token has already been used',
       );
+    });
+  });
+
+  describe('Logout with Token Blacklisting (HIGH-003)', () => {
+    it('should blacklist access token on logout', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+
+      // Mock JWT decode to return payload with expiration
+      jwtService.decode = jest.fn().mockReturnValue({
+        sub: userId,
+        email: mockUser.email,
+        role: mockUser.role,
+        exp: Math.floor(Date.now() / 1000) + 900, // Expires in 15 minutes
+      });
+
+      await service.logout(userId, accessToken);
+
+      // Should blacklist the access token
+      expect(tokenBlacklistService.blacklistToken).toHaveBeenCalledWith(
+        accessToken,
+        expect.any(Number), // expiration time in seconds
+      );
+    });
+
+    it('should revoke all refresh tokens on logout', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: Math.floor(Date.now() / 1000) + 900,
+      });
+
+      await service.logout(userId, accessToken);
+
+      expect(refreshTokenService.revokeAllUserTokens).toHaveBeenCalledWith(userId);
+    });
+
+    it('should calculate correct expiration time for blacklist', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+      const futureExpTime = Math.floor(Date.now() / 1000) + 900; // 15 minutes from now
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: futureExpTime,
+      });
+
+      await service.logout(userId, accessToken);
+
+      // Should calculate remaining time to expiration
+      const callArgs = (tokenBlacklistService.blacklistToken as jest.Mock).mock.calls[0];
+      const expirationSeconds = callArgs[1];
+
+      // Should be approximately 900 seconds (allow 5 second variance for test execution)
+      expect(expirationSeconds).toBeGreaterThan(895);
+      expect(expirationSeconds).toBeLessThanOrEqual(900);
+    });
+
+    it('should return success message on logout', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: Math.floor(Date.now() / 1000) + 900,
+      });
+
+      const result = await service.logout(userId, accessToken);
+
+      expect(result).toEqual({ message: 'Logged out successfully' });
+    });
+
+    it('should support revokeAllDevices parameter', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+      const revokeAllDevices = true;
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: Math.floor(Date.now() / 1000) + 900,
+      });
+
+      await service.logout(userId, accessToken, revokeAllDevices);
+
+      // Should still revoke all tokens (behavior is same currently)
+      expect(refreshTokenService.revokeAllUserTokens).toHaveBeenCalledWith(userId);
+      expect(tokenBlacklistService.blacklistToken).toHaveBeenCalledWith(
+        accessToken,
+        expect.any(Number),
+      );
+    });
+
+    it('should handle expired token gracefully', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'expired.access.token';
+      const pastExpTime = Math.floor(Date.now() / 1000) - 100; // Expired 100 seconds ago
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: pastExpTime,
+      });
+
+      await service.logout(userId, accessToken);
+
+      // Should still blacklist with minimum 1 second (prevent negative values)
+      expect(tokenBlacklistService.blacklistToken).toHaveBeenCalled();
+
+      const callArgs = (tokenBlacklistService.blacklistToken as jest.Mock).mock.calls[0];
+      const expirationSeconds = callArgs[1];
+
+      // Should use minimum expiration time for already-expired tokens
+      expect(expirationSeconds).toBeGreaterThanOrEqual(1);
+    });
+
+    it('should handle missing access token', async () => {
+      const userId = mockUser.id;
+
+      await expect(service.logout(userId, '')).rejects.toThrow();
+    });
+
+    it('should handle invalid JWT format', async () => {
+      const userId = mockUser.id;
+      const invalidToken = 'invalid.token.format';
+
+      jwtService.decode = jest.fn().mockReturnValue(null);
+
+      await expect(service.logout(userId, invalidToken)).rejects.toThrow();
+    });
+
+    it('should blacklist token before revoking refresh tokens', async () => {
+      const userId = mockUser.id;
+      const accessToken = 'valid.access.token';
+      const callOrder: string[] = [];
+
+      jwtService.decode = jest.fn().mockReturnValue({
+        exp: Math.floor(Date.now() / 1000) + 900,
+      });
+
+      tokenBlacklistService.blacklistToken = jest.fn().mockImplementation(async () => {
+        callOrder.push('blacklist');
+      });
+
+      refreshTokenService.revokeAllUserTokens = jest.fn().mockImplementation(async () => {
+        callOrder.push('revoke');
+      });
+
+      await service.logout(userId, accessToken);
+
+      // Order matters for security - blacklist first to prevent race conditions
+      expect(callOrder).toEqual(['blacklist', 'revoke']);
     });
   });
 });

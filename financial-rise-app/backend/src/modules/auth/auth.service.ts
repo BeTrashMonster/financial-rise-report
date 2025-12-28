@@ -15,6 +15,7 @@ import { User, UserStatus } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenService } from './refresh-token.service';
+import { TokenBlacklistService } from './services/token-blacklist.service';
 import { LogSanitizer } from '../../common/utils/log-sanitizer';
 
 @Injectable()
@@ -26,6 +27,7 @@ export class AuthService {
     private jwtService: JwtService,
     private configService: ConfigService,
     private refreshTokenService: RefreshTokenService,
+    private tokenBlacklistService: TokenBlacklistService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -208,7 +210,45 @@ export class AuthService {
     }
   }
 
-  async logout(userId: string, revokeAllDevices = false) {
+  /**
+   * Logout user and immediately invalidate access token
+   *
+   * SECURITY ENHANCEMENT (HIGH-003):
+   * - Blacklists access token for immediate revocation
+   * - Prevents use of logged-out tokens for up to 15 minutes
+   * - Addresses CWE-613: Insufficient Session Expiration
+   *
+   * @param userId - User ID to logout
+   * @param accessToken - Access token to blacklist
+   * @param revokeAllDevices - If true, revoke refresh tokens on all devices
+   * @returns Success message
+   * @throws BadRequestException if token is missing or invalid
+   *
+   * REMEDIATION FOR: SECURITY-AUDIT-REPORT.md HIGH-003
+   */
+  async logout(userId: string, accessToken: string, revokeAllDevices = false) {
+    // Validate input
+    if (!accessToken || accessToken.trim().length === 0) {
+      throw new BadRequestException('Access token is required for logout');
+    }
+
+    // Decode JWT to get expiration time
+    const decoded = this.jwtService.decode(accessToken) as any;
+
+    if (!decoded || !decoded.exp) {
+      throw new BadRequestException('Invalid access token');
+    }
+
+    // Calculate remaining time until token expires
+    const now = Math.floor(Date.now() / 1000);
+    const expiresIn = decoded.exp - now;
+
+    // Blacklist the access token (even if expired, use minimum 1 second)
+    // This prevents race conditions if token is about to expire
+    const blacklistDuration = Math.max(expiresIn, 1);
+    await this.tokenBlacklistService.blacklistToken(accessToken, blacklistDuration);
+
+    // Revoke refresh tokens
     if (revokeAllDevices) {
       // Revoke all refresh tokens for this user (logout from all devices)
       await this.refreshTokenService.revokeAllUserTokens(userId);

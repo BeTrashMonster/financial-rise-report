@@ -10,6 +10,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshToken } from './entities/refresh-token.entity';
 import { RefreshTokenService } from './refresh-token.service';
+import { TokenBlacklistService } from './services/token-blacklist.service';
 
 @Module({
   imports: [
@@ -27,8 +28,14 @@ import { RefreshTokenService } from './refresh-token.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, RefreshTokenService],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    RefreshTokenService,
+    TokenBlacklistService,
+  ],
   controllers: [AuthController],
-  exports: [AuthService, RefreshTokenService],
+  exports: [AuthService, RefreshTokenService, TokenBlacklistService],
 })
 export class AuthModule {}

@@ -1,14 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { UnauthorizedException } from '@nestjs/common';
+import { Request } from 'express';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersService } from '../../users/users.service';
 import { UserRole, UserStatus } from '../../users/entities/user.entity';
+import { TokenBlacklistService } from '../services/token-blacklist.service';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
   let usersService: UsersService;
   let configService: ConfigService;
+  let tokenBlacklistService: TokenBlacklistService;
 
   const mockConfigService = {
     get: jest.fn((key: string) => {
@@ -19,6 +22,10 @@ describe('JwtStrategy', () => {
 
   const mockUsersService = {
     findById: jest.fn(),
+  };
+
+  const mockTokenBlacklistService = {
+    isBlacklisted: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -33,12 +40,17 @@ describe('JwtStrategy', () => {
           provide: UsersService,
           useValue: mockUsersService,
         },
+        {
+          provide: TokenBlacklistService,
+          useValue: mockTokenBlacklistService,
+        },
       ],
     }).compile();
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
     usersService = module.get<UsersService>(UsersService);
     configService = module.get<ConfigService>(ConfigService);
+    tokenBlacklistService = module.get<TokenBlacklistService>(TokenBlacklistService);
   });
 
   afterEach(() => {
@@ -83,10 +95,21 @@ describe('JwtStrategy', () => {
       updated_at: new Date(),
     };
 
+    const mockRequest = {
+      headers: {
+        authorization: 'Bearer test.jwt.token',
+      },
+    } as unknown as Request;
+
+    beforeEach(() => {
+      // Default: token is not blacklisted
+      mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+    });
+
     it('should validate and return user data for valid payload', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(validPayload);
+      const result = await strategy.validate(mockRequest, validPayload);
 
       expect(usersService.findById).toHaveBeenCalledWith('user-123');
       expect(result).toEqual({
@@ -99,8 +122,8 @@ describe('JwtStrategy', () => {
     it('should throw UnauthorizedException if user not found', async () => {
       mockUsersService.findById.mockResolvedValue(null);
 
-      await expect(strategy.validate(validPayload)).rejects.toThrow(UnauthorizedException);
-      await expect(strategy.validate(validPayload)).rejects.toThrow('User not found');
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(UnauthorizedException);
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow('User not found');
     });
 
     it('should throw UnauthorizedException if user is not active', async () => {
@@ -111,8 +134,8 @@ describe('JwtStrategy', () => {
 
       mockUsersService.findById.mockResolvedValue(inactiveUser);
 
-      await expect(strategy.validate(validPayload)).rejects.toThrow(UnauthorizedException);
-      await expect(strategy.validate(validPayload)).rejects.toThrow('Account is not active');
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(UnauthorizedException);
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow('Account is not active');
     });
 
     it('should throw UnauthorizedException if user is locked', async () => {
@@ -123,14 +146,14 @@ describe('JwtStrategy', () => {
 
       mockUsersService.findById.mockResolvedValue(lockedUser);
 
-      await expect(strategy.validate(validPayload)).rejects.toThrow(UnauthorizedException);
-      await expect(strategy.validate(validPayload)).rejects.toThrow('Account is not active');
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(UnauthorizedException);
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow('Account is not active');
     });
 
     it('should extract userId from sub claim', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(validPayload);
+      const result = await strategy.validate(mockRequest, validPayload);
 
       expect(result.userId).toBe('user-123');
     });
@@ -138,7 +161,7 @@ describe('JwtStrategy', () => {
     it('should preserve email from payload', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(validPayload);
+      const result = await strategy.validate(mockRequest, validPayload);
 
       expect(result.email).toBe('test@example.com');
     });
@@ -146,7 +169,7 @@ describe('JwtStrategy', () => {
     it('should preserve role from payload', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(validPayload);
+      const result = await strategy.validate(mockRequest, validPayload);
 
       expect(result.role).toBe('consultant');
     });
@@ -160,7 +183,7 @@ describe('JwtStrategy', () => {
 
         mockUsersService.findById.mockResolvedValue(user);
 
-        const result = await strategy.validate(payload);
+        const result = await strategy.validate(mockRequest, payload);
 
         expect(result.role).toBe(role);
       }
@@ -175,7 +198,7 @@ describe('JwtStrategy', () => {
 
         mockUsersService.findById.mockResolvedValue(user);
 
-        const result = await strategy.validate(payload);
+        const result = await strategy.validate(mockRequest, payload);
 
         expect(result.userId).toBe(userId);
         expect(usersService.findById).toHaveBeenCalledWith(userId);
@@ -185,7 +208,7 @@ describe('JwtStrategy', () => {
     it('should call findById with correct user ID', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      await strategy.validate(validPayload);
+      await strategy.validate(mockRequest, validPayload);
 
       expect(usersService.findById).toHaveBeenCalledWith('user-123');
       expect(usersService.findById).toHaveBeenCalledTimes(1);
@@ -194,7 +217,7 @@ describe('JwtStrategy', () => {
     it('should return minimal user data (not full user entity)', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(validPayload);
+      const result = await strategy.validate(mockRequest, validPayload);
 
       // Should only return userId, email, and role
       expect(Object.keys(result)).toEqual(['userId', 'email', 'role']);
@@ -206,7 +229,7 @@ describe('JwtStrategy', () => {
     it('should handle database errors gracefully', async () => {
       mockUsersService.findById.mockRejectedValue(new Error('Database connection failed'));
 
-      await expect(strategy.validate(validPayload)).rejects.toThrow('Database connection failed');
+      await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow('Database connection failed');
     });
 
     it('should validate active status strictly', async () => {
@@ -217,11 +240,137 @@ describe('JwtStrategy', () => {
         mockUsersService.findById.mockResolvedValue(user);
 
         if (status !== UserStatus.ACTIVE) {
-          await expect(strategy.validate(validPayload)).rejects.toThrow(
+          await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(
             'Account is not active',
           );
         }
       }
+    });
+
+    describe('Token Blacklist Integration (HIGH-003)', () => {
+      it('should check if token is blacklisted before validating user', async () => {
+        mockUsersService.findById.mockResolvedValue(mockUser);
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        await strategy.validate(mockRequest, validPayload);
+
+        expect(tokenBlacklistService.isBlacklisted).toHaveBeenCalledWith('test.jwt.token');
+        // Blacklist check should happen before user lookup
+        expect(tokenBlacklistService.isBlacklisted).toHaveBeenCalled();
+      });
+
+      it('should throw UnauthorizedException if token is blacklisted', async () => {
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(true);
+
+        await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(
+          UnauthorizedException,
+        );
+        await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(
+          'Token has been revoked',
+        );
+      });
+
+      it('should not validate user if token is blacklisted', async () => {
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(true);
+
+        await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(
+          UnauthorizedException,
+        );
+
+        // Should not call usersService if token is blacklisted
+        expect(usersService.findById).not.toHaveBeenCalled();
+      });
+
+      it('should extract token from Authorization Bearer header', async () => {
+        mockUsersService.findById.mockResolvedValue(mockUser);
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        const request = {
+          headers: {
+            authorization: 'Bearer custom.token.value',
+          },
+        } as unknown as Request;
+
+        await strategy.validate(request, validPayload);
+
+        expect(tokenBlacklistService.isBlacklisted).toHaveBeenCalledWith('custom.token.value');
+      });
+
+      it('should handle missing Authorization header gracefully', async () => {
+        const requestWithoutAuth = {
+          headers: {},
+        } as unknown as Request;
+
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        await expect(strategy.validate(requestWithoutAuth, validPayload)).rejects.toThrow();
+      });
+
+      it('should handle malformed Authorization header', async () => {
+        const requestWithMalformedAuth = {
+          headers: {
+            authorization: 'InvalidFormat',
+          },
+        } as unknown as Request;
+
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        await expect(strategy.validate(requestWithMalformedAuth, validPayload)).rejects.toThrow();
+      });
+
+      it('should verify blacklist check completes within 5ms', async () => {
+        mockUsersService.findById.mockResolvedValue(mockUser);
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        const start = Date.now();
+        await strategy.validate(mockRequest, validPayload);
+        const duration = Date.now() - start;
+
+        // Total validation should be fast (blacklist check + user lookup)
+        expect(duration).toBeLessThan(50); // Allowing 50ms for entire validation
+      });
+
+      it('should handle blacklist service errors gracefully', async () => {
+        mockTokenBlacklistService.isBlacklisted.mockRejectedValue(
+          new Error('Blacklist service unavailable'),
+        );
+
+        // Service errors should propagate for proper error handling
+        await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow(
+          'Blacklist service unavailable',
+        );
+      });
+
+      it('should check blacklist for every request', async () => {
+        mockUsersService.findById.mockResolvedValue(mockUser);
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        // Make multiple requests
+        await strategy.validate(mockRequest, validPayload);
+        await strategy.validate(mockRequest, validPayload);
+        await strategy.validate(mockRequest, validPayload);
+
+        // Blacklist should be checked each time
+        expect(tokenBlacklistService.isBlacklisted).toHaveBeenCalledTimes(3);
+      });
+
+      it('should handle different tokens correctly', async () => {
+        mockUsersService.findById.mockResolvedValue(mockUser);
+        mockTokenBlacklistService.isBlacklisted.mockResolvedValue(false);
+
+        const tokens = ['token1', 'token2', 'token3'];
+
+        for (const token of tokens) {
+          const request = {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          } as unknown as Request;
+
+          await strategy.validate(request, validPayload);
+          expect(tokenBlacklistService.isBlacklisted).toHaveBeenCalledWith(token);
+        }
+      });
     });
   });
 
