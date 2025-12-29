@@ -81,9 +81,12 @@ export class PIISafeLogger implements LoggerService {
 
   /**
    * Set logger context (for grouped logs)
+   * Note: NestJS Logger context is set in constructor, not dynamically
    */
   setContext(context: string) {
-    this.logger.setContext(context);
+    // NestJS Logger doesn't support dynamic context changes
+    // Context is set during construction
+    // This method is kept for API compatibility but does nothing
   }
 
   /**

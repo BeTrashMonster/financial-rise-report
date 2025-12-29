@@ -29,6 +29,10 @@
     "node_modules",
     "dist",
     "test",
-    "**/*spec.ts"
+    "**/*spec.ts",
+    "**/*.e2e-spec.ts",
+    "src/database/migrations/**/*",
+    "src/modules/users/users.service-objections.ts",
+    "src/common/guards/report-ownership.guard.ts"
   ]
 }

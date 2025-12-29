@@ -18,6 +18,7 @@
  */
 
 import { INestApplication } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 
 /**
@@ -85,7 +86,7 @@ export function configureSecurityHeaders(app: INestApplication): void {
   );
 
   // Add additional security headers not covered by Helmet defaults
-  app.use((req, res, next) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     // Permissions-Policy (replaces Feature-Policy)
     res.setHeader(
       'Permissions-Policy',
