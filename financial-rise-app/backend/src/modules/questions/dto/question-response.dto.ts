@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { QuestionType, QuestionSection } from '../../../../../../database/entities/Question';
+import { QuestionType, QuestionSection } from '../entities/question.entity';
 
 export class AnswerOptionDto {
   @ApiProperty({ description: 'Option value' })

@@ -14,6 +14,16 @@ export enum QuestionType {
   TEXT = 'text',
 }
 
+export enum QuestionSection {
+  STABILIZE = 'stabilize',
+  ORGANIZE = 'organize',
+  BUILD = 'build',
+  GROW = 'grow',
+  SYSTEMIC = 'systemic',
+  DISC = 'disc',
+  METADATA = 'metadata',
+}
+
 @Entity('questions')
 @Index(['question_key'], { unique: true })
 @Index(['question_type'])
