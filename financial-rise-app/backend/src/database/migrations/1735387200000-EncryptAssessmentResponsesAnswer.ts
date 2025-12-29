@@ -71,11 +71,18 @@ export class EncryptAssessmentResponsesAnswer1735387200000
 
     console.log(`Encrypting ${existingResponses.length} assessment responses...`);
 
-    // Import encryption transformer
+    // Import encryption service and transformer
+    const { EncryptionService } = await import('../../common/services/encryption.service');
+    const { ConfigService } = await import('@nestjs/config');
+
+    // Create encryption service instance for migration
+    const configService = new ConfigService();
+    const encryptionService = new EncryptionService(configService);
+
     const { EncryptedColumnTransformer } = await import(
       '../../common/transformers/encrypted-column.transformer'
     );
-    const transformer = new EncryptedColumnTransformer();
+    const transformer = new EncryptedColumnTransformer(encryptionService);
 
     // Encrypt each response (batch processing for performance)
     const batchSize = 100;
@@ -183,10 +190,17 @@ export class EncryptAssessmentResponsesAnswer1735387200000
       `Decrypting ${encryptedResponses.length} assessment responses...`,
     );
 
+    // Import encryption service and transformer for rollback
+    const { EncryptionService } = await import('../../common/services/encryption.service');
+    const { ConfigService } = await import('@nestjs/config');
+
+    const configService = new ConfigService();
+    const encryptionService = new EncryptionService(configService);
+
     const { EncryptedColumnTransformer } = await import(
       '../../common/transformers/encrypted-column.transformer'
     );
-    const transformer = new EncryptedColumnTransformer();
+    const transformer = new EncryptedColumnTransformer(encryptionService);
 
     const batchSize = 100;
     for (let i = 0; i < encryptedResponses.length; i += batchSize) {
