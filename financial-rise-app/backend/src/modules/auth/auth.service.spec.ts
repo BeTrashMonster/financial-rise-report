@@ -31,6 +31,8 @@ describe('AuthService - Security Enhancements', () => {
     reset_password_expires: null,
     reset_password_used_at: null,
     refresh_token: null,
+    processing_restricted: false,
+    restriction_reason: null,
     created_at: new Date(),
     updated_at: new Date(),
     last_login_at: null,

@@ -110,20 +110,11 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      // Verify CSRF cookie is set
-      const cookies = response.headers['set-cookie'] as string[] | undefined;
-      expect(cookies).toBeDefined();
-      expect(Array.isArray(cookies)).toBe(true);
-      expect(cookies?.some((cookie: string) => cookie.startsWith('XSRF-TOKEN='))).toBe(true);
-
-      // Extract CSRF token from cookie
-      const csrfCookie = cookies?.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
-      expect(csrfCookie).toBeDefined();
-
-      const tokenMatch = csrfCookie?.match(/XSRF-TOKEN=([^;]+)/);
-      expect(tokenMatch).toBeTruthy();
-      expect(tokenMatch?.[1]).toBeTruthy();
-      expect(tokenMatch?.[1].length).toBeGreaterThan(0);
+      // Verify CSRF cookie is set using helper function
+      const token = extractCsrfToken(response);
+      expect(token).toBeDefined();
+      expect(token).toBeTruthy();
+      expect(token!.length).toBeGreaterThan(0);
     });
 
     it('should not regenerate CSRF cookie if already present', async () => {
@@ -132,9 +123,8 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const firstCookies = firstResponse.headers['set-cookie'] as string[] | undefined;
-      const firstCsrfCookie = firstCookies?.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
-      const firstToken = firstCsrfCookie?.match(/XSRF-TOKEN=([^;]+)/)?.[1];
+      const firstToken = extractCsrfToken(firstResponse);
+      expect(firstToken).toBeDefined();
 
       // Second request - send existing token
       const secondResponse = await request(app.getHttpServer())
@@ -167,7 +157,15 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = response.headers['set-cookie'] as string[] | undefined;
+      // Use runtime type checking to handle set-cookie header properly
+      const rawSetCookie = response.headers['set-cookie'];
+      const cookies = typeof rawSetCookie === 'string'
+        ? [rawSetCookie]
+        : rawSetCookie;
+
+      expect(cookies).toBeDefined();
+      expect(Array.isArray(cookies)).toBe(true);
+
       const csrfCookie = cookies?.find((c: string) => c.startsWith('XSRF-TOKEN='));
 
       // httpOnly=false (client needs to read it for double-submit pattern)

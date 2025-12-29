@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User, UserRole, UserStatus } from './entities/user.entity';
+import { Assessment } from '../assessments/entities/assessment.entity';
+import { UserObjection } from './entities/user-objection.entity';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -35,6 +37,26 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: mockRepository,
+        },
+        {
+          provide: getRepositoryToken(Assessment),
+          useValue: {
+            count: jest.fn(),
+            find: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(UserObjection),
+          useValue: {
+            find: jest.fn(),
+            save: jest.fn(),
+          },
+        },
+        {
+          provide: DataSource,
+          useValue: {
+            createQueryRunner: jest.fn(),
+          },
         },
       ],
     }).compile();
