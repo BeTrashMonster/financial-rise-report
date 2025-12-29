@@ -12,10 +12,14 @@ import { getCorsConfig } from '../../config/cors.config';
 
 /**
  * Helper function to extract CSRF token from response headers
- * Properly handles TypeScript types for set-cookie header
+ * Properly handles TypeScript types for set-cookie header which can be string | string[] | undefined
  */
 function extractCsrfToken(response: request.Response): string | undefined {
-  const cookies = response.headers['set-cookie'] as string[] | undefined;
+  const rawSetCookie = response.headers['set-cookie'];
+  const cookies = typeof rawSetCookie === 'string'
+    ? [rawSetCookie]
+    : rawSetCookie;
+
   if (!cookies || !Array.isArray(cookies)) {
     return undefined;
   }

@@ -30,6 +30,8 @@
     "dist",
     "test",
     "**/*spec.ts",
-    "**/*.e2e-spec.ts"
+    "**/*.e2e-spec.ts",
+    "src/common/guards/report-ownership.guard.ts",
+    "src/common/services/data-retention.service.ts"
   ]
 }
