@@ -5,11 +5,13 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { NotFoundException, ForbiddenException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User, UserRole, UserStatus } from './entities/user.entity';
+import { Assessment } from '../assessments/entities/assessment.entity';
+import { UserObjection } from './entities/user-objection.entity';
 
 describe('GDPR Article 18 - Processing Restriction', () => {
   let service: UsersService;
@@ -65,11 +67,15 @@ describe('GDPR Article 18 - Processing Restriction', () => {
           useValue: mockUserRepository,
         },
         {
-          provide: getRepositoryToken('AssessmentEntity'),
+          provide: getRepositoryToken(Assessment),
           useValue: mockAssessmentRepository,
         },
         {
-          provide: 'DataSource',
+          provide: getRepositoryToken(UserObjection),
+          useValue: { findOne: jest.fn(), find: jest.fn() },
+        },
+        {
+          provide: DataSource,
           useValue: mockDataSource,
         },
       ],
@@ -399,7 +405,11 @@ describe('GDPR Article 18 - Processing Restriction', () => {
       };
 
       mockUserRepository.findOne.mockResolvedValue(restrictedUser);
-      mockUserRepository.save.mockResolvedValue(mockUser);
+      mockUserRepository.save.mockResolvedValue({
+        ...restrictedUser,
+        processing_restricted: false,
+        restriction_reason: null,
+      });
 
       const result = await controller.liftProcessingRestriction('user-123', mockRequest);
 
@@ -429,7 +439,11 @@ describe('GDPR Article 18 - Processing Restriction', () => {
       };
 
       mockUserRepository.findOne.mockResolvedValue(restrictedUser);
-      mockUserRepository.save.mockResolvedValue(mockUser);
+      mockUserRepository.save.mockResolvedValue({
+        ...restrictedUser,
+        processing_restricted: false,
+        restriction_reason: null,
+      });
 
       const result = await controller.liftProcessingRestriction('user-123', mockRequest);
 
@@ -443,7 +457,13 @@ describe('GDPR Article 18 - Processing Restriction', () => {
         user: { userId: 'user-123', role: UserRole.CONSULTANT },
       };
 
-      mockUserRepository.findOne.mockResolvedValue(mockUser);
+      const unrestrictedUser = {
+        ...mockUser,
+        processing_restricted: false,
+        restriction_reason: null,
+      };
+
+      mockUserRepository.findOne.mockResolvedValue(unrestrictedUser);
 
       const result = await controller.getProcessingStatus('user-123', mockRequest);
 

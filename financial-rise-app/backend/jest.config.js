@@ -17,8 +17,6 @@ module.exports = {
     'main\\.spec\\.ts$',
     'sql-injection\\.spec\\.ts$',
     'users-right-to-object\\.spec\\.ts$',
-    'users-processing-restriction\\.spec\\.ts$',
-    'consents\\.(service|controller)\\.spec\\.ts$',
     'auth\\.module\\.spec\\.ts$',
     'cors-configuration\\.spec\\.ts$',
     'idor-attack\\.integration\\.spec\\.ts$',
