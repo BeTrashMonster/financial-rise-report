@@ -1,0 +1,12 @@
+{
+  "name": "financial-rise-database",
+  "version": "1.0.0",
+  "description": "Shared database entities and migrations",
+  "private": true,
+  "dependencies": {
+    "typeorm": "^0.3.19"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
+  }
+}
