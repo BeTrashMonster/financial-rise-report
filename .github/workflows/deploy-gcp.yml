@@ -225,6 +225,7 @@ jobs:
         run: |
           gcloud compute scp \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --tunnel-through-iap \
             --recurse \
             financial-rise-app/docker-compose.yml \
             financial-rise-app/docker-compose.prod.yml \
@@ -234,6 +235,7 @@ jobs:
         run: |
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --tunnel-through-iap \
             --command="
               set -e
               cd /opt/financial-rise
@@ -289,6 +291,7 @@ jobs:
           echo "⚠️ Deployment failed, attempting rollback..."
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --tunnel-through-iap \
             --command="
               cd /opt/financial-rise
               echo 'Pulling previous images tagged as latest...'
@@ -328,6 +331,7 @@ jobs:
         run: |
           gcloud compute scp \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --tunnel-through-iap \
             --recurse \
             financial-rise-app/docker-compose.yml \
             financial-rise-app/docker-compose.prod.yml \
@@ -338,6 +342,7 @@ jobs:
           echo "Creating production database backup..."
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --tunnel-through-iap \
             --command="
               cd /opt/financial-rise
               BACKUP_FILE=backup-\$(date +%Y%m%d-%H%M%S).sql
@@ -356,6 +361,7 @@ jobs:
         run: |
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --tunnel-through-iap \
             --command="
               set -e
               cd /opt/financial-rise
@@ -411,6 +417,7 @@ jobs:
           echo "⚠️ Production deployment failed, attempting rollback..."
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --tunnel-through-iap \
             --command="
               cd /opt/financial-rise
 
