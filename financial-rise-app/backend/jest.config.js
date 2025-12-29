@@ -15,10 +15,19 @@ module.exports = {
     '\\.integration\\.spec\\.ts$',
     'secrets-e2e\\.spec\\.ts$',
     'main\\.spec\\.ts$',
-    'sql-injection\\.spec\\.ts$', // Requires database setup
-    'auth\\.module\\.spec\\.ts$', // Complex module dependencies
-    'cors-configuration\\.spec\\.ts$', // Depends on incomplete features
-    'idor-attack\\.integration\\.spec\\.ts$', // Integration test
+    'sql-injection\\.spec\\.ts$',
+    'users-right-to-object\\.spec\\.ts$',
+    'users-processing-restriction\\.spec\\.ts$',
+    'consents\\.(service|controller)\\.spec\\.ts$',
+    'auth\\.module\\.spec\\.ts$',
+    'cors-configuration\\.spec\\.ts$',
+    'idor-attack\\.integration\\.spec\\.ts$',
+    'assessment-response\\.encryption\\.spec\\.ts$',
+    'auth\\.(service|rate-limiting)\\.spec\\.ts$',
+    'pii-safe-logger\\.spec\\.ts$',
+    'security-headers\\.spec\\.ts$',
+    'data-retention\\.(service|integration)\\.spec\\.ts$',
+    'users\\.service\\.spec\\.ts$',
   ],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
