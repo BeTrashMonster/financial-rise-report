@@ -27,16 +27,24 @@ export const authService = {
    * Login user
    */
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/login', credentials);
-    return response.data;
+    const response = await api.post<any>('/auth/login', credentials);
+    // Backend returns access_token, map it to token
+    return {
+      user: response.data.user,
+      token: response.data.access_token,
+    };
   },
 
   /**
    * Register new user
    */
   register: async (userData: RegisterData): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/register', userData);
-    return response.data;
+    const response = await api.post<any>('/auth/register', userData);
+    // Backend returns access_token, map it to token
+    return {
+      user: response.data.user,
+      token: response.data.access_token,
+    };
   },
 
   /**

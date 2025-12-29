@@ -1,184 +1,107 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
+  TextField,
+  Button,
   Typography,
   Paper,
   Alert,
-  Link as MuiLink,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { login, clearError } from '@store/slices/authSlice';
-import Button from '@components/common/Button/Button';
-import Input from '@components/common/Input/Input';
-import { Layout } from '@components/layout/Layout/Layout';
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+import { useAppDispatch } from '@store/hooks';
+import { login } from '@store/slices/authSlice';
 
 /**
- * Login Page Component
+ * Login Page
  */
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.auth);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormData>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-  const onSubmit = async (data: LoginFormData) => {
-    dispatch(clearError());
-    const result = await dispatch(login(data));
-    if (login.fulfilled.match(result)) {
-      navigate('/dashboard');
+    try {
+      const result = await dispatch(login({ email, password })).unwrap();
+      if (result) {
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
+      // Error from Redux thunk is already a string (from rejectWithValue)
+      setError(typeof err === 'string' ? err : 'Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Layout showHeader={false} showFooter={false}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: (theme) => theme.palette.grey[100],
+      }}
+    >
       <Container maxWidth="sm">
-        <Box
-          sx={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            paddingY: 4,
-          }}
-        >
-          <Paper
-            elevation={2}
-            sx={{
-              padding: 4,
-              borderRadius: 2,
-            }}
-          >
-            <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
-              <Typography
-                variant="h4"
-                component="h1"
-                gutterBottom
-                sx={{
-                  fontWeight: 700,
-                  color: 'primary.main',
-                }}
-              >
-                Financial RISE
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                Sign in to your account
-              </Typography>
-            </Box>
+        <Paper elevation={3} sx={{ padding: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom align="center">
+            Sign In
+          </Typography>
 
-            {error && (
-              <Alert severity="error" sx={{ marginBottom: 3 }}>
-                {error}
-              </Alert>
-            )}
+          {error && (
+            <Alert severity="error" sx={{ marginBottom: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Controller
-                  name="email"
-                  control={control}
-                  rules={{
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address',
-                    },
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="email"
-                      label="Email Address"
-                      type="email"
-                      autoComplete="email"
-                      autoFocus
-                      fullWidth
-                      error={!!errors.email}
-                      helperText={errors.email?.message}
-                      disabled={loading}
-                    />
-                  )}
-                />
+          <form onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              margin="normal"
+              required
+              autoComplete="email"
+            />
 
-                <Controller
-                  name="password"
-                  control={control}
-                  rules={{
-                    required: 'Password is required',
-                    minLength: {
-                      value: 8,
-                      message: 'Password must be at least 8 characters',
-                    },
-                  }}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      id="password"
-                      label="Password"
-                      type="password"
-                      autoComplete="current-password"
-                      fullWidth
-                      error={!!errors.password}
-                      helperText={errors.password?.message}
-                      disabled={loading}
-                      showPasswordToggle
-                    />
-                  )}
-                />
+            <TextField
+              fullWidth
+              label="Password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              margin="normal"
+              required
+              autoComplete="current-password"
+            />
 
-                <Box sx={{ textAlign: 'right' }}>
-                  <MuiLink
-                    href="/forgot-password"
-                    variant="body2"
-                    underline="hover"
-                  >
-                    Forgot password?
-                  </MuiLink>
-                </Box>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  loading={loading}
-                  sx={{ marginTop: 2 }}
-                >
-                  Sign In
-                </Button>
-              </Box>
-            </form>
-
-            <Box sx={{ marginTop: 3, textAlign: 'center' }}>
-              <Typography variant="body2" color="text.secondary">
-                Don't have an account?{' '}
-                <MuiLink href="/register" underline="hover">
-                  Sign up
-                </MuiLink>
-              </Typography>
-            </Box>
-          </Paper>
-        </Box>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={loading}
+              sx={{ marginTop: 3 }}
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </Button>
+          </form>
+        </Paper>
       </Container>
-    </Layout>
+    </Box>
   );
 };
 

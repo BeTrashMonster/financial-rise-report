@@ -5,12 +5,12 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 
  * Includes authentication interceptors and error handling
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 30000;
 
 // Create axios instance
 const api: AxiosInstance = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL,
   timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
@@ -43,9 +43,11 @@ api.interceptors.response.use(
 
       switch (status) {
         case 401:
-          // Unauthorized - clear token and redirect to login
-          localStorage.removeItem('token');
-          window.location.href = '/login';
+          // Unauthorized - clear token and redirect to login (only if not already on login page)
+          if (window.location.pathname !== '/login') {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+          }
           break;
         case 403:
           // Forbidden

@@ -49,9 +49,16 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Setup project to authenticate before running tests
+    {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      // dependencies: ['setup'], // Commented out - setup has issues
     },
 
     {
@@ -100,7 +107,7 @@ export default defineConfig({
       {
         command: 'npm run start:dev',
         cwd: '../backend',
-        url: 'http://localhost:3000/api/health',
+        url: 'http://localhost:3000/api/v1/health',
         reuseExistingServer: !process.env.CI,
         timeout: 120 * 1000,
       },

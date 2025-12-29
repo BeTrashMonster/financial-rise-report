@@ -12,17 +12,18 @@ test.describe('Authentication Flow', () => {
   });
 
   test('should show error on invalid credentials', async ({ page }) => {
-    await page.getByLabel(/email|username/i).fill('invalid@example.com');
-    await page.locator('input[name="password"]').fill('wrongpassword');
+    await page.getByLabel(/email/i).fill('invalid@example.com');
+    await page.getByLabel(/password/i).fill('wrongpassword');
+
+    // Click login and wait for response
     await page.getByRole('button', { name: /sign in|login/i }).click();
 
-    // Check for error message
-    await expect(page.getByText(/invalid credentials|login failed|error/i)).toBeVisible({ timeout: 10000 });
+    // Check for error message - should contain 'Invalid' or 'password'
+    await expect(page.getByText(/invalid|password.*incorrect|login.*failed|unauthorized/i)).toBeVisible({ timeout: 10000 });
   });
 
   test('should successfully login with valid credentials', async ({ page }) => {
-    // Skip this test if no test user exists in the database
-    test.skip(true, 'Requires test user in database - create test user first');
+    // Test user has been created in database
 
     // Note: Update these credentials or use test fixtures
     await page.getByLabel(/email|username/i).fill('test@example.com');
@@ -34,8 +35,7 @@ test.describe('Authentication Flow', () => {
   });
 
   test('should be able to logout', async ({ page }) => {
-    // Skip this test if no test user exists in the database
-    test.skip(true, 'Requires test user in database - create test user first');
+    // Test user has been created in database
 
     // First login
     await page.getByLabel(/email|username/i).fill('test@example.com');
