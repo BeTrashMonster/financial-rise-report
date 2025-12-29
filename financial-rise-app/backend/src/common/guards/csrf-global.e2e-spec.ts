@@ -59,10 +59,13 @@ describe('Global CSRF Protection (E2E)', () => {
       imports: [AppModule],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
+    // Create app with bodyParser disabled, just like main.ts
+    app = moduleFixture.createNestApplication({
+      bodyParser: false, // Disable built-in parser to apply custom limits
+    });
 
     // Apply middleware in the same order as main.ts
-    // Request Size Limits - must be applied BEFORE other middleware
+    // Request Size Limits - must come FIRST after disabling bodyParser
     app.use(json({ limit: '10mb' }));
     app.use(urlencoded({ extended: true, limit: '10mb' }));
 

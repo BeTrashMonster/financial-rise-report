@@ -12,7 +12,11 @@ import { CsrfInterceptor } from './common/interceptors/csrf.interceptor';
 import { CsrfGuard } from './common/guards/csrf.guard';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Create app with custom body parser configuration
+  // IMPORTANT: Disable NestJS's built-in bodyParser to use our custom limits
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: false, // Disable built-in parser to apply custom limits
+  });
 
   // CRITICAL: Validate secrets on startup (Work Stream 51 - CRIT-001)
   // This prevents the application from starting with weak or default secrets
@@ -23,7 +27,7 @@ async function bootstrap() {
   // DoS prevention through payload size restrictions
   // Default limit: 10MB for JSON and URL-encoded payloads
   // Prevents memory exhaustion attacks from oversized requests
-  // Note: Apply BEFORE other middleware to reject large payloads early
+  // Note: Must come FIRST after disabling built-in bodyParser
   app.use(json({ limit: '10mb' }));
   app.use(urlencoded({ extended: true, limit: '10mb' }));
 
