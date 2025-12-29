@@ -52,6 +52,6 @@ secrets/
 # AWS
 .aws/
 
-# PDF reports (local development)
-reports/
+# PDF reports (local development) - ignores generated files, not source code
+/reports/
 *.pdf
