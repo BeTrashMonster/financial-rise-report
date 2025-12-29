@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
               {user?.avatar ? (
                 <Avatar
                   src={user.avatar}
-                  alt={user.name}
+                  alt={`${user.first_name} ${user.last_name}`}
                   sx={{ width: 32, height: 32 }}
                 />
               ) : (

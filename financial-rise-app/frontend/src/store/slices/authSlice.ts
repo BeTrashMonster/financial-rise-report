@@ -4,7 +4,8 @@ import { authService } from '@services/authService';
 export interface User {
   id: string;
   email: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   role: string;
   avatar?: string;
 }
@@ -44,7 +45,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   'auth/register',
   async (
-    userData: { email: string; password: string; name: string },
+    userData: { email: string; password: string; first_name: string; last_name: string },
     { rejectWithValue }
   ) => {
     try {
