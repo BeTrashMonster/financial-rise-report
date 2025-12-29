@@ -17,6 +17,7 @@ import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Public } from '../../common/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,7 @@ export class AuthController {
    * Register a new user account
    * Rate limit: 3 attempts per hour to prevent registration flooding
    */
+  @Public() // Exempt from CSRF protection (no token available before registration)
   @Throttle({ default: { ttl: 3600000, limit: 3 } }) // 3 requests per hour
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
@@ -39,6 +41,7 @@ export class AuthController {
    * Authenticate user and return JWT tokens
    * Rate limit: 5 attempts per minute to prevent brute force attacks
    */
+  @Public() // Exempt from CSRF protection (no token available before authentication)
   @Throttle({ default: { ttl: 60000, limit: 5 } }) // 5 requests per minute
   @UseGuards(LocalAuthGuard)
   @Post('login')

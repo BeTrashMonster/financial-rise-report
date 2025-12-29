@@ -3,6 +3,16 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
+import { User } from '../modules/users/entities/user.entity';
+import { UserObjection } from '../modules/users/entities/user-objection.entity';
+import { Assessment } from '../modules/assessments/entities/assessment.entity';
+import { AssessmentResponse } from '../modules/assessments/entities/assessment-response.entity';
+import { Question } from '../modules/questions/entities/question.entity';
+import { RefreshToken } from '../modules/auth/entities/refresh-token.entity';
+import { PhaseResult } from '../modules/algorithms/entities/phase-result.entity';
+import { DISCProfile } from '../modules/algorithms/entities/disc-profile.entity';
+import { Report } from '../reports/entities/report.entity';
+import { UserConsent } from '../modules/consents/entities/user-consent.entity';
 
 /**
  * Get SSL configuration for database connection
@@ -55,7 +65,18 @@ export const typeOrmConfig = (
   username: configService.get('DATABASE_USER', 'financial_rise'),
   password: configService.get('DATABASE_PASSWORD'),
   database: configService.get('DATABASE_NAME', 'financial_rise_db'),
-  entities: [__dirname + '/../modules/**/*.entity{.ts,.js}', __dirname + '/../reports/**/*.entity{.ts,.js}'],
+  entities: [
+    User,
+    UserObjection,
+    Assessment,
+    AssessmentResponse,
+    Question,
+    RefreshToken,
+    PhaseResult,
+    DISCProfile,
+    Report,
+    UserConsent,
+  ],
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false, // Never use in production
   logging: configService.get('NODE_ENV') === 'development',
@@ -71,7 +92,18 @@ const dataSourceOptions: DataSourceOptions = {
   username: config.get('DATABASE_USER', 'financial_rise'),
   password: config.get('DATABASE_PASSWORD', 'financial_rise_dev'),
   database: config.get('DATABASE_NAME', 'financial_rise_dev'),
-  entities: [__dirname + '/../modules/**/*.entity{.ts,.js}', __dirname + '/../reports/**/*.entity{.ts,.js}'],
+  entities: [
+    User,
+    UserObjection,
+    Assessment,
+    AssessmentResponse,
+    Question,
+    RefreshToken,
+    PhaseResult,
+    DISCProfile,
+    Report,
+    UserConsent,
+  ],
   migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
   synchronize: false,
   logging: true,

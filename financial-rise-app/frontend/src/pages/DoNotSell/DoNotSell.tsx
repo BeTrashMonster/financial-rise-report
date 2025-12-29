@@ -13,11 +13,11 @@ import {
   Button,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import GppGoodIcon from '@mui/icons-material/GppGood';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline.js';
+import EmailIcon from '@mui/icons-material/Email.js';
+import PhoneIcon from '@mui/icons-material/Phone.js';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack.js';
+import GppGoodIcon from '@mui/icons-material/GppGood.js';
 
 /**
  * CCPA "Do Not Sell My Personal Information" Page

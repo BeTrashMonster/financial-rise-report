@@ -11,8 +11,8 @@ import {
   ListItem,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack.js';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip.js';
 
 /**
  * Privacy Policy Page

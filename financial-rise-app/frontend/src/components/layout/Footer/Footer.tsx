@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Typography, Link, Divider } from '@mui/material';
-import GppGoodIcon from '@mui/icons-material/GppGood';
+import GppGoodIcon from '@mui/icons-material/GppGood.js';
 
 /**
  * Application Footer Component
