@@ -2,12 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import * as cookieParser from 'cookie-parser';
-import { AppModule } from '../../../app.module';
+import { json, urlencoded } from 'express';
+import { AppModule } from '../../app.module';
 import { CsrfInterceptor } from '../interceptors/csrf.interceptor';
 import { CsrfGuard } from './csrf.guard';
 import { Reflector } from '@nestjs/core';
-import { configureSecurityHeaders } from '../../../config/security-headers.config';
-import { getCorsConfig } from '../../../config/cors.config';
+import { configureSecurityHeaders } from '../../config/security-headers.config';
+import { getCorsConfig } from '../../config/cors.config';
 
 /**
  * Global CSRF Protection E2E Tests
@@ -44,6 +45,10 @@ describe('Global CSRF Protection (E2E)', () => {
     app = moduleFixture.createNestApplication();
 
     // Apply middleware in the same order as main.ts
+    // Request Size Limits - must be applied BEFORE other middleware
+    app.use(json({ limit: '10mb' }));
+    app.use(urlencoded({ extended: true, limit: '10mb' }));
+
     app.use(cookieParser());
 
     // Apply security headers
