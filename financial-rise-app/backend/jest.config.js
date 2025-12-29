@@ -61,8 +61,11 @@ module.exports = {
     'ts-jest': {
       tsconfig: {
         ...compilerOptions,
-        // Ensure all source files are included
+        target: 'ES2021',
+        module: 'commonjs',
         skipLibCheck: true,
+        experimentalDecorators: true,
+        emitDecoratorMetadata: true,
       },
     },
   },
