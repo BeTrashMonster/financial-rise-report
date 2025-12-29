@@ -11,6 +11,19 @@ import { configureSecurityHeaders } from '../../config/security-headers.config';
 import { getCorsConfig } from '../../config/cors.config';
 
 /**
+ * Helper function to extract CSRF token from response headers
+ * Properly handles TypeScript types for set-cookie header
+ */
+function extractCsrfToken(response: request.Response): string | undefined {
+  const cookies = response.headers['set-cookie'] as string[] | undefined;
+  if (!cookies || !Array.isArray(cookies)) {
+    return undefined;
+  }
+  const csrfCookie = cookies.find((c: string) => c.startsWith('XSRF-TOKEN='));
+  return csrfCookie?.match(/XSRF-TOKEN=([^;]+)/)?.[1];
+}
+
+/**
  * Global CSRF Protection E2E Tests
  * Work Stream 63 (MED-002) - Global CSRF Protection
  *
@@ -91,18 +104,19 @@ describe('Global CSRF Protection (E2E)', () => {
         .expect(200);
 
       // Verify CSRF cookie is set
-      const cookies = response.headers['set-cookie'];
+      const cookies = response.headers['set-cookie'] as string[] | undefined;
       expect(cookies).toBeDefined();
-      expect(cookies.some((cookie: string) => cookie.startsWith('XSRF-TOKEN='))).toBe(true);
+      expect(Array.isArray(cookies)).toBe(true);
+      expect(cookies?.some((cookie: string) => cookie.startsWith('XSRF-TOKEN='))).toBe(true);
 
       // Extract CSRF token from cookie
-      const csrfCookie = cookies.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
+      const csrfCookie = cookies?.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
       expect(csrfCookie).toBeDefined();
 
-      const tokenMatch = csrfCookie.match(/XSRF-TOKEN=([^;]+)/);
+      const tokenMatch = csrfCookie?.match(/XSRF-TOKEN=([^;]+)/);
       expect(tokenMatch).toBeTruthy();
-      expect(tokenMatch[1]).toBeTruthy();
-      expect(tokenMatch[1].length).toBeGreaterThan(0);
+      expect(tokenMatch?.[1]).toBeTruthy();
+      expect(tokenMatch?.[1].length).toBeGreaterThan(0);
     });
 
     it('should not regenerate CSRF cookie if already present', async () => {
@@ -111,9 +125,9 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const firstCookies = firstResponse.headers['set-cookie'];
-      const firstCsrfCookie = firstCookies.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
-      const firstToken = firstCsrfCookie.match(/XSRF-TOKEN=([^;]+)/)[1];
+      const firstCookies = firstResponse.headers['set-cookie'] as string[] | undefined;
+      const firstCsrfCookie = firstCookies?.find((cookie: string) => cookie.startsWith('XSRF-TOKEN='));
+      const firstToken = firstCsrfCookie?.match(/XSRF-TOKEN=([^;]+)/)?.[1];
 
       // Second request - send existing token
       const secondResponse = await request(app.getHttpServer())
@@ -135,11 +149,8 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies1 = response1.headers['set-cookie'];
-      const cookies2 = response2.headers['set-cookie'];
-
-      const token1 = cookies1.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
-      const token2 = cookies2.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token1 = extractCsrfToken(response1) || '';
+      const token2 = extractCsrfToken(response2) || '';
 
       expect(token1).not.toBe(token2);
     });
@@ -149,7 +160,8 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const csrfCookie = response.headers['set-cookie'].find((c: string) => c.startsWith('XSRF-TOKEN='));
+      const cookies = response.headers['set-cookie'] as string[] | undefined;
+      const csrfCookie = cookies?.find((c: string) => c.startsWith('XSRF-TOKEN='));
 
       // httpOnly=false (client needs to read it for double-submit pattern)
       expect(csrfCookie).not.toContain('HttpOnly');
@@ -189,9 +201,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = response.headers['set-cookie'];
-      const csrfCookie = cookies.find((c: string) => c.startsWith('XSRF-TOKEN='));
-      csrfToken = csrfCookie.match(/XSRF-TOKEN=([^;]+)/)[1];
+      csrfToken = extractCsrfToken(response) || '';
     });
 
     describe('POST requests', () => {
@@ -357,9 +367,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = tokenResponse.headers['set-cookie'];
-      const csrfCookie = cookies.find((c: string) => c.startsWith('XSRF-TOKEN='));
-      const token = csrfCookie.match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token = extractCsrfToken(tokenResponse) || '';
 
       // Only cookie (no header) - should fail
       await request(app.getHttpServer())
@@ -405,8 +413,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = tokenResponse.headers['set-cookie'];
-      const token = cookies.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token = extractCsrfToken(tokenResponse) || '';
 
       // Different values - should fail
       await request(app.getHttpServer())
@@ -461,8 +468,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = tokenResponse.headers['set-cookie'];
-      const token = cookies.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token = extractCsrfToken(tokenResponse) || '';
 
       // Attacker can set cookies but not custom headers in CSRF attack
       const response = await request(app.getHttpServer())
@@ -508,8 +514,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = response.headers['set-cookie'];
-      csrfToken = cookies.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      csrfToken = extractCsrfToken(response) || '';
     });
 
     it('should protect auth endpoints', async () => {
@@ -564,8 +569,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies1 = response1.headers['set-cookie'];
-      const token1 = cookies1.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token1 = extractCsrfToken(response1) || '';
 
       // Second request with same token
       const response2 = await request(app.getHttpServer())
@@ -588,11 +592,8 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies1 = response1.headers['set-cookie'];
-      const cookies2 = response2.headers['set-cookie'];
-
-      const token1 = cookies1.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
-      const token2 = cookies2.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token1 = extractCsrfToken(response1) || '';
+      const token2 = extractCsrfToken(response2) || '';
 
       expect(token1).not.toBe(token2);
     });
@@ -620,8 +621,7 @@ describe('Global CSRF Protection (E2E)', () => {
         .get('/api/v1/health')
         .expect(200);
 
-      const cookies = tokenResponse.headers['set-cookie'];
-      const token = cookies.find((c: string) => c.startsWith('XSRF-TOKEN=')).match(/XSRF-TOKEN=([^;]+)/)[1];
+      const token = extractCsrfToken(tokenResponse) || '';
 
       const response = await request(app.getHttpServer())
         .post('/api/v1/auth/register')
