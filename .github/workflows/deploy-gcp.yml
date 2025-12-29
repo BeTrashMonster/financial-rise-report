@@ -226,6 +226,7 @@ jobs:
           gcloud compute scp \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --recurse \
             financial-rise-app/docker-compose.yml \
             financial-rise-app/docker-compose.prod.yml \
@@ -236,6 +237,7 @@ jobs:
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="
               set -e
               cd /opt/financial-rise
@@ -292,6 +294,7 @@ jobs:
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="
               cd /opt/financial-rise
               echo 'Pulling previous images tagged as latest...'
@@ -332,6 +335,7 @@ jobs:
           gcloud compute scp \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --recurse \
             financial-rise-app/docker-compose.yml \
             financial-rise-app/docker-compose.prod.yml \
@@ -343,6 +347,7 @@ jobs:
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="
               cd /opt/financial-rise
               BACKUP_FILE=backup-\$(date +%Y%m%d-%H%M%S).sql
@@ -362,6 +367,7 @@ jobs:
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="
               set -e
               cd /opt/financial-rise
@@ -418,6 +424,7 @@ jobs:
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="
               cd /opt/financial-rise
 
