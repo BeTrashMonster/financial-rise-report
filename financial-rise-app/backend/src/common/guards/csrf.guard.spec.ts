@@ -1,6 +1,7 @@
 import { ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CsrfGuard } from './csrf.guard';
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 describe('CsrfGuard', () => {
   let guard: CsrfGuard;
@@ -25,6 +26,8 @@ describe('CsrfGuard', () => {
             headers,
           }),
         }),
+        getHandler: () => ({}), // Mock handler for Reflector
+        getClass: () => ({}), // Mock class for Reflector
       } as any;
     };
 
@@ -182,6 +185,8 @@ describe('CsrfGuard', () => {
               headers: { 'x-csrf-token': csrfToken },
             }),
           }),
+          getHandler: () => ({}), // Mock handler for Reflector
+          getClass: () => ({}), // Mock class for Reflector
         } as any;
 
         expect(() => guard.canActivate(context)).toThrow('CSRF token missing');
@@ -286,6 +291,43 @@ describe('CsrfGuard', () => {
         );
 
         expect(() => guard.canActivate(context)).toThrow('CSRF token mismatch');
+      });
+    });
+
+    describe('@Public() decorator bypass', () => {
+      it('should allow POST request without CSRF token when route is marked as public', () => {
+        const context = createMockContext('POST', {}, {});
+
+        // Mock the reflector to return true for IS_PUBLIC_KEY
+        jest.spyOn(reflector, 'getAllAndOverride').mockReturnValue(true);
+
+        const result = guard.canActivate(context);
+
+        expect(result).toBe(true);
+        expect(reflector.getAllAndOverride).toHaveBeenCalledWith(IS_PUBLIC_KEY, [
+          expect.anything(),
+          expect.anything(),
+        ]);
+      });
+
+      it('should allow PUT request without CSRF token when route is marked as public', () => {
+        const context = createMockContext('PUT', {}, {});
+
+        // Mock the reflector to return true for IS_PUBLIC_KEY
+        jest.spyOn(reflector, 'getAllAndOverride').mockReturnValue(true);
+
+        const result = guard.canActivate(context);
+
+        expect(result).toBe(true);
+      });
+
+      it('should still enforce CSRF when route is not marked as public', () => {
+        const context = createMockContext('POST', {}, {});
+
+        // Mock the reflector to return false (not public)
+        jest.spyOn(reflector, 'getAllAndOverride').mockReturnValue(false);
+
+        expect(() => guard.canActivate(context)).toThrow('CSRF token missing');
       });
     });
   });
