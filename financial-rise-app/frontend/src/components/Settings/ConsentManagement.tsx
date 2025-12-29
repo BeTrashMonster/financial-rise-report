@@ -11,7 +11,6 @@ import {
   Alert,
   CircularProgress,
   Divider,
-  Stack,
   Chip,
   Table,
   TableBody,
@@ -31,7 +30,7 @@ import {
 } from '@mui/icons-material';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState } from '../../store/store';
 
 interface ConsentRecord {
   id: string;

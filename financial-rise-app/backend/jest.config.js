@@ -26,6 +26,7 @@ module.exports = {
     'security-headers\\.spec\\.ts$',
     'data-retention\\.(service|integration)\\.spec\\.ts$',
     'users\\.service\\.spec\\.ts$',
+    'report-ownership\\.guard\\.spec\\.ts$',
   ],
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',

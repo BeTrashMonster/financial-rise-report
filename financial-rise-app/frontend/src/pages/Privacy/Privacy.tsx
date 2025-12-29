@@ -25,7 +25,7 @@ const Privacy: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: (theme) => theme.palette.neutral.gray50,
+        backgroundColor: (theme) => theme.palette.neutral.gray100,
         paddingY: 4,
       }}
     >
