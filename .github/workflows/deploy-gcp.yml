@@ -258,8 +258,8 @@ jobs:
               # Create database backup (if postgres is running locally)
               docker compose exec -T postgres pg_dump -U financial_rise financial_rise_staging > backup-\$(date +%Y%m%d-%H%M%S).sql 2>/dev/null || echo 'Using Cloud SQL, skipping local backup'
 
-              # Run database migrations
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm backend npm run migration:run || echo 'Migrations completed or skipped'
+              # Run database migrations (--no-deps prevents starting Redis/other services)
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm --no-deps backend npm run migration:run || echo 'Migrations completed or skipped'
 
               # Restart services with new images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
@@ -388,8 +388,8 @@ jobs:
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
 
-              # Run migrations
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm backend npm run migration:run || echo 'Migrations completed'
+              # Run migrations (--no-deps prevents starting Redis/other services)
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm --no-deps backend npm run migration:run || echo 'Migrations completed'
 
               # Rolling restart (zero-downtime)
               echo 'Restarting backend...'
