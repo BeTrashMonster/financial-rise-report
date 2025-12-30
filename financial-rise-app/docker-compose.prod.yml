@@ -44,7 +44,8 @@ services:
       - "4000:4000"
     volumes: []  # Remove development volumes
     depends_on:
-      - redis
+      redis:
+        condition: service_started
     networks:
       - financial-rise-network
     logging:
