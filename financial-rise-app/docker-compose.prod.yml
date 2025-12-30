@@ -13,10 +13,7 @@ services:
 
   # Backend API - Production Configuration
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-      target: production
+    image: us-central1-docker.pkg.dev/financial-rise-prod/financial-rise-docker/backend:latest
     container_name: financial-rise-backend-prod
     restart: unless-stopped
     environment:
@@ -64,10 +61,7 @@ services:
 
   # Frontend - Production Configuration with Nginx
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      target: production
+    image: us-central1-docker.pkg.dev/financial-rise-prod/financial-rise-docker/frontend:latest
     container_name: financial-rise-frontend-prod
     restart: unless-stopped
     environment:
