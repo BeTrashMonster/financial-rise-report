@@ -258,14 +258,17 @@ jobs:
               # Create database backup (if postgres is running locally)
               docker compose exec -T postgres pg_dump -U financial_rise financial_rise_staging > backup-\$(date +%Y%m%d-%H%M%S).sql 2>/dev/null || echo 'Using Cloud SQL, skipping local backup'
 
-              # Run database migrations (--no-deps prevents starting Redis/other services)
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm --no-deps backend npm run migration:run || echo 'Migrations completed or skipped'
-
-              # Restart services with new images
+              # Start services with new images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
 
-              # Wait for services to be healthy
-              sleep 15
+              # Wait for backend to be ready
+              sleep 10
+
+              # Run database migrations on running backend container
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed or skipped'
+
+              # Wait for services to be fully healthy
+              sleep 10
 
               # Show running containers
               docker ps
@@ -388,13 +391,13 @@ jobs:
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
 
-              # Run migrations (--no-deps prevents starting Redis/other services)
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm --no-deps backend npm run migration:run || echo 'Migrations completed'
-
               # Rolling restart (zero-downtime)
               echo 'Restarting backend...'
               docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate backend
-              sleep 20
+              sleep 15
+
+              # Run database migrations on running backend container
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed'
 
               echo 'Restarting frontend...'
               docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate frontend
