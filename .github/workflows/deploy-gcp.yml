@@ -249,6 +249,9 @@ jobs:
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
 
+              # Clean up any existing containers from previous deployments
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml down || echo 'No existing containers to remove'
+
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
 
@@ -378,6 +381,9 @@ jobs:
 
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
+              # Clean up any existing containers from previous deployments
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml down || echo 'No existing containers to remove'
 
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
