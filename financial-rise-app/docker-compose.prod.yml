@@ -78,7 +78,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
+    volumes: []  # No volumes needed in production (SSL certs commented out)
       # Mount SSL certificates if using Let's Encrypt
       # Uncomment when SSL is configured:
       # - /etc/letsencrypt:/etc/letsencrypt:ro
