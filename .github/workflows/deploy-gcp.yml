@@ -249,8 +249,10 @@ jobs:
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
 
-              # Clean up any existing containers from previous deployments
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml down || echo 'No existing containers to remove'
+              # Aggressive cleanup: Stop and remove ALL containers (not just compose-managed)
+              docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
+              docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
 
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
@@ -385,8 +387,10 @@ jobs:
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
 
-              # Clean up any existing containers from previous deployments
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml down || echo 'No existing containers to remove'
+              # Aggressive cleanup: Stop and remove ALL containers (not just compose-managed)
+              docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
+              docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
+              docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
 
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
