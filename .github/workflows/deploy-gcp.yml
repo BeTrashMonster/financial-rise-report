@@ -1,4 +1,5 @@
 name: GCP CI/CD Pipeline
+# Updated: 2025-12-30 - Fixed container cleanup and migration strategy
 
 on:
   push:
