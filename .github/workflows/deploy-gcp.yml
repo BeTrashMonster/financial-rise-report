@@ -222,6 +222,14 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Prepare VM directory (handles preemptible VM restarts)
+        run: |
+          gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
+            --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --tunnel-through-iap \
+            --quiet \
+            --command="sudo mkdir -p /opt/financial-rise && sudo chown \$(whoami):\$(whoami) /opt/financial-rise"
+
       - name: Copy deployment files to VM
         run: |
           gcloud compute scp \
@@ -338,6 +346,14 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Prepare VM directory (handles preemptible VM restarts)
+        run: |
+          gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --tunnel-through-iap \
+            --quiet \
+            --command="sudo mkdir -p /opt/financial-rise && sudo chown \$(whoami):\$(whoami) /opt/financial-rise"
 
       - name: Copy deployment files to VM
         run: |
