@@ -1,5 +1,5 @@
 name: GCP CI/CD Pipeline
-# Updated: 2025-12-30 - All fixes applied (cleanup, migrations, permissions)
+# Updated: 2025-12-31 - DB_ENCRYPTION_KEY added to staging secret (version 3)
 
 on:
   push:
