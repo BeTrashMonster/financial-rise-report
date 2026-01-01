@@ -75,8 +75,9 @@ services:
   redis:
     image: redis:7-alpine
     container_name: financial-rise-redis
-    ports:
-      - "6379:6379"
+    # No external port mapping - only accessed via Docker network
+    expose:
+      - "6379"
     volumes:
       - redis_data:/data
     networks:
