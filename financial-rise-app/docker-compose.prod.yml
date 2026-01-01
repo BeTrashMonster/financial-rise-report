@@ -23,6 +23,9 @@ services:
       # JWT secrets
       JWT_SECRET: ${JWT_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      # Backwards compatibility - backend expects these names
+      TOKEN_SECRET: ${JWT_SECRET}
+      REFRESH_TOKEN_SECRET: ${JWT_REFRESH_SECRET}
       # Google Cloud Storage (replaces AWS S3)
       GCS_BUCKET: ${GCS_BUCKET}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
