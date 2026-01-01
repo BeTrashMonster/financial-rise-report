@@ -250,6 +250,9 @@ jobs:
               set -e
               cd /opt/financial-rise
 
+              # Fix Docker socket permissions (resets after preemptible VM restarts)
+              sudo chmod 666 /var/run/docker.sock
+
               # Pull latest environment variables from Secret Manager
               gcloud secrets versions access latest \
                 --secret=financial-rise-staging-env > .env
@@ -394,6 +397,9 @@ jobs:
             --command="
               set -e
               cd /opt/financial-rise
+
+              # Fix Docker socket permissions (resets after preemptible VM restarts)
+              sudo chmod 666 /var/run/docker.sock
 
               # Pull latest environment variables
               gcloud secrets versions access latest \
