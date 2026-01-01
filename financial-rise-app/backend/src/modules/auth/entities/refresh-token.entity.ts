@@ -21,13 +21,12 @@ import { User } from '../../users/entities/user.entity';
  * This is more secure than storing a single refresh_token in the users table.
  */
 @Entity('refresh_tokens')
-@Index(['user_id'])  // Use database column name, not property name
-@Index(['token'])
 export class RefreshToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'uuid', name: 'user_id' })
+  @Index()  // Create index on this column
   userId: string;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
