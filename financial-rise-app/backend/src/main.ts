@@ -1,3 +1,14 @@
+// Crypto polyfill for @nestjs/schedule in production builds
+// Fix for: ReferenceError: crypto is not defined
+if (typeof globalThis.crypto === 'undefined') {
+  const nodeCrypto = require('crypto');
+  globalThis.crypto = nodeCrypto.webcrypto || nodeCrypto;
+}
+
+// Load environment variables FIRST before any other imports
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
