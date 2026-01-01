@@ -40,7 +40,6 @@ services:
     # Backend accessed via nginx proxy, no host port needed
     expose:
       - "4000"
-    volumes: []  # Remove development volumes
     depends_on:
       - redis
     networks:
@@ -73,11 +72,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes: []  # No volumes needed in production (SSL certs commented out)
     command: ["nginx", "-g", "daemon off;"]  # Override base file's "npm start"
-      # Mount SSL certificates if using Let's Encrypt
-      # Uncomment when SSL is configured:
-      # - /etc/letsencrypt:/etc/letsencrypt:ro
+    # Mount SSL certificates if using Let's Encrypt (uncomment when configured):
+    # volumes:
+    #   - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
     networks:
