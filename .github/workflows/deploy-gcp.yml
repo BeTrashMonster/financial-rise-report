@@ -1,5 +1,5 @@
 name: GCP CI/CD Pipeline
-# Updated: 2025-12-31 - Add automatic image/volume cleanup to prevent disk space issues
+# Updated: 2025-12-31 - Secret Manager v4 with correct DB_ENCRYPTION_KEY hex format
 
 on:
   push:
