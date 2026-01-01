@@ -11,10 +11,17 @@ import { Question } from '../../questions/entities/question.entity';
 import { EncryptedColumnTransformer } from '../../../common/transformers/encrypted-column.transformer';
 import { EncryptionService } from '../../../common/services/encryption.service';
 import { ConfigService } from '@nestjs/config';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load .env file explicitly
+dotenv.config({ path: path.resolve(__dirname, '../../../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../../.env.local') });
 
 // Create encryption transformer instance
 const createEncryptionTransformer = () => {
-  const configService = new ConfigService();
+  // Load environment variables explicitly when instantiating ConfigService
+  const configService = new ConfigService(process.env);
   const encryptionService = new EncryptionService(configService);
   return new EncryptedColumnTransformer(encryptionService);
 };

@@ -14,7 +14,7 @@ setup('authenticate as consultant', async ({ page }) => {
   // Fill in credentials
   // TODO: Update with your test credentials or environment variables
   await page.getByLabel(/email|username/i).fill(process.env.TEST_USER_EMAIL || 'test@example.com');
-  await page.getByLabel(/password/i).fill(process.env.TEST_USER_PASSWORD || 'testpassword123');
+  await page.locator('input[name="password"]').fill(process.env.TEST_USER_PASSWORD || 'testpassword123');
 
   // Click login
   await page.getByRole('button', { name: /sign in|login/i }).click();
