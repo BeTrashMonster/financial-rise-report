@@ -37,8 +37,9 @@ services:
       FRONTEND_URL: ${FRONTEND_URL:-https://financialrise.com}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    ports:
-      - "4000:4000"
+    # Backend accessed via nginx proxy, no host port needed
+    expose:
+      - "4000"
     volumes: []  # Remove development volumes
     depends_on:
       - redis
