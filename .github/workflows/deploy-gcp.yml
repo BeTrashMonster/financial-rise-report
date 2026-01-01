@@ -227,8 +227,7 @@ jobs:
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
             --tunnel-through-iap \
-            --quiet \
-            --command="sudo mkdir -p /opt/financial-rise && sudo chown \$(whoami):\$(whoami) /opt/financial-rise"
+            --command="sudo mkdir -p /opt/financial-rise && sudo chown -R \$USER:\$USER /opt/financial-rise && ls -ld /opt/financial-rise"
 
       - name: Copy deployment files to VM
         run: |
@@ -352,8 +351,7 @@ jobs:
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
-            --quiet \
-            --command="sudo mkdir -p /opt/financial-rise && sudo chown \$(whoami):\$(whoami) /opt/financial-rise"
+            --command="sudo mkdir -p /opt/financial-rise && sudo chown -R \$USER:\$USER /opt/financial-rise && ls -ld /opt/financial-rise"
 
       - name: Copy deployment files to VM
         run: |
