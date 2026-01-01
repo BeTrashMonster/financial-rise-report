@@ -9,6 +9,8 @@ services:
     image: us-central1-docker.pkg.dev/financial-rise-prod/financial-rise-docker/backend:latest
     container_name: financial-rise-backend-prod
     restart: unless-stopped
+    env_file:
+      - .env  # Load environment variables from Secret Manager
     environment:
       NODE_ENV: production
       PORT: 4000
