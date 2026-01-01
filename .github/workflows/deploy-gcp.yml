@@ -227,6 +227,7 @@ jobs:
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
             --zone=${{ secrets.STAGING_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="sudo mkdir -p /opt/financial-rise && sudo chown -R \$USER:\$USER /opt/financial-rise && ls -ld /opt/financial-rise"
 
       - name: Copy deployment files to VM
@@ -264,6 +265,13 @@ jobs:
               docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
               docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
               docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
+
+              # Clean up orphaned networks (can cause port binding issues)
+              docker network prune -f || echo 'Network cleanup done'
+
+              # Restart Docker daemon to clear any lingering port bindings
+              sudo systemctl restart docker
+              sleep 5
 
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
@@ -354,6 +362,7 @@ jobs:
           gcloud compute ssh ${{ secrets.PRODUCTION_VM_NAME }} \
             --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
             --tunnel-through-iap \
+            --quiet \
             --command="sudo mkdir -p /opt/financial-rise && sudo chown -R \$USER:\$USER /opt/financial-rise && ls -ld /opt/financial-rise"
 
       - name: Copy deployment files to VM
@@ -412,6 +421,13 @@ jobs:
               docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
               docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
               docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
+
+              # Clean up orphaned networks (can cause port binding issues)
+              docker network prune -f || echo 'Network cleanup done'
+
+              # Restart Docker daemon to clear any lingering port bindings
+              sudo systemctl restart docker
+              sleep 5
 
               # Pull latest images
               docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
