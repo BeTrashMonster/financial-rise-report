@@ -1,5 +1,5 @@
 name: GCP CI/CD Pipeline
-# Updated: 2025-12-31 - DB_ENCRYPTION_KEY added to staging secret (version 3)
+# Updated: 2025-12-31 - Add automatic image/volume cleanup to prevent disk space issues
 
 on:
   push:
@@ -269,6 +269,10 @@ jobs:
               # Clean up orphaned networks (can cause port binding issues)
               docker network prune -f || echo 'Network cleanup done'
 
+              # Clean up old Docker images and volumes (prevents disk space issues)
+              docker image prune -a -f || echo 'Image cleanup done'
+              docker volume prune -f || echo 'Volume cleanup done'
+
               # Restart Docker daemon to clear any lingering port bindings
               sudo systemctl restart docker
               sleep 5
@@ -424,6 +428,10 @@ jobs:
 
               # Clean up orphaned networks (can cause port binding issues)
               docker network prune -f || echo 'Network cleanup done'
+
+              # Clean up old Docker images and volumes (prevents disk space issues)
+              docker image prune -a -f || echo 'Image cleanup done'
+              docker volume prune -f || echo 'Volume cleanup done'
 
               # Restart Docker daemon to clear any lingering port bindings
               sudo systemctl restart docker
