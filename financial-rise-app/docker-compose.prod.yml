@@ -106,7 +106,13 @@ services:
     image: redis:7-alpine
     container_name: financial-rise-redis-prod
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    # Note: If REDIS_PASSWORD not set, runs without password (development only)
+    command: >
+      sh -c "if [ -n \"$$REDIS_PASSWORD\" ]; then
+        redis-server --appendonly yes --requirepass \"$$REDIS_PASSWORD\";
+      else
+        redis-server --appendonly yes;
+      fi"
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD:-}
     # No external port mapping needed - only accessed via Docker network
