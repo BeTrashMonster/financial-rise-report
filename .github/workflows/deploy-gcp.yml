@@ -264,7 +264,7 @@ jobs:
               # Aggressive cleanup: Stop and remove ALL containers (not just compose-managed)
               docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
               docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
+              docker compose -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
 
               # Clean up orphaned networks (can cause port binding issues)
               docker network prune -f || echo 'Network cleanup done'
@@ -278,19 +278,19 @@ jobs:
               sleep 5
 
               # Pull latest images
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.prod.yml pull
 
               # Create database backup (if postgres is running locally)
               docker compose exec -T postgres pg_dump -U financial_rise financial_rise_staging > backup-\$(date +%Y%m%d-%H%M%S).sql 2>/dev/null || echo 'Using Cloud SQL, skipping local backup'
 
               # Start services with new images
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+              docker compose -f docker-compose.prod.yml up -d --force-recreate
 
               # Wait for backend to be ready
               sleep 10
 
               # Run database migrations on running backend container
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed or skipped'
+              docker compose -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed or skipped'
 
               # Wait for services to be fully healthy
               sleep 10
@@ -329,8 +329,8 @@ jobs:
             --command="
               cd /opt/financial-rise
               echo 'Pulling previous images tagged as latest...'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+              docker compose -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.prod.yml up -d --force-recreate
               echo 'Rollback completed'
             "
 
@@ -424,7 +424,7 @@ jobs:
               # Aggressive cleanup: Stop and remove ALL containers (not just compose-managed)
               docker stop \$(docker ps -aq) 2>/dev/null || echo 'No running containers'
               docker rm -f \$(docker ps -aq) 2>/dev/null || echo 'No containers to remove'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
+              docker compose -f docker-compose.prod.yml down -v || echo 'Compose cleanup done'
 
               # Clean up orphaned networks (can cause port binding issues)
               docker network prune -f || echo 'Network cleanup done'
@@ -438,18 +438,18 @@ jobs:
               sleep 5
 
               # Pull latest images
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.prod.yml pull
 
               # Rolling restart (zero-downtime)
               echo 'Restarting backend...'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate backend
+              docker compose -f docker-compose.prod.yml up -d --no-deps --force-recreate backend
               sleep 15
 
               # Run database migrations on running backend container
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed'
+              docker compose -f docker-compose.prod.yml exec -T backend npm run migration:run || echo 'Migrations completed'
 
               echo 'Restarting frontend...'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-deps --force-recreate frontend
+              docker compose -f docker-compose.prod.yml up -d --no-deps --force-recreate frontend
               sleep 10
 
               # Show running containers
@@ -488,8 +488,8 @@ jobs:
 
               # Pull previous images with 'latest' tag
               echo 'Pulling previous version...'
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml pull
-              docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate
+              docker compose -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.prod.yml up -d --force-recreate
 
               echo '⚠️ Rollback completed. Please check logs and investigate the issue.'
             "

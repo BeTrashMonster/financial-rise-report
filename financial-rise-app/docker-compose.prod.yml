@@ -40,8 +40,6 @@ services:
     # Backend accessed via nginx proxy, no host port needed
     expose:
       - "4000"
-    # Clear development volumes - production uses files baked into Docker image
-    volumes: []
     depends_on:
       - redis
     networks:
@@ -75,8 +73,6 @@ services:
       - "80:80"
       - "443:443"
     command: ["nginx", "-g", "daemon off;"]  # Override base file's "npm start"
-    # Clear development volumes - production uses files baked into Docker image
-    volumes: []
     # Mount SSL certificates if using Let's Encrypt (uncomment when configured):
     # volumes:
     #   - /etc/letsencrypt:/etc/letsencrypt:ro
