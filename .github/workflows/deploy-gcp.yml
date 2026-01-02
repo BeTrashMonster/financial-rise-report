@@ -341,7 +341,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: deploy-staging
+    needs: build-and-push  # Skip staging - deploy directly to production
     environment: production  # Requires manual approval in GitHub
 
     permissions:
