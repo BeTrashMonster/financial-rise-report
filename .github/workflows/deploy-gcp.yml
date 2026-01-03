@@ -470,13 +470,28 @@ jobs:
               gcloud secrets versions access latest \
                 --secret=financial-rise-production-env > .env.raw
 
-              # Aggressive cleaning: Remove ALL backslashes and quotes, then re-add clean quotes
-              # This handles any malformed Secret Manager formatting
-              sed 's/\\//g' .env.raw | sed 's/\"//g' | sed '/^$/d' > .env.stripped
+              # Clean malformed quotes using Python (avoids shell escaping issues)
+              python3 << 'PYSCRIPT'
+with open('.env.raw', 'r') as f:
+    lines = f.readlines()
 
-              # Add clean quotes back to all non-comment lines
-              awk -F= '/^[^#]/ && NF==2 {print \$1\"=\"\"\"\$2\"\"\"} /^#/ {print}' .env.stripped > .env
-              rm -f .env.raw .env.stripped
+with open('.env', 'w') as f:
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith('#'):
+            f.write(line + '\n')
+        elif '=' in line:
+            # Strip all quotes and backslashes, then add clean quotes
+            line = line.replace('\\', '').replace('"', '')
+            key, value = line.split('=', 1)
+            f.write(f'{key}=\"{value}\"\n')
+        else:
+            f.write(line + '\n')
+PYSCRIPT
+
+              rm -f .env.raw
 
               echo '.env file cleaned and ready:'
               head -10 .env
