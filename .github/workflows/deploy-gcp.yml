@@ -470,28 +470,23 @@ jobs:
               gcloud secrets versions access latest \
                 --secret=financial-rise-production-env > .env.raw
 
-              # Clean malformed quotes using Python (avoids shell escaping issues)
-              python3 << 'PYSCRIPT'
+              # Clean malformed quotes - write Python script to file
+              cat > /tmp/clean_env.py << 'EOF'
 with open('.env.raw', 'r') as f:
     lines = f.readlines()
-
-with open('.env', 'w') as f:
+with open('.env', 'w') as out:
     for line in lines:
         line = line.strip()
-        if not line:
-            continue
-        if line.startswith('#'):
-            f.write(line + '\n')
+        if not line or line.startswith('#'):
+            if line:
+                out.write(line + chr(10))
         elif '=' in line:
-            # Strip all quotes and backslashes, then add clean quotes
-            line = line.replace('\\', '').replace('"', '')
-            key, value = line.split('=', 1)
-            f.write(f'{key}=\"{value}\"\n')
-        else:
-            f.write(line + '\n')
-PYSCRIPT
-
-              rm -f .env.raw
+            clean = line.replace(chr(92), '').replace(chr(34), '')
+            k, v = clean.split('=', 1)
+            out.write(k + '=' + chr(34) + v + chr(34) + chr(10))
+EOF
+              python3 /tmp/clean_env.py
+              rm -f .env.raw /tmp/clean_env.py
 
               echo '.env file cleaned and ready:'
               head -10 .env
