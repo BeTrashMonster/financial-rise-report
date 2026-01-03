@@ -11,33 +11,48 @@
 **Production Infrastructure:**
 - **VM:** `financial-rise-production-vm` (34.72.61.170)
 - **Cloud SQL:** PostgreSQL 14 with Private IP (ZONAL)
-- **Secret Manager:** Version 3 (contains escaped quotes - workflow cleans on deploy)
-- **Latest Commit:** `75be3ad` - Fix deployment errors (auto-start VMs + clean .env)
-- **Deployment:** Testing workflow fixes
+- **Secret Manager:** Version 3 (malformed - workflow aggressively cleans on deploy)
+- **Latest Commit:** `550eca8` - Aggressive .env cleaning for production
+- **Deployment:** Testing production deployment (staging ✅ working)
 
 **Infrastructure Cost:** $103/month (budget optimized)
+
+**Deployment Status:**
+- ✅ **Staging:** Working (commit 75be3ad)
+- 🔄 **Production:** Testing aggressive cleaning approach (commit 550eca8)
 
 ---
 
 ## Recent Issues & Resolutions
 
-### 11. Staging VM Connectivity + .env Parsing (IN PROGRESS 🔄)
+### 11. Staging VM Connectivity + .env Parsing (RESOLVED ✅)
 **Date:** 2026-01-02
+
 **Problem 1:** Error 4003: 'failed to connect to backend' when SSH to staging VM
 **Root Cause 1:** Preemptible staging VM shuts down after 24 hours, status = TERMINATED
 **Solution 1:** Modified workflow to check VM status and auto-start before SSH attempts
 **Commit:** `75be3ad` - Added "Ensure staging VM is running" step
+**Status:** ✅ Staging deployment working
 
 **Problem 2:** `failed to read .env: line 12: unexpected character "+" in variable name "NRpc8sfc1zWS2lJCbyq+kA=\"\""`
-**Root Cause 2:** Secret Manager contains escaped quotes `=\"...\"` instead of clean quotes `="..."`
-**Solution 2:** Modified workflow to clean .env file after pulling from Secret Manager using sed
-**Command Added:**
+**Root Cause 2:** Secret Manager contains inconsistent formatting (some lines clean, some with escaped quotes)
+**Solution 2 (Staging):** Basic sed cleaning worked
 ```bash
 sed -i 's/\\\"/\"/g' .env  # Remove escaped quotes
 sed -i '/^$/d' .env         # Remove blank lines
 ```
-**Lesson:** Workflow should be resilient to Secret Manager formatting issues
-**Status:** Testing - commit `75be3ad` deployed
+**Status:** ✅ Staging working with basic cleaning
+
+**Solution 2 (Production):** Aggressive cleaning needed due to worse formatting
+```bash
+# Strip ALL backslashes and quotes, then re-add clean quotes
+sed 's/\\//g' .env.raw | sed 's/\"//g' | sed '/^$/d' > .env.stripped
+awk -F= '/^[^#]/ && NF==2 {print $1"=\""$2"\""} /^#/ {print}' .env.stripped > .env
+```
+**Commit:** `550eca8` - Aggressive .env cleaning for production
+**Status:** Testing production deployment
+
+**Lesson:** Production Secret Manager needs to be rebuilt from scratch with clean formatting (future task)
 
 ### 10. Docker Compose .env Parsing Error (ATTEMPTED FIX ⚠️)
 **Date:** 2026-01-02
