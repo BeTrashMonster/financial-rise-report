@@ -29,12 +29,24 @@ function getAllowedOrigins(): string[] {
     process.env.FRONTEND_URL_STAGING, // Staging frontend URL
   ].filter(Boolean) as string[]; // Remove undefined values
 
-  logger.log(`CORS: Configured ${origins.length} allowed origins`);
-  origins.forEach((origin) => {
+  // Add additional origins from CORS_ORIGINS environment variable (comma-separated)
+  if (process.env.CORS_ORIGINS) {
+    const additionalOrigins = process.env.CORS_ORIGINS
+      .split(',')
+      .map(origin => origin.trim())
+      .filter(Boolean);
+    origins.push(...additionalOrigins);
+  }
+
+  // Remove duplicates
+  const uniqueOrigins = Array.from(new Set(origins));
+
+  logger.log(`CORS: Configured ${uniqueOrigins.length} allowed origins`);
+  uniqueOrigins.forEach((origin) => {
     logger.log(`CORS: Whitelisted origin - ${origin}`);
   });
 
-  return origins;
+  return uniqueOrigins;
 }
 
 /**
