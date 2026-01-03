@@ -11,9 +11,9 @@
 **Production Infrastructure:**
 - **VM:** `financial-rise-production-vm` (34.72.61.170)
 - **Cloud SQL:** PostgreSQL 14 with Private IP (ZONAL)
-- **Secret Manager:** Version 2 (quoted values)
-- **Latest Commit:** `b4707d0` - Trigger deployment with fixed secrets
-- **Deployment:** In progress (fresh deployment running)
+- **Secret Manager:** Version 3 (contains escaped quotes - workflow cleans on deploy)
+- **Latest Commit:** `75be3ad` - Fix deployment errors (auto-start VMs + clean .env)
+- **Deployment:** Testing workflow fixes
 
 **Infrastructure Cost:** $103/month (budget optimized)
 
@@ -21,18 +21,32 @@
 
 ## Recent Issues & Resolutions
 
-### 10. Docker Compose .env Parsing Error (RESOLVED ✅)
+### 11. Staging VM Connectivity + .env Parsing (IN PROGRESS 🔄)
+**Date:** 2026-01-02
+**Problem 1:** Error 4003: 'failed to connect to backend' when SSH to staging VM
+**Root Cause 1:** Preemptible staging VM shuts down after 24 hours, status = TERMINATED
+**Solution 1:** Modified workflow to check VM status and auto-start before SSH attempts
+**Commit:** `75be3ad` - Added "Ensure staging VM is running" step
+
+**Problem 2:** `failed to read .env: line 12: unexpected character "+" in variable name "NRpc8sfc1zWS2lJCbyq+kA=\"\""`
+**Root Cause 2:** Secret Manager contains escaped quotes `=\"...\"` instead of clean quotes `="..."`
+**Solution 2:** Modified workflow to clean .env file after pulling from Secret Manager using sed
+**Command Added:**
+```bash
+sed -i 's/\\\"/\"/g' .env  # Remove escaped quotes
+sed -i '/^$/d' .env         # Remove blank lines
+```
+**Lesson:** Workflow should be resilient to Secret Manager formatting issues
+**Status:** Testing - commit `75be3ad` deployed
+
+### 10. Docker Compose .env Parsing Error (ATTEMPTED FIX ⚠️)
 **Date:** 2026-01-02
 **Problem:** `failed to read .env: line 12: unexpected character "+" in variable name`
-**Root Cause:** Base64-encoded secrets (JWT tokens) contain special characters (`+`, `/`, `=`) that Docker Compose's `.env` parser can't handle without quotes
-**Solution:** Updated Secret Manager to wrap all values in double quotes
-**Command:**
-```bash
-awk -F= '{print $1"=\""$2"\""}' /tmp/prod-secret.env > /tmp/prod-secret-fixed.env
-gcloud secrets versions add financial-rise-production-env --data-file=/tmp/prod-secret-fixed.env
-```
-**Lesson:** Always quote environment variable values that contain special characters in `.env` files
-**Commit:** Fixed in Secret Manager version 2
+**Root Cause:** Base64-encoded secrets (JWT tokens) contain special characters (`+`, `/`, `=`) that Docker Compose's `.env` parser can't handle
+**Attempted Fix:** Multiple scripts to fix Secret Manager formatting (versions 2 and 3)
+**Result:** Secret Manager still contains escaped quotes after multiple fix attempts
+**Workaround:** Workflow now cleans .env file after pulling (issue #11)
+**Lesson:** Always quote environment variable values, but use clean quotes `="..."` not escaped `=\"...\"`
 
 ---
 
