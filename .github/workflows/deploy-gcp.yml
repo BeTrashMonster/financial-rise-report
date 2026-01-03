@@ -468,14 +468,18 @@ jobs:
 
               # Pull latest environment variables
               gcloud secrets versions access latest \
-                --secret=financial-rise-production-env > .env
+                --secret=financial-rise-production-env > .env.raw
 
-              # Clean escaped quotes from .env file (Docker Compose parser issue)
-              sed -i 's/\\\"/\"/g' .env
-              sed -i '/^$/d' .env
+              # Aggressive cleaning: Remove ALL backslashes and quotes, then re-add clean quotes
+              # This handles any malformed Secret Manager formatting
+              sed 's/\\//g' .env.raw | sed 's/\"//g' | sed '/^$/d' > .env.stripped
+
+              # Add clean quotes back to all non-comment lines
+              awk -F= '/^[^#]/ && NF==2 {print \$1\"=\"\"\"\$2\"\"\"} /^#/ {print}' .env.stripped > .env
+              rm -f .env.raw .env.stripped
 
               echo '.env file cleaned and ready:'
-              head -5 .env
+              head -10 .env
 
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
