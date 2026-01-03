@@ -222,6 +222,28 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Ensure staging VM is running
+        run: |
+          # Check VM status
+          VM_STATUS=$(gcloud compute instances describe ${{ secrets.STAGING_VM_NAME }} \
+            --zone=${{ secrets.STAGING_VM_ZONE }} \
+            --format='get(status)')
+
+          echo "Staging VM status: $VM_STATUS"
+
+          # Start VM if it's not running (handles preemptible VM shutdowns)
+          if [ "$VM_STATUS" != "RUNNING" ]; then
+            echo "Starting staging VM..."
+            gcloud compute instances start ${{ secrets.STAGING_VM_NAME }} \
+              --zone=${{ secrets.STAGING_VM_ZONE }}
+
+            # Wait for VM to be ready for SSH
+            echo "Waiting 45 seconds for VM to be ready..."
+            sleep 45
+          else
+            echo "VM is already running"
+          fi
+
       - name: Prepare VM directory (handles preemptible VM restarts)
         run: |
           gcloud compute ssh ${{ secrets.STAGING_VM_NAME }} \
@@ -257,6 +279,13 @@ jobs:
               # Pull latest environment variables from Secret Manager
               gcloud secrets versions access latest \
                 --secret=financial-rise-staging-env > .env
+
+              # Clean escaped quotes from .env file (Docker Compose parser issue)
+              sed -i 's/\\\"/\"/g' .env
+              sed -i '/^$/d' .env
+
+              echo '.env file cleaned and ready:'
+              head -5 .env
 
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
@@ -341,7 +370,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: build-and-push  # Skip staging - deploy directly to production
+    needs: deploy-staging  # Deploy to production after staging succeeds
     environment: production  # Requires manual approval in GitHub
 
     permissions:
@@ -360,6 +389,29 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Ensure production VM is running
+        run: |
+          # Check VM status
+          VM_STATUS=$(gcloud compute instances describe ${{ secrets.PRODUCTION_VM_NAME }} \
+            --zone=${{ secrets.PRODUCTION_VM_ZONE }} \
+            --format='get(status)')
+
+          echo "Production VM status: $VM_STATUS"
+
+          # Production VM should always be running (it's not preemptible)
+          # But check anyway in case of manual shutdown
+          if [ "$VM_STATUS" != "RUNNING" ]; then
+            echo "WARNING: Production VM is not running. Starting it..."
+            gcloud compute instances start ${{ secrets.PRODUCTION_VM_NAME }} \
+              --zone=${{ secrets.PRODUCTION_VM_ZONE }}
+
+            # Wait for VM to be ready for SSH
+            echo "Waiting 45 seconds for VM to be ready..."
+            sleep 45
+          else
+            echo "VM is already running"
+          fi
 
       - name: Prepare VM directory (handles preemptible VM restarts)
         run: |
@@ -417,6 +469,13 @@ jobs:
               # Pull latest environment variables
               gcloud secrets versions access latest \
                 --secret=financial-rise-production-env > .env
+
+              # Clean escaped quotes from .env file (Docker Compose parser issue)
+              sed -i 's/\\\"/\"/g' .env
+              sed -i '/^$/d' .env
+
+              echo '.env file cleaned and ready:'
+              head -5 .env
 
               # Configure Docker for Artifact Registry
               gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
