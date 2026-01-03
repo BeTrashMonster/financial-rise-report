@@ -33,6 +33,7 @@ services:
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       # Application settings
       FRONTEND_URL: ${FRONTEND_URL:-https://financialrise.com}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://34.72.61.170,http://localhost:3001,http://localhost:5173,https://financialrise.org}
       REDIS_HOST: redis
       REDIS_PORT: 6379
     # Backend accessed via nginx proxy, no host port needed
