@@ -468,12 +468,11 @@ jobs:
 
               # Pull latest environment variables
               gcloud secrets versions access latest \
-                --secret=financial-rise-production-env > .env.raw
+                --secret=financial-rise-production-env > .env
 
-              # Clean malformed quotes using Perl (simpler than Python for text processing)
-              perl -pe 's/[\\\\"]//g' .env.raw | perl -ne 'chomp; next unless \$_; if (/^#/) { print \"\$_\\n\" } elsif (/=/) { my (\$k,\$v)=split /=/, \$_, 2; print \"\$k=\\\"\$v\\\"\\n\" }' > .env
-
-              rm -f .env.raw
+              # Clean escaped quotes from .env file (Docker Compose parser issue)
+              sed -i 's/\\\\\"/\"/g' .env
+              sed -i '/^\$/d' .env
 
               echo '.env file cleaned and ready:'
               head -10 .env
