@@ -8,6 +8,23 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 
 const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 30000;
 
+/**
+ * Get CSRF token from cookie
+ */
+const getCsrfToken = (): string | null => {
+  const name = 'XSRF-TOKEN=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+
+  for (let cookie of cookieArray) {
+    cookie = cookie.trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length);
+    }
+  }
+  return null;
+};
+
 // Create axios instance
 const api: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -15,15 +32,26 @@ const api: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Required for CSRF cookies
 });
 
-// Request interceptor - Add auth token
+// Request interceptor - Add auth token and CSRF token
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // Add JWT token
     const token = localStorage.getItem('token');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Add CSRF token for state-changing requests
+    if (config.method && ['post', 'put', 'patch', 'delete'].includes(config.method.toLowerCase())) {
+      const csrfToken = getCsrfToken();
+      if (csrfToken && config.headers) {
+        config.headers['X-CSRF-Token'] = csrfToken;
+      }
+    }
+
     return config;
   },
   (error) => {
