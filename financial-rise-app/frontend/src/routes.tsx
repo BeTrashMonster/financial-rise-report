@@ -12,6 +12,7 @@ const Results = React.lazy(() => import('@pages/Results/Results'));
 const UserProfile = React.lazy(() => import('@pages/UserProfile/UserProfile'));
 const Privacy = React.lazy(() => import('@pages/Privacy/Privacy'));
 const DoNotSell = React.lazy(() => import('@pages/DoNotSell/DoNotSell'));
+const NotFound = React.lazy(() => import('@pages/Errors/NotFound'));
 
 /**
  * Protected Route Component
@@ -105,7 +106,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         {/* 404 Not Found */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </React.Suspense>
   );

@@ -6,6 +6,7 @@ import { store } from '@store/store';
 import { theme } from '@theme/theme';
 import { AppRoutes } from './routes';
 import { Navigation } from '@components/Navigation/Navigation';
+import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { getCurrentUser } from '@store/slices/authSlice';
 
@@ -32,21 +33,23 @@ const AppInit: React.FC<{ children: React.ReactNode }> = ({ children }) => {
  */
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <AppInit>
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-              <Navigation />
-              <Box component="main" sx={{ flexGrow: 1 }}>
-                <AppRoutes />
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <AppInit>
+              <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <Navigation />
+                <Box component="main" sx={{ flexGrow: 1 }}>
+                  <AppRoutes />
+                </Box>
               </Box>
-            </Box>
-          </AppInit>
-        </Router>
-      </ThemeProvider>
-    </Provider>
+            </AppInit>
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
