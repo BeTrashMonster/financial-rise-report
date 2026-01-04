@@ -2,6 +2,12 @@ import api from './api';
 import { Assessment, Question, Answer } from '@store/slices/assessmentSlice';
 import type { QuestionsResponse, QuestionResponse } from '@/types/question';
 import type { DISCProfileWithSummary, PhaseResultsWithDetails } from '@/types/results';
+import type {
+  GenerateReportRequest,
+  ReportAccepted,
+  ReportStatusResponse,
+  ReportDownloadResponse,
+} from '@/types/reports';
 
 /**
  * Assessment Service
@@ -160,6 +166,42 @@ export const assessmentService = {
     const response = await api.get<PhaseResultsWithDetails>(
       `/assessments/${assessmentId}/phase-results`
     );
+    return response.data;
+  },
+
+  /**
+   * Generate consultant report for an assessment
+   */
+  generateConsultantReport: async (assessmentId: string): Promise<ReportAccepted> => {
+    const response = await api.post<ReportAccepted>('/reports/generate/consultant', {
+      assessmentId,
+    });
+    return response.data;
+  },
+
+  /**
+   * Generate client report for an assessment
+   */
+  generateClientReport: async (assessmentId: string): Promise<ReportAccepted> => {
+    const response = await api.post<ReportAccepted>('/reports/generate/client', {
+      assessmentId,
+    });
+    return response.data;
+  },
+
+  /**
+   * Get report generation status
+   */
+  getReportStatus: async (reportId: string): Promise<ReportStatusResponse> => {
+    const response = await api.get<ReportStatusResponse>(`/reports/status/${reportId}`);
+    return response.data;
+  },
+
+  /**
+   * Get report download URL
+   */
+  getReportDownloadUrl: async (reportId: string): Promise<ReportDownloadResponse> => {
+    const response = await api.get<ReportDownloadResponse>(`/reports/download/${reportId}`);
     return response.data;
   },
 };

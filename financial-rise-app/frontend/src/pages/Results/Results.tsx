@@ -47,6 +47,7 @@ import {
 import { assessmentService } from '@services/assessmentService';
 import type { DISCProfileWithSummary, PhaseResultsWithDetails, DISCType, FinancialPhase } from '@/types/results';
 import type { Assessment } from '@store/slices/assessmentSlice';
+import type { ReportStatus, ReportType } from '@/types/reports';
 
 /**
  * Get DISC type full name
@@ -114,7 +115,18 @@ export const Results: React.FC = () => {
   const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Report generation state
+  const [consultantReportId, setConsultantReportId] = useState<string | null>(null);
+  const [clientReportId, setClientReportId] = useState<string | null>(null);
+  const [consultantReportStatus, setConsultantReportStatus] = useState<ReportStatus | null>(null);
+  const [clientReportStatus, setClientReportStatus] = useState<ReportStatus | null>(null);
+  const [consultantReportUrl, setConsultantReportUrl] = useState<string | null>(null);
+  const [clientReportUrl, setClientReportUrl] = useState<string | null>(null);
+  const [reportError, setReportError] = useState<string | null>(null);
   const [generatingReports, setGeneratingReports] = useState(false);
+  const [pollingConsultant, setPollingConsultant] = useState(false);
+  const [pollingClient, setPollingClient] = useState(false);
 
   // Fetch results on mount
   useEffect(() => {
@@ -144,21 +156,101 @@ export const Results: React.FC = () => {
     fetchResults();
   }, [assessmentId]);
 
+  // Poll report status
+  const pollReportStatus = async (reportId: string, reportType: ReportType) => {
+    const maxAttempts = 60; // Poll for up to 60 seconds (60 attempts * 1s)
+    let attempts = 0;
+
+    const setStatus = reportType === 'consultant' ? setConsultantReportStatus : setClientReportStatus;
+    const setUrl = reportType === 'consultant' ? setConsultantReportUrl : setClientReportUrl;
+    const setPolling = reportType === 'consultant' ? setPollingConsultant : setPollingClient;
+
+    setPolling(true);
+
+    const poll = async (): Promise<void> => {
+      try {
+        const status = await assessmentService.getReportStatus(reportId);
+        setStatus(status.status);
+
+        if (status.status === 'completed' && status.fileUrl) {
+          setUrl(status.fileUrl);
+          setPolling(false);
+          return;
+        }
+
+        if (status.status === 'failed') {
+          setReportError(status.error || `${reportType} report generation failed`);
+          setPolling(false);
+          return;
+        }
+
+        attempts++;
+        if (attempts >= maxAttempts) {
+          setReportError(`${reportType} report generation timed out after 60 seconds`);
+          setPolling(false);
+          return;
+        }
+
+        // Continue polling every 1 second
+        setTimeout(poll, 1000);
+      } catch (err: any) {
+        setReportError(err.response?.data?.message || `Failed to check ${reportType} report status`);
+        setPolling(false);
+      }
+    };
+
+    poll();
+  };
+
   // Handle report generation
   const handleGenerateReports = async () => {
     if (!assessmentId) return;
 
     try {
       setGeneratingReports(true);
-      await assessmentService.generateReports(assessmentId);
+      setReportError(null);
+      setConsultantReportStatus('generating');
+      setClientReportStatus('generating');
 
-      // Navigate to report viewing page (WS6 - not yet built)
-      navigate(`/assessments/${assessmentId}/reports`);
+      // Generate both reports in parallel
+      const [consultantResponse, clientResponse] = await Promise.all([
+        assessmentService.generateConsultantReport(assessmentId),
+        assessmentService.generateClientReport(assessmentId),
+      ]);
+
+      setConsultantReportId(consultantResponse.reportId);
+      setClientReportId(clientResponse.reportId);
+
+      // Start polling for both reports
+      pollReportStatus(consultantResponse.reportId, 'consultant');
+      pollReportStatus(clientResponse.reportId, 'client');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to generate reports');
+      setReportError(err.response?.data?.message || 'Failed to start report generation');
       setGeneratingReports(false);
+      setConsultantReportStatus(null);
+      setClientReportStatus(null);
     }
   };
+
+  // Handle download
+  const handleDownload = (url: string, filename: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+  };
+
+  // Check if all reports are done (completed or failed)
+  const allReportsDone =
+    (consultantReportStatus === 'completed' || consultantReportStatus === 'failed') &&
+    (clientReportStatus === 'completed' || clientReportStatus === 'failed');
+
+  // Update generatingReports flag
+  useEffect(() => {
+    if (allReportsDone && generatingReports) {
+      setGeneratingReports(false);
+    }
+  }, [allReportsDone, generatingReports]);
 
   // Loading state
   if (loading) {
@@ -455,6 +547,143 @@ export const Results: React.FC = () => {
         </Grid>
       </Grid>
 
+      {/* Report Generation Section */}
+      <Paper sx={{ mt: 4, p: 3 }}>
+        <Typography variant="h5" gutterBottom>
+          <ArticleIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
+          PDF Reports
+        </Typography>
+
+        {/* Error message */}
+        {reportError && (
+          <Alert severity="error" sx={{ mb: 2 }} onClose={() => setReportError(null)}>
+            {reportError}
+          </Alert>
+        )}
+
+        {/* Report generation not started */}
+        {!consultantReportId && !clientReportId && (
+          <Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Generate professional PDF reports for your client and consultant use.
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={handleGenerateReports}
+              disabled={generatingReports}
+              startIcon={<ArticleIcon />}
+            >
+              Generate Reports
+            </Button>
+          </Box>
+        )}
+
+        {/* Report generation in progress or complete */}
+        {(consultantReportId || clientReportId) && (
+          <Grid container spacing={2}>
+            {/* Consultant Report */}
+            <Grid item xs={12} md={6}>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Consultant Report
+                  </Typography>
+
+                  {consultantReportStatus === 'generating' && (
+                    <Box>
+                      <LinearProgress sx={{ mb: 1 }} />
+                      <Typography variant="body2" color="text.secondary">
+                        Generating report... This may take up to 5 seconds.
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {consultantReportStatus === 'completed' && consultantReportUrl && (
+                    <Box>
+                      <Alert severity="success" sx={{ mb: 2 }}>
+                        Report generated successfully!
+                      </Alert>
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        onClick={() => handleDownload(consultantReportUrl, 'consultant-report.pdf')}
+                        startIcon={<ArticleIcon />}
+                      >
+                        Download Consultant Report
+                      </Button>
+                    </Box>
+                  )}
+
+                  {consultantReportStatus === 'failed' && (
+                    <Alert severity="error">
+                      Consultant report generation failed. Please try again.
+                    </Alert>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Client Report */}
+            <Grid item xs={12} md={6}>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Client Report
+                  </Typography>
+
+                  {clientReportStatus === 'generating' && (
+                    <Box>
+                      <LinearProgress sx={{ mb: 1 }} />
+                      <Typography variant="body2" color="text.secondary">
+                        Generating report... This may take up to 5 seconds.
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {clientReportStatus === 'completed' && clientReportUrl && (
+                    <Box>
+                      <Alert severity="success" sx={{ mb: 2 }}>
+                        Report generated successfully!
+                      </Alert>
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        onClick={() => handleDownload(clientReportUrl, 'client-report.pdf')}
+                        startIcon={<ArticleIcon />}
+                      >
+                        Download Client Report
+                      </Button>
+                    </Box>
+                  )}
+
+                  {clientReportStatus === 'failed' && (
+                    <Alert severity="error">
+                      Client report generation failed. Please try again.
+                    </Alert>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Retry button if any report failed */}
+            {(consultantReportStatus === 'failed' || clientReportStatus === 'failed') && (
+              <Grid item xs={12}>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleGenerateReports}
+                    disabled={generatingReports}
+                  >
+                    Retry Failed Reports
+                  </Button>
+                </Box>
+              </Grid>
+            )}
+          </Grid>
+        )}
+      </Paper>
+
       {/* Action Buttons */}
       <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
         <Button
@@ -463,16 +692,6 @@ export const Results: React.FC = () => {
           startIcon={<AssessmentIcon />}
         >
           Back to Assessments
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleGenerateReports}
-          disabled={generatingReports}
-          startIcon={<ArticleIcon />}
-          endIcon={<ArrowForwardIcon />}
-        >
-          {generatingReports ? 'Generating Reports...' : 'Generate Reports'}
         </Button>
       </Box>
     </Container>
