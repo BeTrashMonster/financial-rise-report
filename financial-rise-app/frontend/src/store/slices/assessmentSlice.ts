@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { assessmentService } from '@services/assessmentService';
+import { assessmentService, CreateAssessmentRequest } from '@services/assessmentService';
 
 export interface Question {
   id: string;
@@ -58,9 +58,9 @@ export const fetchQuestions = createAsyncThunk(
 
 export const createAssessment = createAsyncThunk(
   'assessment/create',
-  async (clientName: string, { rejectWithValue }) => {
+  async (data: CreateAssessmentRequest, { rejectWithValue }) => {
     try {
-      const response = await assessmentService.createAssessment(clientName);
+      const response = await assessmentService.createAssessment(data);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to create assessment');

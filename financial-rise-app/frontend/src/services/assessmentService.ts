@@ -8,6 +8,9 @@ import { Assessment, Question, Answer } from '@store/slices/assessmentSlice';
 
 export interface CreateAssessmentRequest {
   clientName: string;
+  businessName: string;
+  clientEmail: string;
+  notes?: string;
 }
 
 export interface GenerateReportResponse {
@@ -27,8 +30,8 @@ export const assessmentService = {
   /**
    * Create a new assessment
    */
-  createAssessment: async (clientName: string): Promise<Assessment> => {
-    const response = await api.post<Assessment>('/assessments', { clientName });
+  createAssessment: async (data: CreateAssessmentRequest): Promise<Assessment> => {
+    const response = await api.post<Assessment>('/assessments', data);
     return response.data;
   },
 
