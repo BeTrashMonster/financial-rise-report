@@ -73,16 +73,16 @@ export class AssessmentsController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   findAll(
     @GetUser() user: any,
-    @Query('page', new ParseIntPipe({ optional: true })) page?: number,
-    @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
     @Query('status') status?: AssessmentStatus,
     @Query('search') search?: string,
     @Query('sortBy') sortBy?: string,
     @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
   ) {
     return this.assessmentsService.findAll(user.id, {
-      page,
-      limit,
+      page: page ? parseInt(page, 10) : undefined,
+      limit: limit ? parseInt(limit, 10) : undefined,
       status,
       search,
       sortBy,
