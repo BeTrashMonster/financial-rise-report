@@ -198,7 +198,7 @@ describe('Authentication Rate Limiting (Work Stream 56)', () => {
     });
 
     it('should call authService.logout when logout is invoked', async () => {
-      const mockRequest = { user: { userId: 1 } };
+      const mockRequest = { user: { id: 1 } };
 
       mockAuthService.logout.mockResolvedValue({
         message: 'Logged out successfully',

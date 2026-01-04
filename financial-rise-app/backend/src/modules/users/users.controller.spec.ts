@@ -55,7 +55,7 @@ describe('UsersController', () => {
   describe('getProfile', () => {
     it('should return user profile for authenticated user', async () => {
       const req = {
-        user: { userId: 'user-123' },
+        user: { id: 'user-123' },
       };
 
       mockUsersService.findById.mockResolvedValue(mockUser);
@@ -69,7 +69,7 @@ describe('UsersController', () => {
 
     it('should return null if user not found', async () => {
       const req = {
-        user: { userId: 'nonexistent-user' },
+        user: { id: 'nonexistent-user' },
       };
 
       mockUsersService.findById.mockResolvedValue(null);
@@ -88,7 +88,7 @@ describe('UsersController', () => {
 
     it('should handle service errors', async () => {
       const req = {
-        user: { userId: 'user-123' },
+        user: { id: 'user-123' },
       };
 
       mockUsersService.findById.mockRejectedValue(new Error('Database error'));
@@ -99,7 +99,7 @@ describe('UsersController', () => {
 
     it('should extract userId from request.user', async () => {
       const req = {
-        user: { userId: 'test-user-456', email: 'other@example.com' },
+        user: { id: 'test-user-456', email: 'other@example.com' },
       };
 
       mockUsersService.findById.mockResolvedValue({

@@ -53,7 +53,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deleted).toBe(true);
@@ -71,7 +71,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedAssessments).toBe(5);
@@ -88,7 +88,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedResponses).toBeGreaterThan(0);
@@ -105,7 +105,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedDISCProfiles).toBeGreaterThan(0);
@@ -122,7 +122,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedPhaseResults).toBeGreaterThan(0);
@@ -138,7 +138,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedRefreshTokens).toBeGreaterThan(0);
@@ -149,7 +149,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
         new NotFoundException('User not found'),
       );
 
-      const req = { user: { userId: 'non-existent', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'non-existent', role: UserRole.CONSULTANT } };
 
       await expect(controller.deleteUser('non-existent', req)).rejects.toThrow(
         NotFoundException,
@@ -157,7 +157,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
     });
 
     it('should only allow users to delete their own account', async () => {
-      const req = { user: { userId: 'different-user-id', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'different-user-id', role: UserRole.CONSULTANT } };
 
       await expect(controller.deleteUser(mockUserId, req)).rejects.toThrow(
         ForbiddenException,
@@ -173,7 +173,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: 'admin-id', role: UserRole.ADMIN } };
+      const req = { user: { id: 'admin-id', role: UserRole.ADMIN } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deleted).toBe(true);
@@ -185,7 +185,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
         deletedAt: new Date().toISOString(),
         auditLog: {
           action: 'USER_DELETED',
-          userId: mockUser.id,
+          id: mockUser.id,
           timestamp: expect.any(String),
           reason: 'GDPR Article 17 - User requested deletion',
         },
@@ -194,7 +194,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result).toHaveProperty('auditLog');
@@ -215,7 +215,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result).toHaveProperty('deletedAssessments');
@@ -238,7 +238,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deleted).toBe(true);
@@ -256,7 +256,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletedEncryptedData).toBe(true);
@@ -271,7 +271,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.gdpr_article).toBe('Article 17 - Right to Erasure');
@@ -288,7 +288,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
 
       mockUsersService.deleteUserCascade.mockResolvedValue(deleteResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.deleteUser(mockUserId, req);
 
       expect(result.deletionType).toBe('HARD_DELETE');
@@ -299,7 +299,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
         new Error('Database transaction failed'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.deleteUser(mockUserId, req)).rejects.toThrow();
     });
@@ -310,7 +310,7 @@ describe('UsersController - GDPR Account Deletion (Article 17)', () => {
         new ForbiddenException('Account deletion blocked due to legal hold'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.deleteUser(mockUserId, req)).rejects.toThrow(
         ForbiddenException,

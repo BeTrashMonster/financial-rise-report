@@ -60,7 +60,7 @@ describe('ConsentsController', () => {
       ];
 
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -75,7 +75,7 @@ describe('ConsentsController', () => {
 
     it('should throw ForbiddenException if user tries to access another user consents', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -103,7 +103,7 @@ describe('ConsentsController', () => {
       ];
 
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.ADMIN },
+        user: { id: mockUserId, role: UserRole.ADMIN },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -120,7 +120,7 @@ describe('ConsentsController', () => {
   describe('PATCH /users/:id/consents/:type', () => {
     it('should update consent for the authenticated user', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -158,7 +158,7 @@ describe('ConsentsController', () => {
 
     it('should throw ForbiddenException if user tries to update another user consent', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -174,7 +174,7 @@ describe('ConsentsController', () => {
 
     it('should allow admin to update any user consent', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.ADMIN },
+        user: { id: mockUserId, role: UserRole.ADMIN },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -212,7 +212,7 @@ describe('ConsentsController', () => {
 
     it('should extract IP address from request', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '203.0.113.42',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -244,7 +244,7 @@ describe('ConsentsController', () => {
 
     it('should extract user agent from request headers', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Custom User Agent String' },
       };
@@ -276,7 +276,7 @@ describe('ConsentsController', () => {
 
     it('should handle missing user agent gracefully', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: {},
       };
@@ -334,7 +334,7 @@ describe('ConsentsController', () => {
       ];
 
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -354,7 +354,7 @@ describe('ConsentsController', () => {
 
     it('should throw ForbiddenException if user tries to access another user history', async () => {
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.CONSULTANT },
+        user: { id: mockUserId, role: UserRole.CONSULTANT },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };
@@ -378,7 +378,7 @@ describe('ConsentsController', () => {
       ];
 
       const mockRequest = {
-        user: { userId: mockUserId, role: UserRole.ADMIN },
+        user: { id: mockUserId, role: UserRole.ADMIN },
         ip: '192.168.1.1',
         headers: { 'user-agent': 'Mozilla/5.0' },
       };

@@ -150,12 +150,12 @@ describe('JwtStrategy', () => {
       await expect(strategy.validate(mockRequest, validPayload)).rejects.toThrow('Account is not active');
     });
 
-    it('should extract userId from sub claim', async () => {
+    it('should extract id from sub claim', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
       const result = await strategy.validate(mockRequest, validPayload);
 
-      expect(result.userId).toBe('user-123');
+      expect(result.id).toBe('user-123');
     });
 
     it('should preserve email from payload', async () => {
@@ -200,7 +200,7 @@ describe('JwtStrategy', () => {
 
         const result = await strategy.validate(mockRequest, payload);
 
-        expect(result.userId).toBe(userId);
+        expect(result.id).toBe(userId);
         expect(usersService.findById).toHaveBeenCalledWith(userId);
       }
     });

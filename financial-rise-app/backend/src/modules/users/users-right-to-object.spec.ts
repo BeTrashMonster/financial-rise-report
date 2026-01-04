@@ -68,7 +68,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.objectToProcessing.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.objectToProcessing(mockUserId, objectionDto, req);
 
       expect(result).toEqual(expectedResult);
@@ -93,7 +93,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.objectToProcessing.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.objectToProcessing(mockUserId, objectionDto, req);
 
       expect(result).toEqual(expectedResult);
@@ -118,7 +118,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.objectToProcessing.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.objectToProcessing(mockUserId, objectionDto, req);
 
       expect(result).toEqual(expectedResult);
@@ -139,7 +139,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new BadRequestException('Reason is required for objection'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.objectToProcessing(mockUserId, objectionDto, req)).rejects.toThrow(
         BadRequestException,
@@ -158,7 +158,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new BadRequestException('Invalid objection type'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.objectToProcessing(mockUserId, objectionDto, req)).rejects.toThrow(
         BadRequestException,
@@ -171,7 +171,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         reason: 'I do not want marketing emails',
       };
 
-      const req = { user: { userId: 'different-user-id', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'different-user-id', role: UserRole.CONSULTANT } };
 
       await expect(controller.objectToProcessing(mockUserId, objectionDto, req)).rejects.toThrow(
         ForbiddenException,
@@ -186,7 +186,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.objectToProcessing.mockResolvedValue(mockObjection);
 
-      const req = { user: { userId: 'admin-id', role: UserRole.ADMIN } };
+      const req = { user: { id: 'admin-id', role: UserRole.ADMIN } };
       const result = await controller.objectToProcessing(mockUserId, objectionDto, req);
 
       expect(result).toEqual(mockObjection);
@@ -203,7 +203,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new NotFoundException('User not found'),
       );
 
-      const req = { user: { userId: 'non-existent', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'non-existent', role: UserRole.CONSULTANT } };
 
       await expect(
         controller.objectToProcessing('non-existent', objectionDto, req),
@@ -220,7 +220,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new BadRequestException('Objection of this type already exists'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.objectToProcessing(mockUserId, objectionDto, req)).rejects.toThrow(
         BadRequestException,
@@ -237,7 +237,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
       const marketingResult = { ...mockObjection, objection_type: ObjectionType.MARKETING };
       mockUsersService.objectToProcessing.mockResolvedValueOnce(marketingResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       await controller.objectToProcessing(mockUserId, marketingDto, req);
 
       // Then create analytics objection
@@ -267,7 +267,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.objectToProcessing.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.objectToProcessing(mockUserId, objectionDto, req);
 
       expect(result).toHaveProperty('gdpr_article', 'Article 21 - Right to Object');
@@ -295,7 +295,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.getObjections.mockResolvedValue(mockObjections);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.getObjections(mockUserId, req);
 
       expect(result).toEqual(mockObjections);
@@ -306,7 +306,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
     it('should return empty array if user has no objections', async () => {
       mockUsersService.getObjections.mockResolvedValue([]);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.getObjections(mockUserId, req);
 
       expect(result).toEqual([]);
@@ -314,7 +314,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
     });
 
     it('should only allow users to view their own objections', async () => {
-      const req = { user: { userId: 'different-user-id', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'different-user-id', role: UserRole.CONSULTANT } };
 
       await expect(controller.getObjections(mockUserId, req)).rejects.toThrow(
         ForbiddenException,
@@ -325,7 +325,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
       const mockObjections = [mockObjection];
       mockUsersService.getObjections.mockResolvedValue(mockObjections);
 
-      const req = { user: { userId: 'admin-id', role: UserRole.ADMIN } };
+      const req = { user: { id: 'admin-id', role: UserRole.ADMIN } };
       const result = await controller.getObjections(mockUserId, req);
 
       expect(result).toEqual(mockObjections);
@@ -336,7 +336,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new NotFoundException('User not found'),
       );
 
-      const req = { user: { userId: 'non-existent', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'non-existent', role: UserRole.CONSULTANT } };
 
       await expect(controller.getObjections('non-existent', req)).rejects.toThrow(
         NotFoundException,
@@ -347,7 +347,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
       const mockObjections = [mockObjection];
       mockUsersService.getObjections.mockResolvedValue(mockObjections);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.getObjections(mockUserId, req);
 
       expect(result[0]).toHaveProperty('id');
@@ -369,7 +369,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.withdrawObjection.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.withdrawObjection(mockUserId, objectionId, req);
 
       expect(result).toEqual(expectedResult);
@@ -378,7 +378,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
     it('should only allow users to withdraw their own objections', async () => {
       const objectionId = 'objection-1';
-      const req = { user: { userId: 'different-user-id', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'different-user-id', role: UserRole.CONSULTANT } };
 
       await expect(controller.withdrawObjection(mockUserId, objectionId, req)).rejects.toThrow(
         ForbiddenException,
@@ -395,7 +395,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.withdrawObjection.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: 'admin-id', role: UserRole.ADMIN } };
+      const req = { user: { id: 'admin-id', role: UserRole.ADMIN } };
       const result = await controller.withdrawObjection(mockUserId, objectionId, req);
 
       expect(result).toEqual(expectedResult);
@@ -408,7 +408,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new NotFoundException('Objection not found'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.withdrawObjection(mockUserId, objectionId, req)).rejects.toThrow(
         NotFoundException,
@@ -422,7 +422,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
         new ForbiddenException('This objection does not belong to you'),
       );
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
 
       await expect(controller.withdrawObjection(mockUserId, objectionId, req)).rejects.toThrow(
         ForbiddenException,
@@ -440,7 +440,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.withdrawObjection.mockResolvedValue(expectedResult);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.withdrawObjection(mockUserId, objectionId, req);
 
       expect(result).toHaveProperty('deletedAt');
@@ -513,7 +513,7 @@ describe('UsersController - GDPR Right to Object (Article 21)', () => {
 
       mockUsersService.getObjections.mockResolvedValue(mockObjections);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.getObjections(mockUserId, req);
 
       expect(result[0]).toHaveProperty('created_at');

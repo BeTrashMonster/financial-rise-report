@@ -80,7 +80,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result).toEqual(exportedData);
@@ -110,7 +110,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.user).toHaveProperty('id');
@@ -134,7 +134,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.assessments).toHaveLength(2);
@@ -166,7 +166,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.user).not.toHaveProperty('password_hash');
@@ -196,7 +196,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.user).not.toHaveProperty('refresh_token');
@@ -216,7 +216,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.export_metadata).toHaveProperty('exported_at');
@@ -229,7 +229,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
         new NotFoundException('User not found'),
       );
 
-      const req = { user: { userId: 'non-existent', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'non-existent', role: UserRole.CONSULTANT } };
 
       await expect(controller.exportUserData('non-existent', req)).rejects.toThrow(
         NotFoundException,
@@ -237,7 +237,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
     });
 
     it('should only allow users to export their own data', async () => {
-      const req = { user: { userId: 'different-user-id', role: UserRole.CONSULTANT } };
+      const req = { user: { id: 'different-user-id', role: UserRole.CONSULTANT } };
 
       await expect(controller.exportUserData(mockUserId, req)).rejects.toThrow(
         ForbiddenException,
@@ -257,7 +257,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: 'admin-id', role: UserRole.ADMIN } };
+      const req = { user: { id: 'admin-id', role: UserRole.ADMIN } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result).toEqual(exportedData);
@@ -287,7 +287,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.assessments[0].responses[0].answer).toHaveProperty('value');
@@ -319,7 +319,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.assessments[0]).toHaveProperty('disc_profiles');
@@ -350,7 +350,7 @@ describe('UsersController - GDPR Data Export (Article 15)', () => {
 
       mockUsersService.exportUserData.mockResolvedValue(exportedData);
 
-      const req = { user: { userId: mockUserId, role: UserRole.CONSULTANT } };
+      const req = { user: { id: mockUserId, role: UserRole.CONSULTANT } };
       const result = await controller.exportUserData(mockUserId, req);
 
       expect(result.assessments[0]).toHaveProperty('phase_results');
