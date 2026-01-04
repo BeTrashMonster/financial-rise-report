@@ -113,7 +113,7 @@ describe('JwtStrategy', () => {
 
       expect(usersService.findById).toHaveBeenCalledWith('user-123');
       expect(result).toEqual({
-        userId: 'user-123',
+        id: 'user-123',
         email: 'test@example.com',
         role: 'consultant',
       });
@@ -219,8 +219,8 @@ describe('JwtStrategy', () => {
 
       const result = await strategy.validate(mockRequest, validPayload);
 
-      // Should only return userId, email, and role
-      expect(Object.keys(result)).toEqual(['userId', 'email', 'role']);
+      // Should only return id, email, and role
+      expect(Object.keys(result)).toEqual(['id', 'email', 'role']);
       expect(result).not.toHaveProperty('password_hash');
       expect(result).not.toHaveProperty('created_at');
       expect(result).not.toHaveProperty('updated_at');

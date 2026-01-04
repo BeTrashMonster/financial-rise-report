@@ -56,12 +56,12 @@ export class ProcessingRestrictionGuard implements CanActivate {
     const user = request.user;
 
     // If no user in request, let other guards handle it
-    if (!user || !user.userId) {
+    if (!user || !user.id) {
       return true;
     }
 
     // Check if user's processing is restricted
-    const isRestricted = await this.usersService.isProcessingRestricted(user.userId);
+    const isRestricted = await this.usersService.isProcessingRestricted(user.id);
 
     if (isRestricted) {
       throw new ForbiddenException(

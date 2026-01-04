@@ -60,7 +60,7 @@ export class AuthController {
   async logout(@Request() req: any, @Headers('authorization') authHeader: string) {
     // Extract access token from Authorization header for blacklisting
     const accessToken = authHeader?.replace('Bearer ', '') || '';
-    return this.authService.logout(req.user.userId, accessToken);
+    return this.authService.logout(req.user.id, accessToken);
   }
 
   /**

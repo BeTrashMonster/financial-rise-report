@@ -26,7 +26,7 @@ export class ConsentsController {
   @Get(':id/consents')
   async getConsents(@Param('id') id: string, @Request() req: any): Promise<UserConsent[]> {
     // Users can only access their own consents unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only access your own consent data');
     }
 
@@ -46,7 +46,7 @@ export class ConsentsController {
     @Request() req: any,
   ): Promise<UserConsent> {
     // Users can only update their own consents unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only update your own consent data');
     }
 
@@ -73,7 +73,7 @@ export class ConsentsController {
     @Request() req: any,
   ): Promise<UserConsent[]> {
     // Users can only access their own consent history unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only access your own consent data');
     }
 

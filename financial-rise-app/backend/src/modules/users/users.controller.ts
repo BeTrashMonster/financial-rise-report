@@ -25,7 +25,7 @@ export class UsersController {
   @Get('profile')
   @AllowWhenRestricted()
   async getProfile(@Request() req: any) {
-    return this.usersService.findById(req.user.userId);
+    return this.usersService.findById(req.user.id);
   }
 
   /**
@@ -37,7 +37,7 @@ export class UsersController {
   @AllowWhenRestricted()
   async exportUserData(@Param('id') id: string, @Request() req: any) {
     // Users can only export their own data unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only export your own data');
     }
 
@@ -58,7 +58,7 @@ export class UsersController {
     @Request() req: any,
   ) {
     // Users can only restrict their own account unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only restrict processing for your own account');
     }
 
@@ -75,7 +75,7 @@ export class UsersController {
   @AllowWhenRestricted()
   async liftProcessingRestriction(@Param('id') id: string, @Request() req: any) {
     // Users can only lift restriction on their own account unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException(
         'You can only lift processing restriction for your own account',
       );
@@ -93,7 +93,7 @@ export class UsersController {
   @AllowWhenRestricted()
   async getProcessingStatus(@Param('id') id: string, @Request() req: any) {
     // Users can only view their own status unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only view processing status for your own account');
     }
 
@@ -110,7 +110,7 @@ export class UsersController {
   @AllowWhenRestricted()
   async deleteUser(@Param('id') id: string, @Request() req: any) {
     // Users can only delete their own account unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only delete your own account');
     }
 
@@ -131,7 +131,7 @@ export class UsersController {
     @Request() req: any,
   ) {
     // Users can only create objections for their own account unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only create objections for your own account');
     }
 
@@ -151,7 +151,7 @@ export class UsersController {
   @AllowWhenRestricted()
   async getObjections(@Param('id') id: string, @Request() req: any) {
     // Users can only view their own objections unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only view your own objections');
     }
 
@@ -172,7 +172,7 @@ export class UsersController {
     @Request() req: any,
   ) {
     // Users can only withdraw their own objections unless they are admin
-    if (req.user.userId !== id && req.user.role !== UserRole.ADMIN) {
+    if (req.user.id !== id && req.user.role !== UserRole.ADMIN) {
       throw new ForbiddenException('You can only withdraw your own objections');
     }
 
