@@ -88,7 +88,7 @@ describe('CsrfInterceptor', () => {
       const [, , options] = (response.cookie as jest.Mock).mock.calls[0];
 
       expect(options.httpOnly).toBe(false); // Client needs to read this
-      expect(options.sameSite).toBe('strict');
+      expect(options.sameSite).toBe('lax');
       expect(options.maxAge).toBe(24 * 60 * 60 * 1000); // 24 hours
     });
 
@@ -196,7 +196,7 @@ describe('CsrfInterceptor', () => {
       expect(options.httpOnly).toBe(false);
     });
 
-    it('should set sameSite to strict', () => {
+    it('should set sameSite to lax', () => {
       const context = createMockContext({});
       const response = context.switchToHttp().getResponse();
 
@@ -204,7 +204,7 @@ describe('CsrfInterceptor', () => {
 
       const options = (response.cookie as jest.Mock).mock.calls[0][2];
 
-      expect(options.sameSite).toBe('strict');
+      expect(options.sameSite).toBe('lax');
     });
 
     it('should set cookie max age to 24 hours', () => {
@@ -323,7 +323,7 @@ describe('CsrfInterceptor', () => {
 
         const options = (response.cookie as jest.Mock).mock.calls[0][2];
 
-        expect(options.sameSite).toBe('strict');
+        expect(options.sameSite).toBe('lax');
       });
 
       it('should use secure cookies in production', () => {
