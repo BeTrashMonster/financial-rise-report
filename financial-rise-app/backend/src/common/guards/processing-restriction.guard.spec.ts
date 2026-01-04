@@ -59,7 +59,7 @@ describe('ProcessingRestrictionGuard', () => {
 
   describe('canActivate', () => {
     it('should allow access for unrestricted users', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' });
+      const context = createMockExecutionContext({ id: 'user-123' });
       mockUsersService.isProcessingRestricted.mockResolvedValue(false);
 
       const result = await guard.canActivate(context);
@@ -69,7 +69,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should block access for restricted users', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' });
+      const context = createMockExecutionContext({ id: 'user-123' });
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
@@ -79,7 +79,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should include helpful message when blocking restricted users', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' });
+      const context = createMockExecutionContext({ id: 'user-123' });
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       try {
@@ -92,7 +92,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should allow access when endpoint is marked @AllowWhenRestricted', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' }, true);
+      const context = createMockExecutionContext({ id: 'user-123' }, true);
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       const result = await guard.canActivate(context);
@@ -111,7 +111,7 @@ describe('ProcessingRestrictionGuard', () => {
       expect(usersService.isProcessingRestricted).not.toHaveBeenCalled();
     });
 
-    it('should allow access when user object has no userId', async () => {
+    it('should allow access when user object has no id', async () => {
       const context = createMockExecutionContext({ email: 'test@example.com' });
 
       const result = await guard.canActivate(context);
@@ -121,7 +121,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should check reflector for class-level decorator', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' }, false);
+      const context = createMockExecutionContext({ id: 'user-123' }, false);
       mockUsersService.isProcessingRestricted.mockResolvedValue(false);
 
       await guard.canActivate(context);
@@ -133,7 +133,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should handle service errors gracefully', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' });
+      const context = createMockExecutionContext({ id: 'user-123' });
       mockUsersService.isProcessingRestricted.mockRejectedValue(
         new Error('Database connection failed'),
       );
@@ -143,7 +143,7 @@ describe('ProcessingRestrictionGuard', () => {
 
     it('should work with different user ID formats', async () => {
       const uuidContext = createMockExecutionContext({
-        userId: '550e8400-e29b-41d4-a716-446655440000',
+        id: '550e8400-e29b-41d4-a716-446655440000',
       });
       mockUsersService.isProcessingRestricted.mockResolvedValue(false);
 
@@ -158,14 +158,14 @@ describe('ProcessingRestrictionGuard', () => {
 
   describe('Integration scenarios', () => {
     it('should block creating assessments for restricted users', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' });
+      const context = createMockExecutionContext({ id: 'user-123' });
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       await expect(guard.canActivate(context)).rejects.toThrow(ForbiddenException);
     });
 
     it('should allow viewing data for restricted users (with decorator)', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' }, true);
+      const context = createMockExecutionContext({ id: 'user-123' }, true);
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       const result = await guard.canActivate(context);
@@ -174,7 +174,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should allow exporting data for restricted users (with decorator)', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' }, true);
+      const context = createMockExecutionContext({ id: 'user-123' }, true);
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       const result = await guard.canActivate(context);
@@ -183,7 +183,7 @@ describe('ProcessingRestrictionGuard', () => {
     });
 
     it('should allow deleting account for restricted users (with decorator)', async () => {
-      const context = createMockExecutionContext({ userId: 'user-123' }, true);
+      const context = createMockExecutionContext({ id: 'user-123' }, true);
       mockUsersService.isProcessingRestricted.mockResolvedValue(true);
 
       const result = await guard.canActivate(context);

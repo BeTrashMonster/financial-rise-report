@@ -224,7 +224,7 @@ export class UsersService {
     }
 
     return {
-      userId: user.id,
+      id: user.id,
       processing_restricted: user.processing_restricted,
       restriction_reason: user.restriction_reason,
       last_updated: user.updated_at,

@@ -467,7 +467,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
       const result = await controller.getProcessingStatus('user-123', mockRequest);
 
-      expect(result.userId).toBe('user-123');
+      expect(result.id).toBe('user-123');
       expect(result.processing_restricted).toBe(false);
     });
 
@@ -493,7 +493,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
       const result = await controller.getProcessingStatus('user-123', mockRequest);
 
-      expect(result.userId).toBe('user-123');
+      expect(result.id).toBe('user-123');
     });
   });
 
