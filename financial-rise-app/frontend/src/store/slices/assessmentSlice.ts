@@ -46,10 +46,10 @@ const initialState: AssessmentState = {
  */
 export const fetchQuestions = createAsyncThunk(
   'assessment/fetchQuestions',
-  async (_, { rejectWithValue }) => {
+  async (assessmentId: string | undefined, { rejectWithValue }) => {
     try {
-      const response = await assessmentService.getQuestions();
-      return response;
+      const response = await assessmentService.getQuestions(assessmentId);
+      return response.questions; // Extract questions array from response
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch questions');
     }

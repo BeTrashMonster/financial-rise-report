@@ -1,5 +1,6 @@
 import api from './api';
 import { Assessment, Question, Answer } from '@store/slices/assessmentSlice';
+import type { QuestionsResponse, QuestionResponse } from '@/types/question';
 
 /**
  * Assessment Service
@@ -22,8 +23,31 @@ export const assessmentService = {
   /**
    * Get all questions for the assessment
    */
-  getQuestions: async (): Promise<Question[]> => {
-    const response = await api.get<Question[]>('/questions');
+  getQuestions: async (assessmentId?: string): Promise<QuestionsResponse> => {
+    const params = assessmentId ? `?assessmentId=${assessmentId}` : '';
+    const response = await api.get<QuestionsResponse>(`/questionnaire/questions${params}`);
+    return response.data;
+  },
+
+  /**
+   * Submit response to a question
+   */
+  submitResponse: async (data: QuestionResponse): Promise<QuestionResponse> => {
+    const response = await api.post<QuestionResponse>('/questionnaire/responses', data);
+    return response.data;
+  },
+
+  /**
+   * Update existing response
+   */
+  updateResponse: async (
+    responseId: string,
+    data: Partial<QuestionResponse>
+  ): Promise<QuestionResponse> => {
+    const response = await api.patch<QuestionResponse>(
+      `/questionnaire/responses/${responseId}`,
+      data
+    );
     return response.data;
   },
 
