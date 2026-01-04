@@ -184,6 +184,9 @@ jobs:
           docker build \
             -f Dockerfile \
             --target production \
+            --build-arg VITE_API_URL=/api/v1 \
+            --build-arg VITE_APP_NAME="Financial RISE Report" \
+            --build-arg VITE_ENVIRONMENT=production \
             -t ${{ env.FRONTEND_IMAGE }} \
             -t ${{ env.FRONTEND_LATEST }} \
             .

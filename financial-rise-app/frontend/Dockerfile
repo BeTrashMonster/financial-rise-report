@@ -14,6 +14,16 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Build arguments for Vite environment variables
+ARG VITE_API_URL=/api/v1
+ARG VITE_APP_NAME="Financial RISE Report"
+ARG VITE_ENVIRONMENT=production
+
+# Set environment variables for build
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_APP_NAME=$VITE_APP_NAME
+ENV VITE_ENVIRONMENT=$VITE_ENVIRONMENT
+
 # Build the application
 RUN npm run build
 
