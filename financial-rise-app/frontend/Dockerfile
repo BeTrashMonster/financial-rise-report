@@ -18,13 +18,13 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Production
-FROM nginx:alpine AS production
+FROM caddy:2-alpine AS production
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom Caddy config
+COPY Caddyfile /etc/caddy/Caddyfile
 
 # Copy built files from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/caddy
 
 # Expose port 80
 EXPOSE 80
@@ -33,5 +33,5 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start Caddy
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
