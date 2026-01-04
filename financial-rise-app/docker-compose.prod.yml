@@ -64,7 +64,7 @@ services:
     container_name: financial-rise-frontend-prod
     restart: unless-stopped
     environment:
-      VITE_API_URL: ${VITE_API_URL:-/api}
+      VITE_API_URL: ${VITE_API_URL:-/api/v1}
       VITE_APP_NAME: Financial RISE Report
       VITE_APP_VERSION: ${APP_VERSION:-1.0.0}
       VITE_ENVIRONMENT: ${NODE_ENV:-production}
