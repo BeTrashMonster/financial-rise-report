@@ -532,7 +532,10 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
   const { question_text, question_type, options, required } = question;
 
   // Single choice (radio buttons)
-  if (question_type === 'single_choice' && Array.isArray(options)) {
+  if (question_type === 'single_choice') {
+    // Handle both formats: direct array or {options: [...]}
+    const optionsList = Array.isArray(options) ? options : options?.options || [];
+
     return (
       <FormControl component="fieldset" fullWidth>
         <FormLabel component="legend" required={required}>
@@ -545,7 +548,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
           onChange={(e) => onChange({ value: e.target.value })}
           aria-label={question_text}
         >
-          {options.map((option: any) => (
+          {optionsList.map((option: any) => (
             <FormControlLabel
               key={option.value}
               value={option.value}
@@ -559,7 +562,9 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
   }
 
   // Multiple choice (checkboxes)
-  if (question_type === 'multiple_choice' && Array.isArray(options)) {
+  if (question_type === 'multiple_choice') {
+    // Handle both formats: direct array or {options: [...]}
+    const optionsList = Array.isArray(options) ? options : options?.options || [];
     const selectedValues = value?.values || [];
 
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {
@@ -577,7 +582,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
           </Typography>
         </FormLabel>
         <FormGroup>
-          {options.map((option: any) => (
+          {optionsList.map((option: any) => (
             <FormControlLabel
               key={option.value}
               control={
