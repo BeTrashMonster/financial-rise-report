@@ -358,36 +358,94 @@ GET    /api/v1/reports/download/:id             - Download report
 
 **After Work Stream 6 completion:**
 
+**Status:** 🚀 Planning Complete - Ready to Deploy
+**Planning Completed:** 2026-01-04
+**Target Start Date:** [Set date after staging deployment]
+**Duration:** 3 weeks
+
 **Goal:** Validate MVP with real users before building enhancements
 
-**Tasks:**
-- [ ] Deploy WS 1-6 + 10a + 11a + 12 + 13 to staging environment
-- [ ] Recruit 3-5 pilot consultants (financial advisors, fractional CFOs)
-- [ ] Conduct structured usability testing:
-  - Task: Create assessment and complete full questionnaire
-  - Task: Review results and generate both reports
-  - Task: Download and review PDF reports
-- [ ] Gather quantitative data:
-  - Assessment completion rate (target: >85%)
-  - Time to complete assessment (target: <30 minutes)
-  - Report generation time (target: <5 seconds)
-  - Client engagement rate (pilot consultants track follow-ups)
-- [ ] Gather qualitative feedback:
-  - Questionnaire clarity and flow
-  - Results display usefulness
-  - Report quality and professionalism
-  - Pain points or missing features
-- [ ] **Decision Point:** Based on pilot feedback, adjust Phase 2-3 priorities
+**Planning Documents Created:**
+- [x] `PILOT-TESTING-PLAN.md` - Comprehensive 3-week pilot plan
+- [x] `STAGING-DEPLOYMENT-CHECKLIST.md` - Step-by-step deployment guide
+- [x] `PILOT-DATA-COLLECTION-TEMPLATES.md` - All survey and interview templates
+
+**Pre-Pilot Tasks:**
+- [ ] **Week 0 (Pre-Pilot): Deployment & Recruitment**
+  - [ ] Deploy backend to staging (GCP VM)
+  - [ ] Deploy frontend to staging (Vercel/Netlify)
+  - [ ] Run smoke tests on all features (authentication, assessments, reports)
+  - [ ] Run Lighthouse audits (target: Performance >80, Accessibility >95)
+  - [ ] Run axe DevTools audits (target: zero violations)
+  - [ ] Set up monitoring (Sentry, Google Analytics, Uptime Robot)
+  - [ ] Send recruitment emails to 20-30 prospects
+  - [ ] Screen respondents and select 5 pilot participants
+  - [ ] Send welcome emails with login credentials
+  - [ ] Schedule onboarding calls with all participants
+
+**Pilot Testing Tasks:**
+- [ ] **Week 1: Onboarding**
+  - [ ] Conduct onboarding sessions with all 5 participants (30 min each)
+  - [ ] Participants complete first assessment with real client
+  - [ ] Monitor usage and respond to support requests (<4 hour response)
+  - [ ] Track bugs and issues in real-time
+
+- [ ] **Week 2: Active Testing**
+  - [ ] Participants complete 2-3 additional assessments
+  - [ ] Send mid-week check-in emails
+  - [ ] Continue monitoring and support
+  - [ ] Fix any P0/P1 bugs discovered
+
+- [ ] **Week 3: Feedback Collection**
+  - [ ] Send quantitative survey to all participants
+  - [ ] Collect survey responses (target: 100% response rate)
+  - [ ] Conduct exit interviews with all 5 participants (30 min each)
+  - [ ] Transcribe interviews and compile feedback themes
+
+**Data Collection (Quantitative):**
+- [ ] Assessment completion rate (target: >85%)
+- [ ] Time savings vs. manual process (target: >40% reduction)
+- [ ] Usability rating (target: >7/10)
+- [ ] Report quality rating (target: >7/10)
+- [ ] Client engagement increase (target: >20%)
+- [ ] Net Promoter Score (target: >7/10)
+- [ ] Willingness to pay (target: >60%)
+- [ ] Report generation time (target: <5 seconds)
+- [ ] Page load times (target: <3 seconds)
+
+**Data Collection (Qualitative):**
+- [ ] Exit interviews (30 min each, recorded with permission)
+- [ ] Feature requests and pain points
+- [ ] Testimonial quotes (with permission)
+- [ ] Bug reports and usability issues
 
 **Success Criteria:**
-- 85%+ questionnaire completion rate
-- Average assessment time <35 minutes (target: 50% reduction from manual)
-- Reports rated 8/10+ for professionalism
-- Zero critical accessibility or error handling issues reported
 
-**Deliverables:**
-- Pilot testing report with metrics
-- Prioritized list of improvements for Phase 2
+**CRITICAL (Must Pass All 5):**
+- [ ] Assessment completion rate >85%
+- [ ] Time savings >40% vs. manual process
+- [ ] Usability rating >7/10
+- [ ] Report quality rating >7/10
+- [ ] Zero critical bugs (data loss, security issues, breaking errors)
+
+**STRONG (2/3 Should Pass):**
+- [ ] Client engagement increase >20%
+- [ ] NPS score >7/10
+- [ ] Willingness to pay >60% at $50-100/month
+
+**GO/NO-GO DECISION MATRIX:**
+- **Best Case** (5/5 critical + 3/3 strong): Launch immediately
+- **Good Case** (5/5 critical + 2/3 strong): Launch with minor iterations
+- **Borderline** (4/5 critical + 2/3 strong): Fix issues, re-test with 2-3 new users
+- **Poor Case** (4/5 critical + <2/3 strong): Pivot features, extend pilot
+- **Failure** (<4/5 critical): Major redesign needed, delay launch
+
+**Post-Pilot Deliverables:**
+- [ ] Pilot testing report with all metrics and analysis
+- [ ] GO/NO-GO decision documented
+- [ ] Prioritized Phase 2 feature list (based on feedback)
+- [ ] Bug fix backlog (categorized by priority)
+- [ ] Testimonial quotes for marketing (if launch approved)
 
 ---
 
