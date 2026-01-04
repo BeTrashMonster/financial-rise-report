@@ -33,7 +33,7 @@ import { AssessmentStatus } from './entities/assessment.entity';
 
 @ApiTags('assessments')
 @ApiBearerAuth()
-@Controller('api/v1/assessments')
+@Controller('assessments')
 @UseGuards(JwtAuthGuard)
 export class AssessmentsController {
   constructor(private readonly assessmentsService: AssessmentsService) {}

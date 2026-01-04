@@ -21,7 +21,7 @@ import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @ApiTags('questionnaire')
 @ApiBearerAuth()
-@Controller('api/v1/questionnaire')
+@Controller('questionnaire')
 @UseGuards(JwtAuthGuard)
 export class QuestionnaireController {
   constructor(private readonly questionnaireService: QuestionnaireService) {}

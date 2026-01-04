@@ -11,7 +11,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('questionnaire')
 @ApiBearerAuth()
-@Controller('api/v1/questionnaire')
+@Controller('questionnaire')
 @UseGuards(JwtAuthGuard)
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}

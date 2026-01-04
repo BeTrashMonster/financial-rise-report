@@ -26,7 +26,7 @@ import {
  * Implements API endpoints as specified in:
  * plans/work-stream-7-implementation-spec.md Section 4
  */
-@Controller('api/v1/assessments')
+@Controller('assessments')
 // @UseGuards(JwtAuthGuard) // TODO: Enable when auth is integrated
 export class AlgorithmsController {
   private readonly logger = new Logger(AlgorithmsController.name);
