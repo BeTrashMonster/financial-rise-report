@@ -44,13 +44,12 @@ import {
 } from '@mui/material';
 import {
   Assessment as AssessmentIcon,
-  ArrowForward as ArrowForwardIcon,
   TrendingUp as TrendingUpIcon,
   Article as ArticleIcon,
 } from '@mui/icons-material';
 import { assessmentService } from '@services/assessmentService';
 import type { DISCProfileWithSummary, PhaseResultsWithDetails, DISCType, FinancialPhase } from '@/types/results';
-import type { Assessment } from '@store/slices/assessmentSlice';
+import type { Assessment } from '@/types/assessment';
 import type { ReportStatus, ReportType } from '@/types/reports';
 
 /**
@@ -164,8 +163,8 @@ export const Results: React.FC = () => {
   } | null>(null);
   const [reportError, setReportError] = useState<string | null>(null);
   const [generatingReports, setGeneratingReports] = useState(false);
-  const [pollingConsultant, setPollingConsultant] = useState(false);
-  const [pollingClient, setPollingClient] = useState(false);
+  const [_pollingConsultant, setPollingConsultant] = useState(false);
+  const [_pollingClient, setPollingClient] = useState(false);
   const [showRegenerateDialog, setShowRegenerateDialog] = useState(false);
 
   // Fetch results on mount
@@ -346,31 +345,31 @@ export const Results: React.FC = () => {
           Assessment Results
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {assessment?.clientName && `Client: ${assessment.clientName}`}
+          {assessment?.client_name && `Client: ${assessment.client_name}`}
         </Typography>
       </Box>
 
       {/* Before/After Confidence Comparison */}
-      {assessment?.beforeConfidence !== undefined && assessment?.afterConfidence !== undefined && (
+      {assessment?.before_confidence !== undefined && assessment?.after_confidence !== undefined && (
         <Paper sx={{ p: 3, mb: 4, bgcolor: 'success.light', color: 'success.contrastText' }}>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={4}>
               <Typography variant="h6" gutterBottom>
                 Before Assessment
               </Typography>
-              <Typography variant="h3">{assessment.beforeConfidence}/10</Typography>
+              <Typography variant="h3">{assessment.before_confidence}/10</Typography>
             </Grid>
             <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
               <TrendingUpIcon sx={{ fontSize: 48 }} />
               <Typography variant="h6">
-                +{assessment.afterConfidence - assessment.beforeConfidence} points
+                +{assessment.after_confidence - assessment.before_confidence} points
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="h6" gutterBottom>
                 After Assessment
               </Typography>
-              <Typography variant="h3">{assessment.afterConfidence}/10</Typography>
+              <Typography variant="h3">{assessment.after_confidence}/10</Typography>
             </Grid>
           </Grid>
         </Paper>

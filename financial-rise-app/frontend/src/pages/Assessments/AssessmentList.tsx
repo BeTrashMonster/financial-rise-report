@@ -45,16 +45,15 @@ import {
   Search as SearchIcon,
   Visibility as ViewIcon,
   Edit as EditIcon,
-  Delete as DeleteIcon,
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { fetchAssessments } from '@store/slices/assessmentSlice';
-import type { Assessment } from '@store/slices/assessmentSlice';
+import type { Assessment } from '@/types/assessment';
 import { Card } from '@components/common/Card/Card';
 
-type SortField = 'clientName' | 'status' | 'createdAt' | 'updatedAt';
+type SortField = 'client_name' | 'status' | 'created_at' | 'updated_at';
 type SortOrder = 'asc' | 'desc';
 type StatusFilter = 'all' | 'draft' | 'in_progress' | 'completed';
 
@@ -101,7 +100,7 @@ export const AssessmentList: React.FC = () => {
   // Filter and sort state
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [sortField, setSortField] = useState<SortField>('updatedAt');
+  const [sortField, setSortField] = useState<SortField>('updated_at');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
   // Fetch assessments on mount
@@ -117,7 +116,7 @@ export const AssessmentList: React.FC = () => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter((assessment) =>
-        assessment.clientName.toLowerCase().includes(query)
+        assessment.client_name.toLowerCase().includes(query)
       );
     }
 
@@ -131,17 +130,17 @@ export const AssessmentList: React.FC = () => {
       let compareValue = 0;
 
       switch (sortField) {
-        case 'clientName':
-          compareValue = a.clientName.localeCompare(b.clientName);
+        case 'client_name':
+          compareValue = a.client_name.localeCompare(b.client_name);
           break;
         case 'status':
           compareValue = a.status.localeCompare(b.status);
           break;
-        case 'createdAt':
-          compareValue = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        case 'created_at':
+          compareValue = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
           break;
-        case 'updatedAt':
-          compareValue = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+        case 'updated_at':
+          compareValue = new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime();
           break;
       }
 
@@ -195,9 +194,9 @@ export const AssessmentList: React.FC = () => {
           <TableRow>
             <TableCell>
               <TableSortLabel
-                active={sortField === 'clientName'}
-                direction={sortField === 'clientName' ? sortOrder : 'asc'}
-                onClick={() => handleSort('clientName')}
+                active={sortField === 'client_name'}
+                direction={sortField === 'client_name' ? sortOrder : 'asc'}
+                onClick={() => handleSort('client_name')}
               >
                 Client Name
               </TableSortLabel>
@@ -213,18 +212,18 @@ export const AssessmentList: React.FC = () => {
             </TableCell>
             <TableCell>
               <TableSortLabel
-                active={sortField === 'createdAt'}
-                direction={sortField === 'createdAt' ? sortOrder : 'asc'}
-                onClick={() => handleSort('createdAt')}
+                active={sortField === 'created_at'}
+                direction={sortField === 'created_at' ? sortOrder : 'asc'}
+                onClick={() => handleSort('created_at')}
               >
                 Created
               </TableSortLabel>
             </TableCell>
             <TableCell>
               <TableSortLabel
-                active={sortField === 'updatedAt'}
-                direction={sortField === 'updatedAt' ? sortOrder : 'asc'}
-                onClick={() => handleSort('updatedAt')}
+                active={sortField === 'updated_at'}
+                direction={sortField === 'updated_at' ? sortOrder : 'asc'}
+                onClick={() => handleSort('updated_at')}
               >
                 Last Updated
               </TableSortLabel>
@@ -253,7 +252,7 @@ export const AssessmentList: React.FC = () => {
               >
                 <TableCell>
                   <Typography variant="body2" fontWeight={500}>
-                    {assessment.clientName}
+                    {assessment.client_name}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -265,19 +264,19 @@ export const AssessmentList: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2" color="text.secondary">
-                    {formatDate(assessment.createdAt)}
+                    {formatDate(assessment.created_at)}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2" color="text.secondary">
-                    {formatDate(assessment.updatedAt)}
+                    {formatDate(assessment.updated_at)}
                   </Typography>
                 </TableCell>
                 <TableCell align="right" onClick={(e) => e.stopPropagation()}>
                   <IconButton
                     size="small"
                     onClick={() => handleViewAssessment(assessment.id)}
-                    aria-label={`View assessment for ${assessment.clientName}`}
+                    aria-label={`View assessment for ${assessment.client_name}`}
                     sx={{ mr: 1 }}
                   >
                     <ViewIcon fontSize="small" />
@@ -286,7 +285,7 @@ export const AssessmentList: React.FC = () => {
                     <IconButton
                       size="small"
                       onClick={() => handleEditAssessment(assessment.id)}
-                      aria-label={`Edit assessment for ${assessment.clientName}`}
+                      aria-label={`Edit assessment for ${assessment.client_name}`}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>
@@ -328,7 +327,7 @@ export const AssessmentList: React.FC = () => {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="h6" component="h3" gutterBottom>
-                    {assessment.clientName}
+                    {assessment.client_name}
                   </Typography>
                   <Chip
                     label={assessment.status.replace('_', ' ').toUpperCase()}
@@ -337,17 +336,17 @@ export const AssessmentList: React.FC = () => {
                     sx={{ mb: 1 }}
                   />
                   <Typography variant="body2" color="text.secondary">
-                    Created: {formatDate(assessment.createdAt)}
+                    Created: {formatDate(assessment.created_at)}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Updated: {formatDate(assessment.updatedAt)}
+                    Updated: {formatDate(assessment.updated_at)}
                   </Typography>
                 </Box>
                 <Box onClick={(e) => e.stopPropagation()}>
                   <IconButton
                     size="small"
                     onClick={() => handleViewAssessment(assessment.id)}
-                    aria-label={`View assessment for ${assessment.clientName}`}
+                    aria-label={`View assessment for ${assessment.client_name}`}
                   >
                     <ViewIcon fontSize="small" />
                   </IconButton>
@@ -355,7 +354,7 @@ export const AssessmentList: React.FC = () => {
                     <IconButton
                       size="small"
                       onClick={() => handleEditAssessment(assessment.id)}
-                      aria-label={`Edit assessment for ${assessment.clientName}`}
+                      aria-label={`Edit assessment for ${assessment.client_name}`}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>

@@ -1,0 +1,14 @@
+
+> financial-rise-frontend@1.0.0 build
+> tsc && vite build
+
+src/pages/Assessments/AssessmentList.tsx(103,57): error TS2345: Argument of type '"updatedAt"' is not assignable to parameter of type 'SortField | (() => SortField)'.
+src/pages/Assessments/AssessmentList.tsx(133,14): error TS2678: Type '"clientName"' is not comparable to type 'SortField'.
+src/pages/Assessments/AssessmentList.tsx(134,28): error TS2551: Property 'clientName' does not exist on type 'Assessment'. Did you mean 'client_name'?
+src/pages/Assessments/AssessmentList.tsx(134,55): error TS2551: Property 'clientName' does not exist on type 'Assessment'. Did you mean 'client_name'?
+src/pages/Assessments/AssessmentList.tsx(139,14): error TS2678: Type '"createdAt"' is not comparable to type 'SortField'.
+src/pages/Assessments/AssessmentList.tsx(140,37): error TS2551: Property 'createdAt' does not exist on type 'Assessment'. Did you mean 'created_at'?
+src/pages/Assessments/AssessmentList.tsx(140,71): error TS2551: Property 'createdAt' does not exist on type 'Assessment'. Did you mean 'created_at'?
+src/pages/Assessments/AssessmentList.tsx(142,14): error TS2678: Type '"updatedAt"' is not comparable to type 'SortField'.
+src/pages/Assessments/AssessmentList.tsx(143,37): error TS2551: Property 'updatedAt' does not exist on type 'Assessment'. Did you mean 'updated_at'?
+src/pages/Assessments/AssessmentList.tsx(143,71): error TS2551: Property 'updatedAt' does not exist on type 'Assessment'. Did you mean 'updated_at'?

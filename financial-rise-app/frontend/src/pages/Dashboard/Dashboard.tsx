@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -7,9 +7,6 @@ import {
   Button,
   Paper,
   Grid,
-  Card as MuiCard,
-  CardContent,
-  CardActions,
   Chip,
   Table,
   TableBody,
@@ -30,7 +27,6 @@ import {
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { fetchAssessments } from '@store/slices/assessmentSlice';
-import type { Assessment } from '@store/slices/assessmentSlice';
 
 /**
  * Get status chip color
@@ -96,7 +92,7 @@ const Dashboard: React.FC = () => {
 
   // Get recent assessments (last 5)
   const recentAssessments = [...assessments]
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
     .slice(0, 5);
 
   const handleViewAssessment = (assessmentId: string, status: string) => {
@@ -251,7 +247,7 @@ const Dashboard: React.FC = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Client Name</TableCell>
-                    <TableCell>Business Name</TableCell>
+                    <TableCell>Email</TableCell>
                     <TableCell>Status</TableCell>
                     <TableCell>Last Updated</TableCell>
                     <TableCell align="right">Actions</TableCell>
@@ -262,11 +258,11 @@ const Dashboard: React.FC = () => {
                     <TableRow key={assessment.id} hover>
                       <TableCell>
                         <Typography variant="body2" fontWeight={600}>
-                          {assessment.clientName}
+                          {assessment.client_name}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2">{assessment.businessName}</Typography>
+                        <Typography variant="body2">{assessment.client_email}</Typography>
                       </TableCell>
                       <TableCell>
                         <Chip
@@ -277,7 +273,7 @@ const Dashboard: React.FC = () => {
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" color="text.secondary">
-                          {formatDate(assessment.updatedAt)}
+                          {formatDate(assessment.updated_at)}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">

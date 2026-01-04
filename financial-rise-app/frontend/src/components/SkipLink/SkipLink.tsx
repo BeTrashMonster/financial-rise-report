@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Box, Link } from '@mui/material';
+import { Box } from '@mui/material';
 
 interface SkipLinkProps {
   /** The ID of the main content element to skip to */

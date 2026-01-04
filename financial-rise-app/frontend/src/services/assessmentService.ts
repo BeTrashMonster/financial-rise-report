@@ -1,9 +1,9 @@
 import api from './api';
-import { Assessment, Question, Answer } from '@store/slices/assessmentSlice';
+import { Answer } from '@store/slices/assessmentSlice';
+import type { Assessment } from '@/types/assessment';
 import type { QuestionsResponse, QuestionResponse } from '@/types/question';
 import type { DISCProfileWithSummary, PhaseResultsWithDetails } from '@/types/results';
 import type {
-  GenerateReportRequest,
   ReportAccepted,
   ReportStatusResponse,
   ReportDownloadResponse,

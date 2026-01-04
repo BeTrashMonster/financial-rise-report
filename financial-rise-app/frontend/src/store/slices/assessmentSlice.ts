@@ -1,33 +1,21 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { assessmentService, CreateAssessmentRequest } from '@services/assessmentService';
-
-export interface Question {
-  id: string;
-  text: string;
-  type: 'multiple_choice' | 'scale' | 'text' | 'boolean';
-  options?: string[];
-  required: boolean;
-  phase?: string;
-}
+import { Question } from '@/types/question';
+import { Assessment as BaseAssessment } from '@/types/assessment';
 
 export interface Answer {
   questionId: string;
   value: string | number | boolean;
 }
 
-export interface Assessment {
-  id: string;
-  clientName: string;
-  status: 'draft' | 'in_progress' | 'completed';
+// Extended Assessment type with local answers for state management
+export interface Assessment extends BaseAssessment {
   answers: Answer[];
-  createdAt: string;
-  updatedAt: string;
-  completedAt?: string;
 }
 
 export interface AssessmentState {
   currentAssessment: Assessment | null;
-  assessments: Assessment[];
+  assessments: BaseAssessment[];
   questions: Question[];
   loading: boolean;
   error: string | null;
@@ -155,9 +143,9 @@ const assessmentSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(createAssessment.fulfilled, (state, action: PayloadAction<Assessment>) => {
+      .addCase(createAssessment.fulfilled, (state, action: PayloadAction<BaseAssessment>) => {
         state.loading = false;
-        state.currentAssessment = action.payload;
+        state.currentAssessment = { ...action.payload, answers: [] };
         state.assessments.push(action.payload);
       })
       .addCase(createAssessment.rejected, (state, action) => {
@@ -171,9 +159,11 @@ const assessmentSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(saveAnswer.fulfilled, (state, action: PayloadAction<Assessment>) => {
+      .addCase(saveAnswer.fulfilled, (state, action: PayloadAction<BaseAssessment>) => {
         state.loading = false;
-        state.currentAssessment = action.payload;
+        if (state.currentAssessment) {
+          state.currentAssessment = { ...action.payload, answers: state.currentAssessment.answers };
+        }
       })
       .addCase(saveAnswer.rejected, (state, action) => {
         state.loading = false;
@@ -186,10 +176,12 @@ const assessmentSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(submitAssessment.fulfilled, (state, action: PayloadAction<Assessment>) => {
+      .addCase(submitAssessment.fulfilled, (state, action: PayloadAction<BaseAssessment>) => {
         state.loading = false;
-        state.currentAssessment = action.payload;
-        const index = state.assessments.findIndex((a) => a.id === action.payload.id);
+        if (state.currentAssessment) {
+          state.currentAssessment = { ...action.payload, answers: state.currentAssessment.answers };
+        }
+        const index = state.assessments.findIndex((a: BaseAssessment) => a.id === action.payload.id);
         if (index >= 0) {
           state.assessments[index] = action.payload;
         }
@@ -205,7 +197,7 @@ const assessmentSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchAssessments.fulfilled, (state, action: PayloadAction<Assessment[]>) => {
+      .addCase(fetchAssessments.fulfilled, (state, action: PayloadAction<BaseAssessment[]>) => {
         state.loading = false;
         state.assessments = action.payload;
       })

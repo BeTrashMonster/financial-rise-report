@@ -11,7 +11,6 @@
  */
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -29,7 +28,6 @@ import {
 } from '@mui/material';
 import {
   Person as PersonIcon,
-  Email as EmailIcon,
   Lock as LockIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
@@ -52,7 +50,6 @@ interface PasswordFormData {
 }
 
 export const UserProfile: React.FC = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
