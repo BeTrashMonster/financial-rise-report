@@ -113,8 +113,8 @@ describe('AssessmentsController', () => {
 
       await controller.findAll(
         mockUser,
-        1,
-        10,
+        '1',
+        '10',
         AssessmentStatus.COMPLETED,
         'Smith',
         'updated_at',
