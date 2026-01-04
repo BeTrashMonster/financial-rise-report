@@ -32,8 +32,8 @@ services:
       # SendGrid for emails
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       # Application settings
-      FRONTEND_URL: ${FRONTEND_URL:-https://financialrise.com}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://34.72.61.170,http://localhost:3001,http://localhost:5173,https://financialrise.org}
+      FRONTEND_URL: ${FRONTEND_URL:-https://getoffthemoneyshametrain.com}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://34.72.61.170,http://localhost:3001,http://localhost:5173,https://getoffthemoneyshametrain.com,http://getoffthemoneyshametrain.com}
       REDIS_HOST: redis
       REDIS_PORT: 6379
     # Backend accessed via Caddy proxy, no host port needed
