@@ -37,7 +37,7 @@ GCP_PROJECT_ID="financial-rise-prod"
 # Application Configuration
 NODE_ENV="production"
 PORT="4000"
-FRONTEND_URL="https://financialrise.org"
+FRONTEND_URL="https://getoffthemoneyshametrain.com"
 
 # Email Configuration
 SENDGRID_API_KEY="SG.your-key-here"
