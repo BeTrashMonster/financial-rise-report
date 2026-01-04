@@ -15,16 +15,140 @@
 **Monthly Cost:** $103 (budget optimized)
 
 **Latest Commits:**
+- `4e4ecc9` - Add comprehensive question bank (P1 bug fix) - 66 questions (2026-01-04) ✅
+- `c0db6b5` - Implement missing /submit endpoint and fix auto-save (P0 bugs) (2026-01-04) ✅
+- `aac9a3c` - Fix Save & Exit error when no responses exist (2026-01-04) ✅
+- `46c9ef4` - Fix question type rendering to handle nested options format (2026-01-04) ✅
+- `1ce00de` - Trigger deployment with corrected FRONTEND_URL (2026-01-04) ✅
+- `d2656dc` - Fix FRONTEND_URL in all deployment scripts (2026-01-04) ✅
+- `92d8c2a` - Fix frontend questionnaire UI issues (2026-01-04) ✅
 - `a2d1a7c` - Fix all remaining userId to id references in test files (2026-01-04) ✅ ALL TESTS PASSING
-- `6f63646` - Complete userId to id migration across all services and tests (2026-01-04)
-- `35e0e2d` - Fix users-processing-restriction tests (2026-01-04)
-- `7d20212` - Fix JWT user object to use 'id' instead of 'userId' (2026-01-04)
-- `33b058f` - Fix CSRF interceptor production tests (2026-01-04)
-- `3f78ea1` - Enable automatic HTTPS with Let's Encrypt (2026-01-04)
 
 ---
 
 ## Recent Issues & Resolutions
+
+### Issue 16: Incomplete Question Bank (RESOLVED ✅)
+**Date:** 2026-01-04
+**Severity:** P1 - High Priority
+**Status:** RESOLVED ✅
+
+**Problem:**
+Only 4 sample questions in database, insufficient for proper assessment testing and production use.
+
+**Root Cause:**
+Manual seeding of minimal questions for initial testing. No comprehensive question bank created.
+
+**Solution:**
+Created `seed-comprehensive-questions.sql` with 66 questions:
+- 4 metadata questions (industry, revenue, employees, business age)
+- 12 Stabilize phase questions (accounting health, compliance, debt)
+- 10 Organize phase questions (entity type with S-Corp conditional)
+- 10 Build phase questions (SOPs, budgeting, workflows)
+- 10 Grow phase questions (forecasting, strategic planning)
+- 8 Systemic phase questions (financial literacy, KPIs)
+- 12 DISC profiling questions (hidden personality assessment)
+
+All questions include `phase_scores` and `disc_scores` for proper calculation.
+
+**Files Changed:**
+- Created: `seed-comprehensive-questions.sql`
+- Updated: `FRONTEND-ASSESSMENT-ROADMAP.md` (marked P1 Bug #3 as complete)
+
+**Commit:** `4e4ecc9`
+
+**Next Steps:**
+- Deploy questions to production: `bash deploy-comprehensive-questions.sh`
+- Test all question types (multiple_choice, rating, text)
+- Verify phase scoring algorithm
+
+---
+
+### Issue 15: Assessment Submit Endpoint Missing (RESOLVED ✅)
+**Date:** 2026-01-04
+**Severity:** P0 - Critical (Production Blocking)
+**Status:** RESOLVED ✅
+
+**Problem:**
+```
+POST /api/v1/assessments/{id}/submit
+404 Not Found
+```
+
+Frontend "Calculate Results" button failed because backend endpoint was not implemented.
+
+**Root Cause:**
+Submit endpoint was planned but never implemented in `assessments.controller.ts`.
+
+**Solution:**
+Implemented POST ':id/submit' endpoint in `assessments.controller.ts`:
+```typescript
+@Post(':id/submit')
+@UseGuards(AssessmentOwnershipGuard)
+async submitAssessment(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
+  return this.assessmentsService.submitAssessment(id, user.id);
+}
+```
+
+Implemented `submitAssessment()` method in `assessments.service.ts`:
+- Validates assessment exists and belongs to consultant
+- Checks if already completed
+- Marks status as COMPLETED
+- Sets completed_at timestamp
+- TODO: DISC profile and phase calculation (future work)
+
+**Files Changed:**
+- `financial-rise-app/backend/src/modules/assessments/assessments.controller.ts`
+- `financial-rise-app/backend/src/modules/assessments/assessments.service.ts`
+
+**Commit:** `c0db6b5`
+
+**Impact:** Assessment workflow can now complete successfully. DISC/phase calculation deferred to future implementation.
+
+---
+
+### Issue 14: Auto-Save 500 Internal Server Error (RESOLVED ✅)
+**Date:** 2026-01-04
+**Severity:** P0 - Critical (Production Blocking)
+**Status:** RESOLVED ✅
+
+**Problem:**
+```
+POST /api/v1/questionnaire/responses
+500 Internal Server Error
+
+QueryFailedError: column Assessment__Assessment_responses.not_applicable does not exist
+```
+
+Assessment responses could not be saved, causing users to lose all progress.
+
+**Root Cause:**
+Database schema was missing two columns that the `AssessmentResponse` entity expected:
+- `not_applicable` (BOOLEAN)
+- `consultant_notes` (TEXT)
+
+TypeORM entity defined these fields but database schema was out of sync.
+
+**Solution:**
+Added missing columns via SQL migration:
+```sql
+ALTER TABLE assessment_responses
+ADD COLUMN IF NOT EXISTS not_applicable BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE assessment_responses
+ADD COLUMN IF NOT EXISTS consultant_notes TEXT;
+```
+
+Ran migration on production database and verified schema with `\d assessment_responses`.
+
+**Files Changed:**
+- Production database schema (assessment_responses table)
+
+**Commit:** `c0db6b5`
+
+**Impact:** Auto-save now works correctly. All assessment responses are persisted.
+
+---
 
 ### Issue 13: JWT User Object Inconsistency (RESOLVED ✅)
 **Date:** 2026-01-04
