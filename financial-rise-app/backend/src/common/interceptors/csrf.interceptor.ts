@@ -35,13 +35,16 @@ export class CsrfInterceptor implements NestInterceptor {
       // Generate new CSRF token
       const csrfToken = crypto.randomBytes(CsrfInterceptor.TOKEN_LENGTH).toString('hex');
 
+      // Determine if connection is secure
+      const isSecure = request.secure || request.headers['x-forwarded-proto'] === 'https';
+
       // Set CSRF cookie
       // Note: httpOnly=false allows client JavaScript to read the cookie
       // This is necessary for the double-submit pattern
       response.cookie(CsrfInterceptor.CSRF_COOKIE_NAME, csrfToken, {
         httpOnly: false, // Client needs to read this
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-        sameSite: 'strict', // Prevent CSRF attacks
+        secure: isSecure, // Only require HTTPS when actually using HTTPS
+        sameSite: 'lax', // Changed from 'strict' to allow cross-site navigation
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       });
     }
