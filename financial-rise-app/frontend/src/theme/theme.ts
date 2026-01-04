@@ -81,6 +81,22 @@ export const theme: Theme = createTheme({
   spacing: 8,
 
   components: {
+    // Global Focus Indicator (WCAG 2.1 AA Compliance)
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*:focus-visible': {
+          outline: `3px solid ${colors.secondary.main}`,
+          outlineOffset: '2px',
+          borderRadius: '4px',
+        },
+        // Ensure all interactive elements have visible focus
+        'a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible': {
+          outline: `3px solid ${colors.secondary.main}`,
+          outlineOffset: '2px',
+        },
+      },
+    },
+
     // Button Overrides
     MuiButton: {
       styleOverrides: {
@@ -93,6 +109,11 @@ export const theme: Theme = createTheme({
           boxShadow: 'none',
           '&:hover': {
             boxShadow: 'none',
+          },
+          // Enhanced focus indicator for buttons
+          '&:focus-visible': {
+            outline: `3px solid ${colors.secondary.main}`,
+            outlineOffset: '2px',
           },
         },
         contained: {
@@ -145,6 +166,12 @@ export const theme: Theme = createTheme({
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderWidth: 2,
+            borderColor: colors.primary.main,
+          },
+          // Enhanced focus indicator for inputs
+          '&.Mui-focused': {
+            outline: `3px solid ${colors.secondary.main}`,
+            outlineOffset: '2px',
           },
         },
         input: {

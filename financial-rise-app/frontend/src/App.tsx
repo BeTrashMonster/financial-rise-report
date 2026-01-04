@@ -7,6 +7,7 @@ import { theme } from '@theme/theme';
 import { AppRoutes } from './routes';
 import { Navigation } from '@components/Navigation/Navigation';
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
+import { SkipLink } from '@components/SkipLink';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { getCurrentUser } from '@store/slices/authSlice';
 
@@ -38,10 +39,16 @@ const App: React.FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Router>
+            <SkipLink targetId="main-content" />
             <AppInit>
               <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <Navigation />
-                <Box component="main" sx={{ flexGrow: 1 }}>
+                <Box
+                  id="main-content"
+                  component="main"
+                  tabIndex={-1}
+                  sx={{ flexGrow: 1, outline: 'none' }}
+                >
                   <AppRoutes />
                 </Box>
               </Box>
