@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { Provider } from 'react-redux';
 import { store } from '@store/store';
 import { theme } from '@theme/theme';
 import { AppRoutes } from './routes';
+import { Navigation } from '@components/Navigation/Navigation';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { getCurrentUser } from '@store/slices/authSlice';
 
@@ -36,7 +37,12 @@ const App: React.FC = () => {
         <CssBaseline />
         <Router>
           <AppInit>
-            <AppRoutes />
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+              <Navigation />
+              <Box component="main" sx={{ flexGrow: 1 }}>
+                <AppRoutes />
+              </Box>
+            </Box>
           </AppInit>
         </Router>
       </ThemeProvider>
