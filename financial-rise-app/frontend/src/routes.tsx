@@ -5,6 +5,7 @@ import { useAppSelector } from '@store/hooks';
 // Lazy load pages
 const Login = React.lazy(() => import('@pages/Login/Login'));
 const Dashboard = React.lazy(() => import('@pages/Dashboard/Dashboard'));
+const AssessmentList = React.lazy(() => import('@pages/Assessments/AssessmentList'));
 const Privacy = React.lazy(() => import('@pages/Privacy/Privacy'));
 const DoNotSell = React.lazy(() => import('@pages/DoNotSell/DoNotSell'));
 
@@ -52,6 +53,14 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assessments"
+          element={
+            <ProtectedRoute>
+              <AssessmentList />
             </ProtectedRoute>
           }
         />
