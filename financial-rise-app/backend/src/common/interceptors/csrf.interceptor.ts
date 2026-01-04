@@ -36,7 +36,7 @@ export class CsrfInterceptor implements NestInterceptor {
       const csrfToken = crypto.randomBytes(CsrfInterceptor.TOKEN_LENGTH).toString('hex');
 
       // Determine if connection is secure
-      const isSecure = request.secure || request.headers['x-forwarded-proto'] === 'https';
+      const isSecure = request.secure || request.headers?.['x-forwarded-proto'] === 'https';
 
       // Set CSRF cookie
       // Note: httpOnly=false allows client JavaScript to read the cookie
