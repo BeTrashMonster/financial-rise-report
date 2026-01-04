@@ -58,7 +58,7 @@ Thank you for joining our pilot program! This quick form helps us understand you
    [ ] 51-100
    [ ] 100+
 
-8. **How many new client financial assessments do you conduct per month?**
+8. **How many new client financial assessments do you conduct per period?**
    [ ] 0-2
    [ ] 3-5
    [ ] 6-10
@@ -167,7 +167,7 @@ Thank you! We'll send your login credentials and schedule your onboarding call w
 ```
 # Financial RISE Pilot - Quantitative Feedback
 
-Thank you for completing the 3-week pilot! This survey should take 10-15 minutes. Your honest feedback will directly shape our product roadmap.
+Thank you for completing the pilot! This survey should take 10-appropriate time. Your honest feedback will directly shape our product roadmap.
 
 **Participant ID:** [Auto-populate if using Google Forms]
 
@@ -309,7 +309,7 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
     [ ] Probably not
     [ ] Definitely not
 
-29. **What monthly price would you consider FAIR for unlimited assessments?**
+29. **What subscription price would you consider FAIR for unlimited assessments?**
     [ ] Less than $25
     [ ] $25-$50
     [ ] $50-$75
@@ -318,14 +318,14 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
     [ ] $150-$200
     [ ] More than $200
 
-30. **What monthly price would be so LOW that you'd question the quality?**
+30. **What subscription price would be so LOW that you'd question the quality?**
     [ ] Less than $10
     [ ] $10-$25
     [ ] $25-$50
     [ ] $50-$75
     [ ] I wouldn't question quality based on price
 
-31. **What monthly price would be so HIGH that you wouldn't consider buying?**
+31. **What subscription price would be so HIGH that you wouldn't consider buying?**
     [ ] $50
     [ ] $75
     [ ] $100
@@ -413,7 +413,7 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
 # Financial RISE Pilot - Exit Interview Script
 **Participant Name:** _______________
 **Date:** _______________
-**Duration:** 30 minutes
+**Duration:** appropriate time
 **Interviewer:** _______________
 
 ---
@@ -432,7 +432,7 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
 ## Introduction (2 minutes)
 
 **Script:**
-"Hi [Name], thanks so much for joining this exit interview and for participating in our pilot program. This call should take about 30 minutes. I'd like to record this conversation so I can focus on our discussion rather than taking notes—is that okay with you?"
+"Hi [Name], thanks so much for joining this exit interview and for participating in our pilot program. This call should take about appropriate time. I'd like to record this conversation so I can focus on our discussion rather than taking notes—is that okay with you?"
 
 [Wait for permission]
 
@@ -461,7 +461,7 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
 
 ---
 
-## Section 2: Feature-Specific Deep Dive (15 minutes)
+## Section 2: Feature-Specific Deep Dive (appropriate time)
 
 ### Questionnaire (3 minutes)
 
@@ -527,13 +527,13 @@ Thank you for completing the 3-week pilot! This survey should take 10-15 minutes
 
 ## Section 4: Pricing & Business Model (3 minutes)
 
-20. **"On your survey, you indicated you'd be willing to pay [$X-$Y] per month. Can you walk me through that pricing decision—what were you comparing to?"**
+20. **"On your survey, you indicated you'd be willing to pay [$X-$Y] per period. Can you walk me through that pricing decision—what were you comparing to?"**
 
 21. **"At what price point would Financial RISE be a 'no-brainer' purchase for you—where you'd subscribe immediately without hesitation?"**
 
-22. **"Would you prefer a monthly subscription (unlimited assessments) or pay-per-assessment model?"**
+22. **"Would you prefer a subscription subscription (unlimited assessments) or pay-per-assessment model?"**
 
-    [Probe: How many assessments do you do per month?]
+    [Probe: How many assessments do you do per period?]
 
 ---
 
@@ -917,7 +917,7 @@ _________________________________________________________________
 | Theme | Category | Mentions | Representative Quote |
 |-------|----------|----------|---------------------|
 | "Reports look professional" | Positive | 5 | "My client was impressed by how professional the report looked" - P001 |
-| "Questionnaire was too long" | Negative | 2 | "30 minutes felt a bit long for my clients" - P003 |
+| "Questionnaire was too long" | Negative | 2 | "appropriate time felt a bit long for my clients" - P003 |
 | "Saved significant time" | Positive | 4 | "This cut my assessment time in half" - P002 |
 | "DISC strategies were helpful" | Positive | 3 | "The communication tips actually helped me frame my follow-up call" - P004 |
 | "Missing task tracking" | Feature Request | 3 | "I wish I could turn the recommendations into a checklist" - P001 |

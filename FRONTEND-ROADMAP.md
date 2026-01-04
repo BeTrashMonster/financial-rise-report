@@ -360,18 +360,16 @@ GET    /api/v1/reports/download/:id             - Download report
 
 **Status:** 🚀 Planning Complete - Ready to Deploy
 **Planning Completed:** 2026-01-04
-**Target Start Date:** [Set date after staging deployment]
-**Duration:** 3 weeks
 
 **Goal:** Validate MVP with real users before building enhancements
 
 **Planning Documents Created:**
-- [x] `PILOT-TESTING-PLAN.md` - Comprehensive 3-week pilot plan
+- [x] `PILOT-TESTING-PLAN.md` - Comprehensive pilot plan
 - [x] `STAGING-DEPLOYMENT-CHECKLIST.md` - Step-by-step deployment guide
 - [x] `PILOT-DATA-COLLECTION-TEMPLATES.md` - All survey and interview templates
 
 **Pre-Pilot Tasks:**
-- [ ] **Week 0 (Pre-Pilot): Deployment & Recruitment**
+- [ ] **Phase: Deployment & Recruitment**
   - [ ] Deploy backend to staging (GCP VM)
   - [ ] Deploy frontend to staging (Vercel/Netlify)
   - [ ] Run smoke tests on all features (authentication, assessments, reports)
@@ -384,22 +382,22 @@ GET    /api/v1/reports/download/:id             - Download report
   - [ ] Schedule onboarding calls with all participants
 
 **Pilot Testing Tasks:**
-- [ ] **Week 1: Onboarding**
-  - [ ] Conduct onboarding sessions with all 5 participants (30 min each)
+- [ ] **Phase: Onboarding**
+  - [ ] Conduct onboarding sessions with all 5 participants (appropriate time each)
   - [ ] Participants complete first assessment with real client
-  - [ ] Monitor usage and respond to support requests (<4 hour response)
+  - [ ] Monitor usage and respond to support requests (promptly)
   - [ ] Track bugs and issues in real-time
 
-- [ ] **Week 2: Active Testing**
+- [ ] **Phase: Active Testing**
   - [ ] Participants complete 2-3 additional assessments
   - [ ] Send mid-week check-in emails
   - [ ] Continue monitoring and support
   - [ ] Fix any P0/P1 bugs discovered
 
-- [ ] **Week 3: Feedback Collection**
+- [ ] **Phase: Feedback Collection**
   - [ ] Send quantitative survey to all participants
   - [ ] Collect survey responses (target: 100% response rate)
-  - [ ] Conduct exit interviews with all 5 participants (30 min each)
+  - [ ] Conduct exit interviews with all 5 participants (appropriate time each)
   - [ ] Transcribe interviews and compile feedback themes
 
 **Data Collection (Quantitative):**
@@ -414,7 +412,7 @@ GET    /api/v1/reports/download/:id             - Download report
 - [ ] Page load times (target: <3 seconds)
 
 **Data Collection (Qualitative):**
-- [ ] Exit interviews (30 min each, recorded with permission)
+- [ ] Exit interviews (appropriate time each, recorded with permission)
 - [ ] Feature requests and pain points
 - [ ] Testimonial quotes (with permission)
 - [ ] Bug reports and usability issues
@@ -890,22 +888,22 @@ These features have completed backend work streams but frontend is deferred:
 
 ## Next Steps
 
-1. **Immediate (Week 1):**
+1. **Immediate (Phase):**
    - Set up Material-UI theme with brand colors (WS 13)
    - Begin WS 1: Assessment List Page
    - Install accessibility testing tools
 
-2. **Short-Term (Weeks 2-6):**
+2. **Short-Term:**
    - Complete WS 1-6 sequentially
    - Integrate error handling (WS 10a) and mobile responsiveness (WS 11a) as each WS is built
    - Conduct accessibility testing (WS 12) throughout
 
-3. **Mid-Term (Weeks 7-8):**
+3. **Mid-Term:**
    - Deploy to staging
    - Recruit and onboard 3-5 pilot consultants
    - Conduct structured pilot testing
 
-4. **Long-Term (Weeks 9-12):**
+4. **Long-Term:**
    - Analyze pilot feedback
    - Implement Phase 2 features based on priorities
    - Prepare for broader launch

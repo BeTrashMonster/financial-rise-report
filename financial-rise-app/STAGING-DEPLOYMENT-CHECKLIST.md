@@ -189,7 +189,7 @@ vercel --prod
    - Go to Vercel project settings → Domains
    - Add domain: `staging.financial-rise.app`
    - Update DNS records as instructed by Vercel
-   - Wait for SSL certificate provisioning (~5 minutes)
+   - Wait for SSL certificate provisioning (~a few minutes)
 
 **Vercel Deployment Checklist:**
 - [ ] Deployment succeeded (green checkmark in Vercel dashboard)
@@ -518,7 +518,7 @@ function App() {
 - Go to uptimerobot.com
 - Create monitor for `https://staging.financial-rise.app`
 - Create monitor for `https://api-staging.financial-rise.app/api/v1/health`
-- Set check interval to 5 minutes
+- Set check interval to a few minutes
 - Add email alert for downtime
 
 2. **Checklist:**
@@ -606,11 +606,11 @@ Welcome to the Financial RISE pilot program! We're excited to have you test our 
 **Next Steps:**
 1. Log in and explore the dashboard
 2. Create your first assessment (we recommend starting with a familiar client)
-3. Complete the questionnaire (20-30 minutes)
+3. Complete the questionnaire (20-appropriate time)
 4. Generate and review the reports
 
 **Support:**
-- Email: support@financial-rise.com (response within 4 hours during business hours)
+- Email: support@financial-rise.com (response within promptly during business hours)
 - Phone: [Phone] (emergency only)
 
 We've scheduled your onboarding call for [Date/Time]. Looking forward to hearing your feedback!
