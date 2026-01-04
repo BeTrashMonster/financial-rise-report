@@ -245,7 +245,10 @@ export const Questionnaire: React.FC = () => {
   };
 
   const handleSaveAndExit = async () => {
-    await handleAutoSave();
+    // Only save if there are responses
+    if (state.responses.size > 0) {
+      await handleAutoSave();
+    }
     navigate('/assessments');
   };
 
