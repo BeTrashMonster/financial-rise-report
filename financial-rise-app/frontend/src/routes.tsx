@@ -8,6 +8,7 @@ const Dashboard = React.lazy(() => import('@pages/Dashboard/Dashboard'));
 const AssessmentList = React.lazy(() => import('@pages/Assessments/AssessmentList'));
 const CreateAssessment = React.lazy(() => import('@pages/Assessments/CreateAssessment'));
 const Questionnaire = React.lazy(() => import('@pages/Questionnaire/Questionnaire'));
+const Results = React.lazy(() => import('@pages/Results/Results'));
 const Privacy = React.lazy(() => import('@pages/Privacy/Privacy'));
 const DoNotSell = React.lazy(() => import('@pages/DoNotSell/DoNotSell'));
 
@@ -79,6 +80,14 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <Questionnaire />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assessments/:assessmentId/results"
+          element={
+            <ProtectedRoute>
+              <Results />
             </ProtectedRoute>
           }
         />

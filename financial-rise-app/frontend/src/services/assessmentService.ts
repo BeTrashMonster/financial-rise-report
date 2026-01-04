@@ -1,6 +1,7 @@
 import api from './api';
 import { Assessment, Question, Answer } from '@store/slices/assessmentSlice';
 import type { QuestionsResponse, QuestionResponse } from '@/types/question';
+import type { DISCProfileWithSummary, PhaseResultsWithDetails } from '@/types/results';
 
 /**
  * Assessment Service
@@ -139,6 +140,26 @@ export const assessmentService = {
     const response = await api.get(`/assessments/${assessmentId}/reports/client`, {
       responseType: 'blob',
     });
+    return response.data;
+  },
+
+  /**
+   * Get DISC profile for an assessment
+   */
+  getDISCProfile: async (assessmentId: string): Promise<DISCProfileWithSummary> => {
+    const response = await api.get<DISCProfileWithSummary>(
+      `/assessments/${assessmentId}/disc-profile`
+    );
+    return response.data;
+  },
+
+  /**
+   * Get phase results for an assessment
+   */
+  getPhaseResults: async (assessmentId: string): Promise<PhaseResultsWithDetails> => {
+    const response = await api.get<PhaseResultsWithDetails>(
+      `/assessments/${assessmentId}/phase-results`
+    );
     return response.data;
   },
 };
