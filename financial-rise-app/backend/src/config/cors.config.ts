@@ -8,6 +8,8 @@ import { Logger } from '@nestjs/common';
  * Purpose: Implement secure CORS origin validation with whitelist,
  * logging for blocked requests, and explicit method/header configuration.
  *
+ * Updated: 2026-01-03 - Added CORS_ORIGINS environment variable support
+ *
  * Security Finding: HIGH-010 - CORS misconfiguration risk
  * OWASP: A05:2021 - Security Misconfiguration
  * CWE: CWE-346 - Origin Validation Error
