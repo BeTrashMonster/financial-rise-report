@@ -14,13 +14,14 @@ describe('CsrfInterceptor', () => {
   });
 
   describe('intercept', () => {
-    const createMockContext = (cookies: any = {}): ExecutionContext => {
+    const createMockContext = (cookies: any = {}, requestOverrides: any = {}): ExecutionContext => {
       const mockResponse = {
         cookie: jest.fn(),
       };
 
       const mockRequest = {
         cookies,
+        ...requestOverrides,
       };
 
       return {
@@ -96,7 +97,7 @@ describe('CsrfInterceptor', () => {
       const originalEnv = process.env.NODE_ENV;
       process.env.NODE_ENV = 'production';
 
-      const context = createMockContext({});
+      const context = createMockContext({}, { headers: { 'x-forwarded-proto': 'https' } });
       const response = context.switchToHttp().getResponse();
 
       interceptor.intercept(context, mockNext);
@@ -330,7 +331,7 @@ describe('CsrfInterceptor', () => {
         const originalEnv = process.env.NODE_ENV;
         process.env.NODE_ENV = 'production';
 
-        const context = createMockContext({});
+        const context = createMockContext({}, { headers: { 'x-forwarded-proto': 'https' } });
         const response = context.switchToHttp().getResponse();
 
         interceptor.intercept(context, mockNext);
