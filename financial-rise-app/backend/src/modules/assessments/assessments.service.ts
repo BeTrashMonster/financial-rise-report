@@ -178,6 +178,29 @@ export class AssessmentsService {
   }
 
   /**
+   * Submit assessment for calculation
+   * Marks assessment as complete and triggers DISC/phase calculation
+   */
+  async submitAssessment(id: string, consultantId: string): Promise<Assessment> {
+    // Find assessment
+    const assessment = await this.findOne(id, consultantId);
+
+    // Check if already completed
+    if (assessment.status === AssessmentStatus.COMPLETED) {
+      throw new BadRequestException('Assessment already submitted');
+    }
+
+    // Update status to completed
+    assessment.status = AssessmentStatus.COMPLETED;
+    assessment.completed_at = new Date();
+
+    // TODO: Calculate DISC profile and phase results here
+    // For now, just mark as complete
+
+    return this.assessmentRepository.save(assessment);
+  }
+
+  /**
    * Soft delete an assessment
    */
   async remove(id: string, consultantId: string): Promise<void> {

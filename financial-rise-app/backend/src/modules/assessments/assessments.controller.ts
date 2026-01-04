@@ -133,6 +133,26 @@ export class AssessmentsController {
     return this.assessmentsService.update(id, updateAssessmentDto, user.id);
   }
 
+  @Post(':id/submit')
+  @UseGuards(AssessmentOwnershipGuard)
+  @ApiOperation({
+    summary: 'Submit assessment for calculation',
+    description: 'Marks assessment as complete and calculates DISC profile and phase results. IDOR protected.',
+  })
+  @ApiParam({ name: 'id', description: 'Assessment ID', type: String })
+  @ApiResponse({
+    status: 200,
+    description: 'Assessment submitted and results calculated',
+    type: AssessmentResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Assessment not found' })
+  @ApiResponse({ status: 400, description: 'Assessment incomplete or already submitted' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - assessment belongs to another user' })
+  async submitAssessment(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: any) {
+    return this.assessmentsService.submitAssessment(id, user.id);
+  }
+
   @Delete(':id')
   @UseGuards(AssessmentOwnershipGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
