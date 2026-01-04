@@ -296,7 +296,7 @@ export const Questionnaire: React.FC = () => {
             Before We Begin
           </Typography>
           <Typography variant="body1" paragraph color="text.secondary">
-            To help us measure the value of this assessment, please rate your current confidence in understanding your business's financial readiness.
+            Please rate your current confidence in understanding your business's financial readiness.
           </Typography>
 
           <Box sx={{ mt: 4, mb: 2 }}>
@@ -307,20 +307,22 @@ export const Questionnaire: React.FC = () => {
                 </Typography>
               </FormLabel>
 
-              <Slider
-                value={state.beforeConfidence || 5}
-                onChange={(_, value) => setState((prev) => ({ ...prev, beforeConfidence: value as number }))}
-                min={1}
-                max={10}
-                marks={[
-                  { value: 1, label: '1 - Not confident' },
-                  { value: 5, label: '5 - Somewhat confident' },
-                  { value: 10, label: '10 - Very confident' },
-                ]}
-                valueLabelDisplay="on"
-                aria-label="Confidence level before assessment"
-                sx={{ mt: 4, mb: 6 }}
-              />
+              <Box sx={{ px: 2 }}>
+                <Slider
+                  value={state.beforeConfidence || 5}
+                  onChange={(_, value) => setState((prev) => ({ ...prev, beforeConfidence: value as number }))}
+                  min={1}
+                  max={10}
+                  marks={[
+                    { value: 1, label: '1 - Not confident' },
+                    { value: 5, label: '5 - Somewhat confident' },
+                    { value: 10, label: '10 - Very confident' },
+                  ]}
+                  valueLabelDisplay="on"
+                  aria-label="Confidence level before assessment"
+                  sx={{ mt: 4, mb: 6 }}
+                />
+              </Box>
             </FormControl>
           </Box>
 
@@ -359,20 +361,22 @@ export const Questionnaire: React.FC = () => {
                 </Typography>
               </FormLabel>
 
-              <Slider
-                value={state.afterConfidence || 5}
-                onChange={(_, value) => setState((prev) => ({ ...prev, afterConfidence: value as number }))}
-                min={1}
-                max={10}
-                marks={[
-                  { value: 1, label: '1 - Not confident' },
-                  { value: 5, label: '5 - Somewhat confident' },
-                  { value: 10, label: '10 - Very confident' },
-                ]}
-                valueLabelDisplay="on"
-                aria-label="Confidence level after assessment"
-                sx={{ mt: 4, mb: 6 }}
-              />
+              <Box sx={{ px: 2 }}>
+                <Slider
+                  value={state.afterConfidence || 5}
+                  onChange={(_, value) => setState((prev) => ({ ...prev, afterConfidence: value as number }))}
+                  min={1}
+                  max={10}
+                  marks={[
+                    { value: 1, label: '1 - Not confident' },
+                    { value: 5, label: '5 - Somewhat confident' },
+                    { value: 10, label: '10 - Very confident' },
+                  ]}
+                  valueLabelDisplay="on"
+                  aria-label="Confidence level after assessment"
+                  sx={{ mt: 4, mb: 6 }}
+                />
+              </Box>
             </FormControl>
           </Box>
 
@@ -387,6 +391,18 @@ export const Questionnaire: React.FC = () => {
             </Button>
           </Box>
         </Paper>
+      </Container>
+    );
+  }
+
+  // Loading state for questions after confidence screen
+  if (questions.length === 0) {
+    return (
+      <Container maxWidth="md" sx={{ py: 8, textAlign: 'center' }}>
+        <CircularProgress size={60} />
+        <Typography variant="h6" sx={{ mt: 3 }}>
+          Loading questions...
+        </Typography>
       </Container>
     );
   }
