@@ -13,7 +13,7 @@ services:
       - .env  # Load environment variables from Secret Manager
     environment:
       NODE_ENV: production
-      PORT: 4000
+      PORT: 3000
       # Database connection to Cloud SQL (private IP)
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
@@ -36,9 +36,9 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:-http://34.72.61.170,http://localhost:3001,http://localhost:5173,https://financialrise.org}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    # Backend accessed via nginx proxy, no host port needed
+    # Backend accessed via Caddy proxy, no host port needed
     expose:
-      - "4000"
+      - "3000"
     depends_on:
       - redis
     networks:
@@ -58,7 +58,7 @@ services:
           memory: 1G
     command: node dist/main.js
 
-  # Frontend - Production Configuration with Nginx
+  # Frontend - Production Configuration with Caddy
   frontend:
     image: us-central1-docker.pkg.dev/financial-rise-prod/financial-rise-docker/frontend:latest
     container_name: financial-rise-frontend-prod
@@ -71,7 +71,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: ["nginx", "-g", "daemon off;"]  # Override base file's "npm start"
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
     # Mount SSL certificates if using Let's Encrypt (uncomment when configured):
     # volumes:
     #   - /etc/letsencrypt:/etc/letsencrypt:ro
