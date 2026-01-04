@@ -23,6 +23,17 @@ export interface AuthResponse {
   token: string;
 }
 
+export interface UpdateProfileData {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+}
+
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export const authService = {
   /**
    * Login user
@@ -88,6 +99,25 @@ export const authService = {
    */
   verifyEmail: async (token: string): Promise<{ message: string }> => {
     const response = await api.post<{ message: string }>('/auth/verify-email', { token });
+    return response.data;
+  },
+
+  /**
+   * Update user profile
+   */
+  updateProfile: async (data: UpdateProfileData): Promise<User> => {
+    const response = await api.patch<User>('/auth/profile', data);
+    return response.data;
+  },
+
+  /**
+   * Change password
+   */
+  changePassword: async (data: ChangePasswordData): Promise<{ message: string }> => {
+    const response = await api.post<{ message: string }>('/auth/change-password', {
+      current_password: data.currentPassword,
+      new_password: data.newPassword,
+    });
     return response.data;
   },
 };

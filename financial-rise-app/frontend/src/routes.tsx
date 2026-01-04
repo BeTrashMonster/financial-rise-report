@@ -9,6 +9,7 @@ const AssessmentList = React.lazy(() => import('@pages/Assessments/AssessmentLis
 const CreateAssessment = React.lazy(() => import('@pages/Assessments/CreateAssessment'));
 const Questionnaire = React.lazy(() => import('@pages/Questionnaire/Questionnaire'));
 const Results = React.lazy(() => import('@pages/Results/Results'));
+const UserProfile = React.lazy(() => import('@pages/UserProfile/UserProfile'));
 const Privacy = React.lazy(() => import('@pages/Privacy/Privacy'));
 const DoNotSell = React.lazy(() => import('@pages/DoNotSell/DoNotSell'));
 
@@ -88,6 +89,14 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <Results />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
             </ProtectedRoute>
           }
         />

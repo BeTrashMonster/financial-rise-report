@@ -185,6 +185,14 @@ export const Navigation: React.FC = () => {
                   horizontal: 'right',
                 }}
               >
+                <MenuItem
+                  onClick={() => {
+                    navigate('/profile');
+                    setUserMenuAnchor(null);
+                  }}
+                >
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </Box>
@@ -258,8 +266,19 @@ export const Navigation: React.FC = () => {
         </List>
         <Divider />
 
-        {/* Logout */}
+        {/* Profile & Logout */}
         <List>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                navigate('/profile');
+                setMobileMenuOpen(false);
+              }}
+              sx={{ py: 1.5 }}
+            >
+              <ListItemText primary="Profile" />
+            </ListItemButton>
+          </ListItem>
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogout} sx={{ py: 1.5 }}>
               <ListItemText primary="Logout" />
