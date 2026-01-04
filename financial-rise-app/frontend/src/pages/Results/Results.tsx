@@ -37,6 +37,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import {
   Assessment as AssessmentIcon,
@@ -104,6 +108,33 @@ const getPhaseName = (phase: string): string => {
 };
 
 /**
+ * Format file size in bytes to human-readable format
+ */
+const formatFileSize = (bytes: number | null): string => {
+  if (bytes === null || bytes === undefined) return 'Unknown size';
+  const kb = bytes / 1024;
+  if (kb < 1024) return `${kb.toFixed(1)} KB`;
+  const mb = kb / 1024;
+  return `${mb.toFixed(2)} MB`;
+};
+
+/**
+ * Format ISO date string to local date/time
+ */
+const formatDateTime = (isoString: string | null): string => {
+  if (!isoString) return 'Unknown date';
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+};
+
+/**
  * Main Results Component
  */
 export const Results: React.FC = () => {
@@ -123,10 +154,19 @@ export const Results: React.FC = () => {
   const [clientReportStatus, setClientReportStatus] = useState<ReportStatus | null>(null);
   const [consultantReportUrl, setConsultantReportUrl] = useState<string | null>(null);
   const [clientReportUrl, setClientReportUrl] = useState<string | null>(null);
+  const [consultantReportMeta, setConsultantReportMeta] = useState<{
+    generatedAt: string | null;
+    fileSizeBytes: number | null;
+  } | null>(null);
+  const [clientReportMeta, setClientReportMeta] = useState<{
+    generatedAt: string | null;
+    fileSizeBytes: number | null;
+  } | null>(null);
   const [reportError, setReportError] = useState<string | null>(null);
   const [generatingReports, setGeneratingReports] = useState(false);
   const [pollingConsultant, setPollingConsultant] = useState(false);
   const [pollingClient, setPollingClient] = useState(false);
+  const [showRegenerateDialog, setShowRegenerateDialog] = useState(false);
 
   // Fetch results on mount
   useEffect(() => {
@@ -163,6 +203,7 @@ export const Results: React.FC = () => {
 
     const setStatus = reportType === 'consultant' ? setConsultantReportStatus : setClientReportStatus;
     const setUrl = reportType === 'consultant' ? setConsultantReportUrl : setClientReportUrl;
+    const setMeta = reportType === 'consultant' ? setConsultantReportMeta : setClientReportMeta;
     const setPolling = reportType === 'consultant' ? setPollingConsultant : setPollingClient;
 
     setPolling(true);
@@ -174,6 +215,10 @@ export const Results: React.FC = () => {
 
         if (status.status === 'completed' && status.fileUrl) {
           setUrl(status.fileUrl);
+          setMeta({
+            generatedAt: status.generatedAt,
+            fileSizeBytes: status.fileSizeBytes,
+          });
           setPolling(false);
           return;
         }
@@ -238,6 +283,21 @@ export const Results: React.FC = () => {
     link.href = url;
     link.download = filename;
     link.click();
+  };
+
+  // Handle regenerate (with confirmation)
+  const handleRegenerateConfirmed = () => {
+    setShowRegenerateDialog(false);
+    // Reset state and regenerate
+    setConsultantReportId(null);
+    setClientReportId(null);
+    setConsultantReportStatus(null);
+    setClientReportStatus(null);
+    setConsultantReportUrl(null);
+    setClientReportUrl(null);
+    setConsultantReportMeta(null);
+    setClientReportMeta(null);
+    handleGenerateReports();
   };
 
   // Check if all reports are done (completed or failed)
@@ -604,6 +664,19 @@ export const Results: React.FC = () => {
                       <Alert severity="success" sx={{ mb: 2 }}>
                         Report generated successfully!
                       </Alert>
+
+                      {/* Report metadata */}
+                      {consultantReportMeta && (
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            Generated: {formatDateTime(consultantReportMeta.generatedAt)}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            Size: {formatFileSize(consultantReportMeta.fileSizeBytes)}
+                          </Typography>
+                        </Box>
+                      )}
+
                       <Button
                         variant="contained"
                         fullWidth
@@ -646,6 +719,19 @@ export const Results: React.FC = () => {
                       <Alert severity="success" sx={{ mb: 2 }}>
                         Report generated successfully!
                       </Alert>
+
+                      {/* Report metadata */}
+                      {clientReportMeta && (
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            Generated: {formatDateTime(clientReportMeta.generatedAt)}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            Size: {formatFileSize(clientReportMeta.fileSizeBytes)}
+                          </Typography>
+                        </Box>
+                      )}
+
                       <Button
                         variant="contained"
                         fullWidth
@@ -680,9 +766,47 @@ export const Results: React.FC = () => {
                 </Box>
               </Grid>
             )}
+
+            {/* Regenerate button if both reports completed */}
+            {consultantReportStatus === 'completed' && clientReportStatus === 'completed' && (
+              <Grid item xs={12}>
+                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => setShowRegenerateDialog(true)}
+                    disabled={generatingReports}
+                  >
+                    Regenerate Reports
+                  </Button>
+                </Box>
+              </Grid>
+            )}
           </Grid>
         )}
       </Paper>
+
+      {/* Regenerate Confirmation Dialog */}
+      <Dialog
+        open={showRegenerateDialog}
+        onClose={() => setShowRegenerateDialog(false)}
+        aria-labelledby="regenerate-dialog-title"
+      >
+        <DialogTitle id="regenerate-dialog-title">Regenerate Reports?</DialogTitle>
+        <DialogContent>
+          <Typography>
+            This will generate new versions of both reports. The current reports will be replaced.
+            Are you sure you want to continue?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowRegenerateDialog(false)} color="inherit">
+            Cancel
+          </Button>
+          <Button onClick={handleRegenerateConfirmed} variant="contained" autoFocus>
+            Regenerate
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Action Buttons */}
       <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
