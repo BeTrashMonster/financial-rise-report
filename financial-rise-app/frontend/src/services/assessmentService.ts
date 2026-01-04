@@ -70,8 +70,8 @@ export const assessmentService = {
    * Get all assessments for the current user
    */
   getAssessments: async (): Promise<Assessment[]> => {
-    const response = await api.get<Assessment[]>('/assessments');
-    return response.data;
+    const response = await api.get<{ data: Assessment[] }>('/assessments');
+    return response.data.data; // Backend returns { data: Assessment[], meta: {...} }
   },
 
   /**
