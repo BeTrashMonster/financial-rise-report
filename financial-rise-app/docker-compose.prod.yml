@@ -72,9 +72,10 @@ services:
       - "80:80"
       - "443:443"
     command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
-    # Mount SSL certificates if using Let's Encrypt (uncomment when configured):
-    # volumes:
-    #   - /etc/letsencrypt:/etc/letsencrypt:ro
+    volumes:
+      # Persist Let's Encrypt certificates
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - backend
     networks:
@@ -140,6 +141,11 @@ services:
 volumes:
   # postgres_data removed - using Cloud SQL
   redis_data:
+    driver: local
+  # Caddy volumes for Let's Encrypt certificates
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
 
 networks:

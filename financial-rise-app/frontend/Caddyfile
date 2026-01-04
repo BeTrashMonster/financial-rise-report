@@ -1,7 +1,8 @@
 # Caddy configuration for Financial RISE Frontend
 # Serves React static files and proxies API requests to backend
+# Automatic HTTPS with Let's Encrypt
 
-:80 {
+getoffthemoneyshametrain.com {
     # Enable gzip compression
     encode gzip
 
@@ -15,6 +16,8 @@
         X-XSS-Protection "1; mode=block"
         # Referrer policy
         Referrer-Policy "no-referrer-when-downgrade"
+        # HSTS - force HTTPS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
         # Remove Server header
         -Server
     }
@@ -41,4 +44,9 @@
         try_files {path} /index.html
         file_server
     }
+}
+
+# Redirect www to non-www
+www.getoffthemoneyshametrain.com {
+    redir https://getoffthemoneyshametrain.com{uri} permanent
 }
