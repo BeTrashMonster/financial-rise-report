@@ -244,7 +244,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
         select: ['id', 'processing_restricted', 'restriction_reason', 'updated_at'],
       });
       expect(result).toEqual({
-        userId: 'user-123',
+        id: 'user-123',
         processing_restricted: false,
         restriction_reason: null,
         last_updated: expect.any(Date),
@@ -263,7 +263,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
       const result = await service.getProcessingStatus('user-123');
 
       expect(result).toEqual({
-        userId: 'user-123',
+        id: 'user-123',
         processing_restricted: true,
         restriction_reason: 'Data accuracy dispute',
         last_updated: expect.any(Date),
@@ -316,7 +316,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
   describe('UsersController.restrictProcessing', () => {
     it('should allow user to restrict their own processing', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
       const restrictedUser = {
         ...mockUser,
@@ -337,7 +337,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should allow user to restrict with a reason', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
       const reason = 'I need to verify the data accuracy';
       const restrictedUser = {
@@ -361,7 +361,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should throw ForbiddenException if user tries to restrict another account', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
 
       await expect(
@@ -374,7 +374,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should allow admin to restrict any user account', async () => {
       const mockRequest = {
-        user: { userId: 'admin-456', role: UserRole.ADMIN },
+        user: { id: 'admin-456', role: UserRole.ADMIN },
       };
       const restrictedUser = {
         ...mockUser,
@@ -397,7 +397,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
   describe('UsersController.liftProcessingRestriction', () => {
     it('should allow user to lift their own processing restriction', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
       const restrictedUser = {
         ...mockUser,
@@ -418,7 +418,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should throw ForbiddenException if user tries to lift restriction on another account', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
 
       await expect(
@@ -431,7 +431,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should allow admin to lift restriction on any account', async () => {
       const mockRequest = {
-        user: { userId: 'admin-456', role: UserRole.ADMIN },
+        user: { id: 'admin-456', role: UserRole.ADMIN },
       };
       const restrictedUser = {
         ...mockUser,
@@ -454,7 +454,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
   describe('UsersController.getProcessingStatus', () => {
     it('should allow user to view their own processing status', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
 
       const unrestrictedUser = {
@@ -473,7 +473,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should throw ForbiddenException if user tries to view another account status', async () => {
       const mockRequest = {
-        user: { userId: 'user-123', role: UserRole.CONSULTANT },
+        user: { id: 'user-123', role: UserRole.CONSULTANT },
       };
 
       await expect(
@@ -486,7 +486,7 @@ describe('GDPR Article 18 - Processing Restriction', () => {
 
     it('should allow admin to view any account processing status', async () => {
       const mockRequest = {
-        user: { userId: 'admin-456', role: UserRole.ADMIN },
+        user: { id: 'admin-456', role: UserRole.ADMIN },
       };
 
       mockUserRepository.findOne.mockResolvedValue(mockUser);
