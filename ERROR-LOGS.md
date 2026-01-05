@@ -527,3 +527,72 @@ Detailed logs available in git history: `git log --all --grep="RESOLVED"`
 **Document Version:** 2.0
 **Maintained By:** Claude Code Assistant
 **Last Review:** 2026-01-04
+
+
+### Issue 17: SSL Certificate Acquisition Failure (RESOLVED ✅)
+**Date:** 2026-01-05
+**Severity:** P0 - Critical (Site Inaccessible)
+**Status:** RESOLVED ✅
+
+**Problem:**
+```
+ERR_SSL_PROTOCOL_ERROR
+getoffthemoneyshametrain.com sent an invalid response
+```
+
+Site completely inaccessible - no login page, no HTTPS connection.
+
+**Root Causes:**
+1. **Caddyfile misconfiguration** - Backend container referenced as `backend:3000` but actual container name was `financial-rise-backend-prod`
+2. **ACME challenge redirection** - Caddy was redirecting HTTP ACME challenges to HTTPS, preventing Let's Encrypt validation
+3. **Let's Encrypt rate limiting** - Hit 5 certificates/week limit from previous troubleshooting attempts
+4. **Missing email in Caddyfile** - No contact email specified for ACME account
+
+**Diagnostic Steps:**
+- Verified DNS: `34.72.61.170` ✅
+- Verified firewall: Ports 80/443 open with `http-server` tag ✅
+- Verified containers running and communicating (ping test) ✅
+- Found Caddy had no certificates in `/data/caddy/certificates/`
+- Found stuck lock files: `issue_cert_*.lock`
+
+**Solution:**
+1. Removed stuck certificate lock files
+2. Updated Caddyfile with proper configuration:
+   - Added email address for ACME notifications
+   - Ensured ACME challenges handled correctly on HTTP
+   - Kept security headers and proxy configuration intact
+3. Restarted Caddy container
+4. Caddy automatically fell back to ZeroSSL after Let's Encrypt rate limiting
+
+**Certificates Obtained:**
+```
+/data/caddy/certificates/acme.zerossl.com-v2-dv90/
+├── getoffthemoneyshametrain.com.crt
+├── getoffthemoneyshametrain.com.key
+├── www.getoffthemoneyshametrain.com.crt
+└── www.getoffthemoneyshametrain.com.key
+```
+
+**Commands Used:**
+```bash
+# Remove stuck locks
+docker exec financial-rise-frontend-prod rm -f /data/caddy/locks/issue_cert_*.lock
+
+# Update Caddyfile (added email, proper ACME handling)
+docker exec financial-rise-frontend-prod sh -c 'cat > /etc/caddy/Caddyfile << EOF...'
+
+# Restart and verify
+docker restart financial-rise-frontend-prod
+docker exec financial-rise-frontend-prod find /data/caddy/certificates -type f
+```
+
+**Impact:** Site is now accessible via HTTPS with valid SSL certificates from ZeroSSL.
+
+**Lesson:** 
+- Always include email address in Caddyfile global config for ACME account management
+- ACME challenges MUST be accessible via HTTP (port 80) - don't redirect to HTTPS
+- Caddy automatically tries multiple certificate authorities (Let's Encrypt → ZeroSSL) if one fails
+- Let's Encrypt has strict rate limits: 5 certificates per exact domain set per week
+- Container names in Docker network aliases matter - verify with `docker inspect` before configuring
+
+---
