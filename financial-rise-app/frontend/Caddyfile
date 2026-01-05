@@ -2,6 +2,10 @@
 # Serves React static files and proxies API requests to backend
 # Automatic HTTPS with Let's Encrypt
 
+{
+    email admin@getoffthemoneyshametrain.com
+}
+
 getoffthemoneyshametrain.com {
     # Enable gzip compression
     encode gzip
