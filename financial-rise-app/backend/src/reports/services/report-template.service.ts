@@ -1,14 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { FinancialPhase } from '../../modules/algorithms/entities/phase-result.entity';
 
 export type DISCType = 'D' | 'I' | 'S' | 'C';
-
-export enum FinancialPhase {
-  STABILIZE = 'stabilize',
-  ORGANIZE = 'organize',
-  BUILD = 'build',
-  GROW = 'grow',
-  SYSTEMIC = 'systemic',
-}
 
 interface ClientInfo {
   name: string;
@@ -277,12 +270,12 @@ export class ReportTemplateService {
    * Generates SVG phase diagram
    */
   public getPhaseDiagramSVG(primaryPhase: string, secondaryPhases: string[]): string {
-    const phases = [
-      FinancialPhase.STABILIZE,
-      FinancialPhase.ORGANIZE,
-      FinancialPhase.BUILD,
-      FinancialPhase.GROW,
-      FinancialPhase.SYSTEMIC
+    const phases: FinancialPhase[] = [
+      'stabilize',
+      'organize',
+      'build',
+      'grow',
+      'systemic'
     ];
     const phaseWidth = 150;
     const phaseHeight = 100;
@@ -359,13 +352,13 @@ export class ReportTemplateService {
    */
   public getPhaseIcon(phase: string): string {
     const icons: Record<string, string> = {
-      [FinancialPhase.STABILIZE]: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Stabilize phase icon">
+      'stabilize': `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Stabilize phase icon">
         <circle cx="20" cy="20" r="18" fill="#4B006E" stroke="#666" stroke-width="2"/>
         <path d="M 10,20 L 20,10 L 30,20" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="10" y1="25" x2="30" y2="25" stroke="white" stroke-width="3" stroke-linecap="round"/>
       </svg>`,
 
-      [FinancialPhase.ORGANIZE]: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Organize phase icon">
+      'organize': `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Organize phase icon">
         <circle cx="20" cy="20" r="18" fill="#4B006E" stroke="#666" stroke-width="2"/>
         <rect x="10" y="10" width="8" height="8" fill="white" rx="1"/>
         <rect x="22" y="10" width="8" height="8" fill="white" rx="1"/>
@@ -373,19 +366,19 @@ export class ReportTemplateService {
         <rect x="22" y="22" width="8" height="8" fill="white" rx="1"/>
       </svg>`,
 
-      [FinancialPhase.BUILD]: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Build phase icon">
+      'build': `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Build phase icon">
         <circle cx="20" cy="20" r="18" fill="#4B006E" stroke="#666" stroke-width="2"/>
         <rect x="12" y="18" width="6" height="12" fill="white"/>
         <rect x="22" y="12" width="6" height="18" fill="white"/>
       </svg>`,
 
-      [FinancialPhase.GROW]: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Grow phase icon">
+      'grow': `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Grow phase icon">
         <circle cx="20" cy="20" r="18" fill="#4B006E" stroke="#666" stroke-width="2"/>
         <path d="M 12,28 L 16,20 L 20,24 L 24,16 L 28,22" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <polyline points="24,16 28,16 28,22" fill="white"/>
       </svg>`,
 
-      [FinancialPhase.SYSTEMIC]: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Systemic phase icon">
+      'systemic': `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" aria-label="Systemic phase icon">
         <circle cx="20" cy="20" r="18" fill="#4B006E" stroke="#666" stroke-width="2"/>
         <circle cx="20" cy="14" r="3" fill="white"/>
         <circle cx="12" cy="24" r="3" fill="white"/>
@@ -1173,11 +1166,11 @@ export class ReportTemplateService {
 
   private getPhaseDescription(phase: string): string {
     const descriptions: Record<string, string> = {
-      [FinancialPhase.STABILIZE]: 'Establish basic financial order and compliance',
-      [FinancialPhase.ORGANIZE]: 'Build foundational systems and processes',
-      [FinancialPhase.BUILD]: 'Create robust operational systems and workflows',
-      [FinancialPhase.GROW]: 'Develop strategic financial planning capabilities',
-      [FinancialPhase.SYSTEMIC]: 'Master financial literacy and report interpretation'
+      'stabilize': 'Establish basic financial order and compliance',
+      'organize': 'Build foundational systems and processes',
+      'build': 'Create robust operational systems and workflows',
+      'grow': 'Develop strategic financial planning capabilities',
+      'systemic': 'Master financial literacy and report interpretation'
     };
     return descriptions[phase] || 'Financial readiness development';
   }
