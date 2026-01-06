@@ -21,6 +21,7 @@ import { ReportResponseDto, ReportAcceptedDto } from './dto/report-response.dto'
 import { AssessmentsService } from '../modules/assessments/assessments.service';
 import { AlgorithmsService } from '../modules/algorithms/algorithms.service';
 import { AssessmentStatus } from '../modules/assessments/entities/assessment.entity';
+import { FinancialPhase } from '../modules/algorithms/entities/phase-result.entity';
 
 /**
  * Controller for report generation and retrieval endpoints
@@ -101,9 +102,9 @@ export class ReportsController {
           grow: phaseResults.grow_score,
           systemic: phaseResults.systemic_score,
         } as any,
-        secondaryPhases: phaseResults.secondary_phase ? [phaseResults.secondary_phase as any] : [],
+        secondaryPhases: (phaseResults.secondary_phases || []) as FinancialPhase[],
       },
-      responses: assessment.responses || [],
+      responses: [], // Empty for now - response transformation not needed for PDF template
       consultantNotes: assessment.notes || '',
     };
 
@@ -181,7 +182,7 @@ export class ReportsController {
           grow: phaseResults.grow_score,
           systemic: phaseResults.systemic_score,
         } as any,
-        secondaryPhases: phaseResults.secondary_phase ? [phaseResults.secondary_phase as any] : [],
+        secondaryPhases: (phaseResults.secondary_phases || []) as FinancialPhase[],
       },
       quickWins,
       roadmap,
@@ -311,7 +312,7 @@ export class ReportsController {
    * Identifies top 3 areas for improvement with lowest scores
    */
   private generateQuickWins(phaseResults: any): Array<{ action: string; why: string; benefit: string }> {
-    const phaseQuickWins = {
+    const phaseQuickWins: Record<string, { action: string; why: string; benefit: string }> = {
       stabilize: {
         action: 'Set up automated bank reconciliation',
         why: 'Reduces manual errors and ensures accurate financial records',
@@ -358,8 +359,8 @@ export class ReportsController {
    * Generate roadmap based on phase results
    * Creates prioritized list of phases and milestones
    */
-  private generateRoadmap(phaseResults: any): { phases: string[]; milestones: string[] } {
-    const phaseMilestones = {
+  private generateRoadmap(phaseResults: any): { phases: FinancialPhase[]; milestones: string[] } {
+    const phaseMilestones: Record<string, string[]> = {
       stabilize: [
         'Clean up historical accounting records',
         'Establish regular bookkeeping schedule',
@@ -388,8 +389,8 @@ export class ReportsController {
     };
 
     // Determine phase sequence based on scores
-    const phaseOrder = ['stabilize', 'organize', 'build', 'grow', 'systemic'];
-    const currentPhaseIndex = phaseOrder.indexOf(phaseResults.primary_phase.toLowerCase());
+    const phaseOrder: FinancialPhase[] = ['stabilize', 'organize', 'build', 'grow', 'systemic'];
+    const currentPhaseIndex = phaseOrder.indexOf(phaseResults.primary_phase.toLowerCase() as FinancialPhase);
 
     // Roadmap includes current phase and next 2 phases
     const roadmapPhases = phaseOrder.slice(currentPhaseIndex, currentPhaseIndex + 3);
