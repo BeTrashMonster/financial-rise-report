@@ -218,13 +218,59 @@ export const Questionnaire: React.FC = () => {
     }
   };
 
+  // Validate response format for current question
+  const validateResponse = (question: Question, response: QuestionResponse | undefined): string | null => {
+    // Check if required question has a response
+    if (question.required && !response) {
+      return 'Please answer this question before continuing';
+    }
+
+    // If not required and no response, that's okay
+    if (!response) {
+      return null;
+    }
+
+    // Validate based on question type
+    switch (question.question_type) {
+      case 'single_choice':
+        if (!response.value || response.value.trim() === '') {
+          return 'Please select an option';
+        }
+        break;
+
+      case 'multiple_choice':
+        if (!response.values || response.values.length === 0) {
+          return question.required
+            ? 'Please select at least one option'
+            : null;
+        }
+        break;
+
+      case 'rating':
+        if (response.rating === null || response.rating === undefined) {
+          return 'Please provide a rating';
+        }
+        break;
+
+      case 'text':
+        if (question.required && (!response.text || response.text.trim() === '')) {
+          return 'Please enter a response';
+        }
+        break;
+    }
+
+    return null;
+  };
+
   // Navigation handlers
   const handleNext = () => {
     const currentQuestion = questions[state.currentQuestionIndex];
+    const currentResponse = state.responses.get(currentQuestion.question_key);
 
-    // Validate required question
-    if (currentQuestion?.required && !state.responses.has(currentQuestion.question_key)) {
-      setFormError('Please answer this question before continuing');
+    // Validate current response
+    const validationError = validateResponse(currentQuestion, currentResponse);
+    if (validationError) {
+      setFormError(validationError);
       return;
     }
 
