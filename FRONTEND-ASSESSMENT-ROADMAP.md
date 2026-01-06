@@ -312,8 +312,20 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
     - Result: ✅ All 908 backend tests passing
     - Files modified: `algorithms.service.ts`
 
-**After Question Bank Update:**
-13. Wire up calculation trigger in assessments.service.ts (line 197)
+13. ✅ **Wired up calculation trigger in assessments.service.ts** (2026-01-06)
+    - Integrated AlgorithmsService into AssessmentsService
+    - On assessment submission, automatically calculates:
+      - DISC personality profile (D, I, S, C scores with primary/secondary types)
+      - Financial phase results (Stabilize, Organize, Build, Grow, Systemic)
+    - Added proper error handling for missing responses
+    - Updated test mocks to include AlgorithmsService
+    - Result: ✅ All 908 backend tests passing
+    - Files modified:
+      - `assessments.service.ts` - Added calculation trigger
+      - `assessments.module.ts` - Imported AlgorithmsModule
+      - `assessments.service.spec.ts` - Added AlgorithmsService mock
+
+**Next Steps:**
 14. Implement results page (section 1.9)
 15. Test report generation (section 1.10)
 

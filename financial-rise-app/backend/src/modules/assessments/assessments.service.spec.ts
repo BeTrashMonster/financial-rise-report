@@ -8,6 +8,7 @@ import { AssessmentResponse } from './entities/assessment-response.entity';
 import { Question } from '../questions/entities/question.entity';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
+import { AlgorithmsService } from '../algorithms/algorithms.service';
 
 describe('AssessmentsService', () => {
   let service: AssessmentsService;
@@ -48,6 +49,12 @@ describe('AssessmentsService', () => {
     count: jest.fn(),
   };
 
+  const mockAlgorithmsService = {
+    calculateAll: jest.fn(),
+    getDISCProfile: jest.fn(),
+    getPhaseResults: jest.fn(),
+  };
+
   const mockUser = {
     id: 'user-123',
     email: 'consultant@example.com',
@@ -85,6 +92,10 @@ describe('AssessmentsService', () => {
         {
           provide: getRepositoryToken(Question),
           useValue: mockQuestionRepository,
+        },
+        {
+          provide: AlgorithmsService,
+          useValue: mockAlgorithmsService,
         },
       ],
     }).compile();

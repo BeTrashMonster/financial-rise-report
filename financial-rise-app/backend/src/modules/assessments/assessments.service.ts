@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindOptionsWhere, Like } from 'typeorm';
@@ -10,6 +11,7 @@ import { AssessmentResponse } from './entities/assessment-response.entity';
 import { Question } from '../questions/entities/question.entity';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
+import { AlgorithmsService } from '../algorithms/algorithms.service';
 
 export interface FindAllFilters {
   page?: number;
@@ -22,6 +24,8 @@ export interface FindAllFilters {
 
 @Injectable()
 export class AssessmentsService {
+  private readonly logger = new Logger(AssessmentsService.name);
+
   constructor(
     @InjectRepository(Assessment)
     private assessmentRepository: Repository<Assessment>,
@@ -29,6 +33,7 @@ export class AssessmentsService {
     private responseRepository: Repository<AssessmentResponse>,
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
+    private readonly algorithmsService: AlgorithmsService,
   ) {}
 
   /**
@@ -190,14 +195,43 @@ export class AssessmentsService {
       throw new BadRequestException('Assessment already submitted');
     }
 
-    // Update status to completed
-    assessment.status = AssessmentStatus.COMPLETED;
-    assessment.completed_at = new Date();
+    // Fetch all responses for this assessment
+    const responses = await this.responseRepository.find({
+      where: { assessment_id: id },
+    });
 
-    // TODO: Calculate DISC profile and phase results here
-    // For now, just mark as complete
+    if (responses.length === 0) {
+      throw new BadRequestException('Cannot submit assessment with no responses');
+    }
 
-    return this.assessmentRepository.save(assessment);
+    this.logger.log(`Submitting assessment ${id} with ${responses.length} responses`);
+
+    try {
+      // Transform responses to format expected by AlgorithmsService
+      // answer field contains { value: ... } for single/multiple choice, or { values: [...] } for multi-select
+      const assessmentResponses = responses.map(r => ({
+        question_id: r.question_id,
+        response_value: r.answer?.value ?? r.answer?.values?.[0] ?? '',
+      }));
+
+      // Calculate DISC profile and phase results
+      const results = await this.algorithmsService.calculateAll(id, assessmentResponses);
+
+      this.logger.log(
+        `Calculated results for assessment ${id}: DISC=${results.disc_profile.primary_type}, Phase=${results.phase_results.primary_phase}`,
+      );
+
+      // Update status to completed
+      assessment.status = AssessmentStatus.COMPLETED;
+      assessment.completed_at = new Date();
+
+      return this.assessmentRepository.save(assessment);
+    } catch (error) {
+      this.logger.error(`Failed to calculate results for assessment ${id}`, error);
+      throw new BadRequestException(
+        `Failed to calculate assessment results: ${error.message}`,
+      );
+    }
   }
 
   /**
