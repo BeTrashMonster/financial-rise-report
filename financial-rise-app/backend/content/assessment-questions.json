@@ -1,0 +1,2575 @@
+{
+  "questions": [
+    {
+      "id": "STAB-001",
+      "text": "In the last month, how many times did you look at your Profit & Loss report?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "weekly_or_more",
+          "label": "4+ times (weekly or more)",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "2_3_times",
+          "label": "2–3 times",
+          "stabilize_score": 4,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "once",
+          "label": "Once",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "looked_not_sure_when",
+          "label": "I looked at it, but not sure when",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "didnt_look",
+          "label": "I didn't look at it",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-002",
+      "text": "How current is your bookkeeping?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 2,
+      "options": [
+        {
+          "value": "up_to_date",
+          "label": "Up to date",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "1_3_months_behind",
+          "label": "Slightly behind (1–3 months)",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "3_6_months_behind",
+          "label": "Pretty behind (3–6 months)",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "6_plus_months",
+          "label": "Needs catching up (6+ months)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-003",
+      "text": "When did you last reconcile your bank account?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "last_month",
+          "label": "Within the last month",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "1_3_months",
+          "label": "1–3 months ago",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "4_6_months",
+          "label": "4–6 months ago",
+          "stabilize_score": 2,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "6_plus_months",
+          "label": "More than 6 months ago",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "never_not_sure",
+          "label": "Never / I'm not sure what this means",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-004",
+      "text": "Are your business tax returns filed and current?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "all_current",
+          "label": "Yes, all current",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "mostly_current",
+          "label": "Mostly current (one may be late)",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "some_late",
+          "label": "Some are late",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "significantly_behind",
+          "label": "Significantly behind",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-005",
+      "text": "Do you track money owed to you AND bills you need to pay?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 5,
+      "options": [
+        {
+          "value": "both_software",
+          "label": "Yes, both tracked with software",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "both_manual",
+          "label": "Yes, both tracked manually (spreadsheet or paper)",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "one_not_other",
+          "label": "I track one but not the other",
+          "stabilize_score": 2,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_consistently",
+          "label": "Not consistently",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_cash_business",
+          "label": "N/A — Cash business, paid immediately",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "STAB-006",
+      "text": "Are your personal finances and business finances completely separate?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 6,
+      "options": [
+        {
+          "value": "completely_separate",
+          "label": "Yes, completely separate",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "mostly_separate",
+          "label": "Mostly separate (rare exceptions)",
+          "stabilize_score": 4,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "sometimes_mixed",
+          "label": "Sometimes mixed",
+          "stabilize_score": 2,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "regularly_mixed",
+          "label": "Regularly mixed",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-007",
+      "text": "Do you have a clear picture of any business debts and when payments are due?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 7,
+      "options": [
+        {
+          "value": "documented_tracked",
+          "label": "Yes, documented and tracked",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "know_in_head",
+          "label": "Yes, I know it in my head",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "know_big_ones",
+          "label": "Somewhat — I know the big ones",
+          "stabilize_score": 2,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_really",
+          "label": "Not really",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_no_debt",
+          "label": "N/A — No business debt",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "STAB-008",
+      "text": "Does your business have emergency cash reserves?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 8,
+      "options": [
+        {
+          "value": "3_months_plus",
+          "label": "Yes, 3+ months of expenses",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "1_3_months",
+          "label": "Yes, 1–3 months",
+          "stabilize_score": 3,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "less_than_1_month",
+          "label": "Less than 1 month",
+          "stabilize_score": 1,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "none",
+          "label": "None",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-009",
+      "text": "Do you set aside money for taxes throughout the year (estimated tax payments)?",
+      "type": "phase",
+      "section": "stabilize",
+      "display_order": 9,
+      "options": [
+        {
+          "value": "automatic_transfer",
+          "label": "Yes, automatically transferred to a separate account",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "manual_regular",
+          "label": "Yes, I manually set money aside regularly",
+          "stabilize_score": 4,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "when_remember",
+          "label": "Sometimes, when I remember",
+          "stabilize_score": 2,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "tax_time",
+          "label": "No, I deal with it at tax time",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "STAB-010",
+      "text": "When you notice something's off with your finances, what do you usually do first?",
+      "type": "phase_and_disc",
+      "section": "stabilize",
+      "display_order": 10,
+      "options": [
+        {
+          "value": "handle_right_away",
+          "label": "Handle it right away — quick action",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "talk_it_through",
+          "label": "Talk it through with my bookkeeper, partner, or advisor",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "understand_full_picture",
+          "label": "Take time to understand the full picture before acting",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "dig_into_details",
+          "label": "Dig into the details and research what's happening",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 5,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-001",
+      "text": "What's your business structure?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "s_corp",
+          "label": "S-Corp",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "triggers_conditional": "ORG-002"
+        },
+        {
+          "value": "c_corp",
+          "label": "C-Corp",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "single_member_llc",
+          "label": "Single Member LLC",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "multi_member_llc",
+          "label": "Multi Member LLC",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "partnership",
+          "label": "Partnership",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "sole_proprietor",
+          "label": "Sole Proprietor",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_sure",
+          "label": "Not sure",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-002",
+      "text": "Do you pay yourself a regular salary through payroll?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 2,
+      "conditional_trigger": "ORG-001:s_corp",
+      "options": [
+        {
+          "value": "yes_payroll",
+          "label": "Yes, on payroll with salary",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "just_distributions",
+          "label": "No, just distributions",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "flag": "compliance_risk"
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "flag": "compliance_risk"
+        }
+      ]
+    },
+    {
+      "id": "ORG-003",
+      "text": "What do you use to manage your finances?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "full_software",
+          "label": "QuickBooks, Xero, or similar full software",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "simple_software",
+          "label": "Simpler software (Wave, FreshBooks)",
+          "stabilize_score": 0,
+          "organize_score": 4,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "spreadsheet_organized",
+          "label": "Spreadsheets with a clear system",
+          "stabilize_score": 0,
+          "organize_score": 3,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "spreadsheet_disorganized",
+          "label": "Spreadsheets, but disorganized",
+          "stabilize_score": 0,
+          "organize_score": 1,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "paper_nothing",
+          "label": "Paper or nothing formal",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-004",
+      "text": "Do your business systems talk to each other (like sales updating accounting automatically)?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "fully_integrated",
+          "label": "Yes, fully integrated",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "partially_connected",
+          "label": "Partially connected",
+          "stabilize_score": 0,
+          "organize_score": 3,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "enter_separately",
+          "label": "No, I enter things separately",
+          "stabilize_score": 0,
+          "organize_score": 1,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_no_multiple_systems",
+          "label": "N/A — I don't have multiple systems",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "ORG-005",
+      "text": "If you have inventory, how do you track it?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 5,
+      "options": [
+        {
+          "value": "connected_accounting",
+          "label": "Software connected to my accounting",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "separate_system",
+          "label": "Separate inventory system",
+          "stabilize_score": 0,
+          "organize_score": 3,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "spreadsheet",
+          "label": "Spreadsheet",
+          "stabilize_score": 0,
+          "organize_score": 2,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "dont_track",
+          "label": "I don't really track it",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_no_inventory",
+          "label": "N/A — No inventory",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "ORG-006",
+      "text": "Where do you keep important financial documents?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 6,
+      "options": [
+        {
+          "value": "cloud_organized",
+          "label": "Cloud storage, well organized",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "cloud_somewhat",
+          "label": "Cloud storage, somewhat organized",
+          "stabilize_score": 0,
+          "organize_score": 3,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "paper_organized",
+          "label": "Paper files, organized",
+          "stabilize_score": 0,
+          "organize_score": 3,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "paper_hard_to_find",
+          "label": "Paper files, hard to find things",
+          "stabilize_score": 0,
+          "organize_score": 1,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "scattered",
+          "label": "Scattered / no real system",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-007",
+      "text": "Are your income and expense categories in your books organized in a way that makes sense for you and your business?",
+      "type": "phase",
+      "section": "organize",
+      "display_order": 7,
+      "options": [
+        {
+          "value": "customized_meaningful",
+          "label": "Yes, customized and meaningful for my business",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "standard_default",
+          "label": "Yes, using standard/default categories",
+          "stabilize_score": 0,
+          "organize_score": 4,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "could_use_cleanup",
+          "label": "Somewhat — could use some cleanup",
+          "stabilize_score": 0,
+          "organize_score": 2,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "messy_confusing",
+          "label": "No, it's messy or confusing",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_sure",
+          "label": "Not sure what this means",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-008",
+      "text": "How do you typically work with vendors and suppliers?",
+      "type": "phase_and_disc",
+      "section": "organize",
+      "display_order": 8,
+      "options": [
+        {
+          "value": "negotiate_hard",
+          "label": "I negotiate hard and focus on getting the best deal",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "build_relationships",
+          "label": "I build relationships — they're flexible because we work well together",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "stick_reliable",
+          "label": "I stick with reliable vendors I trust, even if not cheapest",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "document_everything",
+          "label": "I document everything and track all contracts carefully",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "ORG-009",
+      "text": "When setting up a new financial process (like how invoices get sent), you prefer:",
+      "type": "phase_and_disc",
+      "section": "organize",
+      "display_order": 9,
+      "options": [
+        {
+          "value": "keep_simple",
+          "label": "Keep it simple — just get it working",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "team_input",
+          "label": "Get input from the team so everyone's on board",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "proven_approach",
+          "label": "Use a proven approach that's worked before",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "detail_document",
+          "label": "Think through every detail and document it thoroughly",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 5,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "BUILD-001",
+      "text": "Do you have written guides or checklists for regular financial tasks?",
+      "type": "phase",
+      "section": "build",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "comprehensive_documentation",
+          "label": "Yes, comprehensive documentation",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "some_written",
+          "label": "Some things written down",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "in_head_can_explain",
+          "label": "Mostly in my head, but I could explain it",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 2,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "in_head_hard_to_explain",
+          "label": "Mostly in my head, hard to explain",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "BUILD-002",
+      "text": "Do you work from a budget?",
+      "type": "phase",
+      "section": "build",
+      "display_order": 2,
+      "options": [
+        {
+          "value": "detailed_review_regularly",
+          "label": "Yes, detailed budget I review regularly",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "basic_check_occasionally",
+          "label": "Yes, basic budget I check occasionally",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "informal_in_head",
+          "label": "Informal / in my head",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no_budget",
+          "label": "No budget",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "BUILD-003",
+      "text": "In the last quarter, how many times did you compare what you actually spent vs. what you planned?",
+      "type": "phase",
+      "section": "build",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "3_plus_times",
+          "label": "3+ times (monthly or more)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "twice",
+          "label": "Twice",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 4,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "once",
+          "label": "Once",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "thought_about_it",
+          "label": "I thought about it but didn't formally compare",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "none",
+          "label": "None",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "BUILD-004",
+      "text": "Do you have a process for approving bigger purchases?",
+      "type": "phase",
+      "section": "build",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "documented_thresholds",
+          "label": "Yes, documented with spending thresholds",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "informal_process",
+          "label": "Yes, informal process",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "only_very_large",
+          "label": "Only for very large purchases",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 2,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_all_mine",
+          "label": "N/A — All decisions are mine alone",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "BUILD-005",
+      "text": "Do you have safeguards to catch mistakes or prevent fraud?",
+      "type": "phase",
+      "section": "build",
+      "display_order": 5,
+      "options": [
+        {
+          "value": "solid_controls",
+          "label": "Yes, solid controls (different people handle different tasks)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "basic_safeguards",
+          "label": "Basic safeguards",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "minimal",
+          "label": "Minimal",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_just_me",
+          "label": "N/A — Just me, no one else touches finances",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "BUILD-006",
+      "text": "When a financial decision needs to be made (like a significant purchase), you typically:",
+      "type": "phase_and_disc",
+      "section": "build",
+      "display_order": 6,
+      "options": [
+        {
+          "value": "decide_quickly",
+          "label": "Decide quickly if it makes sense — no need to overthink",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "discuss_with_trusted",
+          "label": "Discuss it with people I trust before deciding",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "think_effects",
+          "label": "Think about how it affects stability and people",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "analyze_numbers",
+          "label": "Analyze the numbers and ROI before committing",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 5,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "BUILD-007",
+      "text": "Which of these have you automated?",
+      "type": "multiple_choice",
+      "section": "build",
+      "display_order": 7,
+      "options": [
+        {
+          "value": "vendor_payments",
+          "label": "Vendor payments",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "recurring_payments",
+          "label": "Recurring payments (subscriptions, rent, etc.)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "invoicing",
+          "label": "Invoicing",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "expense_tracking",
+          "label": "Expense tracking",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "payroll",
+          "label": "Payroll",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "bank_sync",
+          "label": "Bank transactions syncing to your books",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "financial_reports",
+          "label": "Financial reports",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 1,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "none",
+          "label": "None",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ],
+      "max_score": 5
+    },
+    {
+      "id": "BUILD-008",
+      "text": "How do you prefer to see your financial information?",
+      "type": "phase_and_disc",
+      "section": "build",
+      "display_order": 8,
+      "options": [
+        {
+          "value": "dashboard_snapshot",
+          "label": "Dashboard with key numbers — quick snapshot",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "visuals_discuss",
+          "label": "Visuals I can discuss with my team or advisor",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "consistent_format",
+          "label": "Consistent reports in the same format each time",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "detailed_reports",
+          "label": "Detailed reports with all the underlying numbers",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 3,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "META-001",
+      "text": "What kind of business do you run?",
+      "type": "metadata",
+      "section": "metadata",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "retail",
+          "label": "Retail (selling products)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "professional_services",
+          "label": "Professional Services (selling expertise)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "manufacturing",
+          "label": "Manufacturing (making products)",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "technology_software",
+          "label": "Technology / Software",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "healthcare",
+          "label": "Healthcare",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "hospitality_food",
+          "label": "Hospitality / Food Service",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "construction_trades",
+          "label": "Construction / Trades",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "other",
+          "label": "Other",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "META-002",
+      "text": "How long have you been in business?",
+      "type": "metadata",
+      "section": "metadata",
+      "display_order": 2,
+      "options": [
+        {
+          "value": "less_than_1_year",
+          "label": "Less than 1 year",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "1_3_years",
+          "label": "1–3 years",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "3_5_years",
+          "label": "3–5 years",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "5_10_years",
+          "label": "5–10 years",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "more_than_10_years",
+          "label": "More than 10 years",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "META-003",
+      "text": "About how much does your business bring in each year?",
+      "type": "metadata",
+      "section": "metadata",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "under_100k",
+          "label": "Under $100K",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "100k_500k",
+          "label": "$100K–$500K",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "500k_1m",
+          "label": "$500K–$1M",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "over_1m",
+          "label": "Over $1M",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "META-004",
+      "text": "How many people work in your business?",
+      "type": "metadata",
+      "section": "metadata",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "just_me",
+          "label": "Just me",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "2_10_people",
+          "label": "2–10 people",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "11_50_people",
+          "label": "11–50 people",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "more_than_50",
+          "label": "More than 50",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-001",
+      "text": "Do you predict how much money will be coming in and going out?",
+      "type": "phase",
+      "section": "grow",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "3_months_ahead",
+          "label": "Yes, I look 3+ months ahead",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 5,
+          "systemic_score": 0
+        },
+        {
+          "value": "month_ahead",
+          "label": "Yes, about a month ahead",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 4,
+          "systemic_score": 0
+        },
+        {
+          "value": "occasionally_big_things",
+          "label": "Occasionally, when something big is coming up",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 2,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-002",
+      "text": "Do you plan for different scenarios (like \"what if sales drop 20%\")?",
+      "type": "phase",
+      "section": "grow",
+      "display_order": 2,
+      "options": [
+        {
+          "value": "detailed_best_worst",
+          "label": "Yes, detailed best/worst case plans",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 5,
+          "systemic_score": 0
+        },
+        {
+          "value": "basic_what_if",
+          "label": "Basic what-if thinking",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0
+        },
+        {
+          "value": "when_worried",
+          "label": "Occasionally, when worried",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 2,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-003",
+      "text": "Do you know which of your products or services are most profitable?",
+      "type": "phase",
+      "section": "grow",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "track_in_detail",
+          "label": "Yes, I track this in detail",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 5,
+          "systemic_score": 0
+        },
+        {
+          "value": "general_sense",
+          "label": "Yes, I have a general sense",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0
+        },
+        {
+          "value": "thought_not_tracked",
+          "label": "I've thought about it but haven't tracked it",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 1,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-004",
+      "text": "Do you plan ahead for big purchases (equipment, vehicles, expansion)?",
+      "type": "phase",
+      "section": "grow",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "multi_year_plan",
+          "label": "Yes, multi-year plan",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 5,
+          "systemic_score": 0
+        },
+        {
+          "value": "this_year",
+          "label": "Yes, for this year",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_necessary",
+          "label": "Not necessary for my business",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 2,
+          "systemic_score": 0
+        },
+        {
+          "value": "when_needed",
+          "label": "Deal with it when needed",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 1,
+          "systemic_score": 0
+        },
+        {
+          "value": "no_plan",
+          "label": "No plan",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-005",
+      "text": "Do you have a strategy for funding growth (loans, investors, profits)?",
+      "type": "phase",
+      "section": "grow",
+      "display_order": 5,
+      "options": [
+        {
+          "value": "documented_plan",
+          "label": "Yes, documented plan",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 5,
+          "systemic_score": 0
+        },
+        {
+          "value": "informal_plan",
+          "label": "Informal plan",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0
+        },
+        {
+          "value": "exploring_options",
+          "label": "Exploring options",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 2,
+          "systemic_score": 0
+        },
+        {
+          "value": "not_relevant",
+          "label": "Doesn't feel relevant for my business right now",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 1,
+          "systemic_score": 0
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "GROW-006",
+      "text": "When predicting future revenue, you rely mostly on:",
+      "type": "phase_and_disc",
+      "section": "grow",
+      "display_order": 6,
+      "options": [
+        {
+          "value": "gut_instinct",
+          "label": "Gut instinct and confidence in my ability to make it happen",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "conversations_network",
+          "label": "Conversations with customers, partners, and my network",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "past_consistency",
+          "label": "What's worked consistently in the past",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "data_analysis",
+          "label": "Data analysis and detailed projections",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 3,
+          "systemic_score": 0,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-001",
+      "text": "Do you understand what your financial statements are telling you?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 1,
+      "options": [
+        {
+          "value": "very_confident",
+          "label": "Very confident reading my reports",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "basic_level",
+          "label": "Understand it on a basic level",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "foreign_language",
+          "label": "I get my reports regularly but it's a foreign language",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 1
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-002",
+      "text": "If your profit margin dropped 10% this month, would you know why?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 2,
+      "options": [
+        {
+          "value": "identify_quickly",
+          "label": "Yes, I could identify the cause quickly",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "little_digging",
+          "label": "I'd figure it out with a little digging",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 4
+        },
+        {
+          "value": "need_help",
+          "label": "I'd need help figuring it out",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 2
+        },
+        {
+          "value": "not_notice",
+          "label": "I wouldn't notice until much later",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-003",
+      "text": "Do you know how much revenue you need each month to cover all your expenses (your break-even point)?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 3,
+      "options": [
+        {
+          "value": "exact_number",
+          "label": "Yes, I know the exact number",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "roughly",
+          "label": "Roughly",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "thought_not_calculated",
+          "label": "I've thought about it but never calculated",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 1
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-004",
+      "text": "Do you know which financial metrics matter most for YOUR type of business?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 4,
+      "options": [
+        {
+          "value": "very_clear",
+          "label": "Very clear on this",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "mostly_clear",
+          "label": "Mostly clear",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "somewhat",
+          "label": "Somewhat",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 1
+        },
+        {
+          "value": "not_really_sure",
+          "label": "Not really sure",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-005",
+      "text": "Do you set financial goals and track progress toward them?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 5,
+      "options": [
+        {
+          "value": "specific_regular_tracking",
+          "label": "Yes, specific goals with regular tracking",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "basic_occasionally",
+          "label": "Basic goals I check occasionally",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "informal_in_head",
+          "label": "Informal goals in my head",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 1
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-006",
+      "text": "Have you helped your team understand the financial side of the business?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 6,
+      "options": [
+        {
+          "value": "ongoing_education",
+          "label": "Yes, ongoing education",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "initial_training",
+          "label": "Initial training when they started",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "informally",
+          "label": "Informally, here and there",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 2
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        },
+        {
+          "value": "na_no_team",
+          "label": "N/A — No team",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0,
+          "is_na": true
+        }
+      ]
+    },
+    {
+      "id": "SYS-007",
+      "text": "How do you approach setting business goals?",
+      "type": "phase_and_disc",
+      "section": "systemic",
+      "display_order": 7,
+      "options": [
+        {
+          "value": "ambitious_targets",
+          "label": "Set ambitious targets and push to hit them",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "create_together",
+          "label": "Create goals together with my team or partners",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "steady_sustainable",
+          "label": "Focus on steady, sustainable progress",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "detailed_plans",
+          "label": "Build detailed plans with specific milestones",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-008",
+      "text": "When learning something new about managing business finances, you prefer:",
+      "type": "phase_and_disc",
+      "section": "systemic",
+      "display_order": 8,
+      "options": [
+        {
+          "value": "quick_tips",
+          "label": "Quick tips I can apply immediately",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3,
+          "disc_d_score": 2,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "conversation_discussion",
+          "label": "Learning through conversation or group discussion",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3,
+          "disc_d_score": 0,
+          "disc_i_score": 2,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        },
+        {
+          "value": "step_by_step",
+          "label": "Step-by-step guidance at my own pace",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 2,
+          "disc_c_score": 0
+        },
+        {
+          "value": "deep_dive",
+          "label": "Deep-dive into all the details",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 2
+        },
+        {
+          "value": "none_fit",
+          "label": "None of these fit me well",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3,
+          "disc_d_score": 0,
+          "disc_i_score": 0,
+          "disc_s_score": 0,
+          "disc_c_score": 0
+        }
+      ]
+    },
+    {
+      "id": "SYS-009",
+      "text": "On a scale of 1 to 5, how confident do you feel about understanding your business's overall financial health?",
+      "type": "rating",
+      "section": "systemic",
+      "display_order": 9,
+      "min": 1,
+      "max": 5,
+      "min_label": "Not confident at all",
+      "max_label": "Very confident",
+      "phase_scoring": {
+        "systemic": "linear"
+      }
+    },
+    {
+      "id": "SYS-010",
+      "text": "Looking back at your answers in this assessment, does anything surprise you about where you are?",
+      "type": "phase",
+      "section": "systemic",
+      "display_order": 10,
+      "options": [
+        {
+          "value": "knew_where_stood",
+          "label": "No — I knew where I stood",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 5
+        },
+        {
+          "value": "little_surprised",
+          "label": "A little — some things to think about",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 3
+        },
+        {
+          "value": "more_work_than_thought",
+          "label": "Yes — I have more work to do than I thought",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 1
+        },
+        {
+          "value": "not_sure",
+          "label": "I'm not sure what to think",
+          "stabilize_score": 0,
+          "organize_score": 0,
+          "build_score": 0,
+          "grow_score": 0,
+          "systemic_score": 0
+        }
+      ]
+    }
+  ]
+}

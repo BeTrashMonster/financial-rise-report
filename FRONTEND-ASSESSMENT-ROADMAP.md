@@ -100,7 +100,7 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 ## Phase 2: Data Quality & Validation
 
 ### 2.1 Question Seeding ✅ COMPLETE
-**Current State:** 66 comprehensive questions ready for deployment
+**Current State:** 66 comprehensive questions deployed to production (2026-01-04)
 
 - [x] Delete redundant business name question
 - [x] **Seed full question bank** (66 questions across all phases)
@@ -113,10 +113,10 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
   - [x] DISC profiling questions (12) - Hidden personality assessment
 - [x] **Include DISC scoring data** in options
 - [x] **Include phase scoring data** in options
+- [x] **Deploy to production database** - Deployed via seed-comprehensive-questions.sql
 
-**Question Bank:** seed-comprehensive-questions.sql
-
-**Action Required:** Deploy to production database
+**Question Bank:** seed-comprehensive-questions.sql (Commit: 4e4ecc9)
+**Deployment Status:** ✅ Live in production
 
 ### 2.2 Response Validation
 - [ ] Validate required questions before allowing Next
@@ -130,6 +130,28 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 - [ ] Test with all question types
 - [ ] Test incomplete assessments (Save & Exit)
 - [ ] Test resuming incomplete assessments
+
+---
+
+## Phase 2.5: Infrastructure & SSL ✅ COMPLETE
+
+### 2.5.1 SSL Certificate Configuration ✅ FIXED (2026-01-04)
+- [x] **FIXED: ERR_SSL_PROTOCOL_ERROR** - Site inaccessible
+  - Root cause: Caddyfile missing email configuration for ACME
+  - Additional issues: Let's Encrypt rate limiting, stuck lock files
+  - Fix: Added global email config, removed locks, fallback to ZeroSSL
+  - Commit: 0a9fbbc
+  - Status: Site live with ZeroSSL certificates
+
+- [x] **SSL certificate persistence** - Certificates lost on container restart
+  - Root cause: Caddyfile edits not in source code/Docker image
+  - Fix: Updated source Caddyfile, applied to running container via `docker cp`
+  - Status: Fix committed, frontend image rebuild pending
+
+**Current Status:**
+- ✅ Site accessible at https://getoffthemoneyshametrain.com (HTTP/2 200)
+- ✅ SSL certificates from acme.zerossl.com-v2-dv90
+- ✅ Frontend Docker image rebuilt and deployed (fix is permanent)
 
 ---
 
@@ -249,28 +271,54 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 
 ## Next Actions (Immediate)
 
-**Completed:**
-1. ✅ Debug auto-save 500 error - Fixed (missing DB columns)
-2. ✅ Fix submit endpoint - Fixed (implemented POST endpoint)
-3. ✅ Seed comprehensive question bank - Done (66 questions)
+**Completed (2026-01-04):**
+1. ✅ Debug auto-save 500 error - Fixed (missing DB columns, commit c0db6b5)
+2. ✅ Fix submit endpoint - Fixed (implemented POST endpoint, commit c0db6b5)
+3. ✅ Seed comprehensive question bank - Done (66 questions, commit 4e4ecc9)
+4. ✅ Deploy questions to production - Deployed successfully (66 questions live)
+5. ✅ Fix SSL certificate error - Fixed (Caddyfile email config, commit 0a9fbbc)
+6. ✅ Test assessment end-to-end - Tested successfully (auto-save and submission work)
 
-**Right Now (Next 30 minutes):**
-4. Deploy questions to production (run seed-comprehensive-questions.sql)
-5. Test assessment end-to-end (verify auto-save and submission work)
+**Right Now (Next Task):**
+7. ✅ **Frontend Docker image rebuilt** - Deployed via GitHub Actions (commit 0a9fbbc)
+   - Verified: Email configuration present in deployed container
+   - SSL certificates now persist permanently across restarts
 
 **Today:**
-6. Test all question types (multiple_choice, rating, text)
-7. Verify confidence before/after screens work
-8. Update roadmap sections 1.4 and 1.7 to mark as complete
+8. Test all question types (multiple_choice, rating, text - currently only single_choice tested)
+9. Verify confidence before/after screens work
+10. Investigate dashboard "Failed to fetch assessments" error (occurred after assessment completion)
 
-**This Week:**
-9. Implement results page (section 1.9)
-10. Test report generation (section 1.10)
-11. Implement DISC calculation (section 1.8)
-12. Implement Phase determination (section 1.8)
+**Completed (2026-01-06):**
+11. ✅ **Updated question bank to new 47-question structure**
+    - Old: 66 questions (separate DISC + Phase in 2 JSON files)
+    - New: 47 questions (8 embedded DISC + 43 phase in 1 unified JSON file)
+    - Discovery: DISC & Phase algorithms ALREADY IMPLEMENTED (production-ready!)
+    - Completed tasks:
+      - [x] Generated unified question JSON (`assessment-questions.json`)
+      - [x] Created SQL seed script generator (`generate-seed.js`)
+      - [x] Generated SQL seed file (`seed-assessment-questions.sql`)
+      - [x] Adjusted DISC validation (12→8 questions minimum)
+      - [x] Updated response extraction for embedded DISC in `algorithms.service.ts`
+      - [x] Updated DISC validation tests to use 8-question minimum
+    - Ready to deploy: SQL seed script ready to run against production database
+
+12. ✅ **Fixed algorithms service to handle rating questions** (2026-01-06)
+    - Root cause: Rating questions (SYS-009) don't have `options` array, causing `TypeError` in tests
+    - Fixed: Added guards to check if `options` exists before accessing it in:
+      - `loadQuestionWeights()` - when counting DISC questions
+      - `extractDISCResponses()` - when extracting DISC weights
+      - `extractPhaseResponses()` - when extracting phase weights
+    - Result: ✅ All 908 backend tests passing
+    - Files modified: `algorithms.service.ts`
+
+**After Question Bank Update:**
+13. Wire up calculation trigger in assessments.service.ts (line 197)
+14. Implement results page (section 1.9)
+15. Test report generation (section 1.10)
 
 ---
 
-**Last Updated:** 2026-01-04 11:15 PM
+**Last Updated:** 2026-01-06 (Question Bank Update & Test Fixes)
 **Owner:** Claude Code Assistant
-**Status:** 🔴 Active Development - Bug Fixing Phase
+**Status:** 🟢 Major Milestones Complete - All Backend Tests Passing (908/908)

@@ -19,7 +19,7 @@ import { LogSanitizer } from '../../../common/utils/log-sanitizer';
 @Injectable()
 export class DISCCalculatorService {
   private readonly logger = new Logger(DISCCalculatorService.name);
-  private readonly MINIMUM_QUESTIONS = 12;
+  private readonly MINIMUM_QUESTIONS = 8;
   private readonly SECONDARY_TRAIT_THRESHOLD = 10; // percentage points
 
   constructor(

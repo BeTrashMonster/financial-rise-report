@@ -596,3 +596,407 @@ docker exec financial-rise-frontend-prod find /data/caddy/certificates -type f
 - Container names in Docker network aliases matter - verify with `docker inspect` before configuring
 
 ---
+info@financial-rise-production-vm:~$  docker exec financial-rise-frontend-prod rm -f /data/caddy/locks/issue_cert_*.lock
+info@financial-rise-production-vm:~$ docker logs financial-rise-frontend-prod 2>&1 | grep -i "error\|certificate\|acme" | tail -30
+{"level":"info","ts":1767579541.331249,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3321767,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3321936,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3322089,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"info","ts":1767579541.3366585,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3374918,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3375309,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3375452,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767579541.715981,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579541.7160587,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.384892822,"max_duration":2592000}
+{"level":"error","ts":1767579541.747043,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579541.7471378,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.41056275,"max_duration":2592000}
+{"level":"info","ts":1767579601.7162862,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579601.7173462,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767579601.7477417,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579601.7487755,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767579602.084232,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410093"}
+{"level":"info","ts":1767579602.0995686,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410113"}
+{"level":"info","ts":1767579605.42765,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c61ae5c4efb9b1195e5bca1fd59d2e7462a"}
+{"level":"info","ts":1767579605.427995,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.4280133,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.42803,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"info","ts":1767579605.4455721,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cc74c584a0ed38261ba7c698b90911427ff"}
+{"level":"info","ts":1767579605.4459517,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.4459662,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.445981,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767579605.5483031,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579605.5483813,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.217216026,"max_duration":2592000}
+{"level":"error","ts":1767579605.5731711,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579605.57324,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.236665165,"max_duration":2592000}
+info@financial-rise-production-vm:~$  docker logs financial-rise-frontend-prod > /tmp/caddy-debug.log 2>&1
+  tail -100 /tmp/caddy-debug.log
+{"level":"info","ts":1767578991.9835954,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767578992.2870824,"msg":"authorization finalized","identifier":"getoffthemoneyshametrain.com","authz_status":"valid"}
+{"level":"info","ts":1767578992.287125,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222171543"}
+{"level":"info","ts":1767578995.515669,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772682926,"window_end":1772838376,"selected_time":1772814041,"recheck_after":1767600595.5156496,"explanation_url":""}
+{"level":"info","ts":1767578995.624118,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772682926,"window_end":1772838376,"selected_time":1772812778,"recheck_after":1767600595.6241002,"explanation_url":""}
+{"level":"info","ts":1767578995.6242156,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c85c688c21cb67690e8f05c004bdd6f2b26"}
+{"level":"info","ts":1767578995.6246336,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767578995.6246674,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767578995.624686,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767578995.8024979,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:42:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767578995.8025925,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:42:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":6,"retrying_in":600,"elapsed":1220.98157101,"max_duration":2592000}
+{"level":"info","ts":1767578997.6759958,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767578997.6773093,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767578997.8443513,"msg":"authorization finalized","identifier":"www.getoffthemoneyshametrain.com","authz_status":"valid"}
+{"level":"info","ts":1767578997.8444145,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222173643"}
+{"level":"info","ts":1767579004.1285827,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772682933,"window_end":1772838382,"selected_time":1772828068,"recheck_after":1767600604.1285636,"explanation_url":""}
+{"level":"info","ts":1767579004.241257,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772682933,"window_end":1772838382,"selected_time":1772718466,"recheck_after":1767600604.2412255,"explanation_url":""}
+{"level":"info","ts":1767579004.2413635,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cd046e67a516e548389f6ea9f6f63cb8c59"}
+{"level":"info","ts":1767579004.2419012,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579004.2419372,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579004.2419577,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767579004.3392415,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:45:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579004.3393528,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:45:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":6,"retrying_in":600,"elapsed":1229.527702915,"max_duration":2592000}
+{"level":"error","ts":1767579434.7867696,"logger":"tls","msg":"tls-alpn challenge","remote_addr":"66.133.109.36:54469","server_name":"www.getoffthemoneyshametrain.com","error":"no information found to solve challenge for identifier: www.getoffthemoneyshametrain.com"}
+{"level":"error","ts":1767579435.216887,"logger":"tls","msg":"tls-alpn challenge","remote_addr":"66.133.109.36:38281","server_name":"getoffthemoneyshametrain.com","error":"no information found to solve challenge for identifier: getoffthemoneyshametrain.com"}
+{"level":"warn","ts":1767579436.2135684,"logger":"http","msg":"looking up info for HTTP challenge","host":"www.getoffthemoneyshametrain.com","remote_addr":"66.133.109.36:52085","user_agent":"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)","error":"no information found to solve challenge for identifier: www.getoffthemoneyshametrain.com"}
+{"level":"warn","ts":1767579436.6493213,"logger":"http","msg":"looking up info for HTTP challenge","host":"getoffthemoneyshametrain.com","remote_addr":"66.133.109.36:52087","user_agent":"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)","error":"no information found to solve challenge for identifier: getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579460.6583235,"logger":"admin.api","msg":"received request","method":"POST","host":"localhost:2019","uri":"/load","remote_ip":"127.0.0.1","remote_port":"37754","headers":{"Accept-Encoding":["gzip"],"Content-Length":["1580"],"Content-Type":["application/json"],"Origin":["http://localhost:2019"],"User-Agent":["Go-http-client/1.1"]}}
+{"level":"info","ts":1767579460.6587799,"msg":"config is unchanged"}
+{"level":"info","ts":1767579460.6587975,"logger":"admin.api","msg":"load complete"}
+{"level":"info","ts":1767579540.6484354,"msg":"shutting down apps, then terminating","signal":"SIGTERM"}
+{"level":"warn","ts":1767579540.6485634,"msg":"exiting; byeee!! 👋","signal":"SIGTERM"}
+{"level":"info","ts":1767579540.648749,"logger":"http","msg":"servers shutting down with eternal grace period"}
+{"level":"info","ts":1767579540.6503127,"logger":"tls.obtain","msg":"releasing lock","identifier":"getoffthemoneyshametrain.com"}
+{"level":"error","ts":1767579540.6503549,"logger":"tls.obtain","msg":"unable to unlock","identifier":"getoffthemoneyshametrain.com","lock_key":"issue_cert_getoffthemoneyshametrain.com","error":"remove /data/caddy/locks/issue_cert_getoffthemoneyshametrain.com.lock: no such file or directory"}
+{"level":"error","ts":1767579540.650398,"logger":"tls","msg":"job failed","error":"getoffthemoneyshametrain.com: obtaining certificate: context canceled"}
+{"level":"info","ts":1767579540.6504273,"logger":"tls.obtain","msg":"releasing lock","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"error","ts":1767579540.6505785,"msg":"unable to clean up lock in storage backend","signal":"SIGTERM","storage":"FileStorage:/data/caddy","lock_key":"issue_cert_www.getoffthemoneyshametrain.com","error":"remove /data/caddy/locks/issue_cert_www.getoffthemoneyshametrain.com.lock: no such file or directory"}
+{"level":"info","ts":1767579540.650653,"logger":"admin","msg":"stopped previous server","address":"localhost:2019"}
+{"level":"info","ts":1767579540.6506631,"msg":"shutdown complete","signal":"SIGTERM","exit_code":0}
+{"level":"info","ts":1767579541.3168838,"msg":"maxprocs: Updating GOMAXPROCS=1: using minimum allowed GOMAXPROCS"}
+{"level":"info","ts":1767579541.317361,"msg":"GOMEMLIMIT is updated","package":"github.com/KimMachineGun/automemlimit/memlimit","GOMEMLIMIT":483183820,"previous":9223372036854775807}
+{"level":"info","ts":1767579541.317455,"msg":"using config from file","file":"/etc/caddy/Caddyfile"}
+{"level":"info","ts":1767579541.319768,"msg":"adapted config to JSON","adapter":"caddyfile"}
+{"level":"warn","ts":1767579541.319781,"msg":"Caddyfile input is not formatted; run 'caddy fmt --overwrite' to fix inconsistencies","adapter":"caddyfile","file":"/etc/caddy/Caddyfile","line":6}
+{"level":"info","ts":1767579541.3213058,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+{"level":"info","ts":1767579541.3217354,"logger":"http.auto_https","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+{"level":"info","ts":1767579541.3218205,"logger":"http.auto_https","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+{"level":"warn","ts":1767579541.3230655,"logger":"http","msg":"HTTP/2 skipped because it requires TLS","network":"tcp","addr":":80"}
+{"level":"warn","ts":1767579541.3230875,"logger":"http","msg":"HTTP/3 skipped because it requires TLS","network":"tcp","addr":":80"}
+{"level":"info","ts":1767579541.3230922,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1767579541.323169,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+{"level":"info","ts":1767579541.3233488,"msg":"failed to sufficiently increase receive buffer size (was: 208 kiB, wanted: 7168 kiB, got: 416 kiB). See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes for details."}
+{"level":"info","ts":1767579541.3238642,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1767579541.3240077,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["www.getoffthemoneyshametrain.com","getoffthemoneyshametrain.com"]}
+{"level":"info","ts":1767579541.3246653,"msg":"autosaved config (load with --resume flag)","file":"/config/caddy/autosave.json"}
+{"level":"info","ts":1767579541.3247445,"msg":"serving initial configuration"}
+{"level":"info","ts":1767579541.326882,"logger":"tls","msg":"storage cleaning happened too recently; skipping for now","storage":"FileStorage:/data/caddy","instance":"62fcde7c-1c2f-44e6-9570-34c278e56b82","try_again":1767665941.32688,"try_again_in":86399.9999994}
+{"level":"info","ts":1767579541.326958,"logger":"tls","msg":"finished cleaning storage units"}
+{"level":"info","ts":1767579541.327036,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000353a80"}
+{"level":"info","ts":1767579541.3291905,"logger":"tls.obtain","msg":"acquiring lock","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3311274,"logger":"tls.obtain","msg":"lock acquired","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.331249,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3321767,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3321936,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3322089,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"info","ts":1767579541.3347952,"logger":"tls.obtain","msg":"acquiring lock","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3365436,"logger":"tls.obtain","msg":"lock acquired","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3366585,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579541.3374918,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3375309,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579541.3375452,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767579541.715981,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579541.7160587,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.384892822,"max_duration":2592000}
+{"level":"error","ts":1767579541.747043,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579541.7471378,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.41056275,"max_duration":2592000}
+{"level":"info","ts":1767579601.7162862,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579601.7173462,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767579601.7477417,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
+{"level":"info","ts":1767579601.7487755,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
+{"level":"info","ts":1767579602.084188,"msg":"authorization finalized","identifier":"getoffthemoneyshametrain.com","authz_status":"valid"}
+{"level":"info","ts":1767579602.084232,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410093"}
+{"level":"info","ts":1767579602.09953,"msg":"authorization finalized","identifier":"www.getoffthemoneyshametrain.com","authz_status":"valid"}
+{"level":"info","ts":1767579602.0995686,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410113"}
+{"level":"info","ts":1767579605.3128922,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838986,"selected_time":1772773676,"recheck_after":1767601205.3128774,"explanation_url":""}
+{"level":"info","ts":1767579605.330349,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838985,"selected_time":1772769856,"recheck_after":1767601205.3303385,"explanation_url":""}
+{"level":"info","ts":1767579605.4274843,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838986,"selected_time":1772793057,"recheck_after":1767601205.427474,"explanation_url":""}
+{"level":"info","ts":1767579605.42765,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c61ae5c4efb9b1195e5bca1fd59d2e7462a"}
+{"level":"info","ts":1767579605.427995,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.4280133,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.42803,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"info","ts":1767579605.4454904,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838985,"selected_time":1772754009,"recheck_after":1767601205.445478,"explanation_url":""}
+{"level":"info","ts":1767579605.4455721,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cc74c584a0ed38261ba7c698b90911427ff"}
+{"level":"info","ts":1767579605.4459517,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.4459662,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
+{"level":"info","ts":1767579605.445981,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
+{"level":"error","ts":1767579605.5483031,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579605.5483813,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.217216026,"max_duration":2592000}
+{"level":"error","ts":1767579605.5731711,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
+{"level":"error","ts":1767579605.57324,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.236665165,"max_duration":2592000}
+info@financial-rise-production-vm:~$ docker exec financial-rise-frontend-prod cat /etc/caddy/Caddyfile | head -10
+# Caddy configuration for Financial RISE Frontend
+# Serves React static files and proxies API requests to backend
+# Automatic HTTPS with Let's Encrypt
+
+getoffthemoneyshametrain.com {
+    # Enable gzip compression
+    encode gzip
+
+    # Security headers
+    header {
+
+---
+
+## Issue 18: SSL Certificate Persistence - Certificates Lost on Container Restart
+
+**Date:** 2026-01-04
+**Status:** ✅ RESOLVED
+**Severity:** P0 - CRITICAL
+**Impact:** Site became inaccessible again after SSL was fixed - ERR_SSL_PROTOCOL_ERROR returned
+
+### Problem
+
+After successfully fixing the SSL certificate issue (Issue 17), the site worked for ~25 minutes, then ERR_SSL_PROTOCOL_ERROR returned. Investigation revealed certificates had completely disappeared from the container.
+
+**Symptoms:**
+- Site worked with valid ZeroSSL certificates
+- 25 minutes later, same SSL error returned
+- Certificate directory showed only lock files and ACME account keys
+- Actual `.crt` and `.key` files were gone
+
+### Root Cause
+
+The Caddyfile fix was applied directly to the **running container** via `docker cp`, but the **source code and Docker image** still had the old Caddyfile without email configuration. When the container restarted (or was replaced during deployment), it loaded the original Caddyfile from the image, losing the fix.
+
+**Why This Happened:**
+1. Fixed Caddyfile in running container: ✅ Immediate fix
+2. But Docker image still has old Caddyfile: ❌ Fix not permanent
+3. Container restart/redeploy → loads image Caddyfile → loses email config → SSL fails
+
+### Solution
+
+**Two-Part Fix:**
+
+**Part 1: Immediate Fix (Applied to Running Container)**
+```bash
+# Update Caddyfile in running container
+cat > /tmp/Caddyfile << 'EOF'
+{
+    email admin@getoffthemoneyshametrain.com
+}
+
+getoffthemoneyshametrain.com {
+    encode gzip
+    header { ... }
+    @api path /api/*
+    handle @api {
+        reverse_proxy backend:3000
+    }
+    handle { ... }
+}
+
+www.getoffthemoneyshametrain.com {
+    redir https://getoffthemoneyshametrain.com{uri} permanent
+}
+EOF
+
+docker cp /tmp/Caddyfile financial-rise-frontend-prod:/etc/caddy/Caddyfile
+
+# Remove stuck locks
+docker exec financial-rise-frontend-prod rm -f /data/caddy/locks/issue_cert_*.lock
+
+# Restart Caddy
+docker restart financial-rise-frontend-prod
+
+# Verify certificates obtained
+docker exec financial-rise-frontend-prod find /data/caddy/certificates -type f
+```
+
+**Part 2: Permanent Fix (Update Source Code)**
+```bash
+# Update source Caddyfile
+cd financial-rise-app/frontend
+# Edit Caddyfile to add email configuration
+git add Caddyfile
+git commit -m "Add ACME email configuration to Caddyfile for SSL persistence"
+git push origin main
+
+# Rebuild Docker image
+gcloud builds submit --config cloudbuild.yaml
+```
+
+### Verification
+
+**Immediate:**
+```bash
+# Verify site accessible with HTTPS
+curl -I https://getoffthemoneyshametrain.com
+# Expected: HTTP/2 200
+
+# Verify certificates present
+docker exec financial-rise-frontend-prod ls -la /data/caddy/certificates/acme.zerossl.com-v2-dv90/
+# Expected: .crt and .key files for both domains
+```
+
+**After Image Rebuild:**
+```bash
+# Redeploy with new image
+docker-compose down
+docker-compose up -d
+
+# Verify Caddyfile has email in new container
+docker exec financial-rise-frontend-prod cat /etc/caddy/Caddyfile | head -10
+# Expected: Shows email in global config block
+
+# Verify certificates persist
+docker exec financial-rise-frontend-prod ls -la /data/caddy/certificates/acme.zerossl.com-v2-dv90/
+```
+
+### Impact
+
+**Before Fix:** Site worked temporarily but became inaccessible after any container restart
+**After Fix:** SSL certificates persist across container restarts and redeployments
+
+### Quick Reference - SSL Certificate Troubleshooting Checklist
+
+If SSL certificates fail or disappear:
+
+1. **Check if email is in Caddyfile global config:**
+   ```bash
+   docker exec financial-rise-frontend-prod cat /etc/caddy/Caddyfile | head -10
+   ```
+   Should show:
+   ```
+   {
+       email admin@getoffthemoneyshametrain.com
+   }
+   ```
+
+2. **Remove stuck certificate locks:**
+   ```bash
+   docker exec financial-rise-frontend-prod rm -f /data/caddy/locks/issue_cert_*.lock
+   ```
+
+3. **Restart Caddy:**
+   ```bash
+   docker restart financial-rise-frontend-prod
+   ```
+
+4. **Monitor certificate acquisition:**
+   ```bash
+   docker logs -f financial-rise-frontend-prod | grep -i "certificate\|acme"
+   ```
+
+5. **Verify certificates obtained:**
+   ```bash
+   docker exec financial-rise-frontend-prod find /data/caddy/certificates -type f
+   ```
+
+6. **If certificates obtained but fix not permanent:**
+   - Update source Caddyfile in repository
+   - Rebuild Docker image
+   - Redeploy
+
+### Lesson Learned
+
+**Container vs. Image Persistence:**
+- Changes to **running containers** (via `docker exec`, `docker cp`) are temporary
+- Changes only persist if made to the **Docker image** or mounted volumes
+- For configuration files baked into images: always update source code + rebuild image
+
+**The Right Workflow:**
+1. Apply fix to running container for immediate resolution
+2. Update source code in repository
+3. Rebuild Docker image
+4. Redeploy to make fix permanent
+
+---
+
+## Issue 19: PowerShell Execution Policy Blocking gcloud Command
+
+**Date:** 2026-01-04
+**Status:** ✅ RESOLVED (Not Needed)
+**Severity:** P2 - MEDIUM
+**Impact:** Cannot rebuild Docker image from Windows PC to make SSL fix permanent
+
+### Problem
+
+When attempting to rebuild the frontend Docker image to permanently fix the SSL certificate issue, PowerShell blocked the gcloud command with a security error.
+
+**Error:**
+```
+PS C:\Users\Admin\src\financial-rise-app\frontend> gcloud builds submit --config cloudbuild.yaml
+gcloud : File C:\Users\Admin\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1
+cannot be loaded because running scripts is disabled on this system. For more information, see
+about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:2
++  gcloud builds submit --config cloudbuild.yaml
++  ~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+```
+
+### Root Cause
+
+Windows PowerShell execution policy is set to `Restricted` or `AllSigned`, which prevents running scripts downloaded from the internet (including Google Cloud SDK scripts).
+
+### Solutions
+
+**Option 1: Use Command Prompt (Easiest - RECOMMENDED)**
+
+Command Prompt (cmd.exe) does NOT have execution policies. Simply use cmd instead of PowerShell:
+
+```cmd
+REM Open Command Prompt (not PowerShell)
+cd C:\Users\Admin\src\financial-rise-app\frontend
+gcloud builds submit --config cloudbuild.yaml
+```
+
+**Option 2: Bypass Execution Policy for One Command**
+
+```powershell
+# Run in PowerShell
+cd C:\Users\Admin\src\financial-rise-app\frontend
+powershell -ExecutionPolicy Bypass -Command "gcloud builds submit --config cloudbuild.yaml"
+```
+
+**Option 3: Change Execution Policy (Requires Admin)**
+
+```powershell
+# Run PowerShell as Administrator
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Then run normally
+cd C:\Users\Admin\src\financial-rise-app\frontend
+gcloud builds submit --config cloudbuild.yaml
+```
+
+### Quick Reference - Execution Policy Levels
+
+- **Restricted** - No scripts allowed (most secure, default on Windows client)
+- **AllSigned** - Only scripts signed by trusted publisher
+- **RemoteSigned** - Local scripts allowed, downloaded scripts must be signed
+- **Unrestricted** - All scripts allowed (least secure)
+- **Bypass** - Nothing is blocked, no warnings (temporary use only)
+
+### Recommended Solution
+
+**Use Command Prompt (cmd.exe) for gcloud commands** to avoid PowerShell execution policy issues entirely.
+
+```cmd
+cmd
+cd C:\Users\Admin\src\financial-rise-app\frontend
+gcloud builds submit --config cloudbuild.yaml
+```
+
+### Resolution
+
+**Issue became moot** - GitHub Actions workflow already deployed the fixed Caddyfile (commit 0a9fbbc) automatically when code was pushed to main. Manual rebuild from Windows PC was not needed.
+
+**Verification:**
+```bash
+docker exec financial-rise-frontend-prod cat /etc/caddy/Caddyfile | head -10
+```
+
+Shows email configuration is present in deployed container. SSL certificates now persist permanently.
+
+**Lesson:** Always check GitHub Actions workflow status before attempting manual deployments. The automated CI/CD pipeline handles image building and deployment.
+
+---

@@ -42,8 +42,8 @@ describe('DISCCalculatorService', () => {
   });
 
   describe('validateInputs', () => {
-    it('should not throw error for sufficient responses (12+)', () => {
-      const responses: DISCQuestionResponse[] = Array(12).fill({
+    it('should not throw error for sufficient responses (8+)', () => {
+      const responses: DISCQuestionResponse[] = Array(8).fill({
         question_id: 'test',
         selected_value: 'test',
         weights: { disc_d_score: 5, disc_i_score: 5, disc_s_score: 0, disc_c_score: 0 },
@@ -52,8 +52,8 @@ describe('DISCCalculatorService', () => {
       expect(() => service.validateInputs(responses)).not.toThrow();
     });
 
-    it('should log warning but not throw for insufficient responses (<12)', () => {
-      const responses: DISCQuestionResponse[] = Array(8).fill({
+    it('should log warning but not throw for insufficient responses (<8)', () => {
+      const responses: DISCQuestionResponse[] = Array(4).fill({
         question_id: 'test',
         selected_value: 'test',
         weights: { disc_d_score: 5, disc_i_score: 5, disc_s_score: 0, disc_c_score: 0 },

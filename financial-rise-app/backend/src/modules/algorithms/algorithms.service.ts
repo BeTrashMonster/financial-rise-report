@@ -63,7 +63,6 @@ export interface CalculationResult {
 export class AlgorithmsService {
   private readonly logger = new Logger(AlgorithmsService.name);
   private questionsCache: Map<string, Question> = new Map();
-  private discQuestionsCache: Map<string, Question> = new Map();
   private cacheLoaded = false;
 
   constructor(
@@ -183,11 +182,10 @@ export class AlgorithmsService {
   resetCache(): void {
     this.cacheLoaded = false;
     this.questionsCache.clear();
-    this.discQuestionsCache.clear();
   }
 
   /**
-   * Load question weights from JSON files into cache
+   * Load question weights from unified JSON file into cache
    */
   private async loadQuestionWeights(): Promise<void> {
     if (this.cacheLoaded) {
@@ -195,29 +193,39 @@ export class AlgorithmsService {
     }
 
     try {
-      const contentPath = path.join(__dirname, '../../../..', 'content');
+      // Path resolution for both test and production environments
+      // In tests (Jest rootDir='src'): __dirname is src/modules/algorithms, go up 3 to backend/ then into content/
+      // In production: __dirname is dist/modules/algorithms, go up 3 to backend/ then into content/
+      const contentPath = path.join(__dirname, '../../..', 'content');
 
-      // Load financial readiness questions
-      const questionsPath = path.join(contentPath, 'questions.json');
+      // Load unified assessment questions (includes both phase and embedded DISC)
+      const questionsPath = path.join(contentPath, 'assessment-questions.json');
       const questionsData = await fs.readFile(questionsPath, 'utf-8');
       const questionsBank: QuestionBank = JSON.parse(questionsData);
 
+      let discQuestionCount = 0;
       for (const question of questionsBank.questions) {
         this.questionsCache.set(question.id, question);
-      }
 
-      // Load DISC questions
-      const discQuestionsPath = path.join(contentPath, 'disc-questions.json');
-      const discQuestionsData = await fs.readFile(discQuestionsPath, 'utf-8');
-      const discQuestionsBank: QuestionBank = JSON.parse(discQuestionsData);
-
-      for (const question of discQuestionsBank.questions) {
-        this.discQuestionsCache.set(question.id, question);
+        // Count questions with DISC scores (embedded DISC questions)
+        // Only check questions that have options (rating questions don't have options)
+        if (question.options && Array.isArray(question.options)) {
+          const hasDiscScores = question.options.some(
+            (opt) =>
+              opt.disc_d_score !== undefined ||
+              opt.disc_i_score !== undefined ||
+              opt.disc_s_score !== undefined ||
+              opt.disc_c_score !== undefined,
+          );
+          if (hasDiscScores) {
+            discQuestionCount++;
+          }
+        }
       }
 
       this.cacheLoaded = true;
       this.logger.log(
-        `Loaded ${this.questionsCache.size} phase questions and ${this.discQuestionsCache.size} DISC questions`,
+        `Loaded ${this.questionsCache.size} total questions (${discQuestionCount} with DISC scoring)`,
       );
     } catch (error) {
       this.logger.error('Failed to load question weights', error);
@@ -228,6 +236,8 @@ export class AlgorithmsService {
   /**
    * Extract DISC responses with weights from assessment responses
    *
+   * Checks all questions for DISC scoring (handles embedded DISC questions)
+   *
    * @param responses - All assessment responses
    * @returns DISC responses with weights
    */
@@ -237,10 +247,15 @@ export class AlgorithmsService {
     const discResponses: DISCQuestionResponse[] = [];
 
     for (const response of responses) {
-      const question = this.discQuestionsCache.get(response.question_id);
+      const question = this.questionsCache.get(response.question_id);
 
       if (!question) {
-        // Not a DISC question, skip
+        // Question not found in cache, skip
+        continue;
+      }
+
+      // Skip questions without options (e.g., rating questions)
+      if (!question.options || !Array.isArray(question.options)) {
         continue;
       }
 
@@ -250,8 +265,20 @@ export class AlgorithmsService {
 
       if (!selectedOption) {
         this.logger.warn(
-          `Invalid response value for DISC question ${response.question_id}`,
+          `Invalid response value for question ${response.question_id}`,
         );
+        continue;
+      }
+
+      // Check if this option has DISC scores (embedded DISC question)
+      const hasDiscScores =
+        selectedOption.disc_d_score !== undefined ||
+        selectedOption.disc_i_score !== undefined ||
+        selectedOption.disc_s_score !== undefined ||
+        selectedOption.disc_c_score !== undefined;
+
+      if (!hasDiscScores) {
+        // Not a DISC question, skip
         continue;
       }
 
@@ -286,6 +313,11 @@ export class AlgorithmsService {
 
       if (!question) {
         // Not a phase question, skip
+        continue;
+      }
+
+      // Skip questions without options (e.g., rating questions)
+      if (!question.options || !Array.isArray(question.options)) {
         continue;
       }
 
