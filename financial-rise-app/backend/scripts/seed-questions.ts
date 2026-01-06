@@ -49,14 +49,15 @@ async function seedQuestions() {
   console.log('🌱 Starting question seeding process...\n');
 
   // Create database connection
+  // Use DATABASE_* variables (from docker-compose) or DB_* variables (from .env files)
   const dataSource = new DataSource({
     type: 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    username: process.env.DB_USERNAME || 'postgres',
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME || 'financial_rise',
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+    host: process.env.DATABASE_HOST || process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DATABASE_PORT || process.env.DB_PORT || '5432'),
+    username: process.env.DATABASE_USER || process.env.DB_USERNAME || 'postgres',
+    password: process.env.DATABASE_PASSWORD || process.env.DB_PASSWORD,
+    database: process.env.DATABASE_NAME || process.env.DB_NAME || 'financial_rise',
+    ssl: (process.env.DATABASE_SSL === 'true' || process.env.DB_SSL === 'true') ? { rejectUnauthorized: false } : false,
   });
 
   try {
