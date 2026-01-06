@@ -1,9 +1,20 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
+/**
+ * DEPRECATED: This migration is kept for historical purposes only.
+ *
+ * DO NOT USE - Questions are now managed via:
+ * - Source: backend/content/assessment-questions.json (47 questions)
+ * - Seeding: npm run seed:questions (backend/scripts/seed-questions.ts)
+ *
+ * This migration was overwritten by manual SQL execution and is no longer accurate.
+ * Left in place so TypeORM doesn't complain about missing migrations.
+ */
 export class SeedQuestions1703700000003 implements MigrationInterface {
   name = 'SeedQuestions1703700000003';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    // DEPRECATED: See class comment above
     // Seed questions with DISC and Phase scoring
     // This is based on the requirements and questionnaire service
 
