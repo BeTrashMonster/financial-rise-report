@@ -672,10 +672,10 @@ const validateQuestionData = (question: Question): { valid: boolean; error?: str
       if (!Array.isArray(opts) || opts.length === 0) {
         return { valid: false, error: 'Choice questions must have at least one option' };
       }
-      // Validate each option has value and label
+      // Validate each option has value and text (stored as 'text' in database, not 'label')
       for (const opt of opts) {
-        if (!opt || typeof opt !== 'object' || !opt.value || !opt.label) {
-          return { valid: false, error: 'Invalid option format: missing value or label' };
+        if (!opt || typeof opt !== 'object' || !opt.value || !opt.text) {
+          return { valid: false, error: 'Invalid option format: missing value or text' };
         }
       }
       break;
