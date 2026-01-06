@@ -38,6 +38,7 @@ import {
   CircularProgress,
   Chip,
   Divider,
+  Skeleton,
 } from '@mui/material';
 import {
   CheckCircle as CheckCircleIcon,
@@ -381,14 +382,58 @@ export const Questionnaire: React.FC = () => {
   const currentQuestion = questions[state.currentQuestionIndex];
   const currentSection = currentQuestion?.section || 'metadata';
 
-  // Loading state
+  // Loading state with skeleton loaders
   if (loading && questions.length === 0) {
     return (
-      <Container maxWidth="md" sx={{ py: 8, textAlign: 'center' }}>
-        <CircularProgress size={60} />
-        <Typography variant="h6" sx={{ mt: 3 }}>
-          Loading questionnaire...
-        </Typography>
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        <Paper elevation={2} sx={{ p: 4 }}>
+          {/* Header skeleton */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Skeleton variant="text" width={300} height={40} />
+            <Skeleton variant="text" width={100} height={30} />
+          </Box>
+
+          {/* Progress bar skeleton */}
+          <Box sx={{ mb: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+              <Skeleton variant="text" width={120} height={20} />
+              <Skeleton variant="text" width={100} height={20} />
+            </Box>
+            <Skeleton variant="rectangular" width="100%" height={8} sx={{ borderRadius: 1 }} />
+          </Box>
+
+          {/* Breadcrumbs skeleton */}
+          <Box sx={{ mb: 3 }}>
+            <Skeleton variant="text" width={200} height={30} />
+          </Box>
+
+          <Divider sx={{ mb: 3 }} />
+
+          {/* Question text skeleton */}
+          <Box sx={{ mb: 4 }}>
+            <Skeleton variant="text" width="80%" height={32} sx={{ mb: 1 }} />
+            <Skeleton variant="text" width="60%" height={32} />
+          </Box>
+
+          {/* Options skeleton (simulating radio buttons) */}
+          <Box sx={{ mb: 4 }}>
+            {[1, 2, 3, 4].map((item) => (
+              <Box key={item} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Skeleton variant="circular" width={20} height={20} sx={{ mr: 2 }} />
+                <Skeleton variant="text" width="70%" height={24} />
+              </Box>
+            ))}
+          </Box>
+
+          {/* Navigation buttons skeleton */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
+            <Skeleton variant="rectangular" width={120} height={42} sx={{ borderRadius: 1 }} />
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Skeleton variant="rectangular" width={140} height={42} sx={{ borderRadius: 1 }} />
+              <Skeleton variant="rectangular" width={100} height={42} sx={{ borderRadius: 1 }} />
+            </Box>
+          </Box>
+        </Paper>
       </Container>
     );
   }
