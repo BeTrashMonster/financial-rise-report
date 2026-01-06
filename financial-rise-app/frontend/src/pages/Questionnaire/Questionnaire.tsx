@@ -111,9 +111,11 @@ export const Questionnaire: React.FC = () => {
     isCalculating: false,
   });
 
-  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'offline'>('idle');
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const retryCountRef = useRef<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Fetch questions on mount
   useEffect(() => {
@@ -141,11 +143,22 @@ export const Questionnaire: React.FC = () => {
     };
   }, [state.responses]);
 
-  // Auto-save function
-  const handleAutoSave = async () => {
+  // Auto-save function with retry logic and offline detection
+  const handleAutoSave = async (retryAttempt: number = 0) => {
     if (!assessmentId) return;
 
+    // Check if offline
+    if (!navigator.onLine) {
+      setAutoSaveStatus('offline');
+      setSaveError('You appear to be offline. Changes will be saved when connection is restored.');
+      // Retry when connection comes back online
+      window.addEventListener('online', () => handleAutoSave(), { once: true });
+      return;
+    }
+
     setAutoSaveStatus('saving');
+    setSaveError(null);
+
     try {
       // Save all pending responses
       const unsavedResponses = Array.from(state.responses.values());
@@ -163,11 +176,35 @@ export const Questionnaire: React.FC = () => {
         }
       }
 
+      // Success - reset retry count
+      retryCountRef.current = 0;
       setAutoSaveStatus('saved');
+      setSaveError(null);
       setTimeout(() => setAutoSaveStatus('idle'), 2000);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Auto-save failed:', err);
-      setAutoSaveStatus('idle');
+
+      // Network error - retry with exponential backoff
+      if (err.code === 'ERR_NETWORK' || err.message?.includes('Network')) {
+        const maxRetries = 3;
+        if (retryAttempt < maxRetries) {
+          const backoffMs = Math.min(1000 * Math.pow(2, retryAttempt), 10000); // Max 10s
+          retryCountRef.current = retryAttempt + 1;
+          setAutoSaveStatus('error');
+          setSaveError(`Connection issue. Retrying in ${Math.ceil(backoffMs / 1000)}s... (${retryAttempt + 1}/${maxRetries})`);
+
+          setTimeout(() => handleAutoSave(retryAttempt + 1), backoffMs);
+        } else {
+          // Max retries exceeded
+          setAutoSaveStatus('error');
+          setSaveError('Failed to save changes. Please check your connection and try again.');
+        }
+      } else {
+        // Other error (validation, server error, etc.)
+        setAutoSaveStatus('error');
+        setSaveError(err.response?.data?.message || 'Failed to save changes. Please try again.');
+        retryCountRef.current = 0;
+      }
     }
   };
 
@@ -481,6 +518,20 @@ export const Questionnaire: React.FC = () => {
                 <CheckCircleIcon fontSize="small" color="success" />
                 <Typography variant="caption" color="success.main">
                   Saved
+                </Typography>
+              </>
+            )}
+            {autoSaveStatus === 'error' && saveError && (
+              <>
+                <Typography variant="caption" color="error.main" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  ⚠️ {saveError}
+                </Typography>
+              </>
+            )}
+            {autoSaveStatus === 'offline' && (
+              <>
+                <Typography variant="caption" color="warning.main" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  📡 Offline - changes will save when reconnected
                 </Typography>
               </>
             )}
