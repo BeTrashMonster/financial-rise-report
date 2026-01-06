@@ -203,10 +203,43 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 
 **Note:** Duplicate response prevention not needed - Map-based state management inherently prevents duplicates by question_key
 
-### 2.3 Edge Cases
+### 2.3 Edge Cases ✅ COMPLETE (2026-01-06)
+
+**Network Failure Handling** (commit 73b114d):
+- [x] Offline detection using navigator.onLine API
+- [x] Auto-retry when connection restored
+- [x] Exponential backoff retry logic (1s, 2s, 4s, max 10s)
+- [x] Max 3 retry attempts before showing persistent error
+- [x] Visual feedback for error/offline states (⚠️ and 📡 indicators)
+- [x] Real-time retry countdown display
+- [x] User-friendly error messages
+
+**Malformed Data Validation** (commit 61d8e48):
+- [x] Question data structure validation before rendering
+- [x] Required field checking (question_text, question_type)
+- [x] Type-specific validation:
+  * single_choice/multiple_choice: Validates options array, value/label presence
+  * rating: Validates min/max are numbers and min < max
+  * text: No additional validation needed
+- [x] Response data validation:
+  * Type checking (string, array, number)
+  * Option value verification (selected values exist in question options)
+  * Rating range validation (within min/max bounds)
+  * Text length validation (max 5000 characters)
+- [x] User-friendly error alerts for invalid question data
+- [x] Prevents injection of invalid data
+
+**Empty/Missing Data Handling:**
+- [x] Graceful handling of null/undefined responses
+- [x] Required vs optional question differentiation
+- [x] Empty response arrays handled correctly
+- [x] Missing question fields show helpful error message
+
+**Testing Checklist** (Manual - Requires Live App):
 - [ ] Test with 0 questions in database
 - [ ] Test with 100+ questions
-- [ ] Test with all question types
+- [ ] Test network disconnect during auto-save
+- [ ] Test malformed question data from API
 - [ ] Test incomplete assessments (Save & Exit)
 - [ ] Test resuming incomplete assessments
 
@@ -242,12 +275,16 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 - [ ] Loading state for auto-save
 - [ ] Skeleton loaders for questions
 
-### 3.2 Error Handling ⚠️ BASIC
+### 3.2 Error Handling ✅ COMPLETE (2026-01-06)
 - [x] Display error alerts
-- [ ] **Improve error messages** (currently shows "Internal server error")
-- [ ] Retry failed auto-saves
-- [ ] Offline detection and queuing
-- [ ] Network error recovery
+- [x] **Improved error messages** - User-friendly messages for all error types
+- [x] Retry failed auto-saves - Exponential backoff with max 3 retries
+- [x] Network error detection and handling
+- [x] Offline mode detection
+- [x] Validation error messages (question/response format)
+- [x] Visual feedback for all error states
+- [x] Offline detection and queuing (auto-retry when online)
+- [x] Network error recovery (retry logic with backoff)
 
 ### 3.3 Accessibility
 - [ ] WCAG 2.1 Level AA compliance audit
