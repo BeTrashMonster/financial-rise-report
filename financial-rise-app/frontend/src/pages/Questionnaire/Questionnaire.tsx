@@ -270,16 +270,30 @@ export const Questionnaire: React.FC = () => {
     // Validate based on question type
     switch (question.question_type) {
       case 'single_choice':
-        if (!response.value || response.value.trim() === '') {
+        if (!response.value || typeof response.value !== 'string' || response.value.trim() === '') {
           return 'Please select an option';
+        }
+        // Validate selected value exists in options
+        const singleOpts = Array.isArray(question.options) ? question.options : question.options?.options || [];
+        const validValue = singleOpts.some((opt: any) => opt.value === response.value);
+        if (!validValue) {
+          return 'Selected option is invalid. Please select a valid option.';
         }
         break;
 
       case 'multiple_choice':
-        if (!response.values || response.values.length === 0) {
+        if (!Array.isArray(response.values) || response.values.length === 0) {
           return question.required
             ? 'Please select at least one option'
             : null;
+        }
+        // Validate all selected values exist in options
+        const multiOpts = Array.isArray(question.options) ? question.options : question.options?.options || [];
+        const validValues = response.values.every((val: string) =>
+          multiOpts.some((opt: any) => opt.value === val)
+        );
+        if (!validValues) {
+          return 'One or more selected options are invalid. Please reselect.';
         }
         break;
 
@@ -287,11 +301,25 @@ export const Questionnaire: React.FC = () => {
         if (response.rating === null || response.rating === undefined) {
           return 'Please provide a rating';
         }
+        if (typeof response.rating !== 'number') {
+          return 'Rating must be a number';
+        }
+        // Validate rating is within min/max range
+        const ratingOpts = question.options as any;
+        const min = ratingOpts?.min || 1;
+        const max = ratingOpts?.max || 10;
+        if (response.rating < min || response.rating > max) {
+          return `Rating must be between ${min} and ${max}`;
+        }
         break;
 
       case 'text':
-        if (question.required && (!response.text || response.text.trim() === '')) {
+        if (question.required && (!response.text || typeof response.text !== 'string' || response.text.trim() === '')) {
           return 'Please enter a response';
+        }
+        // Validate text length (prevent extremely long inputs)
+        if (response.text && typeof response.text === 'string' && response.text.length > 5000) {
+          return 'Response is too long (maximum 5000 characters)';
         }
         break;
     }
@@ -619,6 +647,63 @@ export const Questionnaire: React.FC = () => {
 };
 
 /**
+ * Validate question data structure
+ * Protects against malformed data from API
+ */
+const validateQuestionData = (question: Question): { valid: boolean; error?: string } => {
+  // Check required fields
+  if (!question || typeof question !== 'object') {
+    return { valid: false, error: 'Invalid question object' };
+  }
+
+  if (!question.question_text || typeof question.question_text !== 'string') {
+    return { valid: false, error: 'Question text is missing or invalid' };
+  }
+
+  if (!question.question_type || typeof question.question_type !== 'string') {
+    return { valid: false, error: 'Question type is missing or invalid' };
+  }
+
+  // Validate based on question type
+  switch (question.question_type) {
+    case 'single_choice':
+    case 'multiple_choice':
+      const opts = Array.isArray(question.options) ? question.options : question.options?.options;
+      if (!Array.isArray(opts) || opts.length === 0) {
+        return { valid: false, error: 'Choice questions must have at least one option' };
+      }
+      // Validate each option has value and label
+      for (const opt of opts) {
+        if (!opt || typeof opt !== 'object' || !opt.value || !opt.label) {
+          return { valid: false, error: 'Invalid option format: missing value or label' };
+        }
+      }
+      break;
+
+    case 'rating':
+      const ratingOpts = question.options as any;
+      if (!ratingOpts || typeof ratingOpts !== 'object') {
+        return { valid: false, error: 'Rating question must have options object' };
+      }
+      const min = ratingOpts.min;
+      const max = ratingOpts.max;
+      if (typeof min !== 'number' || typeof max !== 'number' || min >= max) {
+        return { valid: false, error: 'Rating question must have valid min/max values' };
+      }
+      break;
+
+    case 'text':
+      // Text questions don't need options
+      break;
+
+    default:
+      return { valid: false, error: `Unsupported question type: ${question.question_type}` };
+  }
+
+  return { valid: true };
+};
+
+/**
  * Question Renderer Component
  * Renders different question types dynamically
  */
@@ -630,6 +715,21 @@ interface QuestionRendererProps {
 
 const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, onChange }) => {
   const { question_text, question_type, options, required } = question;
+
+  // Validate question data before rendering
+  const validation = validateQuestionData(question);
+  if (!validation.valid) {
+    return (
+      <Alert severity="error">
+        <Typography variant="body2">
+          <strong>Question data error:</strong> {validation.error}
+        </Typography>
+        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+          Question ID: {question.question_key || 'unknown'}
+        </Typography>
+      </Alert>
+    );
+  }
 
   // Single choice (radio buttons)
   if (question_type === 'single_choice') {
