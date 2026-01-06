@@ -3,8 +3,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { config } from 'dotenv';
 
-// Load environment variables
-config();
+// Load environment variables from .env.production if it exists, otherwise .env
+const envFile = fs.existsSync(path.join(__dirname, '..', '.env.production'))
+  ? '.env.production'
+  : '.env';
+config({ path: path.join(__dirname, '..', envFile) });
+console.log(`📦 Loaded environment from: ${envFile}\n`);
 
 /**
  * Script to seed assessment questions from assessment-questions.json
