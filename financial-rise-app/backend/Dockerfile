@@ -43,6 +43,7 @@ COPY --from=builder /app/dist ./dist
 # Copy scripts and content directories for seeding
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/content ./content
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
