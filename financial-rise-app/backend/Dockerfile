@@ -40,6 +40,10 @@ RUN npm ci --only=production
 # Copy built application
 COPY --from=builder /app/dist ./dist
 
+# Copy scripts and content directories for seeding
+COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/content ./content
+
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nestjs -u 1001
