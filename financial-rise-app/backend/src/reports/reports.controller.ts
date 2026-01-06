@@ -8,6 +8,7 @@ import {
   HttpStatus,
   UseGuards,
   NotFoundException,
+  BadRequestException,
   Logger,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
@@ -17,6 +18,9 @@ import { GetUser } from '../modules/auth/decorators/get-user.decorator';
 import { ReportGenerationService } from './services/report-generation.service';
 import { GenerateReportDto } from './dto/generate-report.dto';
 import { ReportResponseDto, ReportAcceptedDto } from './dto/report-response.dto';
+import { AssessmentsService } from '../modules/assessments/assessments.service';
+import { AlgorithmsService } from '../modules/algorithms/algorithms.service';
+import { AssessmentStatus } from '../modules/assessments/entities/assessment.entity';
 
 /**
  * Controller for report generation and retrieval endpoints
@@ -29,7 +33,11 @@ import { ReportResponseDto, ReportAcceptedDto } from './dto/report-response.dto'
 export class ReportsController {
   private readonly logger = new Logger(ReportsController.name);
 
-  constructor(private readonly reportGenerationService: ReportGenerationService) {}
+  constructor(
+    private readonly reportGenerationService: ReportGenerationService,
+    private readonly assessmentsService: AssessmentsService,
+    private readonly algorithmsService: AlgorithmsService,
+  ) {}
 
   /**
    * POST /reports/generate/consultant
@@ -46,37 +54,57 @@ export class ReportsController {
   async generateConsultantReport(@Body() dto: GenerateReportDto, @GetUser() user: any): Promise<ReportAcceptedDto> {
     this.logger.log(`Generating consultant report for assessment ${dto.assessmentId}`);
 
-    // TODO: Fetch assessment data from database
-    // For now, this is a placeholder structure
+    // Fetch assessment with all relationships
+    const assessment = await this.assessmentsService.findOne(dto.assessmentId, user.id);
+
+    // Verify assessment is completed
+    if (assessment.status !== AssessmentStatus.COMPLETED) {
+      throw new BadRequestException('Assessment must be completed before generating reports');
+    }
+
+    // Fetch DISC profile and phase results
+    const discProfile = await this.algorithmsService.getDISCProfile(dto.assessmentId);
+    const phaseResults = await this.algorithmsService.getPhaseResults(dto.assessmentId);
+
+    if (!discProfile || !phaseResults) {
+      throw new BadRequestException('Assessment results not found. Please ensure the assessment was submitted successfully.');
+    }
+
+    // Transform data for report template
     const consultantData = {
       client: {
-        name: 'Client Name',
-        businessName: 'Business Name',
-        email: 'client@example.com',
+        name: assessment.client_name,
+        businessName: assessment.business_name,
+        email: assessment.client_email,
       },
       assessment: {
-        id: dto.assessmentId,
-        completedAt: new Date(),
+        id: assessment.id,
+        completedAt: assessment.completed_at || new Date(),
       },
       discProfile: {
-        primaryType: 'C' as const,
-        scores: { D: 65, I: 70, S: 55, C: 85 },
-        secondaryTraits: ['D'],
+        primaryType: discProfile.primary_type as any,
+        scores: {
+          D: discProfile.d_score,
+          I: discProfile.i_score,
+          S: discProfile.s_score,
+          C: discProfile.c_score,
+        },
+        secondaryTraits: discProfile.secondary_type ? [discProfile.secondary_type] : [],
         confidence: 'high',
       },
       phaseResults: {
-        primaryPhase: 'organize' as any,
+        primaryPhase: phaseResults.primary_phase as any,
         scores: {
-          stabilize: 65,
-          organize: 75,
-          build: 45,
-          grow: 30,
-          systemic: 50,
+          stabilize: phaseResults.stabilize_score,
+          organize: phaseResults.organize_score,
+          build: phaseResults.build_score,
+          grow: phaseResults.grow_score,
+          systemic: phaseResults.systemic_score,
         } as any,
-        secondaryPhases: ['stabilize' as any],
+        secondaryPhases: phaseResults.secondary_phase ? [phaseResults.secondary_phase as any] : [],
       },
-      responses: [],
-      consultantNotes: 'Initial assessment complete',
+      responses: assessment.responses || [],
+      consultantNotes: assessment.notes || '',
     };
 
     const report = await this.reportGenerationService.generateConsultantReport(consultantData, user.id);
@@ -104,43 +132,61 @@ export class ReportsController {
   async generateClientReport(@Body() dto: GenerateReportDto, @GetUser() user: any): Promise<ReportAcceptedDto> {
     this.logger.log(`Generating client report for assessment ${dto.assessmentId}`);
 
-    // TODO: Fetch assessment data and generate quick wins/roadmap
+    // Fetch assessment with all relationships
+    const assessment = await this.assessmentsService.findOne(dto.assessmentId, user.id);
+
+    // Verify assessment is completed
+    if (assessment.status !== AssessmentStatus.COMPLETED) {
+      throw new BadRequestException('Assessment must be completed before generating reports');
+    }
+
+    // Fetch DISC profile and phase results
+    const discProfile = await this.algorithmsService.getDISCProfile(dto.assessmentId);
+    const phaseResults = await this.algorithmsService.getPhaseResults(dto.assessmentId);
+
+    if (!discProfile || !phaseResults) {
+      throw new BadRequestException('Assessment results not found. Please ensure the assessment was submitted successfully.');
+    }
+
+    // Generate quick wins based on phase scores (top 3 improvement areas)
+    const quickWins = this.generateQuickWins(phaseResults);
+
+    // Generate roadmap based on primary and secondary phases
+    const roadmap = this.generateRoadmap(phaseResults);
+
+    // Transform data for report template
     const clientData = {
       client: {
-        name: 'Client Name',
-        businessName: 'Business Name',
-        email: 'client@example.com',
+        name: assessment.client_name,
+        businessName: assessment.business_name,
+        email: assessment.client_email,
       },
       discProfile: {
-        primaryType: 'C' as const,
-        scores: { D: 65, I: 70, S: 55, C: 85 },
-        secondaryTraits: ['D'],
+        primaryType: discProfile.primary_type as any,
+        scores: {
+          D: discProfile.d_score,
+          I: discProfile.i_score,
+          S: discProfile.s_score,
+          C: discProfile.c_score,
+        },
+        secondaryTraits: discProfile.secondary_type ? [discProfile.secondary_type] : [],
         confidence: 'high',
       },
       phaseResults: {
-        primaryPhase: 'organize' as any,
+        primaryPhase: phaseResults.primary_phase as any,
         scores: {
-          stabilize: 65,
-          organize: 75,
-          build: 45,
-          grow: 30,
-          systemic: 50,
+          stabilize: phaseResults.stabilize_score,
+          organize: phaseResults.organize_score,
+          build: phaseResults.build_score,
+          grow: phaseResults.grow_score,
+          systemic: phaseResults.systemic_score,
         } as any,
-        secondaryPhases: ['stabilize' as any],
+        secondaryPhases: phaseResults.secondary_phase ? [phaseResults.secondary_phase as any] : [],
       },
-      quickWins: [
-        {
-          action: 'Set up automated bank reconciliation',
-          why: 'Reduces manual errors and saves time',
-          benefit: 'Save 2-3 hours per week',
-        },
-      ],
-      roadmap: {
-        phases: ['organize' as any, 'build' as any],
-        milestones: ['Complete chart of accounts setup', 'Integrate accounting software'],
-      },
+      quickWins,
+      roadmap,
       branding: {
-        consultantName: 'Your Financial Consultant',
+        consultantName: user.name || 'Your Financial Consultant',
         logo: null,
         brandColor: '#4B006E',
       },
@@ -257,6 +303,103 @@ export class ReportsController {
     return {
       message: 'Use POST /algorithms/phase endpoint instead',
       redirectTo: '/api/v1/algorithms/phase',
+    };
+  }
+
+  /**
+   * Generate quick wins based on phase scores
+   * Identifies top 3 areas for improvement with lowest scores
+   */
+  private generateQuickWins(phaseResults: any): Array<{ action: string; why: string; benefit: string }> {
+    const phaseQuickWins = {
+      stabilize: {
+        action: 'Set up automated bank reconciliation',
+        why: 'Reduces manual errors and ensures accurate financial records',
+        benefit: 'Save 2-3 hours per week and catch discrepancies early',
+      },
+      organize: {
+        action: 'Implement a standardized chart of accounts',
+        why: 'Creates consistency in financial reporting',
+        benefit: 'Easier to track expenses and generate meaningful reports',
+      },
+      build: {
+        action: 'Document your month-end close process',
+        why: 'Ensures consistency and reduces time to close books',
+        benefit: 'Close books 50% faster with fewer errors',
+      },
+      grow: {
+        action: 'Create a 13-week cash flow forecast',
+        why: 'Provides early warning of cash shortfalls',
+        benefit: 'Make informed decisions about hiring and investments',
+      },
+      systemic: {
+        action: 'Schedule monthly financial review meetings',
+        why: 'Keeps financial health top of mind',
+        benefit: 'Catch trends early and make data-driven decisions',
+      },
+    };
+
+    // Find bottom 3 phases by score
+    const phases = [
+      { phase: 'stabilize', score: phaseResults.stabilize_score },
+      { phase: 'organize', score: phaseResults.organize_score },
+      { phase: 'build', score: phaseResults.build_score },
+      { phase: 'grow', score: phaseResults.grow_score },
+      { phase: 'systemic', score: phaseResults.systemic_score },
+    ];
+
+    return phases
+      .sort((a, b) => a.score - b.score)
+      .slice(0, 3)
+      .map((p) => phaseQuickWins[p.phase]);
+  }
+
+  /**
+   * Generate roadmap based on phase results
+   * Creates prioritized list of phases and milestones
+   */
+  private generateRoadmap(phaseResults: any): { phases: string[]; milestones: string[] } {
+    const phaseMilestones = {
+      stabilize: [
+        'Clean up historical accounting records',
+        'Establish regular bookkeeping schedule',
+        'Reconcile all bank and credit card accounts',
+      ],
+      organize: [
+        'Set up proper chart of accounts',
+        'Integrate accounting software with bank feeds',
+        'Implement approval workflows for expenses',
+      ],
+      build: [
+        'Document month-end close procedures',
+        'Create financial reporting templates',
+        'Set up budget vs actual tracking',
+      ],
+      grow: [
+        'Develop 12-month revenue forecast',
+        'Create scenario planning models',
+        'Implement KPI dashboard',
+      ],
+      systemic: [
+        'Establish monthly financial review cadence',
+        'Train team on reading financial statements',
+        'Develop data-driven decision framework',
+      ],
+    };
+
+    // Determine phase sequence based on scores
+    const phaseOrder = ['stabilize', 'organize', 'build', 'grow', 'systemic'];
+    const currentPhaseIndex = phaseOrder.indexOf(phaseResults.primary_phase.toLowerCase());
+
+    // Roadmap includes current phase and next 2 phases
+    const roadmapPhases = phaseOrder.slice(currentPhaseIndex, currentPhaseIndex + 3);
+
+    // Get milestones for roadmap phases
+    const milestones = roadmapPhases.flatMap((phase) => phaseMilestones[phase] || []);
+
+    return {
+      phases: roadmapPhases,
+      milestones: milestones.slice(0, 6), // Top 6 milestones
     };
   }
 }
