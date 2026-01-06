@@ -28,7 +28,8 @@
     "migration:create": "npm run typeorm migration:create",
     "migration:run": "npm run typeorm migration:run -- -d src/config/typeorm.config.ts",
     "migration:revert": "npm run typeorm migration:revert -- -d src/config/typeorm.config.ts",
-    "seed": "ts-node src/database/seeds/seed.ts"
+    "seed": "ts-node src/database/seeds/seed.ts",
+    "seed:questions": "ts-node -r tsconfig-paths/register scripts/seed-questions.ts"
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^6.1.1",
