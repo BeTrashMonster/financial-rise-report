@@ -600,8 +600,19 @@ export const Questionnaire: React.FC = () => {
 
       {/* Header with progress */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h5" component="h1">
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: { xs: 'flex-start', md: 'center' },
+          flexDirection: { xs: 'column', md: 'row' },
+          gap: { xs: 1.5, md: 0 },
+          mb: 2
+        }}>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{ fontSize: { xs: '1.25rem', sm: '1.4rem', md: '1.5rem' } }}
+          >
             Financial Readiness Assessment
           </Typography>
 
@@ -648,10 +659,18 @@ export const Questionnaire: React.FC = () => {
         {/* Progress bar */}
         <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' } }}
+            >
               Question {state.currentQuestionIndex + 1} of {totalQuestions}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' } }}
+            >
               {answeredCount} answered
             </Typography>
           </Box>
@@ -703,14 +722,26 @@ export const Questionnaire: React.FC = () => {
 
           <Divider sx={{ my: 4 }} />
 
-          {/* Navigation buttons */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+          {/* Navigation buttons - responsive layout */}
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2
+          }}>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: 2,
+              width: { xs: '100%', sm: 'auto' }
+            }}>
               <Button
                 variant="outlined"
                 onClick={handlePrevious}
                 disabled={state.currentQuestionIndex === 0}
                 startIcon={<NavigateBeforeIcon />}
+                fullWidth
+                sx={{ width: { sm: 'auto' } }}
               >
                 Previous
               </Button>
@@ -719,6 +750,8 @@ export const Questionnaire: React.FC = () => {
                 onClick={handleSaveAndExit}
                 startIcon={<ExitIcon />}
                 disabled={autoSaveStatus === 'saving'}
+                fullWidth
+                sx={{ width: { sm: 'auto' } }}
               >
                 Save & Exit
               </Button>
@@ -728,6 +761,8 @@ export const Questionnaire: React.FC = () => {
               variant="contained"
               onClick={handleNext}
               endIcon={<NavigateNextIcon />}
+              fullWidth
+              sx={{ width: { sm: 'auto' } }}
             >
               {state.currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
             </Button>
@@ -837,7 +872,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
         aria-describedby={hasError ? 'question-error' : undefined}
       >
         <FormLabel component="legend" required={required}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography
+            variant="h6"
+            component="h2"
+            gutterBottom
+            sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.25rem' } }}
+          >
             {question_text}
           </Typography>
         </FormLabel>
@@ -852,6 +892,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
               value={option.value}
               control={<Radio />}
               label={option.text}
+              sx={{
+                mb: { xs: 2, md: 1 },
+                '& .MuiFormControlLabel-label': {
+                  fontSize: { xs: '0.95rem', md: '1rem' },
+                },
+              }}
             />
           ))}
         </RadioGroup>
@@ -880,7 +926,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
         aria-describedby={hasError ? 'question-error' : undefined}
       >
         <FormLabel component="legend" required={required}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography
+            variant="h6"
+            component="h2"
+            gutterBottom
+            sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.25rem' } }}
+          >
             {question_text}
           </Typography>
         </FormLabel>
@@ -895,6 +946,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
                 />
               }
               label={option.text}
+              sx={{
+                mb: { xs: 2, md: 1 },
+                '& .MuiFormControlLabel-label': {
+                  fontSize: { xs: '0.95rem', md: '1rem' },
+                },
+              }}
             />
           ))}
         </FormGroup>
@@ -916,7 +973,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
         aria-describedby={hasError ? 'question-error' : undefined}
       >
         <FormLabel component="legend" required={required}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography
+            variant="h6"
+            component="h2"
+            gutterBottom
+            sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.25rem' } }}
+          >
             {question_text}
           </Typography>
         </FormLabel>
@@ -928,7 +990,20 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
           marks
           valueLabelDisplay="on"
           aria-label={question_text}
-          sx={{ mt: 4, mb: 4 }}
+          sx={{
+            mt: 4,
+            mb: 4,
+            '& .MuiSlider-thumb': {
+              width: { xs: 28, md: 20 },
+              height: { xs: 28, md: 20 },
+            },
+            '& .MuiSlider-rail': {
+              height: { xs: 6, md: 4 },
+            },
+            '& .MuiSlider-track': {
+              height: { xs: 6, md: 4 },
+            },
+          }}
         />
       </FormControl>
     );
@@ -944,7 +1019,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
         aria-describedby={hasError ? 'question-error' : undefined}
       >
         <FormLabel component="legend" required={required}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography
+            variant="h6"
+            component="h2"
+            gutterBottom
+            sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.25rem' } }}
+          >
             {question_text}
           </Typography>
         </FormLabel>
@@ -957,7 +1037,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
           placeholder="Enter your response..."
           aria-label={question_text}
           error={hasError}
-          sx={{ mt: 2 }}
+          sx={{
+            mt: 2,
+            '& .MuiInputBase-input': {
+              fontSize: { xs: '1rem', md: '0.95rem' },
+            },
+          }}
         />
       </FormControl>
     );
