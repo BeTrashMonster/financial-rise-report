@@ -855,807 +855,442 @@ Shows email configuration is present in deployed container. SSL certificates now
 **Lesson:** Always check GitHub Actions workflow status before attempting manual deployments. The automated CI/CD pipeline handles image building and deployment.
 
 ---
-Run npm run test:cov
+Run docker build \
+#0 building with "default" instance using docker driver
 
-> financial-rise-backend@1.0.0 test:cov
-> jest --coverage
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.05kB done
+#1 DONE 0.0s
 
-ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
-transform: {
-    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
-},
-See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
-ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
-transform: {
-    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
-},
-See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
-ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
-transform: {
-    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
-},
-See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
-PASS src/common/utils/log-sanitizer.spec.ts (9.284 s)
-PASS src/modules/users/users-processing-restriction.spec.ts (11.321 s)
-PASS src/modules/assessments/services/validation.service.spec.ts
-PASS src/modules/auth/auth.service.spec.ts (12.391 s)
-PASS src/config/typeorm-ssl.config.spec.ts
-  ● Console
+#2 [internal] load metadata for docker.io/library/node:18-alpine
+#2 ...
 
-    console.warn
-      [TypeORM SSL] CA certificate file not found: /invalid/path/that/does/not/exist.pem
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
 
-      46 |       } else {
-      47 |         // Log warning but don't fail - connection attempt will reveal if cert is actually needed
-    > 48 |         console.warn(`[TypeORM SSL] CA certificate file not found: ${caPath}`);
-         |                 ^
-      49 |       }
-      50 |     } catch (error) {
-      51 |       // Log error but don't throw - allow TypeORM to handle connection failure
+#2 [internal] load metadata for docker.io/library/node:18-alpine
+#2 DONE 2.1s
 
-      at warn (config/typeorm.config.ts:48:17)
-      at getSSLConfig (config/typeorm.config.ts:81:8)
-      at config/typeorm-ssl.config.spec.ts:389:33
-      at Object.<anonymous> (../node_modules/expect/build/toThrowMatchers.js:74:11)
-      at Object.throwingMatcher [as toThrow] (../node_modules/expect/build/index.js:320:21)
-      at Object.<anonymous> (config/typeorm-ssl.config.spec.ts:389:58)
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
 
-    console.warn
-      [TypeORM SSL] CA certificate file not found: /invalid/path/that/does/not/exist.pem
+#5 [internal] load build context
+#5 transferring context: 2.23MB 0.0s done
+#5 DONE 0.0s
 
-      46 |       } else {
-      47 |         // Log warning but don't fail - connection attempt will reveal if cert is actually needed
-    > 48 |         console.warn(`[TypeORM SSL] CA certificate file not found: ${caPath}`);
-         |                 ^
-      49 |       }
-      50 |     } catch (error) {
-      51 |       // Log error but don't throw - allow TypeORM to handle connection failure
+#6 [base 1/3] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#6 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e done
+#6 sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 7.67kB / 7.67kB done
+#6 sha256:929b04d7c782f04f615cf785488fed452b6569f87c73ff666ad553a7554f0006 1.72kB / 1.72kB done
+#6 sha256:ee77c6cd7c1886ecc802ad6cedef3a8ec1ea27d1fb96162bf03dd3710839b8da 6.18kB / 6.18kB done
+#6 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0B / 3.64MB 0.1s
+#6 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0B / 40.01MB 0.1s
+#6 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 0.1s
+#6 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 3.64MB / 3.64MB 1.0s done
+#6 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.26MB / 1.26MB 0.9s done
+#6 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0B / 446B 1.0s
+#6 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 14.68MB / 40.01MB 1.1s
+#6 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0.1s done
+#6 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 33.55MB / 40.01MB 1.2s
+#6 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e
+#6 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 1.3s done
+#6 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 1.4s done
+#6 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0.9s done
+#6 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3
+#6 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0.0s done
+#6 extracting sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 done
+#6 DONE 5.2s
 
-      at warn (config/typeorm.config.ts:48:17)
-      at getSSLConfig (config/typeorm.config.ts:81:8)
-      at Object.<anonymous> (config/typeorm-ssl.config.spec.ts:391:40)
+#7 [base 2/3] WORKDIR /app
+#7 DONE 0.0s
 
-[Nest] 3549  - 01/06/2026, 6:20:24 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:24 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-PASS src/modules/assessments/services/progress.service.spec.ts
-[Nest] 3549  - 01/06/2026, 6:20:25 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-PASS src/modules/questionnaire/questionnaire.service.spec.ts
-PASS src/modules/consents/consents.service.spec.ts
-PASS src/modules/users/users.service.spec.ts
-PASS src/modules/algorithms/phase/phase-calculator.service.spec.ts
-[Nest] 3549  - 01/06/2026, 6:20:26 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:26 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-PASS src/security/request-size-limits.spec.ts
-PASS src/modules/algorithms/entities/disc-profile.encryption.spec.ts
-PASS src/modules/auth/strategies/jwt.strategy.spec.ts
-PASS src/modules/auth/refresh-token.service.spec.ts
-PASS src/modules/algorithms/disc/disc-calculator.service.spec.ts
-PASS src/config/cors.config.spec.ts
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://app.financialrise.com
-[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://app.financialrise.com
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://staging.financialrise.com
-[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://staging.financialrise.com
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://evil.com
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "http://evil.com",
-  "timestamp": "2026-01-06T06:20:29.047Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
+#8 [base 3/3] COPY package*.json ./
+#8 DONE 0.0s
 
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://localhost:9999
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "http://localhost:9999",
-  "timestamp": "2026-01-06T06:20:29.048Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
+#9 [production 3/7] RUN apk add --no-cache     chromium     nss     freetype     harfbuzz     ca-certificates     ttf-freefont
+#9 0.144 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#9 0.243 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#9 0.537 (1/173) Installing ca-certificates (20250911-r0)
+#9 0.559 (2/173) Installing libexpat (2.7.3-r0)
+#9 0.569 (3/173) Installing brotli-libs (1.1.0-r2)
+#9 0.585 (4/173) Installing libbz2 (1.0.8-r6)
+#9 0.595 (5/173) Installing libpng (1.6.53-r0)
+#9 0.605 (6/173) Installing freetype (2.13.3-r0)
+#9 0.619 (7/173) Installing fontconfig (2.15.0-r1)
+#9 0.638 (8/173) Installing libfontenc (1.1.8-r0)
+#9 0.647 (9/173) Installing mkfontscale (1.2.3-r1)
+#9 0.656 (10/173) Installing font-opensans (0_git20210927-r1)
+#9 0.692 (11/173) Installing pkgconf (2.3.0-r0)
+#9 0.702 (12/173) Installing libffi (3.4.7-r0)
+#9 0.711 (13/173) Installing libintl (0.22.5-r0)
+#9 0.724 (14/173) Installing libeconf (0.6.3-r0)
+#9 0.733 (15/173) Installing libblkid (2.40.4-r1)
+#9 0.745 (16/173) Installing libmount (2.40.4-r1)
+#9 0.756 (17/173) Installing pcre2 (10.43-r0)
+#9 0.772 (18/173) Installing glib (2.82.5-r0)
+#9 0.812 (19/173) Installing xz-libs (5.6.3-r1)
+#9 0.822 (20/173) Installing libxml2 (2.13.9-r0)
+#9 0.841 (21/173) Installing shared-mime-info (2.4-r2)
+#9 0.858 (22/173) Installing hicolor-icon-theme (0.18-r0)
+#9 0.885 (23/173) Installing libjpeg-turbo (3.0.4-r0)
+#9 0.899 (24/173) Installing libsharpyuv (1.4.0-r0)
+#9 0.908 (25/173) Installing libwebp (1.4.0-r0)
+#9 0.921 (26/173) Installing zstd-libs (1.5.6-r2)
+#9 0.938 (27/173) Installing tiff (4.7.1-r0)
+#9 0.951 (28/173) Installing gdk-pixbuf (2.42.12-r1)
+#9 0.965 (29/173) Installing gtk-update-icon-cache (3.24.49-r0)
+#9 0.974 (30/173) Installing libxau (1.0.11-r4)
+#9 0.983 (31/173) Installing libmd (1.1.0-r0)
+#9 0.992 (32/173) Installing libbsd (0.12.2-r0)
+#9 1.001 (33/173) Installing libxdmcp (1.1.5-r1)
+#9 1.011 (34/173) Installing libxcb (1.16.1-r0)
+#9 1.030 (35/173) Installing libx11 (1.8.10-r0)
+#9 1.064 (36/173) Installing libxcomposite (0.4.6-r5)
+#9 1.073 (37/173) Installing libxfixes (6.0.1-r4)
+#9 1.083 (38/173) Installing libxrender (0.9.11-r5)
+#9 1.093 (39/173) Installing libxcursor (1.2.3-r0)
+#9 1.105 (40/173) Installing libxdamage (1.1.6-r5)
+#9 1.117 (41/173) Installing libxext (1.3.6-r2)
+#9 1.127 (42/173) Installing libxi (1.8.2-r0)
+#9 1.137 (43/173) Installing libxinerama (1.1.5-r4)
+#9 1.146 (44/173) Installing libxrandr (1.5.4-r1)
+#9 1.155 (45/173) Installing libatk-1.0 (2.54.1-r0)
+#9 1.166 (46/173) Installing libxtst (1.2.5-r0)
+#9 1.176 (47/173) Installing dbus-libs (1.14.10-r4)
+#9 1.187 (48/173) Installing at-spi2-core (2.54.1-r0)
+#9 1.200 (49/173) Installing libatk-bridge-2.0 (2.54.1-r0)
+#9 1.211 (50/173) Installing pixman (0.43.4-r1)
+#9 1.225 (51/173) Installing cairo (1.18.4-r0)
+#9 1.243 (52/173) Installing cairo-gobject (1.18.4-r0)
+#9 1.252 (53/173) Installing avahi-libs (0.8-r19)
+#9 1.263 (54/173) Installing gmp (6.3.0-r2)
+#9 1.276 (55/173) Installing nettle (3.10-r1)
+#9 1.294 (56/173) Installing libunistring (1.2-r0)
+#9 1.314 (57/173) Installing libidn2 (2.3.7-r0)
+#9 1.324 (58/173) Installing libtasn1 (4.20.0-r0)
+#9 1.334 (59/173) Installing p11-kit (0.25.5-r2)
+#9 1.350 (60/173) Installing gnutls (3.8.8-r0)
+#9 1.372 (61/173) Installing cups-libs (2.4.11-r0)
+#9 1.385 (62/173) Installing libepoxy (1.5.10-r1)
+#9 1.400 (63/173) Installing fribidi (1.0.16-r0)
+#9 1.410 (64/173) Installing graphite2 (1.3.14-r6)
+#9 1.422 (65/173) Installing harfbuzz (9.0.0-r1)
+#9 1.440 (66/173) Installing libxft (2.3.8-r3)
+#9 1.450 (67/173) Installing pango (1.54.0-r1)
+#9 1.465 (68/173) Installing wayland-libs-client (1.23.1-r0)
+#9 1.475 (69/173) Installing wayland-libs-cursor (1.23.1-r0)
+#9 1.484 (70/173) Installing wayland-libs-egl (1.23.1-r0)
+#9 1.493 (71/173) Installing xkeyboard-config (2.43-r0)
+#9 1.535 (72/173) Installing libxkbcommon (1.7.0-r1)
+#9 1.548 (73/173) Installing gtk+3.0 (3.24.49-r0)
+#9 1.633 (74/173) Installing icu-data-full (74.2-r1)
+#9 1.810 (75/173) Installing llvm19-libs (19.1.4-r1)
+#9 2.749 (76/173) Installing hwdata-pci (0.393-r0)
+#9 2.765 (77/173) Installing libpciaccess (0.18.1-r0)
+#9 2.774 (78/173) Installing libdrm (2.4.123-r1)
+#9 2.788 (79/173) Installing libelf (0.191-r0)
+#9 2.798 (80/173) Installing mesa-glapi (24.2.8-r0)
+#9 2.810 (81/173) Installing libxshmfence (1.3.2-r6)
+#9 2.819 (82/173) Installing mesa (24.2.8-r0)
+#9 3.437 (83/173) Installing wayland-libs-server (1.23.1-r0)
+#9 3.447 (84/173) Installing mesa-gbm (24.2.8-r0)
+#9 3.457 (85/173) Installing mesa-dri-gallium (24.2.8-r0)
+#9 3.471 (86/173) Installing eudev-libs (3.2.14-r5)
+#9 3.481 (87/173) Installing libmagic (5.46-r2)
+#9 3.520 (88/173) Installing file (5.46-r2)
+#9 3.529 (89/173) Installing xprop (1.2.8-r0)
+#9 3.539 (90/173) Installing libice (1.1.1-r6)
+#9 3.549 (91/173) Installing libuuid (2.40.4-r1)
+#9 3.558 (92/173) Installing libsm (1.2.4-r4)
+#9 3.567 (93/173) Installing libxt (1.3.1-r0)
+#9 3.579 (94/173) Installing libxmu (1.2.1-r0)
+#9 3.589 (95/173) Installing xset (1.2.5-r1)
+#9 3.600 (96/173) Installing xdg-utils (1.2.1-r1)
+#9 3.611 (97/173) Installing libogg (1.3.5-r5)
+#9 3.620 (98/173) Installing libflac (1.4.3-r1)
+#9 3.633 (99/173) Installing alsa-lib (1.2.12-r0)
+#9 3.658 (100/173) Installing libSvtAv1Enc (2.2.1-r0)
+#9 3.712 (101/173) Installing aom-libs (3.11.0-r0)
+#9 3.769 (102/173) Installing libva (2.22.0-r1)
+#9 3.782 (103/173) Installing libvdpau (1.5-r4)
+#9 3.792 (104/173) Installing onevpl-libs (2023.3.1-r2)
+#9 3.803 (105/173) Installing ffmpeg-libavutil (6.1.2-r1)
+#9 3.820 (106/173) Installing libdav1d (1.5.0-r0)
+#9 3.841 (107/173) Installing openexr-libiex (3.3.2-r0)
+#9 3.853 (108/173) Installing openexr-libilmthread (3.3.2-r0)
+#9 3.862 (109/173) Installing imath (3.1.12-r0)
+#9 3.873 (110/173) Installing libdeflate (1.22-r0)
+#9 3.883 (111/173) Installing openexr-libopenexrcore (3.3.2-r0)
+#9 3.902 (112/173) Installing openexr-libopenexr (3.3.2-r0)
+#9 3.918 (113/173) Installing giflib (5.2.2-r1)
+#9 3.928 (114/173) Installing libhwy (1.0.7-r0)
+#9 3.937 (115/173) Installing lcms2 (2.16-r0)
+#9 3.949 (116/173) Installing libjxl (0.10.4-r0)
+#9 3.986 (117/173) Installing lame-libs (3.100-r5)
+#9 3.998 (118/173) Installing opus (1.5.2-r1)
+#9 4.010 (119/173) Installing rav1e-libs (0.7.1-r0)
+#9 4.037 (120/173) Installing libgomp (14.2.0-r4)
+#9 4.049 (121/173) Installing soxr (0.1.3-r7)
+#9 4.060 (122/173) Installing ffmpeg-libswresample (6.1.2-r1)
+#9 4.071 (123/173) Installing libtheora (1.1.1-r18)
+#9 4.086 (124/173) Installing libvorbis (1.3.7-r2)
+#9 4.101 (125/173) Installing libvpx (1.15.0-r0)
+#9 4.135 (126/173) Installing libwebpmux (1.4.0-r0)
+#9 4.145 (127/173) Installing x264-libs (0.164.3108-r0)
+#9 4.172 (128/173) Installing numactl (2.0.18-r0)
+#9 4.182 (129/173) Installing x265-libs (3.6-r0)
+#9 4.273 (130/173) Installing xvidcore (1.3.7-r2)
+#9 4.287 (131/173) Installing ffmpeg-libavcodec (6.1.2-r1)
+#9 4.419 (132/173) Installing libbluray (1.3.4-r1)
+#9 4.431 (133/173) Installing mpg123-libs (1.32.9-r0)
+#9 4.444 (134/173) Installing libopenmpt (0.7.12-r0)
+#9 4.465 (135/173) Installing cjson (1.7.19-r0)
+#9 4.474 (136/173) Installing mbedtls (3.6.5-r0)
+#9 4.493 (137/173) Installing librist (0.2.10-r1)
+#9 4.503 (138/173) Installing libsrt (1.5.3-r0)
+#9 4.521 (139/173) Installing libssh (0.11.1-r0)
+#9 4.538 (140/173) Installing libsodium (1.0.20-r1)
+#9 4.549 (141/173) Installing libzmq (4.3.5-r2)
+#9 4.563 (142/173) Installing ffmpeg-libavformat (6.1.2-r1)
+#9 4.594 (143/173) Installing crc32c (1.1.2-r1)
+#9 4.604 (144/173) Installing double-conversion (3.3.0-r0)
+#9 4.613 (145/173) Installing harfbuzz-subset (9.0.0-r1)
+#9 4.632 (146/173) Installing icu-libs (74.2-r1)
+#9 4.677 (147/173) Installing minizip (1.3.1-r0)
+#9 4.687 (148/173) Installing nspr (4.36-r0)
+#9 4.701 (149/173) Installing sqlite-libs (3.48.0-r4)
+#9 4.722 (150/173) Installing nss (3.109-r0)
+#9 4.761 (151/173) Installing openh264 (2.6.0-r0)
+#9 4.783 (152/173) Installing libcamera-ipa (0.3.2-r0)
+#9 4.798 (153/173) Installing libunwind (1.8.1-r0)
+#9 4.809 (154/173) Installing yaml (0.2.5-r2)
+#9 4.820 (155/173) Installing libcamera (0.3.2-r0)
+#9 4.838 (156/173) Installing speexdsp (1.2.1-r2)
+#9 4.848 (157/173) Installing libuv (1.49.2-r0)
+#9 4.859 (158/173) Installing roc-toolkit-libs (0.4.0-r0)
+#9 4.877 (159/173) Installing libsndfile (1.2.2-r2)
+#9 4.891 (160/173) Installing webrtc-audio-processing-1 (1.3-r1)
+#9 4.910 (161/173) Installing pipewire-libs (1.2.7-r0)
+#9 4.967 (162/173) Installing libasyncns (0.8-r4)
+#9 4.976 (163/173) Installing libltdl (2.4.7-r3)
+#9 4.986 (164/173) Installing orc (0.4.40-r1)
+#9 4.998 (165/173) Installing tdb-libs (1.4.12-r0)
+#9 5.008 (166/173) Installing libpulse (17.0-r4)
+#9 5.026 (167/173) Installing libwebpdemux (1.4.0-r0)
+#9 5.036 (168/173) Installing libgpg-error (1.51-r0)
+#9 5.046 (169/173) Installing libgcrypt (1.10.3-r1)
+#9 5.065 (170/173) Installing libxslt (1.1.42-r2)
+#9 5.078 (171/173) Installing chromium (136.0.7103.113-r0)
+#9 6.905 (172/173) Installing encodings (1.0.7-r1)
+#9 6.926 (173/173) Installing font-freefont (20120503-r4)
+#9 7.000 Executing busybox-1.37.0-r12.trigger
+#9 7.017 Executing ca-certificates-20250911-r0.trigger
+#9 7.064 Executing fontconfig-2.15.0-r1.trigger
+#9 7.105 Executing mkfontscale-1.2.3-r1.trigger
+#9 7.161 Executing glib-2.82.5-r0.trigger
+#9 7.168 Executing shared-mime-info-2.4-r2.trigger
+#9 7.680 Executing gdk-pixbuf-2.42.12-r1.trigger
+#9 7.687 Executing gtk-update-icon-cache-3.24.49-r0.trigger
+#9 7.719 Executing gtk+3.0-3.24.49-r0.trigger
+#9 7.735 OK: 727 MiB in 190 packages
+#9 DONE 9.8s
 
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: https://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "https://localhost:3001",
-  "timestamp": "2026-01-06T06:20:29.049Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
+#10 [builder 1/3] RUN npm ci
+#10 3.539 npm warn deprecated supertest@6.3.4: Please upgrade to supertest v7.1.3+, see release notes at https://github.com/forwardemail/supertest/releases/tag/v7.1.3 - maintenance is supported by Forward Email @ https://forwardemail.net
+#10 4.170 npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+#10 4.775 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+#10 4.828 npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+#10 4.973 npm warn deprecated superagent@8.1.2: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+#10 5.140 npm warn deprecated gauge@3.0.2: This package is no longer supported.
+#10 5.609 npm warn deprecated puppeteer@21.11.0: < 24.15.0 is no longer supported
+#10 5.798 npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+#10 6.376 npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+#10 6.642 npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+#10 6.669 npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+#10 7.012 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.212 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#10 7.212 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.212 npm warn deprecated are-we-there-yet@3.0.1: This package is no longer supported.
+#10 7.237 npm warn deprecated npmlog@6.0.2: This package is no longer supported.
+#10 7.376 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.377 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.581 npm warn deprecated gauge@4.0.4: This package is no longer supported.
+#10 7.584 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#10 7.647 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.675 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#10 7.675 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#10 7.689 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.727 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.735 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#10 7.755 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 7.755 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#10 10.28 npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#10 275.5 
+#10 275.5 added 1071 packages, and audited 1072 packages in 5m
+#10 275.5 
+#10 275.5 162 packages are looking for funding
+#10 275.5   run `npm fund` for details
+#10 275.6 
+#10 275.6 20 vulnerabilities (4 low, 1 moderate, 15 high)
+#10 275.6 
+#10 275.6 To address all issues (including breaking changes), run:
+#10 275.6   npm audit fix --force
+#10 275.6 
+#10 275.6 Run `npm audit` for details.
+#10 275.6 npm notice
+#10 275.6 npm notice New major version of npm available! 10.8.2 -> 11.7.0
+#10 275.6 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+#10 275.6 npm notice To update run: npm install -g npm@11.7.0
+#10 275.6 npm notice
+#10 DONE 275.7s
 
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Request with no origin header - allowing
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://LOCALHOST:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "http://LOCALHOST:3001",
-  "timestamp": "2026-01-06T06:20:29.050Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
+#11 [builder 2/3] COPY . .
+#11 DONE 0.0s
 
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://malicious.localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "http://malicious.localhost:3001",
-  "timestamp": "2026-01-06T06:20:29.051Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
-
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://127.0.0.1:3001
-[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
-{
-  "origin": "http://127.0.0.1:3001",
-  "timestamp": "2026-01-06T06:20:29.052Z",
-  "securityEvent": "CORS_ORIGIN_BLOCKED",
-  "severity": "MEDIUM"
-}
-
-PASS src/config/secrets.config.spec.ts
-  ● Console
-
-    console.log
-      ✅ Secret validation passed - All secrets meet security requirements
-
-      at SecretsValidationService.log [as validateSecrets] (config/secrets-validation.service.ts:48:13)
-
-    console.log
-      ✅ Secret validation passed - All secrets meet security requirements
-
-      at SecretsValidationService.log [as validateSecrets] (config/secrets-validation.service.ts:48:13)
-
-PASS src/modules/users/users-data-export.spec.ts
-PASS src/security/sql-injection-prevention.spec.ts
-PASS src/modules/assessments/assessments.service.spec.ts
-PASS src/modules/consents/consents.controller.spec.ts
-PASS src/common/services/encryption.service.spec.ts
-PASS src/modules/users/users-account-deletion.spec.ts
-PASS src/common/interceptors/csrf.interceptor.spec.ts
-PASS src/common/guards/csrf.guard.spec.ts
-PASS src/config/request-size-limits.config.spec.ts
-PASS src/common/guards/report-ownership.guard.spec.ts
-PASS src/modules/algorithms/algorithms.service.spec.ts
-[Nest] 3551  - 01/06/2026, 6:20:32 AM   ERROR [DataRetentionService] [GDPR COMPLIANCE ERROR] Data retention enforcement failed: Database connection lost
-Error: Database connection lost
-    at Object.<anonymous> (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/src/common/services/data-retention.service.spec.ts:140:9)
-    at Promise.then.completed (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (<anonymous>)
-    at callAsyncCircusFn (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at _runTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:121:9)
-    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:121:9)
-    at run (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/testWorker.js:106:12)
-PASS src/common/services/data-retention.service.spec.ts
-PASS src/common/guards/assessment-ownership.guard.spec.ts
-PASS src/modules/auth/strategies/local.strategy.spec.ts
-PASS src/modules/questionnaire/questionnaire.controller.spec.ts
-PASS src/common/guards/processing-restriction.guard.spec.ts
-PASS src/modules/algorithms/algorithms.controller.spec.ts
-[Nest] 3549  - 01/06/2026, 6:20:34 AM   ERROR [HTTP] Request failed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM   ERROR [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "error": "Test error",
-  "statusCode": 500,
-  "duration": "0ms",
-  "timestamp": "2026-01-06T06:20:34.532Z"
-}
-
-PASS src/common/interceptors/logging.interceptor.spec.ts
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.524Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "1ms",
-  "timestamp": "2026-01-06T06:20:34.525Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.527Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "1ms",
-  "timestamp": "2026-01-06T06:20:34.528Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.529Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "0ms",
-  "timestamp": "2026-01-06T06:20:34.529Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/auth/login
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/auth/login",
-  "body": {
-    "email": "***@test.com",
-    "password": "[REDACTED - PASSWORD]"
-  },
-  "timestamp": "2026-01-06T06:20:34.530Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/auth/login
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/auth/login",
-  "statusCode": 200,
-  "duration": "0ms",
-  "timestamp": "2026-01-06T06:20:34.530Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.531Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.533Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "0ms",
-  "timestamp": "2026-01-06T06:20:34.533Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T06:20:34.534Z"
-}
-
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "0ms",
-  "timestamp": "2026-01-06T06:20:34.534Z"
-}
-
-PASS src/modules/auth/guards/roles.guard.spec.ts
-PASS src/modules/auth/services/token-blacklist.service.spec.ts (5.169 s)
-PASS src/modules/questions/questions.service.spec.ts
-PASS src/modules/assessments/assessments.controller.spec.ts
-PASS src/modules/users/users.controller.spec.ts
-PASS src/modules/auth/guards/jwt-auth.guard.spec.ts
-PASS src/common/transformers/encrypted-column.transformer.spec.ts
-PASS src/modules/auth/guards/local-auth.guard.spec.ts
-PASS src/modules/questions/questions.controller.spec.ts
--------------------------------------|---------|----------|---------|---------|-------------------------------------------
-File                                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                         
--------------------------------------|---------|----------|---------|---------|-------------------------------------------
-All files                            |   85.11 |    74.95 |   81.72 |   85.09 |                                           
- common/decorators                   |      90 |      100 |      50 |     100 |                                           
-  allow-when-restricted.decorator.ts |     100 |      100 |     100 |     100 |                                           
-  public.decorator.ts                |      80 |      100 |       0 |     100 |                                           
- common/guards                       |     100 |      100 |     100 |     100 |                                           
-  assessment-ownership.guard.ts      |     100 |      100 |     100 |     100 |                                           
-  csrf.guard.ts                      |     100 |      100 |     100 |     100 |                                           
-  processing-restriction.guard.ts    |     100 |      100 |     100 |     100 |                                           
-  report-ownership.guard.ts          |     100 |      100 |     100 |     100 |                                           
- common/interceptors                 |   97.29 |       75 |     100 |   97.05 |                                           
-  csrf.interceptor.ts                |     100 |      100 |     100 |     100 |                                           
-  logging.interceptor.ts             |   95.65 |    66.66 |     100 |   95.23 | 22                                        
- common/services                     |    98.8 |       76 |     100 |   98.75 |                                           
-  data-retention.service.ts          |     100 |    66.66 |     100 |     100 | 155-160                                   
-  encryption.service.ts              |    97.5 |    84.61 |     100 |   97.36 | 71                                        
- common/transformers                 |     100 |      100 |     100 |     100 |                                           
-  encrypted-column.transformer.ts    |     100 |      100 |     100 |     100 |                                           
- common/utils                        |   77.59 |    83.33 |   58.82 |   79.65 |                                           
-  log-sanitizer.ts                   |   95.94 |    96.15 |   95.23 |   96.47 | 149,266,306,345,426                       
-  pii-safe-logger.ts                 |       0 |        0 |       0 |       0 | 1-130                                     
- config                              |   80.87 |     70.9 |   73.07 |   80.44 |                                           
-  cors.config.ts                     |    87.5 |    66.66 |      80 |    87.5 | 36-39                                     
-  request-size-limits.config.ts      |   58.69 |    57.14 |   42.85 |   58.69 | 114-128,147-164                           
-  secrets-validation.service.ts      |   90.47 |       84 |     100 |   90.24 | 79,83,93,112                              
-  secrets.service.ts                 |   96.77 |    44.44 |     100 |   96.66 | 92                                        
-  security-headers.config.ts         |       0 |      100 |       0 |       0 | 22-101                                    
-  typeorm.config.ts                  |   96.96 |      100 |     100 |   96.77 | 52                                        
- modules/algorithms                  |   80.86 |    35.29 |   88.88 |   81.65 |                                           
-  algorithms.controller.ts           |     100 |       75 |     100 |     100 | 184                                       
-  algorithms.service.ts              |   73.17 |    31.91 |   81.81 |   74.35 | 192,231-232,256-279,312-323               
- modules/algorithms/disc             |    97.5 |    95.65 |     100 |   97.29 |                                           
-  disc-calculator.service.ts         |    97.5 |    95.65 |     100 |   97.29 | 62-63                                     
- modules/algorithms/phase            |   97.14 |    90.47 |     100 |   96.92 |                                           
-  phase-calculator.service.ts        |   97.14 |    90.47 |     100 |   96.92 | 249-250                                   
- modules/assessments                 |    78.7 |    69.44 |   82.35 |   80.61 |                                           
-  assessments.controller.ts          |   96.15 |      100 |   85.71 |   95.83 | 190                                       
-  assessments.service.ts             |   73.17 |    65.62 |      80 |   75.67 | 80,179-229                                
- modules/assessments/services        |   98.29 |    85.45 |     100 |   98.11 |                                           
-  progress.service.ts                |     100 |       70 |     100 |     100 | 70,116-163                                
-  validation.service.ts              |   97.36 |    88.88 |     100 |   97.14 | 100,154                                   
- modules/auth                        |    64.2 |    62.79 |      60 |   64.11 |                                           
-  auth.controller.ts                 |       0 |        0 |       0 |       0 | 1-105                                     
-  auth.service.ts                    |   71.79 |       60 |   77.77 |    71.3 | 34-73,155,185,196,265-292,299,307,312-313 
-  refresh-token.service.ts           |     100 |      100 |     100 |     100 |                                           
- modules/auth/decorators             |   66.66 |      100 |       0 |   71.42 |                                           
-  get-user.decorator.ts              |      50 |      100 |       0 |      50 | 4-5                                       
-  roles.decorator.ts                 |      80 |      100 |       0 |     100 |                                           
- modules/auth/guards                 |     100 |      100 |     100 |     100 |                                           
-  jwt-auth.guard.ts                  |     100 |      100 |     100 |     100 |                                           
-  local-auth.guard.ts                |     100 |      100 |     100 |     100 |                                           
-  roles.guard.ts                     |     100 |      100 |     100 |     100 |                                           
- modules/auth/services               |     100 |      100 |     100 |     100 |                                           
-  token-blacklist.service.ts         |     100 |      100 |     100 |     100 |                                           
- modules/auth/strategies             |     100 |      100 |     100 |     100 |                                           
-  jwt.strategy.ts                    |     100 |      100 |     100 |     100 |                                           
-  local.strategy.ts                  |     100 |      100 |     100 |     100 |                                           
- modules/consents                    |     100 |    76.19 |     100 |     100 |                                           
-  consents.controller.ts             |     100 |     92.3 |     100 |     100 | 53                                        
-  consents.service.ts                |     100 |       50 |     100 |     100 | 21-65                                     
- modules/questionnaire               |     100 |    94.11 |     100 |     100 |                                           
-  questionnaire.controller.ts        |     100 |      100 |     100 |     100 |                                           
-  questionnaire.service.ts           |     100 |    94.11 |     100 |     100 | 70                                        
- modules/questions                   |     100 |      100 |     100 |     100 |                                           
-  questions.controller.ts            |     100 |      100 |     100 |     100 |                                           
-  questions.service.ts               |     100 |      100 |     100 |     100 |                                           
- modules/users                       |   69.66 |    61.11 |   65.85 |   69.18 |                                           
-  users.controller.ts                |   79.54 |     62.5 |      70 |   78.57 | 132-136,152-156,173-177                   
-  users.service.ts                   |   66.41 |       60 |   64.51 |   66.15 | 147,265,280-303,333-334,350-445           
--------------------------------------|---------|----------|---------|---------|-------------------------------------------
-Jest: "global" coverage threshold for branches (79%) not met: 74.95%
-
-Test Suites: 44 passed, 44 total
-Tests:       908 passed, 908 total
-Snapshots:   0 total
-Time:        32.307 s
-Ran all test suites.
+#12 [builder 3/3] RUN npm run build
+#12 0.239 
+#12 0.239 > financial-rise-backend@1.0.0 prebuild
+#12 0.239 > rimraf dist
+#12 0.239 
+#12 0.320 
+#12 0.320 > financial-rise-backend@1.0.0 build
+#12 0.320 > nest build
+#12 0.320 
+#12 6.884 ERROR in ./src/reports/reports.controller.ts:111:80
+#12 6.884 TS2345: Argument of type '{ client: { name: string; businessName: string; email: string; }; assessment: { id: string; completedAt: Date; }; discProfile: { primaryType: any; scores: { D: number; I: number; S: number; C: number; }; secondaryTraits: DISCType[]; confidence: string; }; phaseResults: { ...; }; responses: never[]; consultantNotes: ...' is not assignable to parameter of type 'ConsultantReportData'.
+#12 6.884   The types of 'phaseResults.secondaryPhases' are incompatible between these types.
+#12 6.884     Type 'import("/app/src/modules/algorithms/entities/phase-result.entity").FinancialPhase[]' is not assignable to type 'import("/app/src/reports/services/report-template.service").FinancialPhase[]'.
+#12 6.884       Type 'import("/app/src/modules/algorithms/entities/phase-result.entity").FinancialPhase' is not assignable to type 'import("/app/src/reports/services/report-template.service").FinancialPhase'.
+#12 6.884         Type '"stabilize"' is not assignable to type 'FinancialPhase'.
+#12 6.884     109 |     };
+#12 6.884     110 |
+#12 6.884   > 111 |     const report = await this.reportGenerationService.generateConsultantReport(consultantData, user.id);
+#12 6.884         |                                                                                ^^^^^^^^^^^^^^
+#12 6.884     112 |
+#12 6.884     113 |     return {
+#12 6.884     114 |       reportId: report.id,
+#12 6.884 
+#12 6.884 ERROR in ./src/reports/reports.controller.ts:196:76
+#12 6.884 TS2345: Argument of type '{ client: { name: string; businessName: string; email: string; }; discProfile: { primaryType: any; scores: { D: number; I: number; S: number; C: number; }; secondaryTraits: DISCType[]; confidence: string; }; phaseResults: { ...; }; quickWins: { ...; }[]; roadmap: { ...; }; branding: { ...; }; }' is not assignable to parameter of type 'ClientReportData'.
+#12 6.884   The types of 'phaseResults.secondaryPhases' are incompatible between these types.
+#12 6.884     Type 'import("/app/src/modules/algorithms/entities/phase-result.entity").FinancialPhase[]' is not assignable to type 'import("/app/src/reports/services/report-template.service").FinancialPhase[]'.
+#12 6.884       Type 'import("/app/src/modules/algorithms/entities/phase-result.entity").FinancialPhase' is not assignable to type 'import("/app/src/reports/services/report-template.service").FinancialPhase'.
+#12 6.884         Type '"stabilize"' is not assignable to type 'FinancialPhase'.
+#12 6.884     194 |     };
+#12 6.884     195 |
+#12 6.884   > 196 |     const report = await this.reportGenerationService.generateClientReport(clientData, user.id, dto.assessmentId);
+#12 6.884         |                                                                            ^^^^^^^^^^
+#12 6.884     197 |
+#12 6.884     198 |     return {
+#12 6.884     199 |       reportId: report.id,
+#12 6.884 
+#12 6.884 webpack 5.97.1 compiled with 2 errors in 5699 ms
+#12 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+------
+ > [builder 3/3] RUN npm run build:
+6.884         Type '"stabilize"' is not assignable to type 'FinancialPhase'.
+6.884     194 |     };
+6.884     195 |
+6.884   > 196 |     const report = await this.reportGenerationService.generateClientReport(clientData, user.id, dto.assessmentId);
+6.884         |                                                                            ^^^^^^^^^^
+6.884     197 |
+6.884     198 |     return {
+6.884     199 |       reportId: report.id,
+6.884 
+6.884 webpack 5.97.1 compiled with 2 errors in 5699 ms
+------
+Dockerfile:17
+--------------------
+  15 |     RUN npm ci
+  16 |     COPY . .
+  17 | >>> RUN npm run build
+  18 |     
+  19 |     # Production stage
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
 Error: Process completed with exit code 1.
+---
+
+## Commit 73b114d errors (2026-01-06) - Frontend TypeScript - ✅ RESOLVED
+
+**Build Error:** Frontend build failed with 8 TypeScript errors in Questionnaire.tsx
+
+**Errors:**
+```
+TS2339: Property 'value' does not exist on type 'QuestionResponse'.
+TS2339: Property 'values' does not exist on type 'QuestionResponse'.
+TS2339: Property 'rating' does not exist on type 'QuestionResponse'.
+TS2339: Property 'text' does not exist on type 'QuestionResponse'.
+```
+(8 occurrences at lines 236, 242, 250, 256)
+
+**Root Cause:** 
+QuestionResponse interface has `answer: Record<string, any>` - all answer data is nested under the `answer` property. Validation code was incorrectly accessing properties directly (e.g., `response.value`) instead of through the answer object (`response.answer.value`).
+
+**Fix:** Commit 71dd2b7
+Updated validateResponse() function to access all properties via `response.answer`:
+- `response.value` → `response.answer.value`
+- `response.values` → `response.answer.values`
+- `response.rating` → `response.answer.rating`
+- `response.text` → `response.answer.text`
+
+**Status:** ✅ Resolved - Frontend builds successfully
+
+---
+
+## Commit 71dd2b7 errors (2026-01-06) - Backend TypeScript Type Conflict - ✅ RESOLVED
+
+**Build Error:** Backend build failed with 2 TypeScript errors in reports.controller.ts
+
+**Errors:**
+```
+ERROR in ./src/reports/reports.controller.ts:111:80
+TS2345: Argument of type '{ ... phaseResults: { secondaryPhases: FinancialPhase[] } }' 
+is not assignable to parameter of type 'ConsultantReportData'.
+  The types of 'phaseResults.secondaryPhases' are incompatible between these types.
+    Type 'import("/app/src/modules/algorithms/entities/phase-result.entity").FinancialPhase[]' 
+    is not assignable to type 'import("/app/src/reports/services/report-template.service").FinancialPhase[]'.
+      Type '"stabilize"' is not assignable to type 'FinancialPhase'.
+
+ERROR in ./src/reports/reports.controller.ts:196:76
+[Same error for generateClientReport]
+```
+
+**Root Cause:**
+Two conflicting FinancialPhase type definitions existed:
+1. `phase-result.entity.ts`: `export type FinancialPhase = 'stabilize' | 'organize' | 'build' | 'grow' | 'systemic'` (type alias)
+2. `report-template.service.ts`: `export enum FinancialPhase { STABILIZE = 'stabilize', ORGANIZE = 'organize', ... }` (enum)
+
+TypeScript treats enum and type alias as incompatible types even when they have identical values. When reports.controller.ts passed data with the type alias FinancialPhase[] to report-generation.service.ts which expected the enum FinancialPhase[], TypeScript rejected it.
+
+**Fix:** Commit 0fb83dd
+Removed duplicate enum definition and used shared type:
+- Removed `enum FinancialPhase` from report-template.service.ts
+- Added import: `import { FinancialPhase } from '../../modules/algorithms/entities/phase-result.entity'`
+- Replaced all enum references with string literals:
+  * `FinancialPhase.STABILIZE` → `'stabilize'`
+  * `FinancialPhase.ORGANIZE` → `'organize'`
+  * `FinancialPhase.BUILD` → `'build'`
+  * `FinancialPhase.GROW` → `'grow'`
+  * `FinancialPhase.SYSTEMIC` → `'systemic'`
+
+**Lesson:** Maintain single source of truth for shared types. Use type aliases for union types instead of enums to avoid import conflicts.
+
+**Status:** ✅ Resolved - Backend builds successfully
+
+---
+
+## Summary (2026-01-06)
+
+**Total Issues:** 10 TypeScript compilation errors across 3 commits (73b114d, 71dd2b7, 0fb83dd)
+**Resolution Time:** ~2 hours
+**Commits to Fix:** 2 (71dd2b7, 0fb83dd)
+
+**Key Takeaways:**
+1. Always check type definitions before accessing nested properties
+2. Avoid duplicate type definitions - use imports and shared types
+3. Type aliases are more flexible than enums for union types
+4. TypeScript's strict type checking catches incompatibilities that would be runtime bugs
+
+**Current Status:** All builds passing, ready for deployment
