@@ -855,7 +855,6 @@ Shows email configuration is present in deployed container. SSL certificates now
 **Lesson:** Always check GitHub Actions workflow status before attempting manual deployments. The automated CI/CD pipeline handles image building and deployment.
 
 ---
-36s
 Run npm run test:cov
 
 > financial-rise-backend@1.0.0 test:cov
@@ -876,9 +875,10 @@ transform: {
     <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
 },
 See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
-PASS src/common/utils/log-sanitizer.spec.ts (9.785 s)
+PASS src/common/utils/log-sanitizer.spec.ts (9.284 s)
+PASS src/modules/users/users-processing-restriction.spec.ts (11.321 s)
 PASS src/modules/assessments/services/validation.service.spec.ts
-PASS src/modules/users/users-processing-restriction.spec.ts (12.463 s)
+PASS src/modules/auth/auth.service.spec.ts (12.391 s)
 PASS src/config/typeorm-ssl.config.spec.ts
   ● Console
 
@@ -915,8 +915,7 @@ PASS src/config/typeorm-ssl.config.spec.ts
       at getSSLConfig (config/typeorm.config.ts:81:8)
       at Object.<anonymous> (config/typeorm-ssl.config.spec.ts:391:40)
 
-PASS src/modules/auth/auth.service.spec.ts (13.71 s)
-[Nest] 3591  - 01/06/2026, 5:53:07 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:24 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -945,47 +944,12 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:07 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:24 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
     at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
     at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:08 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
     at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
     at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
     at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
@@ -1010,39 +974,7 @@ PayloadTooLargeError: request entity too large
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
 PASS src/modules/assessments/services/progress.service.spec.ts
-PASS src/modules/questionnaire/questionnaire.service.spec.ts
-PASS src/modules/consents/consents.service.spec.ts
-PASS src/modules/users/users.service.spec.ts
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
-PayloadTooLargeError: request entity too large
-    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
-    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
-    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
-    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
-    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
-    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
-    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
-    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
-    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
-    at Server.emit (node:events:517:28)
-    at parserOnIncoming (node:_http_server:1130:12)
-    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:25 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1077,7 +1009,11 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PASS src/modules/questionnaire/questionnaire.service.spec.ts
+PASS src/modules/consents/consents.service.spec.ts
+PASS src/modules/users/users.service.spec.ts
+PASS src/modules/algorithms/phase/phase-calculator.service.spec.ts
+[Nest] 3549  - 01/06/2026, 6:20:26 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1106,7 +1042,42 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:26 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1135,7 +1106,7 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1164,7 +1135,7 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1193,7 +1164,36 @@ PayloadTooLargeError: request entity too large
     at Server.emit (node:events:517:28)
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
-[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3549  - 01/06/2026, 6:20:27 AM   ERROR [ExceptionsHandler] request entity too large
 PayloadTooLargeError: request entity too large
     at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
     at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
@@ -1223,107 +1223,105 @@ PayloadTooLargeError: request entity too large
     at parserOnIncoming (node:_http_server:1130:12)
     at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
 PASS src/security/request-size-limits.spec.ts
-PASS src/modules/algorithms/phase/phase-calculator.service.spec.ts
 PASS src/modules/algorithms/entities/disc-profile.encryption.spec.ts
 PASS src/modules/auth/strategies/jwt.strategy.spec.ts
 PASS src/modules/auth/refresh-token.service.spec.ts
 PASS src/modules/algorithms/disc/disc-calculator.service.spec.ts
 PASS src/config/cors.config.spec.ts
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://app.financialrise.com
-[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://app.financialrise.com
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://staging.financialrise.com
-[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://staging.financialrise.com
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://evil.com
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://app.financialrise.com
+[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://app.financialrise.com
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://staging.financialrise.com
+[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://staging.financialrise.com
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://evil.com
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "http://evil.com",
-  "timestamp": "2026-01-06T05:53:12.783Z",
+  "timestamp": "2026-01-06T06:20:29.047Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://localhost:9999
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://localhost:9999
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "http://localhost:9999",
-  "timestamp": "2026-01-06T05:53:12.787Z",
+  "timestamp": "2026-01-06T06:20:29.048Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: https://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: https://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "https://localhost:3001",
-  "timestamp": "2026-01-06T05:53:12.788Z",
+  "timestamp": "2026-01-06T06:20:29.049Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Request with no origin header - allowing
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://LOCALHOST:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM   DEBUG [CORSConfiguration] CORS: Request with no origin header - allowing
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://LOCALHOST:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "http://LOCALHOST:3001",
-  "timestamp": "2026-01-06T05:53:12.789Z",
+  "timestamp": "2026-01-06T06:20:29.050Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://malicious.localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://malicious.localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "http://malicious.localhost:3001",
-  "timestamp": "2026-01-06T05:53:12.790Z",
+  "timestamp": "2026-01-06T06:20:29.051Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://127.0.0.1:3001
-[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://127.0.0.1:3001
+[Nest] 3551  - 01/06/2026, 6:20:29 AM    WARN [CORSConfiguration] Object:
 {
   "origin": "http://127.0.0.1:3001",
-  "timestamp": "2026-01-06T05:53:12.791Z",
+  "timestamp": "2026-01-06T06:20:29.052Z",
   "securityEvent": "CORS_ORIGIN_BLOCKED",
   "severity": "MEDIUM"
 }
 
-PASS src/modules/users/users-data-export.spec.ts
 PASS src/config/secrets.config.spec.ts
   ● Console
 
@@ -1337,18 +1335,18 @@ PASS src/config/secrets.config.spec.ts
 
       at SecretsValidationService.log [as validateSecrets] (config/secrets-validation.service.ts:48:13)
 
+PASS src/modules/users/users-data-export.spec.ts
 PASS src/security/sql-injection-prevention.spec.ts
 PASS src/modules/assessments/assessments.service.spec.ts
-PASS src/common/services/encryption.service.spec.ts
 PASS src/modules/consents/consents.controller.spec.ts
-PASS src/common/interceptors/csrf.interceptor.spec.ts
+PASS src/common/services/encryption.service.spec.ts
 PASS src/modules/users/users-account-deletion.spec.ts
+PASS src/common/interceptors/csrf.interceptor.spec.ts
 PASS src/common/guards/csrf.guard.spec.ts
 PASS src/config/request-size-limits.config.spec.ts
 PASS src/common/guards/report-ownership.guard.spec.ts
 PASS src/modules/algorithms/algorithms.service.spec.ts
-PASS src/common/guards/assessment-ownership.guard.spec.ts
-[Nest] 3590  - 01/06/2026, 5:53:17 AM   ERROR [DataRetentionService] [GDPR COMPLIANCE ERROR] Data retention enforcement failed: Database connection lost
+[Nest] 3551  - 01/06/2026, 6:20:32 AM   ERROR [DataRetentionService] [GDPR COMPLIANCE ERROR] Data retention enforcement failed: Database connection lost
 Error: Database connection lost
     at Object.<anonymous> (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/src/common/services/data-retention.service.spec.ts:140:9)
     at Promise.then.completed (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/utils.js:298:28)
@@ -1367,25 +1365,25 @@ Error: Database connection lost
     at runTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/runTest.js:444:34)
     at Object.worker (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/testWorker.js:106:12)
 PASS src/common/services/data-retention.service.spec.ts
-PASS src/modules/questionnaire/questionnaire.controller.spec.ts
+PASS src/common/guards/assessment-ownership.guard.spec.ts
 PASS src/modules/auth/strategies/local.strategy.spec.ts
-PASS src/modules/auth/services/token-blacklist.service.spec.ts (5.188 s)
+PASS src/modules/questionnaire/questionnaire.controller.spec.ts
 PASS src/common/guards/processing-restriction.guard.spec.ts
 PASS src/modules/algorithms/algorithms.controller.spec.ts
-[Nest] 3597  - 01/06/2026, 5:53:19 AM   ERROR [HTTP] Request failed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM   ERROR [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM   ERROR [HTTP] Request failed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM   ERROR [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/test",
   "error": "Test error",
   "statusCode": 500,
-  "duration": "4ms",
-  "timestamp": "2026-01-06T05:53:19.756Z"
+  "duration": "0ms",
+  "timestamp": "2026-01-06T06:20:34.532Z"
 }
 
 PASS src/common/interceptors/logging.interceptor.spec.ts
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1400,50 +1398,21 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "id": "user-123",
     "email": "***@test.com"
   },
-  "timestamp": "2026-01-06T05:53:19.717Z"
+  "timestamp": "2026-01-06T06:20:34.524Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
-{
-  "method": "POST",
-  "url": "/api/test",
-  "statusCode": 200,
-  "duration": "2ms",
-  "timestamp": "2026-01-06T05:53:19.719Z"
-}
-
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
-{
-  "controller": "TestController",
-  "handler": "testHandler",
-  "method": "POST",
-  "url": "/api/test",
-  "body": {
-    "email": "***@example.com",
-    "password": "[REDACTED - PASSWORD]",
-    "name": "J***"
-  },
-  "user": {
-    "id": "user-123",
-    "email": "***@test.com"
-  },
-  "timestamp": "2026-01-06T05:53:19.722Z"
-}
-
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/test",
   "statusCode": 200,
   "duration": "1ms",
-  "timestamp": "2026-01-06T05:53:19.723Z"
+  "timestamp": "2026-01-06T06:20:34.525Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1458,21 +1427,50 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "id": "user-123",
     "email": "***@test.com"
   },
-  "timestamp": "2026-01-06T05:53:19.746Z"
+  "timestamp": "2026-01-06T06:20:34.527Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "1ms",
+  "timestamp": "2026-01-06T06:20:34.528Z"
+}
+
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T06:20:34.529Z"
+}
+
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/test",
   "statusCode": 200,
   "duration": "0ms",
-  "timestamp": "2026-01-06T05:53:19.746Z"
+  "timestamp": "2026-01-06T06:20:34.529Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/auth/login
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/auth/login
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1482,21 +1480,21 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "email": "***@test.com",
     "password": "[REDACTED - PASSWORD]"
   },
-  "timestamp": "2026-01-06T05:53:19.751Z"
+  "timestamp": "2026-01-06T06:20:34.530Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/auth/login
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/auth/login
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/auth/login",
   "statusCode": 200,
   "duration": "0ms",
-  "timestamp": "2026-01-06T05:53:19.751Z"
+  "timestamp": "2026-01-06T06:20:34.530Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1511,11 +1509,11 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "id": "user-123",
     "email": "***@test.com"
   },
-  "timestamp": "2026-01-06T05:53:19.752Z"
+  "timestamp": "2026-01-06T06:20:34.531Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1530,21 +1528,21 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "id": "user-123",
     "email": "***@test.com"
   },
-  "timestamp": "2026-01-06T05:53:19.761Z"
+  "timestamp": "2026-01-06T06:20:34.533Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/test",
   "statusCode": 200,
-  "duration": "1ms",
-  "timestamp": "2026-01-06T05:53:19.762Z"
+  "duration": "0ms",
+  "timestamp": "2026-01-06T06:20:34.533Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "controller": "TestController",
   "handler": "testHandler",
@@ -1559,27 +1557,28 @@ PASS src/common/interceptors/logging.interceptor.spec.ts
     "id": "user-123",
     "email": "***@test.com"
   },
-  "timestamp": "2026-01-06T05:53:19.764Z"
+  "timestamp": "2026-01-06T06:20:34.534Z"
 }
 
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
-[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3549  - 01/06/2026, 6:20:34 AM     LOG [HTTP] Object:
 {
   "method": "POST",
   "url": "/api/test",
   "statusCode": 200,
-  "duration": "1ms",
-  "timestamp": "2026-01-06T05:53:19.764Z"
+  "duration": "0ms",
+  "timestamp": "2026-01-06T06:20:34.534Z"
 }
 
 PASS src/modules/auth/guards/roles.guard.spec.ts
+PASS src/modules/auth/services/token-blacklist.service.spec.ts (5.169 s)
+PASS src/modules/questions/questions.service.spec.ts
 PASS src/modules/assessments/assessments.controller.spec.ts
 PASS src/modules/users/users.controller.spec.ts
-PASS src/modules/questions/questions.service.spec.ts
 PASS src/modules/auth/guards/jwt-auth.guard.spec.ts
 PASS src/common/transformers/encrypted-column.transformer.spec.ts
-PASS src/modules/questions/questions.controller.spec.ts
 PASS src/modules/auth/guards/local-auth.guard.spec.ts
+PASS src/modules/questions/questions.controller.spec.ts
 -------------------------------------|---------|----------|---------|---------|-------------------------------------------
 File                                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                         
 -------------------------------------|---------|----------|---------|---------|-------------------------------------------
@@ -1657,6 +1656,6 @@ Jest: "global" coverage threshold for branches (79%) not met: 74.95%
 Test Suites: 44 passed, 44 total
 Tests:       908 passed, 908 total
 Snapshots:   0 total
-Time:        34.641 s
+Time:        32.307 s
 Ran all test suites.
 Error: Process completed with exit code 1.

@@ -338,4 +338,141 @@ describe('AssessmentsService', () => {
       expect(mockAssessmentRepository.update).toHaveBeenCalledWith('assessment-123', { progress: 100 });
     });
   });
+
+  describe('submitAssessment', () => {
+    const mockResponses = [
+      {
+        id: 'response-1',
+        assessment_id: 'assessment-123',
+        question_id: 'question-1',
+        answer: { value: 'option-1' },
+      },
+      {
+        id: 'response-2',
+        assessment_id: 'assessment-123',
+        question_id: 'question-2',
+        answer: { values: ['option-2', 'option-3'] },
+      },
+    ];
+
+    const mockCalculationResults = {
+      disc_profile: {
+        assessment_id: 'assessment-123',
+        d_score: 75,
+        i_score: 60,
+        s_score: 45,
+        c_score: 80,
+        primary_type: 'C',
+        secondary_type: 'D',
+      },
+      phase_results: {
+        assessment_id: 'assessment-123',
+        primary_phase: 'Build',
+        stabilize_score: 70,
+        organize_score: 75,
+        build_score: 85,
+        grow_score: 60,
+        systemic_score: 55,
+      },
+    };
+
+    it('should successfully submit assessment and calculate results', async () => {
+      const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
+      mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
+      mockResponseRepository.find.mockResolvedValue(mockResponses);
+      mockAlgorithmsService.calculateAll.mockResolvedValue(mockCalculationResults);
+      mockAssessmentRepository.save.mockResolvedValue({
+        ...inProgressAssessment,
+        status: AssessmentStatus.COMPLETED,
+        completed_at: expect.any(Date),
+      });
+
+      const result = await service.submitAssessment('assessment-123', mockUser.id);
+
+      expect(mockResponseRepository.find).toHaveBeenCalledWith({
+        where: { assessment_id: 'assessment-123' },
+      });
+
+      expect(mockAlgorithmsService.calculateAll).toHaveBeenCalledWith('assessment-123', [
+        { question_id: 'question-1', response_value: 'option-1' },
+        { question_id: 'question-2', response_value: 'option-2' },
+      ]);
+
+      expect(result.status).toBe(AssessmentStatus.COMPLETED);
+      expect(result.completed_at).toBeDefined();
+    });
+
+    it('should throw BadRequestException when assessment already completed', async () => {
+      const completedAssessment = {
+        ...mockAssessment,
+        status: AssessmentStatus.COMPLETED,
+        completed_at: new Date(),
+      };
+      mockAssessmentRepository.findOne.mockResolvedValue(completedAssessment);
+
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        BadRequestException,
+      );
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        'Assessment already submitted',
+      );
+    });
+
+    it('should throw BadRequestException when no responses exist', async () => {
+      const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
+      mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
+      mockResponseRepository.find.mockResolvedValue([]);
+
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        BadRequestException,
+      );
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        'Cannot submit assessment with no responses',
+      );
+    });
+
+    it('should throw BadRequestException when calculation fails', async () => {
+      const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
+      mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
+      mockResponseRepository.find.mockResolvedValue(mockResponses);
+      mockAlgorithmsService.calculateAll.mockRejectedValue(new Error('Insufficient DISC responses'));
+
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        BadRequestException,
+      );
+      await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
+        'Failed to calculate assessment results: Insufficient DISC responses',
+      );
+    });
+
+    it('should handle responses with null/undefined answer values', async () => {
+      const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
+      const responsesWithNulls = [
+        {
+          id: 'response-1',
+          assessment_id: 'assessment-123',
+          question_id: 'question-1',
+          answer: null,
+        },
+        {
+          id: 'response-2',
+          assessment_id: 'assessment-123',
+          question_id: 'question-2',
+          answer: {},
+        },
+      ];
+
+      mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
+      mockResponseRepository.find.mockResolvedValue(responsesWithNulls);
+      mockAlgorithmsService.calculateAll.mockResolvedValue(mockCalculationResults);
+      mockAssessmentRepository.save.mockImplementation((assessment) => Promise.resolve(assessment));
+
+      await service.submitAssessment('assessment-123', mockUser.id);
+
+      expect(mockAlgorithmsService.calculateAll).toHaveBeenCalledWith('assessment-123', [
+        { question_id: 'question-1', response_value: '' },
+        { question_id: 'question-2', response_value: '' },
+      ]);
+    });
+  });
 });
