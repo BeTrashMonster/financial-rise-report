@@ -250,7 +250,13 @@ export const Questionnaire: React.FC = () => {
       // Navigate to results page
       navigate(`/assessments/${assessmentId}/results`);
     } catch (err: any) {
-      setFormError(err.response?.data?.message || 'Failed to submit assessment');
+      // Handle authentication errors
+      if (err.response?.status === 401) {
+        setFormError('Your session has expired. Please log in again.');
+        setTimeout(() => navigate('/login'), 2000);
+      } else {
+        setFormError(err.response?.data?.message || 'Failed to submit assessment');
+      }
       setState((prev) => ({ ...prev, isCalculating: false }));
     }
   };

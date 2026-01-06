@@ -71,11 +71,11 @@ api.interceptors.response.use(
 
       switch (status) {
         case 401:
-          // Unauthorized - clear token and redirect to login (only if not already on login page)
-          if (window.location.pathname !== '/login') {
-            localStorage.removeItem('token');
-            window.location.href = '/login';
-          }
+          // Unauthorized - token is invalid or expired
+          // Clear token but let the component handle the redirect
+          // This prevents auto-logout during form submissions
+          localStorage.removeItem('token');
+          console.error('Authentication failed - token cleared');
           break;
         case 403:
           // Forbidden
