@@ -62,7 +62,7 @@ Write-Host $query | psql -h $env:DB_HOST -U $env:DB_USERNAME -d $env:DB_NAME
 Write-Host ""
 Write-Host "✅ 47-question deployment complete!" -ForegroundColor Green
 Write-Host ""
-Write-Host "📋 Next steps:" -ForegroundColor Cyan
+Write-Host "Next steps:" -ForegroundColor Cyan
 Write-Host "  1. Test the assessment workflow end-to-end"
 Write-Host "  2. Verify multiple_choice question (BUILD-007) renders correctly"
 Write-Host "  3. Verify rating question (SYS-009) renders correctly"

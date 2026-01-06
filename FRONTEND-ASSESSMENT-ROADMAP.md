@@ -269,11 +269,11 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 
 ## Phase 3: User Experience Enhancements
 
-### 3.1 Loading States ⚠️ PARTIAL
+### 3.1 Loading States ✅ COMPLETE
 - [x] Loading spinner when fetching questions
 - [x] "Calculating Results..." button state
-- [ ] Loading state for auto-save
-- [ ] Skeleton loaders for questions
+- [x] Loading state for auto-save (already implemented)
+- [x] Skeleton loaders for questions (commit c0f5902)
 
 ### 3.2 Error Handling ✅ COMPLETE (2026-01-06)
 - [x] Display error alerts
