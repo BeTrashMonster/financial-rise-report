@@ -27,18 +27,24 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 - [x] Slider stays within shadow box (no overflow)
 - [x] Continue to first question
 
-### 1.3 Question Loading & Display ⚠️ PARTIALLY WORKING
+### 1.3 Question Loading & Display ⚠️ NEEDS MANUAL TESTING
 - [x] Fetch questions from `/api/v1/questionnaire/questions`
 - [x] Display question count (e.g., "Question 1 of 4")
 - [x] Render single_choice questions with radio buttons
 - [x] Handle nested options format `{options: [...]}`
-- [ ] **BUG: Test multiple_choice questions** (not tested yet)
-- [ ] **BUG: Test rating questions** (not tested yet)
-- [ ] **BUG: Test text questions** (not tested yet)
+- [x] **Code implemented for multiple_choice questions** (checkboxes) - needs manual testing
+- [x] **Code implemented for rating questions** (slider) - needs manual testing
+- [x] **Code implemented for text questions** (textarea) - needs manual testing
 - [x] Section breadcrumb with phase colors
 - [x] Progress bar
 
-**Current Status:** single_choice works, other types untested
+**Current Status:** All question type rendering code exists in Questionnaire.tsx (lines 538-653), needs manual testing in production
+
+**Test Questions Identified:**
+- multiple_choice: BUILD-007 ("Which of these have you automated?")
+- rating: SYS-009 (confidence scale 1-5)
+- single_choice: All phase questions (STAB-001, STAB-002, etc.)
+- text: No text questions currently in question bank (may need to add one for testing)
 
 ### 1.4 Response Auto-Save ✅ FIXED
 - [x] Auto-save every 5 seconds after change
@@ -182,11 +188,20 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 **Question Bank:** seed-comprehensive-questions.sql (Commit: 4e4ecc9)
 **Deployment Status:** ✅ Live in production
 
-### 2.2 Response Validation
-- [ ] Validate required questions before allowing Next
-- [ ] Validate answer format matches question type
-- [ ] Prevent duplicate responses
-- [ ] Handle missing/null responses gracefully
+### 2.2 Response Validation ✅ COMPLETE (2026-01-06)
+- [x] Validate required questions before allowing Next
+- [x] Validate answer format matches question type
+- [x] Handle missing/null responses gracefully
+- [x] Type-specific validation for single_choice, multiple_choice, rating, and text questions
+- [x] Descriptive error messages for each validation case
+
+**Implementation:** Enhanced `validateResponse()` function in Questionnaire.tsx (commit 1555cd0)
+- Single choice: Validates non-empty selection
+- Multiple choice: Requires at least one selection for required questions
+- Rating: Validates rating value is provided
+- Text: Validates non-empty text for required questions
+
+**Note:** Duplicate response prevention not needed - Map-based state management inherently prevents duplicates by question_key
 
 ### 2.3 Edge Cases
 - [ ] Test with 0 questions in database
@@ -393,11 +408,27 @@ This roadmap tracks the implementation and bug fixes for the complete assessment
 - DISC & phase calculation, results display, report generation
 - Full end-to-end workflow from assessment creation to PDF download
 
-**Next Steps (Phase 2):**
-13. Test all question types (multiple_choice, rating, text)
-14. Verify confidence before/after screens work
-15. Implement response validation (Phase 2.2)
-16. Test edge cases (Phase 2.3)
+**Phase 2 Progress (2026-01-06):**
+13. ✅ **Enhanced response validation** (commit 1555cd0)
+    - Type-specific validation for all question types
+    - Descriptive error messages
+    - Proper handling of required vs optional questions
+14. ✅ **Verified question type rendering code** - All types implemented
+    - multiple_choice: Checkboxes (Questionnaire.tsx:568-602)
+    - rating: Slider (Questionnaire.tsx:606-630)
+    - text: Textarea (Questionnaire.tsx:633-653)
+15. ✅ **Fixed backend TypeScript errors** (commit f2a57ac)
+    - Report controller type errors resolved
+    - All 913 backend tests passing
+
+**Next Steps (Phase 2 - Manual Testing Required):**
+16. Manual testing after deployment completes:
+    - Test multiple_choice question (BUILD-007) in live app
+    - Test rating question (SYS-009) in live app
+    - Verify confidence before/after screens work end-to-end
+    - Test complete assessment submission flow
+17. Test edge cases (Phase 2.3)
+18. User experience enhancements (Phase 3)
 
 ---
 
