@@ -595,152 +595,7 @@ docker exec financial-rise-frontend-prod find /data/caddy/certificates -type f
 - Let's Encrypt has strict rate limits: 5 certificates per exact domain set per week
 - Container names in Docker network aliases matter - verify with `docker inspect` before configuring
 
----
-info@financial-rise-production-vm:~$  docker exec financial-rise-frontend-prod rm -f /data/caddy/locks/issue_cert_*.lock
-info@financial-rise-production-vm:~$ docker logs financial-rise-frontend-prod 2>&1 | grep -i "error\|certificate\|acme" | tail -30
-{"level":"info","ts":1767579541.331249,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3321767,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3321936,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3322089,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"info","ts":1767579541.3366585,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3374918,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3375309,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3375452,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767579541.715981,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579541.7160587,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.384892822,"max_duration":2592000}
-{"level":"error","ts":1767579541.747043,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579541.7471378,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.41056275,"max_duration":2592000}
-{"level":"info","ts":1767579601.7162862,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579601.7173462,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767579601.7477417,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579601.7487755,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767579602.084232,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410093"}
-{"level":"info","ts":1767579602.0995686,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410113"}
-{"level":"info","ts":1767579605.42765,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c61ae5c4efb9b1195e5bca1fd59d2e7462a"}
-{"level":"info","ts":1767579605.427995,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.4280133,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.42803,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"info","ts":1767579605.4455721,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cc74c584a0ed38261ba7c698b90911427ff"}
-{"level":"info","ts":1767579605.4459517,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.4459662,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.445981,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767579605.5483031,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579605.5483813,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.217216026,"max_duration":2592000}
-{"level":"error","ts":1767579605.5731711,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579605.57324,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.236665165,"max_duration":2592000}
-info@financial-rise-production-vm:~$  docker logs financial-rise-frontend-prod > /tmp/caddy-debug.log 2>&1
-  tail -100 /tmp/caddy-debug.log
-{"level":"info","ts":1767578991.9835954,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767578992.2870824,"msg":"authorization finalized","identifier":"getoffthemoneyshametrain.com","authz_status":"valid"}
-{"level":"info","ts":1767578992.287125,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222171543"}
-{"level":"info","ts":1767578995.515669,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772682926,"window_end":1772838376,"selected_time":1772814041,"recheck_after":1767600595.5156496,"explanation_url":""}
-{"level":"info","ts":1767578995.624118,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772682926,"window_end":1772838376,"selected_time":1772812778,"recheck_after":1767600595.6241002,"explanation_url":""}
-{"level":"info","ts":1767578995.6242156,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c85c688c21cb67690e8f05c004bdd6f2b26"}
-{"level":"info","ts":1767578995.6246336,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767578995.6246674,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767578995.624686,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767578995.8024979,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:42:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767578995.8025925,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:42:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":6,"retrying_in":600,"elapsed":1220.98157101,"max_duration":2592000}
-{"level":"info","ts":1767578997.6759958,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767578997.6773093,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767578997.8443513,"msg":"authorization finalized","identifier":"www.getoffthemoneyshametrain.com","authz_status":"valid"}
-{"level":"info","ts":1767578997.8444145,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222173643"}
-{"level":"info","ts":1767579004.1285827,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772682933,"window_end":1772838382,"selected_time":1772828068,"recheck_after":1767600604.1285636,"explanation_url":""}
-{"level":"info","ts":1767579004.241257,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772682933,"window_end":1772838382,"selected_time":1772718466,"recheck_after":1767600604.2412255,"explanation_url":""}
-{"level":"info","ts":1767579004.2413635,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cd046e67a516e548389f6ea9f6f63cb8c59"}
-{"level":"info","ts":1767579004.2419012,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579004.2419372,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579004.2419577,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767579004.3392415,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:45:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579004.3393528,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:45:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":6,"retrying_in":600,"elapsed":1229.527702915,"max_duration":2592000}
-{"level":"error","ts":1767579434.7867696,"logger":"tls","msg":"tls-alpn challenge","remote_addr":"66.133.109.36:54469","server_name":"www.getoffthemoneyshametrain.com","error":"no information found to solve challenge for identifier: www.getoffthemoneyshametrain.com"}
-{"level":"error","ts":1767579435.216887,"logger":"tls","msg":"tls-alpn challenge","remote_addr":"66.133.109.36:38281","server_name":"getoffthemoneyshametrain.com","error":"no information found to solve challenge for identifier: getoffthemoneyshametrain.com"}
-{"level":"warn","ts":1767579436.2135684,"logger":"http","msg":"looking up info for HTTP challenge","host":"www.getoffthemoneyshametrain.com","remote_addr":"66.133.109.36:52085","user_agent":"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)","error":"no information found to solve challenge for identifier: www.getoffthemoneyshametrain.com"}
-{"level":"warn","ts":1767579436.6493213,"logger":"http","msg":"looking up info for HTTP challenge","host":"getoffthemoneyshametrain.com","remote_addr":"66.133.109.36:52087","user_agent":"Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)","error":"no information found to solve challenge for identifier: getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579460.6583235,"logger":"admin.api","msg":"received request","method":"POST","host":"localhost:2019","uri":"/load","remote_ip":"127.0.0.1","remote_port":"37754","headers":{"Accept-Encoding":["gzip"],"Content-Length":["1580"],"Content-Type":["application/json"],"Origin":["http://localhost:2019"],"User-Agent":["Go-http-client/1.1"]}}
-{"level":"info","ts":1767579460.6587799,"msg":"config is unchanged"}
-{"level":"info","ts":1767579460.6587975,"logger":"admin.api","msg":"load complete"}
-{"level":"info","ts":1767579540.6484354,"msg":"shutting down apps, then terminating","signal":"SIGTERM"}
-{"level":"warn","ts":1767579540.6485634,"msg":"exiting; byeee!! 👋","signal":"SIGTERM"}
-{"level":"info","ts":1767579540.648749,"logger":"http","msg":"servers shutting down with eternal grace period"}
-{"level":"info","ts":1767579540.6503127,"logger":"tls.obtain","msg":"releasing lock","identifier":"getoffthemoneyshametrain.com"}
-{"level":"error","ts":1767579540.6503549,"logger":"tls.obtain","msg":"unable to unlock","identifier":"getoffthemoneyshametrain.com","lock_key":"issue_cert_getoffthemoneyshametrain.com","error":"remove /data/caddy/locks/issue_cert_getoffthemoneyshametrain.com.lock: no such file or directory"}
-{"level":"error","ts":1767579540.650398,"logger":"tls","msg":"job failed","error":"getoffthemoneyshametrain.com: obtaining certificate: context canceled"}
-{"level":"info","ts":1767579540.6504273,"logger":"tls.obtain","msg":"releasing lock","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"error","ts":1767579540.6505785,"msg":"unable to clean up lock in storage backend","signal":"SIGTERM","storage":"FileStorage:/data/caddy","lock_key":"issue_cert_www.getoffthemoneyshametrain.com","error":"remove /data/caddy/locks/issue_cert_www.getoffthemoneyshametrain.com.lock: no such file or directory"}
-{"level":"info","ts":1767579540.650653,"logger":"admin","msg":"stopped previous server","address":"localhost:2019"}
-{"level":"info","ts":1767579540.6506631,"msg":"shutdown complete","signal":"SIGTERM","exit_code":0}
-{"level":"info","ts":1767579541.3168838,"msg":"maxprocs: Updating GOMAXPROCS=1: using minimum allowed GOMAXPROCS"}
-{"level":"info","ts":1767579541.317361,"msg":"GOMEMLIMIT is updated","package":"github.com/KimMachineGun/automemlimit/memlimit","GOMEMLIMIT":483183820,"previous":9223372036854775807}
-{"level":"info","ts":1767579541.317455,"msg":"using config from file","file":"/etc/caddy/Caddyfile"}
-{"level":"info","ts":1767579541.319768,"msg":"adapted config to JSON","adapter":"caddyfile"}
-{"level":"warn","ts":1767579541.319781,"msg":"Caddyfile input is not formatted; run 'caddy fmt --overwrite' to fix inconsistencies","adapter":"caddyfile","file":"/etc/caddy/Caddyfile","line":6}
-{"level":"info","ts":1767579541.3213058,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
-{"level":"info","ts":1767579541.3217354,"logger":"http.auto_https","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
-{"level":"info","ts":1767579541.3218205,"logger":"http.auto_https","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
-{"level":"warn","ts":1767579541.3230655,"logger":"http","msg":"HTTP/2 skipped because it requires TLS","network":"tcp","addr":":80"}
-{"level":"warn","ts":1767579541.3230875,"logger":"http","msg":"HTTP/3 skipped because it requires TLS","network":"tcp","addr":":80"}
-{"level":"info","ts":1767579541.3230922,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
-{"level":"info","ts":1767579541.323169,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
-{"level":"info","ts":1767579541.3233488,"msg":"failed to sufficiently increase receive buffer size (was: 208 kiB, wanted: 7168 kiB, got: 416 kiB). See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes for details."}
-{"level":"info","ts":1767579541.3238642,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
-{"level":"info","ts":1767579541.3240077,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["www.getoffthemoneyshametrain.com","getoffthemoneyshametrain.com"]}
-{"level":"info","ts":1767579541.3246653,"msg":"autosaved config (load with --resume flag)","file":"/config/caddy/autosave.json"}
-{"level":"info","ts":1767579541.3247445,"msg":"serving initial configuration"}
-{"level":"info","ts":1767579541.326882,"logger":"tls","msg":"storage cleaning happened too recently; skipping for now","storage":"FileStorage:/data/caddy","instance":"62fcde7c-1c2f-44e6-9570-34c278e56b82","try_again":1767665941.32688,"try_again_in":86399.9999994}
-{"level":"info","ts":1767579541.326958,"logger":"tls","msg":"finished cleaning storage units"}
-{"level":"info","ts":1767579541.327036,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000353a80"}
-{"level":"info","ts":1767579541.3291905,"logger":"tls.obtain","msg":"acquiring lock","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3311274,"logger":"tls.obtain","msg":"lock acquired","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.331249,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3321767,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3321936,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3322089,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"info","ts":1767579541.3347952,"logger":"tls.obtain","msg":"acquiring lock","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3365436,"logger":"tls.obtain","msg":"lock acquired","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3366585,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579541.3374918,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3375309,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579541.3375452,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767579541.715981,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579541.7160587,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:39:13 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.384892822,"max_duration":2592000}
-{"level":"error","ts":1767579541.747043,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579541.7471378,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:24:52 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":1,"retrying_in":60,"elapsed":0.41056275,"max_duration":2592000}
-{"level":"info","ts":1767579601.7162862,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579601.7173462,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767579601.7477417,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"www.getoffthemoneyshametrain.com"}
-{"level":"info","ts":1767579601.7487755,"logger":"http","msg":"using ACME account","account_id":"https://acme-staging-v02.api.letsencrypt.org/acme/acct/255435633","account_contact":[]}
-{"level":"info","ts":1767579602.084188,"msg":"authorization finalized","identifier":"getoffthemoneyshametrain.com","authz_status":"valid"}
-{"level":"info","ts":1767579602.084232,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410093"}
-{"level":"info","ts":1767579602.09953,"msg":"authorization finalized","identifier":"www.getoffthemoneyshametrain.com","authz_status":"valid"}
-{"level":"info","ts":1767579602.0995686,"msg":"validations succeeded; finalizing order","order":"https://acme-staging-v02.api.letsencrypt.org/acme/order/255435633/30222410113"}
-{"level":"info","ts":1767579605.3128922,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838986,"selected_time":1772773676,"recheck_after":1767601205.3128774,"explanation_url":""}
-{"level":"info","ts":1767579605.330349,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838985,"selected_time":1772769856,"recheck_after":1767601205.3303385,"explanation_url":""}
-{"level":"info","ts":1767579605.4274843,"msg":"got renewal info","names":["getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838986,"selected_time":1772793057,"recheck_after":1767601205.427474,"explanation_url":""}
-{"level":"info","ts":1767579605.42765,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2c61ae5c4efb9b1195e5bca1fd59d2e7462a"}
-{"level":"info","ts":1767579605.427995,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.4280133,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.42803,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"info","ts":1767579605.4454904,"msg":"got renewal info","names":["www.getoffthemoneyshametrain.com"],"window_start":1772683536,"window_end":1772838985,"selected_time":1772754009,"recheck_after":1767601205.445478,"explanation_url":""}
-{"level":"info","ts":1767579605.4455721,"msg":"successfully downloaded available certificate chains","count":2,"first_url":"https://acme-staging-v02.api.letsencrypt.org/acme/cert/2cc74c584a0ed38261ba7c698b90911427ff"}
-{"level":"info","ts":1767579605.4459517,"logger":"http","msg":"waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.4459662,"logger":"http","msg":"done waiting on internal rate limiter","identifiers":["www.getoffthemoneyshametrain.com"],"ca":"https://acme-v02.api.letsencrypt.org/directory","account":""}
-{"level":"info","ts":1767579605.445981,"logger":"http","msg":"using ACME account","account_id":"https://acme-v02.api.letsencrypt.org/acme/acct/2935492736","account_contact":[]}
-{"level":"error","ts":1767579605.5483031,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579605.5483813,"logger":"tls.obtain","msg":"will retry","error":"[getoffthemoneyshametrain.com] Obtain: [getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:12:24 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.217216026,"max_duration":2592000}
-{"level":"error","ts":1767579605.5731711,"logger":"tls.obtain","msg":"could not get certificate from issuer","identifier":"www.getoffthemoneyshametrain.com","issuer":"acme-v02.api.letsencrypt.org-directory","error":"HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers"}
-{"level":"error","ts":1767579605.57324,"logger":"tls.obtain","msg":"will retry","error":"[www.getoffthemoneyshametrain.com] Obtain: [www.getoffthemoneyshametrain.com] creating new order: attempt 1: https://acme-v02.api.letsencrypt.org/acme/new-order: HTTP 429 urn:ietf:params:acme:error:rateLimited - too many certificates (5) already issued for this exact set of identifiers in the last 168h0m0s, retry after 2026-01-06 06:51:36 UTC: see https://letsencrypt.org/docs/rate-limits/#new-certificates-per-exact-set-of-identifiers (ca=https://acme-v02.api.letsencrypt.org/directory)","attempt":2,"retrying_in":120,"elapsed":64.236665165,"max_duration":2592000}
-info@financial-rise-production-vm:~$ docker exec financial-rise-frontend-prod cat /etc/caddy/Caddyfile | head -10
-# Caddy configuration for Financial RISE Frontend
-# Serves React static files and proxies API requests to backend
-# Automatic HTTPS with Let's Encrypt
 
-getoffthemoneyshametrain.com {
-    # Enable gzip compression
-    encode gzip
-
-    # Security headers
-    header {
 
 ---
 
@@ -1000,3 +855,808 @@ Shows email configuration is present in deployed container. SSL certificates now
 **Lesson:** Always check GitHub Actions workflow status before attempting manual deployments. The automated CI/CD pipeline handles image building and deployment.
 
 ---
+36s
+Run npm run test:cov
+
+> financial-rise-backend@1.0.0 test:cov
+> jest --coverage
+
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+ts-jest[ts-jest-transformer] (WARN) Define `ts-jest` config under `globals` is deprecated. Please do
+transform: {
+    <transform_regex>: ['ts-jest', { /* ts-jest config goes here in Jest */ }],
+},
+See more at https://kulshekhar.github.io/ts-jest/docs/getting-started/presets#advanced
+PASS src/common/utils/log-sanitizer.spec.ts (9.785 s)
+PASS src/modules/assessments/services/validation.service.spec.ts
+PASS src/modules/users/users-processing-restriction.spec.ts (12.463 s)
+PASS src/config/typeorm-ssl.config.spec.ts
+  ● Console
+
+    console.warn
+      [TypeORM SSL] CA certificate file not found: /invalid/path/that/does/not/exist.pem
+
+      46 |       } else {
+      47 |         // Log warning but don't fail - connection attempt will reveal if cert is actually needed
+    > 48 |         console.warn(`[TypeORM SSL] CA certificate file not found: ${caPath}`);
+         |                 ^
+      49 |       }
+      50 |     } catch (error) {
+      51 |       // Log error but don't throw - allow TypeORM to handle connection failure
+
+      at warn (config/typeorm.config.ts:48:17)
+      at getSSLConfig (config/typeorm.config.ts:81:8)
+      at config/typeorm-ssl.config.spec.ts:389:33
+      at Object.<anonymous> (../node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] (../node_modules/expect/build/index.js:320:21)
+      at Object.<anonymous> (config/typeorm-ssl.config.spec.ts:389:58)
+
+    console.warn
+      [TypeORM SSL] CA certificate file not found: /invalid/path/that/does/not/exist.pem
+
+      46 |       } else {
+      47 |         // Log warning but don't fail - connection attempt will reveal if cert is actually needed
+    > 48 |         console.warn(`[TypeORM SSL] CA certificate file not found: ${caPath}`);
+         |                 ^
+      49 |       }
+      50 |     } catch (error) {
+      51 |       // Log error but don't throw - allow TypeORM to handle connection failure
+
+      at warn (config/typeorm.config.ts:48:17)
+      at getSSLConfig (config/typeorm.config.ts:81:8)
+      at Object.<anonymous> (config/typeorm-ssl.config.spec.ts:391:40)
+
+PASS src/modules/auth/auth.service.spec.ts (13.71 s)
+[Nest] 3591  - 01/06/2026, 5:53:07 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:07 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:08 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+PASS src/modules/assessments/services/progress.service.spec.ts
+PASS src/modules/questionnaire/questionnaire.service.spec.ts
+PASS src/modules/consents/consents.service.spec.ts
+PASS src/modules/users/users.service.spec.ts
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at urlencodedParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/urlencoded.js:119:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:122:7)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+[Nest] 3591  - 01/06/2026, 5:53:10 AM   ERROR [ExceptionsHandler] request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/raw-body/index.js:116:12)
+    at read (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/read.js:79:3)
+    at jsonParser (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/body-parser/lib/types/json.js:138:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at expressInit (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/init.js:40:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at query (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/middleware/query.js:45:5)
+    at Layer.handle [as handle_request] (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/router/index.js:175:3)
+    at Function.handle (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/application.js:181:10)
+    at Server.app (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/express/lib/express.js:39:9)
+    at Server.emit (node:events:517:28)
+    at parserOnIncoming (node:_http_server:1130:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:119:17)
+PASS src/security/request-size-limits.spec.ts
+PASS src/modules/algorithms/phase/phase-calculator.service.spec.ts
+PASS src/modules/algorithms/entities/disc-profile.encryption.spec.ts
+PASS src/modules/auth/strategies/jwt.strategy.spec.ts
+PASS src/modules/auth/refresh-token.service.spec.ts
+PASS src/modules/algorithms/disc/disc-calculator.service.spec.ts
+PASS src/config/cors.config.spec.ts
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://app.financialrise.com
+[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://app.financialrise.com
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 3 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - https://staging.financialrise.com
+[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Allowed request from whitelisted origin: https://staging.financialrise.com
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://evil.com
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "http://evil.com",
+  "timestamp": "2026-01-06T05:53:12.783Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://localhost:9999
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "http://localhost:9999",
+  "timestamp": "2026-01-06T05:53:12.787Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: https://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "https://localhost:3001",
+  "timestamp": "2026-01-06T05:53:12.788Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM   DEBUG [CORSConfiguration] CORS: Request with no origin header - allowing
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://LOCALHOST:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "http://LOCALHOST:3001",
+  "timestamp": "2026-01-06T05:53:12.789Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://malicious.localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "http://malicious.localhost:3001",
+  "timestamp": "2026-01-06T05:53:12.790Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Configured 2 allowed origins
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM     LOG [CORSConfiguration] CORS: Whitelisted origin - http://localhost:5173
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] 🚫 CORS: Blocked request from unauthorized origin: http://127.0.0.1:3001
+[Nest] 3590  - 01/06/2026, 5:53:12 AM    WARN [CORSConfiguration] Object:
+{
+  "origin": "http://127.0.0.1:3001",
+  "timestamp": "2026-01-06T05:53:12.791Z",
+  "securityEvent": "CORS_ORIGIN_BLOCKED",
+  "severity": "MEDIUM"
+}
+
+PASS src/modules/users/users-data-export.spec.ts
+PASS src/config/secrets.config.spec.ts
+  ● Console
+
+    console.log
+      ✅ Secret validation passed - All secrets meet security requirements
+
+      at SecretsValidationService.log [as validateSecrets] (config/secrets-validation.service.ts:48:13)
+
+    console.log
+      ✅ Secret validation passed - All secrets meet security requirements
+
+      at SecretsValidationService.log [as validateSecrets] (config/secrets-validation.service.ts:48:13)
+
+PASS src/security/sql-injection-prevention.spec.ts
+PASS src/modules/assessments/assessments.service.spec.ts
+PASS src/common/services/encryption.service.spec.ts
+PASS src/modules/consents/consents.controller.spec.ts
+PASS src/common/interceptors/csrf.interceptor.spec.ts
+PASS src/modules/users/users-account-deletion.spec.ts
+PASS src/common/guards/csrf.guard.spec.ts
+PASS src/config/request-size-limits.config.spec.ts
+PASS src/common/guards/report-ownership.guard.spec.ts
+PASS src/modules/algorithms/algorithms.service.spec.ts
+PASS src/common/guards/assessment-ownership.guard.spec.ts
+[Nest] 3590  - 01/06/2026, 5:53:17 AM   ERROR [DataRetentionService] [GDPR COMPLIANCE ERROR] Data retention enforcement failed: Database connection lost
+Error: Database connection lost
+    at Object.<anonymous> (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/src/common/services/data-retention.service.spec.ts:140:9)
+    at Promise.then.completed (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:121:9)
+    at run (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/runTest.js:444:34)
+    at Object.worker (/home/runner/work/financial-rise-report/financial-rise-report/financial-rise-app/backend/node_modules/jest-runner/build/testWorker.js:106:12)
+PASS src/common/services/data-retention.service.spec.ts
+PASS src/modules/questionnaire/questionnaire.controller.spec.ts
+PASS src/modules/auth/strategies/local.strategy.spec.ts
+PASS src/modules/auth/services/token-blacklist.service.spec.ts (5.188 s)
+PASS src/common/guards/processing-restriction.guard.spec.ts
+PASS src/modules/algorithms/algorithms.controller.spec.ts
+[Nest] 3597  - 01/06/2026, 5:53:19 AM   ERROR [HTTP] Request failed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM   ERROR [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "error": "Test error",
+  "statusCode": 500,
+  "duration": "4ms",
+  "timestamp": "2026-01-06T05:53:19.756Z"
+}
+
+PASS src/common/interceptors/logging.interceptor.spec.ts
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.717Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "2ms",
+  "timestamp": "2026-01-06T05:53:19.719Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.722Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "1ms",
+  "timestamp": "2026-01-06T05:53:19.723Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.746Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "0ms",
+  "timestamp": "2026-01-06T05:53:19.746Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/auth/login
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "body": {
+    "email": "***@test.com",
+    "password": "[REDACTED - PASSWORD]"
+  },
+  "timestamp": "2026-01-06T05:53:19.751Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/auth/login
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/auth/login",
+  "statusCode": 200,
+  "duration": "0ms",
+  "timestamp": "2026-01-06T05:53:19.751Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.752Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.761Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "1ms",
+  "timestamp": "2026-01-06T05:53:19.762Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Incoming request: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "controller": "TestController",
+  "handler": "testHandler",
+  "method": "POST",
+  "url": "/api/test",
+  "body": {
+    "email": "***@example.com",
+    "password": "[REDACTED - PASSWORD]",
+    "name": "J***"
+  },
+  "user": {
+    "id": "user-123",
+    "email": "***@test.com"
+  },
+  "timestamp": "2026-01-06T05:53:19.764Z"
+}
+
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Request completed: POST /api/test
+[Nest] 3597  - 01/06/2026, 5:53:19 AM     LOG [HTTP] Object:
+{
+  "method": "POST",
+  "url": "/api/test",
+  "statusCode": 200,
+  "duration": "1ms",
+  "timestamp": "2026-01-06T05:53:19.764Z"
+}
+
+PASS src/modules/auth/guards/roles.guard.spec.ts
+PASS src/modules/assessments/assessments.controller.spec.ts
+PASS src/modules/users/users.controller.spec.ts
+PASS src/modules/questions/questions.service.spec.ts
+PASS src/modules/auth/guards/jwt-auth.guard.spec.ts
+PASS src/common/transformers/encrypted-column.transformer.spec.ts
+PASS src/modules/questions/questions.controller.spec.ts
+PASS src/modules/auth/guards/local-auth.guard.spec.ts
+-------------------------------------|---------|----------|---------|---------|-------------------------------------------
+File                                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                         
+-------------------------------------|---------|----------|---------|---------|-------------------------------------------
+All files                            |   85.11 |    74.95 |   81.72 |   85.09 |                                           
+ common/decorators                   |      90 |      100 |      50 |     100 |                                           
+  allow-when-restricted.decorator.ts |     100 |      100 |     100 |     100 |                                           
+  public.decorator.ts                |      80 |      100 |       0 |     100 |                                           
+ common/guards                       |     100 |      100 |     100 |     100 |                                           
+  assessment-ownership.guard.ts      |     100 |      100 |     100 |     100 |                                           
+  csrf.guard.ts                      |     100 |      100 |     100 |     100 |                                           
+  processing-restriction.guard.ts    |     100 |      100 |     100 |     100 |                                           
+  report-ownership.guard.ts          |     100 |      100 |     100 |     100 |                                           
+ common/interceptors                 |   97.29 |       75 |     100 |   97.05 |                                           
+  csrf.interceptor.ts                |     100 |      100 |     100 |     100 |                                           
+  logging.interceptor.ts             |   95.65 |    66.66 |     100 |   95.23 | 22                                        
+ common/services                     |    98.8 |       76 |     100 |   98.75 |                                           
+  data-retention.service.ts          |     100 |    66.66 |     100 |     100 | 155-160                                   
+  encryption.service.ts              |    97.5 |    84.61 |     100 |   97.36 | 71                                        
+ common/transformers                 |     100 |      100 |     100 |     100 |                                           
+  encrypted-column.transformer.ts    |     100 |      100 |     100 |     100 |                                           
+ common/utils                        |   77.59 |    83.33 |   58.82 |   79.65 |                                           
+  log-sanitizer.ts                   |   95.94 |    96.15 |   95.23 |   96.47 | 149,266,306,345,426                       
+  pii-safe-logger.ts                 |       0 |        0 |       0 |       0 | 1-130                                     
+ config                              |   80.87 |     70.9 |   73.07 |   80.44 |                                           
+  cors.config.ts                     |    87.5 |    66.66 |      80 |    87.5 | 36-39                                     
+  request-size-limits.config.ts      |   58.69 |    57.14 |   42.85 |   58.69 | 114-128,147-164                           
+  secrets-validation.service.ts      |   90.47 |       84 |     100 |   90.24 | 79,83,93,112                              
+  secrets.service.ts                 |   96.77 |    44.44 |     100 |   96.66 | 92                                        
+  security-headers.config.ts         |       0 |      100 |       0 |       0 | 22-101                                    
+  typeorm.config.ts                  |   96.96 |      100 |     100 |   96.77 | 52                                        
+ modules/algorithms                  |   80.86 |    35.29 |   88.88 |   81.65 |                                           
+  algorithms.controller.ts           |     100 |       75 |     100 |     100 | 184                                       
+  algorithms.service.ts              |   73.17 |    31.91 |   81.81 |   74.35 | 192,231-232,256-279,312-323               
+ modules/algorithms/disc             |    97.5 |    95.65 |     100 |   97.29 |                                           
+  disc-calculator.service.ts         |    97.5 |    95.65 |     100 |   97.29 | 62-63                                     
+ modules/algorithms/phase            |   97.14 |    90.47 |     100 |   96.92 |                                           
+  phase-calculator.service.ts        |   97.14 |    90.47 |     100 |   96.92 | 249-250                                   
+ modules/assessments                 |    78.7 |    69.44 |   82.35 |   80.61 |                                           
+  assessments.controller.ts          |   96.15 |      100 |   85.71 |   95.83 | 190                                       
+  assessments.service.ts             |   73.17 |    65.62 |      80 |   75.67 | 80,179-229                                
+ modules/assessments/services        |   98.29 |    85.45 |     100 |   98.11 |                                           
+  progress.service.ts                |     100 |       70 |     100 |     100 | 70,116-163                                
+  validation.service.ts              |   97.36 |    88.88 |     100 |   97.14 | 100,154                                   
+ modules/auth                        |    64.2 |    62.79 |      60 |   64.11 |                                           
+  auth.controller.ts                 |       0 |        0 |       0 |       0 | 1-105                                     
+  auth.service.ts                    |   71.79 |       60 |   77.77 |    71.3 | 34-73,155,185,196,265-292,299,307,312-313 
+  refresh-token.service.ts           |     100 |      100 |     100 |     100 |                                           
+ modules/auth/decorators             |   66.66 |      100 |       0 |   71.42 |                                           
+  get-user.decorator.ts              |      50 |      100 |       0 |      50 | 4-5                                       
+  roles.decorator.ts                 |      80 |      100 |       0 |     100 |                                           
+ modules/auth/guards                 |     100 |      100 |     100 |     100 |                                           
+  jwt-auth.guard.ts                  |     100 |      100 |     100 |     100 |                                           
+  local-auth.guard.ts                |     100 |      100 |     100 |     100 |                                           
+  roles.guard.ts                     |     100 |      100 |     100 |     100 |                                           
+ modules/auth/services               |     100 |      100 |     100 |     100 |                                           
+  token-blacklist.service.ts         |     100 |      100 |     100 |     100 |                                           
+ modules/auth/strategies             |     100 |      100 |     100 |     100 |                                           
+  jwt.strategy.ts                    |     100 |      100 |     100 |     100 |                                           
+  local.strategy.ts                  |     100 |      100 |     100 |     100 |                                           
+ modules/consents                    |     100 |    76.19 |     100 |     100 |                                           
+  consents.controller.ts             |     100 |     92.3 |     100 |     100 | 53                                        
+  consents.service.ts                |     100 |       50 |     100 |     100 | 21-65                                     
+ modules/questionnaire               |     100 |    94.11 |     100 |     100 |                                           
+  questionnaire.controller.ts        |     100 |      100 |     100 |     100 |                                           
+  questionnaire.service.ts           |     100 |    94.11 |     100 |     100 | 70                                        
+ modules/questions                   |     100 |      100 |     100 |     100 |                                           
+  questions.controller.ts            |     100 |      100 |     100 |     100 |                                           
+  questions.service.ts               |     100 |      100 |     100 |     100 |                                           
+ modules/users                       |   69.66 |    61.11 |   65.85 |   69.18 |                                           
+  users.controller.ts                |   79.54 |     62.5 |      70 |   78.57 | 132-136,152-156,173-177                   
+  users.service.ts                   |   66.41 |       60 |   64.51 |   66.15 | 147,265,280-303,333-334,350-445           
+-------------------------------------|---------|----------|---------|---------|-------------------------------------------
+Jest: "global" coverage threshold for branches (79%) not met: 74.95%
+
+Test Suites: 44 passed, 44 total
+Tests:       908 passed, 908 total
+Snapshots:   0 total
+Time:        34.641 s
+Ran all test suites.
+Error: Process completed with exit code 1.

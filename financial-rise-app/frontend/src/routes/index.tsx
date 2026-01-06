@@ -8,6 +8,9 @@ import Dashboard from '@pages/Dashboard/Dashboard';
 import NotFound from '@pages/NotFound/NotFound';
 import Privacy from '@pages/Privacy/Privacy';
 import DoNotSell from '@pages/DoNotSell/DoNotSell';
+import { Results } from '@pages/Results/Results';
+import Questionnaire from '@pages/Questionnaire/Questionnaire';
+import Assessments from '@pages/Assessments/Assessments';
 
 /**
  * Protected Route Component
@@ -71,6 +74,33 @@ export const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/assessments"
+        element={
+          <ProtectedRoute>
+            <Assessments />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/assessments/:assessmentId/questionnaire"
+        element={
+          <ProtectedRoute>
+            <Questionnaire />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/assessments/:assessmentId/results"
+        element={
+          <ProtectedRoute>
+            <Results />
           </ProtectedRoute>
         }
       />
