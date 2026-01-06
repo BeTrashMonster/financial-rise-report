@@ -32,7 +32,7 @@ interface QuestionOption {
 interface Question {
   id: string;
   text: string;
-  type: 'phase' | 'disc' | 'confidence_before' | 'confidence_after' | 'rating';
+  type: 'phase' | 'disc' | 'confidence_before' | 'confidence_after' | 'rating' | 'multiple_choice';
   section?: string;
   display_order: number;
   options?: QuestionOption[];
@@ -97,6 +97,31 @@ async function seedQuestions() {
           min: question.min || 1,
           max: question.max || 10,
           labels: question.labels || {},
+        };
+      } else if (question.type === 'multiple_choice') {
+        questionType = 'multiple_choice';
+        options = {
+          options: (question.options || []).map(opt => ({
+            value: opt.value,
+            text: opt.label,
+            // Phase scores
+            phase_scores: {
+              stabilize: opt.stabilize_score || 0,
+              organize: opt.organize_score || 0,
+              build: opt.build_score || 0,
+              grow: opt.grow_score || 0,
+              systemic: opt.systemic_score || 0,
+            },
+            // DISC scores (only for disc-type questions)
+            ...(opt.disc_d_score !== undefined && {
+              disc_scores: {
+                disc_d_score: opt.disc_d_score || 0,
+                disc_i_score: opt.disc_i_score || 0,
+                disc_s_score: opt.disc_s_score || 0,
+                disc_c_score: opt.disc_c_score || 0,
+              },
+            }),
+          })),
         };
       } else {
         questionType = 'single_choice';
