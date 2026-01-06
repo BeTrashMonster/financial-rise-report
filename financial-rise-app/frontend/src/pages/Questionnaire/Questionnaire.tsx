@@ -753,7 +753,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
               key={option.value}
               value={option.value}
               control={<Radio />}
-              label={option.label}
+              label={option.text}
             />
           ))}
         </RadioGroup>
@@ -791,7 +791,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
                   onChange={(e) => handleCheckboxChange(option.value, e.target.checked)}
                 />
               }
-              label={option.label}
+              label={option.text}
             />
           ))}
         </FormGroup>
