@@ -238,20 +238,32 @@ export const Questionnaire: React.FC = () => {
 
   // Handle after confidence and submit
   const handleAfterConfidence = async (value: number) => {
-    if (!assessmentId) return;
+    if (!assessmentId) {
+      console.error('[Questionnaire] No assessment ID for submission');
+      return;
+    }
 
+    console.log('[Questionnaire] Submitting assessment:', assessmentId);
     setState((prev) => ({ ...prev, afterConfidence: value, isCalculating: true }));
 
     try {
       // Submit final auto-save
+      console.log('[Questionnaire] Auto-saving before submission...');
       await handleAutoSave();
 
       // Calculate results
-      await assessmentService.submitAssessment(assessmentId);
+      console.log('[Questionnaire] Calling submitAssessment API...');
+      const result = await assessmentService.submitAssessment(assessmentId);
+      console.log('[Questionnaire] Submit response:', result);
 
       // Navigate to results page
-      navigate(`/assessments/${assessmentId}/results`);
+      const resultsPath = `/assessments/${assessmentId}/results`;
+      console.log('[Questionnaire] Navigating to:', resultsPath);
+      navigate(resultsPath);
     } catch (err: any) {
+      console.error('[Questionnaire] Submission error:', err);
+      console.error('[Questionnaire] Error response:', err.response);
+
       // Handle authentication errors
       if (err.response?.status === 401) {
         setFormError('Your session has expired. Please log in again.');

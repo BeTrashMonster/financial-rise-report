@@ -170,23 +170,39 @@ export const Results: React.FC = () => {
   // Fetch results on mount
   useEffect(() => {
     const fetchResults = async () => {
-      if (!assessmentId) return;
+      if (!assessmentId) {
+        console.error('[Results] No assessment ID provided');
+        return;
+      }
+
+      console.log('[Results] Fetching results for assessment:', assessmentId);
 
       try {
         setLoading(true);
         setError(null);
 
+        console.log('[Results] Calling API endpoints...');
         const [disc, phase, assess] = await Promise.all([
           assessmentService.getDISCProfile(assessmentId),
           assessmentService.getPhaseResults(assessmentId),
           assessmentService.getAssessment(assessmentId),
         ]);
 
+        console.log('[Results] DISC Profile received:', disc);
+        console.log('[Results] Phase Results received:', phase);
+        console.log('[Results] Assessment received:', assess);
+
         setDiscProfile(disc);
         setPhaseResults(phase);
         setAssessment(assess);
       } catch (err: any) {
-        setError(err.response?.data?.message || 'Failed to load results');
+        console.error('[Results] Error fetching results:', err);
+        console.error('[Results] Error response:', err.response);
+        console.error('[Results] Error status:', err.response?.status);
+        console.error('[Results] Error data:', err.response?.data);
+
+        const errorMessage = err.response?.data?.message || err.message || 'Failed to load results';
+        setError(`${errorMessage} (Check browser console for details)`);
       } finally {
         setLoading(false);
       }
