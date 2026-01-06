@@ -263,33 +263,33 @@ export const Questionnaire: React.FC = () => {
     }
 
     // If not required and no response, that's okay
-    if (!response) {
+    if (!response || !response.answer) {
       return null;
     }
 
     // Validate based on question type
     switch (question.question_type) {
       case 'single_choice':
-        if (!response.value || typeof response.value !== 'string' || response.value.trim() === '') {
+        if (!response.answer.value || typeof response.answer.value !== 'string' || response.answer.value.trim() === '') {
           return 'Please select an option';
         }
         // Validate selected value exists in options
         const singleOpts = Array.isArray(question.options) ? question.options : question.options?.options || [];
-        const validValue = singleOpts.some((opt: any) => opt.value === response.value);
+        const validValue = singleOpts.some((opt: any) => opt.value === response.answer.value);
         if (!validValue) {
           return 'Selected option is invalid. Please select a valid option.';
         }
         break;
 
       case 'multiple_choice':
-        if (!Array.isArray(response.values) || response.values.length === 0) {
+        if (!Array.isArray(response.answer.values) || response.answer.values.length === 0) {
           return question.required
             ? 'Please select at least one option'
             : null;
         }
         // Validate all selected values exist in options
         const multiOpts = Array.isArray(question.options) ? question.options : question.options?.options || [];
-        const validValues = response.values.every((val: string) =>
+        const validValues = response.answer.values.every((val: string) =>
           multiOpts.some((opt: any) => opt.value === val)
         );
         if (!validValues) {
@@ -298,27 +298,27 @@ export const Questionnaire: React.FC = () => {
         break;
 
       case 'rating':
-        if (response.rating === null || response.rating === undefined) {
+        if (response.answer.rating === null || response.answer.rating === undefined) {
           return 'Please provide a rating';
         }
-        if (typeof response.rating !== 'number') {
+        if (typeof response.answer.rating !== 'number') {
           return 'Rating must be a number';
         }
         // Validate rating is within min/max range
         const ratingOpts = question.options as any;
         const min = ratingOpts?.min || 1;
         const max = ratingOpts?.max || 10;
-        if (response.rating < min || response.rating > max) {
+        if (response.answer.rating < min || response.answer.rating > max) {
           return `Rating must be between ${min} and ${max}`;
         }
         break;
 
       case 'text':
-        if (question.required && (!response.text || typeof response.text !== 'string' || response.text.trim() === '')) {
+        if (question.required && (!response.answer.text || typeof response.answer.text !== 'string' || response.answer.text.trim() === '')) {
           return 'Please enter a response';
         }
         // Validate text length (prevent extremely long inputs)
-        if (response.text && typeof response.text === 'string' && response.text.length > 5000) {
+        if (response.answer.text && typeof response.answer.text === 'string' && response.answer.text.length > 5000) {
           return 'Response is too long (maximum 5000 characters)';
         }
         break;
