@@ -35,7 +35,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 # Copy package files and install production dependencies only
 COPY --from=builder /app/package*.json ./
-RUN npm ci --only=production
+RUN npm ci --only=production && npm install ts-node tsconfig-paths
 
 # Copy built application
 COPY --from=builder /app/dist ./dist
