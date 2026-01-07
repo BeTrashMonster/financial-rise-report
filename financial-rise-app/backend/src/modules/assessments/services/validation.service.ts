@@ -121,7 +121,10 @@ export class ValidationService {
     // Extract valid option IDs from the options array
     const validOptionIds = question.options.map((opt: any) => opt.optionId || opt.value);
 
-    if (!validOptionIds.includes(answer)) {
+    // Answer comes as {value: "x"} from frontend, extract the value
+    const answerValue = typeof answer === 'object' && answer.value ? answer.value : answer;
+
+    if (!validOptionIds.includes(answerValue)) {
       return {
         valid: false,
         errors: [{ field: 'answer', message: 'Invalid option selected' }],
@@ -139,14 +142,19 @@ export class ValidationService {
     question: Question,
     answer: any,
   ): ValidationResult {
-    if (!Array.isArray(answer)) {
+    // Answer may come as {value: ["x", "y"]} from frontend, extract the value
+    const answerArray = typeof answer === 'object' && answer.value && Array.isArray(answer.value)
+      ? answer.value
+      : answer;
+
+    if (!Array.isArray(answerArray)) {
       return {
         valid: false,
         errors: [{ field: 'answer', message: 'Answer must be an array' }],
       };
     }
 
-    if (answer.length === 0 && question.required) {
+    if (answerArray.length === 0 && question.required) {
       return {
         valid: false,
         errors: [
@@ -166,7 +174,7 @@ export class ValidationService {
     }
 
     const validOptionIds = question.options.map((opt: any) => opt.optionId || opt.value);
-    const invalidOptions = answer.filter(
+    const invalidOptions = answerArray.filter(
       (optId: string) => !validOptionIds.includes(optId),
     );
 
