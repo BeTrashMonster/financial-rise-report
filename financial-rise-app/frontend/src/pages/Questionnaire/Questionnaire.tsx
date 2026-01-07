@@ -1002,8 +1002,8 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
           </Typography>
         </FormLabel>
         <Slider
-          value={value?.rating || min}
-          onChange={(_, newValue) => onChange({ rating: newValue })}
+          value={value?.value || min}
+          onChange={(_, newValue) => onChange({ value: newValue })}
           min={min}
           max={max}
           marks
