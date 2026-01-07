@@ -309,14 +309,14 @@ export const Questionnaire: React.FC = () => {
         break;
 
       case 'multiple_choice':
-        if (!Array.isArray(response.answer.values) || response.answer.values.length === 0) {
+        if (!Array.isArray(response.answer.value) || response.answer.value.length === 0) {
           return question.required
             ? 'Please select at least one option'
             : null;
         }
         // Validate all selected values exist in options
         const multiOpts = Array.isArray(question.options) ? question.options : question.options?.options || [];
-        const validValues = response.answer.values.every((val: string) =>
+        const validValues = response.answer.value.every((val: string) =>
           multiOpts.some((opt: any) => opt.value === val)
         );
         if (!validValues) {
@@ -928,13 +928,13 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, value, on
   if (question_type === 'multiple_choice') {
     // Handle both formats: direct array or {options: [...]}
     const optionsList = Array.isArray(options) ? options : options?.options || [];
-    const selectedValues = value?.values || [];
+    const selectedValues = value?.value || [];
 
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {
       const newValues = checked
         ? [...selectedValues, optionValue]
         : selectedValues.filter((v: string) => v !== optionValue);
-      onChange({ values: newValues });
+      onChange({ value: newValues });
     };
 
     return (
