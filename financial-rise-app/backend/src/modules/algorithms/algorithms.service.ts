@@ -194,12 +194,13 @@ export class AlgorithmsService {
 
     try {
       // Path resolution for both test and production environments
-      // In tests (Jest rootDir='src'): __dirname is src/modules/algorithms, go up 3 to backend/ then into content/
-      // In production: __dirname is dist/modules/algorithms, go up 3 to backend/ then into content/
-      const contentPath = path.join(__dirname, '../../..', 'content');
+      // Use process.cwd() which is reliable in Docker (/app) and tests
+      // Fallback to __dirname-based path for legacy compatibility
+      const contentPath = path.join(process.cwd(), 'content');
 
       // Load unified assessment questions (includes both phase and embedded DISC)
       const questionsPath = path.join(contentPath, 'assessment-questions.json');
+      this.logger.log(`Loading question bank from: ${questionsPath}`);
       const questionsData = await fs.readFile(questionsPath, 'utf-8');
       const questionsBank: QuestionBank = JSON.parse(questionsData);
 
