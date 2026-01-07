@@ -247,11 +247,7 @@ export const Questionnaire: React.FC = () => {
     setState((prev) => ({ ...prev, afterConfidence: value, isCalculating: true }));
 
     try {
-      // Submit final auto-save
-      console.log('[Questionnaire] Auto-saving before submission...');
-      await handleAutoSave();
-
-      // Calculate results
+      // Calculate results (responses should already be saved via auto-save)
       console.log('[Questionnaire] Calling submitAssessment API...');
       const result = await assessmentService.submitAssessment(assessmentId);
       console.log('[Questionnaire] Submit response:', result);
@@ -268,9 +264,20 @@ export const Questionnaire: React.FC = () => {
       if (err.response?.status === 401) {
         setFormError('Your session has expired. Please log in again.');
         setTimeout(() => navigate('/login'), 2000);
-      } else {
-        setFormError(err.response?.data?.message || 'Failed to submit assessment');
+        return;
       }
+
+      // Handle "results already calculated" error - navigate to results anyway
+      if (err.response?.status === 400 &&
+          err.response?.data?.message?.includes('already calculated')) {
+        console.log('[Questionnaire] Results already exist, navigating to results page');
+        const resultsPath = `/assessments/${assessmentId}/results`;
+        navigate(resultsPath);
+        return;
+      }
+
+      // Handle other errors
+      setFormError(err.response?.data?.message || 'Failed to submit assessment');
       setState((prev) => ({ ...prev, isCalculating: false }));
     }
   };
