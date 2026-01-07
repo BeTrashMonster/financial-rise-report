@@ -164,21 +164,170 @@
 
 ---
 
+## Recent Issues - Assessment Submission Flow (2026-01-07)
+
+### Issue: Assessment Results Not Displaying After Completion
+
+**Context:** User completed assessment, clicked submit, but results page showed "DISC profile not found" error despite responses being saved to database.
+
+**Symptoms:**
+- F12 console errors: "Answer must be an array", "Rating must be a number"
+- Backend logs: "Failed to load question bank data"
+- Browser loading old JavaScript files despite new deployments
+- Assessment status stuck on "draft" instead of "completed"
+- PDF generation blocked with "Assessment must be completed before generating reports"
+
+**Root Causes Identified:**
+
+#### 1. Frontend Answer Format Mismatches
+**Problem:** Frontend sending answer data in different format than backend expected.
+
+**Multiple Choice Questions:**
+- Frontend was using `{values: [...]}`
+- Backend expected `{value: [...]}`
+- Validation checking `response.answer.value` failed
+
+**Rating Questions:**
+- Frontend Slider onChange was using `{rating: 5}`
+- Backend expected `{value: 5}`
+- Validation checking `response.answer.value` failed
+
+**Files Affected:**
+- `frontend/src/pages/Questionnaire/Questionnaire.tsx` lines 312, 319, 931, 937 (multiple_choice)
+- `frontend/src/pages/Questionnaire/Questionnaire.tsx` lines 328-339, 1005-1006 (rating)
+
+**Solution:**
+```typescript
+// Multiple choice - changed from:
+const selectedValues = value?.values || [];
+onChange({ values: newValues });
+
+// To:
+const selectedValues = value?.value || [];
+onChange({ value: newValues });
+
+// Rating - changed from:
+value={value?.rating || min}
+onChange={(_, newValue) => onChange({ rating: newValue })}
+
+// To:
+value={value?.value || min}
+onChange={(_, newValue) => onChange({ value: newValue })}
+```
+
+**Lesson:** Frontend and backend must agree on data structure. The `answer` field should consistently use `{value: ...}` for all question types, not `{values: ...}` or `{rating: ...}`.
+
+#### 2. Browser Caching Serving Stale JavaScript
+
+**Problem:** Despite deploying new frontend code, browser loaded old JavaScript files with outdated validation logic.
+
+**Symptoms:**
+- Deployment logs showed new Docker image built
+- Hard refresh (Ctrl+F5) didn't load new code
+- Network tab showed `Questionnaire-CkgHtM29.js` (old) instead of `Questionnaire-D5gstmFZ.js` (new)
+
+**Solution:**
+- Updated Caddyfile to prevent caching of index.html
+- Used Incognito mode for completely fresh cache
+- Recommended: Add cache-busting query parameters to JS imports
+
+**Lesson:** Frontend assets need aggressive cache invalidation in production. HTML should never be cached, and JS/CSS should use content hashes in filenames (Vite does this) plus proper Cache-Control headers.
+
+#### 3. Backend Path Resolution Bug
+
+**Problem:** Backend looking for `/content/assessment-questions.json` but file was at `/app/content/assessment-questions.json`.
+
+**Symptoms:**
+```
+Error: ENOENT: no such file or directory, open '/content/assessment-questions.json'
+Failed to load question bank data
+```
+
+**Root Cause:** `path.join(__dirname, '../../..', 'content')` resolved to `/content` instead of `/app/content` in Docker container.
+
+**File:** `backend/src/modules/algorithms/algorithms.service.ts` line 199
+
+**Initial Fix Attempt:** Changed to `process.cwd()` which returns `/app` in Docker
+```typescript
+// Changed from:
+const contentPath = path.join(__dirname, '../../..', 'content');
+
+// To:
+const contentPath = path.join(process.cwd(), 'content');
+```
+
+**Problem:** Backend Docker build stuck for 50+ minutes, couldn't deploy code fix
+
+**Workaround:** Created symlink on production VM:
+```bash
+docker exec -u root financial-rise-backend-prod ln -s /app/content /content
+```
+
+**Lesson:** `__dirname` resolves to the compiled output directory in production, not the project root. Use `process.cwd()` for project root paths in Docker containers. However, **symlinks should only be temporary workarounds** - the proper fix is deploying updated code.
+
+#### 4. Assessment Status Not Updating to "Completed"
+
+**Problem:** When results already exist (from previous failed submission attempt), `submitAssessment` throws ConflictException and never updates status to "completed".
+
+**Code Flow (assessments.service.ts:189-235):**
+```typescript
+async submitAssessment(id: string, consultantId: string): Promise<Assessment> {
+  // ... validation ...
+
+  try {
+    // This throws ConflictException if results exist
+    const results = await this.algorithmsService.calculateAll(id, assessmentResponses);
+
+    // These lines NEVER execute if exception thrown:
+    assessment.status = AssessmentStatus.COMPLETED;
+    assessment.completed_at = new Date();
+    return this.assessmentRepository.save(assessment);
+  } catch (error) {
+    throw new BadRequestException(...);
+  }
+}
+```
+
+**Impact:**
+- Assessment status remains "draft"
+- Results page loads successfully (results exist in database)
+- PDF generation fails: "Assessment must be completed before generating reports"
+
+**Proper Solution:** Modify `submitAssessment` to:
+1. Check if DISC/phase results already exist
+2. If yes, skip calculation but still update status to "completed"
+3. If no, calculate results AND update status
+
+**Lesson:** Error handling should not prevent critical state updates. If the desired end state (results calculated + status completed) is partially achieved, the remaining steps should still execute.
+
+**Files to Fix:**
+- `backend/src/modules/assessments/assessments.service.ts` - submitAssessment method
+- `backend/src/modules/algorithms/algorithms.service.ts` - handle existing results gracefully
+
+---
+
 ## Resolution Times
 
-**Total Issues Documented:** 18
+**Total Issues Documented:** 22
 **Average Resolution Time:** 1-2 hours
 **Longest Issue:** 5 hours (47-question seed deployment - circular problem solving)
 **Quickest Issue:** 10 minutes (simple TypeScript type fixes)
 
 ---
 
-## Current Status
+## Current Status (2026-01-07)
 
 ✅ All builds passing
 ✅ GitHub Actions deployment working
 ✅ Backend container includes seed scripts and content
 ✅ 47-question structure seeded to production database
-✅ Ready for end-to-end testing
+✅ Frontend answer format fixed (multiple_choice and rating)
+✅ Backend can load question bank (symlink workaround in place)
+✅ Results page displaying DISC profile and Phase results
+🟡 Assessment status not updating to "completed" (blocks PDF generation)
+🟡 Symlink `/content -> /app/content` is temporary workaround
 
-**Next:** Test new assessment workflow with BUILD-007 (multiple_choice) and SYS-009 (rating) questions
+**Next:**
+1. Fix backend `submitAssessment` to handle existing results gracefully
+2. Deploy backend code fix to replace symlink workaround
+3. Test PDF generation end-to-end

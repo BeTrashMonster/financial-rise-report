@@ -206,6 +206,20 @@ export class AssessmentsService {
 
     this.logger.log(`Submitting assessment ${id} with ${responses.length} responses`);
 
+    // Check if results already exist (from previous failed submission attempt)
+    const discProfile = await this.algorithmsService.getDISCProfile(id).catch(() => null);
+    const phaseResults = await this.algorithmsService.getPhaseResults(id).catch(() => null);
+    const resultsExist = discProfile !== null && phaseResults !== null;
+
+    if (resultsExist) {
+      // Results already calculated, just update status to completed
+      this.logger.log(`Results already exist for assessment ${id}, updating status to completed`);
+      assessment.status = AssessmentStatus.COMPLETED;
+      assessment.completed_at = new Date();
+      return this.assessmentRepository.save(assessment);
+    }
+
+    // Results don't exist, calculate them
     try {
       // Transform responses to format expected by AlgorithmsService
       // answer field contains { value: ... } for single/multiple choice, or { values: [...] } for multi-select
