@@ -325,17 +325,17 @@ export const Questionnaire: React.FC = () => {
         break;
 
       case 'rating':
-        if (response.answer.rating === null || response.answer.rating === undefined) {
+        if (response.answer.value === null || response.answer.value === undefined) {
           return 'Please provide a rating';
         }
-        if (typeof response.answer.rating !== 'number') {
+        if (typeof response.answer.value !== 'number') {
           return 'Rating must be a number';
         }
         // Validate rating is within min/max range
         const ratingOpts = question.options as any;
         const min = ratingOpts?.min || 1;
         const max = ratingOpts?.max || 10;
-        if (response.answer.rating < min || response.answer.rating > max) {
+        if (response.answer.value < min || response.answer.value > max) {
           return `Rating must be between ${min} and ${max}`;
         }
         break;
