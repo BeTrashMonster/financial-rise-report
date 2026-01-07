@@ -56,11 +56,11 @@ export class QuestionnaireService {
     );
 
     // Check if response already exists
-    // NOTE: question_id in DB is UUID, but frontend sends question_key
+    // NOTE: question_id in DB is question_key (VARCHAR), not UUID
     let response = await this.responseRepository.findOne({
       where: {
         assessment_id: dto.assessmentId,
-        question_id: question.id, // Use UUID from fetched question
+        question_id: question.question_key, // Use question_key for lookup
       },
     });
 
@@ -74,7 +74,7 @@ export class QuestionnaireService {
       // Create new response
       response = this.responseRepository.create({
         assessment_id: dto.assessmentId,
-        question_id: question.id, // Use UUID from fetched question
+        question_id: question.question_key, // Use question_key, not UUID
         answer: dto.answer,
         not_applicable: dto.notApplicable || false,
         consultant_notes: dto.consultantNotes || null,
