@@ -193,14 +193,19 @@ export class ValidationService {
    * Must be an integer between 1 and 5
    */
   private validateRating(answer: any): ValidationResult {
-    if (typeof answer !== 'number') {
+    // Answer may come as {value: 3} from frontend, extract the value
+    const ratingValue = typeof answer === 'object' && answer.value !== undefined
+      ? answer.value
+      : answer;
+
+    if (typeof ratingValue !== 'number') {
       return {
         valid: false,
         errors: [{ field: 'answer', message: 'Rating must be a number' }],
       };
     }
 
-    if (!Number.isInteger(answer) || answer < 1 || answer > 5) {
+    if (!Number.isInteger(ratingValue) || ratingValue < 1 || ratingValue > 5) {
       return {
         valid: false,
         errors: [
