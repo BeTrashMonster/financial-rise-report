@@ -223,10 +223,14 @@ export class AssessmentsService {
     try {
       // Transform responses to format expected by AlgorithmsService
       // answer field contains { value: ... } for single/multiple choice, or { values: [...] } for multi-select
+      this.logger.log(`Sample responses (first 3): ${JSON.stringify(responses.slice(0, 3).map(r => ({ id: r.question_id, answer: r.answer })))}`);
+
       const assessmentResponses = responses.map(r => ({
         question_id: r.question_id,
         response_value: r.answer?.value ?? r.answer?.values?.[0] ?? '',
       }));
+
+      this.logger.log(`Transformed responses (first 3): ${JSON.stringify(assessmentResponses.slice(0, 3))}`);
 
       // Calculate DISC profile and phase results
       const results = await this.algorithmsService.calculateAll(id, assessmentResponses);
