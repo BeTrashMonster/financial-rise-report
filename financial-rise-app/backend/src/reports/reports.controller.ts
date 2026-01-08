@@ -10,7 +10,12 @@ import {
   NotFoundException,
   BadRequestException,
   Logger,
+  Res,
+  StreamableFile,
 } from '@nestjs/common';
+import { Response } from 'express';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../modules/auth/guards/jwt-auth.guard';
 import { ReportOwnershipGuard } from '../common/guards/report-ownership.guard';
@@ -265,6 +270,51 @@ export class ReportsController {
 
     // Return the signed URL for download
     return { url: report.fileUrl };
+  }
+
+  /**
+   * GET /reports/files/:filename
+   * Serves local PDF files (when GCS is not configured)
+   */
+  @Get('files/:filename')
+  @ApiOperation({ summary: 'Download local PDF file' })
+  @ApiResponse({ status: 200, description: 'PDF file' })
+  @ApiResponse({ status: 404, description: 'File not found' })
+  async downloadLocalFile(
+    @Param('filename') filename: string,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<StreamableFile> {
+    try {
+      // Convert double dashes back to slashes
+      const actualFilename = filename.replace(/--/g, '/');
+
+      // Build file path
+      const filePath = path.join(process.cwd(), 'reports', actualFilename);
+
+      // Check if file exists
+      try {
+        await fs.access(filePath);
+      } catch {
+        throw new NotFoundException('PDF file not found');
+      }
+
+      // Read file
+      const fileBuffer = await fs.readFile(filePath);
+
+      // Set response headers
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${path.basename(actualFilename)}"`,
+      });
+
+      return new StreamableFile(fileBuffer);
+    } catch (error) {
+      this.logger.error(`Error serving local PDF ${filename}:`, error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new NotFoundException('Failed to retrieve PDF file');
+    }
   }
 
   /**

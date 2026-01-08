@@ -272,7 +272,7 @@ export class ReportGenerationService {
       this.logger.log(`PDF saved locally: ${filePath}`);
 
       // Return URL path for serving the file
-      const fileUrl = `/api/v1/reports/download/${fileName.replace(/\//g, '--')}`;
+      const fileUrl = `/api/v1/reports/files/${fileName.replace(/\//g, '--')}`;
       return fileUrl;
     } catch (error: any) {
       this.logger.error('Local file save error:', error);
