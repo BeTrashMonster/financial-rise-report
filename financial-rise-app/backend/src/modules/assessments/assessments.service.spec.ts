@@ -380,6 +380,8 @@ describe('AssessmentsService', () => {
       const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
       mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
       mockResponseRepository.find.mockResolvedValue(mockResponses);
+      mockAlgorithmsService.getDISCProfile.mockRejectedValue(new Error('Not found'));
+      mockAlgorithmsService.getPhaseResults.mockRejectedValue(new Error('Not found'));
       mockAlgorithmsService.calculateAll.mockResolvedValue(mockCalculationResults);
       mockAssessmentRepository.save.mockResolvedValue({
         ...inProgressAssessment,
@@ -435,6 +437,8 @@ describe('AssessmentsService', () => {
       const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
       mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
       mockResponseRepository.find.mockResolvedValue(mockResponses);
+      mockAlgorithmsService.getDISCProfile.mockRejectedValue(new Error('Not found'));
+      mockAlgorithmsService.getPhaseResults.mockRejectedValue(new Error('Not found'));
       mockAlgorithmsService.calculateAll.mockRejectedValue(new Error('Insufficient DISC responses'));
 
       await expect(service.submitAssessment('assessment-123', mockUser.id)).rejects.toThrow(
@@ -464,6 +468,8 @@ describe('AssessmentsService', () => {
 
       mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
       mockResponseRepository.find.mockResolvedValue(responsesWithNulls);
+      mockAlgorithmsService.getDISCProfile.mockRejectedValue(new Error('Not found'));
+      mockAlgorithmsService.getPhaseResults.mockRejectedValue(new Error('Not found'));
       mockAlgorithmsService.calculateAll.mockResolvedValue(mockCalculationResults);
       mockAssessmentRepository.save.mockImplementation((assessment) => Promise.resolve(assessment));
 
@@ -473,6 +479,27 @@ describe('AssessmentsService', () => {
         { question_id: 'question-1', response_value: '' },
         { question_id: 'question-2', response_value: '' },
       ]);
+    });
+
+    it('should update status to completed if results already exist', async () => {
+      const inProgressAssessment = { ...mockAssessment, status: AssessmentStatus.IN_PROGRESS };
+      mockAssessmentRepository.findOne.mockResolvedValue(inProgressAssessment);
+      mockResponseRepository.find.mockResolvedValue(mockResponses);
+      mockAlgorithmsService.getDISCProfile.mockResolvedValue(mockCalculationResults.disc_profile);
+      mockAlgorithmsService.getPhaseResults.mockResolvedValue(mockCalculationResults.phase_results);
+      mockAssessmentRepository.save.mockResolvedValue({
+        ...inProgressAssessment,
+        status: AssessmentStatus.COMPLETED,
+        completed_at: expect.any(Date),
+      });
+
+      const result = await service.submitAssessment('assessment-123', mockUser.id);
+
+      expect(mockAlgorithmsService.getDISCProfile).toHaveBeenCalledWith('assessment-123');
+      expect(mockAlgorithmsService.getPhaseResults).toHaveBeenCalledWith('assessment-123');
+      expect(mockAlgorithmsService.calculateAll).not.toHaveBeenCalled();
+      expect(result.status).toBe(AssessmentStatus.COMPLETED);
+      expect(result.completed_at).toBeDefined();
     });
   });
 });
