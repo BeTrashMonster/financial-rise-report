@@ -247,11 +247,15 @@ export class AlgorithmsService {
   ): DISCQuestionResponse[] {
     const discResponses: DISCQuestionResponse[] = [];
 
+    this.logger.log(`Extracting DISC responses from ${responses.length} total responses`);
+    this.logger.log(`Question cache has ${this.questionsCache.size} questions loaded`);
+
     for (const response of responses) {
       const question = this.questionsCache.get(response.question_id);
 
       if (!question) {
         // Question not found in cache, skip
+        this.logger.warn(`Question ${response.question_id} not found in cache`);
         continue;
       }
 
@@ -266,7 +270,7 @@ export class AlgorithmsService {
 
       if (!selectedOption) {
         this.logger.warn(
-          `Invalid response value for question ${response.question_id}`,
+          `Invalid response value "${response.response_value}" for question ${response.question_id}. Available options: ${question.options.map(o => o.value).join(', ')}`,
         );
         continue;
       }
@@ -295,6 +299,7 @@ export class AlgorithmsService {
       });
     }
 
+    this.logger.log(`Extracted ${discResponses.length} DISC responses`);
     return discResponses;
   }
 
