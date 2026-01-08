@@ -21,7 +21,7 @@ import {
 @Injectable()
 export class ReportGenerationService {
   private readonly logger = new Logger(ReportGenerationService.name);
-  private storage: Storage;
+  private storage: Storage | null;
   private bucketName: string;
 
   constructor(
