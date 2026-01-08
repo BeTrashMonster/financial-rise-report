@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { Storage } from '@google-cloud/storage';
 import * as puppeteer from 'puppeteer';
 import { Browser, Page, PDFOptions } from 'puppeteer';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { Report } from '../entities/report.entity';
 import {
   ReportTemplateService,
@@ -28,11 +30,17 @@ export class ReportGenerationService {
     private reportTemplateService: ReportTemplateService,
     private configService: ConfigService,
   ) {
-    // Initialize Google Cloud Storage
-    const keyFilename = this.configService.get<string>('GOOGLE_APPLICATION_CREDENTIALS');
-    this.storage = new Storage(keyFilename ? { keyFilename } : undefined);
-    this.bucketName = this.configService.get<string>('GCS_BUCKET_NAME') || 'financial-rise-reports';
-    this.logger.log(`Initialized GCS with bucket: ${this.bucketName}`);
+    // Initialize Google Cloud Storage (optional - falls back to local storage)
+    try {
+      const keyFilename = this.configService.get<string>('GOOGLE_APPLICATION_CREDENTIALS');
+      this.storage = new Storage(keyFilename ? { keyFilename } : undefined);
+      this.bucketName = this.configService.get<string>('GCS_BUCKET_NAME') || 'financial-rise-reports';
+      this.logger.log(`Initialized GCS with bucket: ${this.bucketName}`);
+    } catch (error) {
+      this.logger.warn('GCS not configured, using local file storage for PDFs');
+      this.storage = null;
+      this.bucketName = '';
+    }
   }
 
   /**
@@ -213,6 +221,11 @@ export class ReportGenerationService {
    * @private
    */
   private async uploadToGCS(pdfBuffer: Buffer, fileName: string): Promise<string> {
+    // If GCS is not configured, use local file storage
+    if (!this.storage) {
+      return this.saveToLocal(pdfBuffer, fileName);
+    }
+
     try {
       const file = this.storage.bucket(this.bucketName).file(fileName);
 
@@ -235,6 +248,35 @@ export class ReportGenerationService {
     } catch (error: any) {
       this.logger.error('GCS upload error:', error);
       throw new Error('Failed to upload PDF to Google Cloud Storage: ' + error.message);
+    }
+  }
+
+  /**
+   * Save PDF to local file system (fallback when GCS not configured)
+   * @private
+   */
+  private async saveToLocal(pdfBuffer: Buffer, fileName: string): Promise<string> {
+    try {
+      // Create reports directory if it doesn't exist
+      const reportsDir = path.join(process.cwd(), 'reports');
+      await fs.mkdir(reportsDir, { recursive: true });
+
+      // Create subdirectory for file
+      const fileDir = path.join(reportsDir, path.dirname(fileName));
+      await fs.mkdir(fileDir, { recursive: true });
+
+      // Save file
+      const filePath = path.join(reportsDir, fileName);
+      await fs.writeFile(filePath, pdfBuffer);
+
+      this.logger.log(`PDF saved locally: ${filePath}`);
+
+      // Return URL path for serving the file
+      const fileUrl = `/api/v1/reports/download/${fileName.replace(/\//g, '--')}`;
+      return fileUrl;
+    } catch (error: any) {
+      this.logger.error('Local file save error:', error);
+      throw new Error('Failed to save PDF locally: ' + error.message);
     }
   }
 
